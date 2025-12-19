@@ -2,12 +2,10 @@ import Link from "next/link";
 import { mainNav } from "@/content/nav";
 import { site } from "@/content/site";
 
-const languages = ["FR", "EN", "ES", "HT"];
-
 export default function Header() {
   return (
     <header className="border-b bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4">
         <Link href="/" className="leading-tight">
           <div className="text-xs uppercase tracking-wide text-neutral-500">
             {site.shortName}
@@ -17,8 +15,8 @@ export default function Header() {
           </div>
         </Link>
 
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
-          <nav className="flex flex-wrap items-center gap-4 text-sm text-neutral-700">
+        <div className="flex items-center gap-6">
+          <nav className="hidden items-center gap-5 text-sm text-neutral-700 md:flex">
             {mainNav.map((item) => (
               <Link
                 key={item.href}
@@ -29,15 +27,14 @@ export default function Header() {
               </Link>
             ))}
           </nav>
-          <div className="flex items-center gap-2 text-xs text-neutral-500">
-            {languages.map((language, index) => (
-              <span key={language} className={language === "FR" ? "font-semibold text-neutral-900" : ""}>
-                {language}
-                {index < languages.length - 1 && (
-                  <span className="mx-2 text-neutral-300">|</span>
-                )}
-              </span>
-            ))}
+          <div className="hidden items-center gap-2 text-xs text-neutral-500 lg:flex">
+            <span className="font-medium text-neutral-900">FR</span>
+            <span aria-hidden="true">|</span>
+            <span>EN</span>
+            <span aria-hidden="true">|</span>
+            <span>ES</span>
+            <span aria-hidden="true">|</span>
+            <span>HT</span>
           </div>
         </div>
       </div>

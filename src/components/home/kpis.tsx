@@ -12,13 +12,12 @@ export default function Kpis() {
         {kpis.map((item) => (
           <div
             key={item.label}
-            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+            className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6"
           >
             <div className="text-3xl font-semibold text-neutral-900">
               {item.value}
             </div>
             <div className="mt-2 text-sm text-neutral-600">{item.label}</div>
-            <div className="mt-4 h-1 w-10 rounded-full bg-emerald-500" />
           </div>
         ))}
       </div>

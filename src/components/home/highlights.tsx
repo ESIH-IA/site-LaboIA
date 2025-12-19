@@ -1,18 +1,18 @@
 const highlights = [
   {
-    title: "Recherche fondamentale",
+    title: "Agriculture intelligente",
     description:
-      "Nouveaux modèles d'apprentissage, architectures frugales et méthodes explicables adaptées aux contraintes locales.",
+      "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basés sur la donnée.",
   },
   {
-    title: "Recherche appliquée",
+    title: "Services publics & gouvernance",
     description:
-      "Solutions IA pour l'agriculture, la santé, les services publics et la gestion des risques.",
+      "Optimisation des services essentiels, observatoires de données et aide à la décision.",
   },
   {
-    title: "Open science & data",
+    title: "Santé & environnement",
     description:
-      "Production de datasets, outils open source et diffusion de la connaissance scientifique.",
+      "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios.",
   },
 ];
 

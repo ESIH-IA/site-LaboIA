@@ -1,11 +1,4 @@
-const partners = [
-  "ESIH",
-  "Université",
-  "Ministères",
-  "ONG",
-  "Industrie",
-  "Startups",
-];
+const partners = ["ESIH", "Université", "Ministères", "ONG", "Industrie", "Startups"];
 
 export default function Partners() {
   return (
@@ -21,9 +14,9 @@ export default function Partners() {
               accélérer l’impact de la recherche.
             </p>
           </div>
-          <button className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-neutral-400">
-            Devenir partenaire
-          </button>
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm text-neutral-600">
+            Besoin de collaborer ? <span className="font-medium">Contactez-nous.</span>
+          </div>
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
