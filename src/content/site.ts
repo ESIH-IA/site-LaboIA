@@ -1,6 +1,6 @@
 export const site = {
-  name: "Laboratoire de Recherche en Intelligence Artificielle et Science des Données de l’ESIH",
-  shortName: "AIDA Lab – ESIH",
+  name: "Laboratoire des sciences de Données et l'Intelligence Artificielle",
+  shortName: "LaDIA",
   description:
-    "Laboratoire de recherche en IA et science des données : projets, publications, partenariats et formation à l’ESIH.",
+    "Laboratoire de recherche en IA et science des données : projets, publications, partenariats et formation.",
 } as const;
