@@ -1,9 +1,5 @@
-const event = {
-  label: "Événement à venir",
-  title: "Séminaire IA & données pour les services publics",
-  date: "Jeudi 25 avril · 10h00",
-  location: "Campus ESIH, Port-au-Prince",
-};
+import Link from "next/link";
+import { event } from "@/content/home";
 
 export default function EventBanner() {
   return (
@@ -21,9 +17,12 @@ export default function EventBanner() {
               {event.date} · {event.location}
             </p>
           </div>
-          <button className="rounded-full border border-neutral-900 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-900 hover:text-white">
-            Voir le programme
-          </button>
+          <Link
+            href={event.ctaHref}
+            className="rounded-full border border-neutral-900 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+          >
+            {event.ctaLabel}
+          </Link>
         </div>
       </div>
     </section>
