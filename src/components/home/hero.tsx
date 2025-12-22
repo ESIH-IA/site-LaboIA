@@ -1,5 +1,15 @@
 import Link from "next/link";
+import { hero } from "@/content/home";
 import { site } from "@/content/site";
+
+const actionStyles = {
+  primary:
+    "rounded-xl bg-white px-4 py-2 text-sm font-medium text-neutral-950 transition hover:bg-white/90",
+  secondary:
+    "rounded-xl border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70",
+  tertiary:
+    "rounded-xl border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white",
+} as const;
 
 export default function Hero() {
   return (
@@ -13,30 +23,19 @@ export default function Hero() {
             {site.name}
           </h1>
           <p className="mt-5 text-base text-white/75 md:text-lg">
-            Nous concevons des solutions en intelligence artificielle et science des
-            données pour l’agriculture, les services publics, la santé, l’environnement
-            et l’innovation en Haïti et à l’international.
+            {hero.description}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/projets"
-              className="rounded-xl bg-white px-4 py-2 text-sm font-medium text-neutral-950 transition hover:bg-white/90"
-            >
-              Découvrir nos projets
-            </Link>
-            <Link
-              href="/collaborer"
-              className="rounded-xl border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70"
-            >
-              Collaborer avec nous
-            </Link>
-            <Link
-              href="/publications"
-              className="rounded-xl border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white"
-            >
-              Voir nos publications
-            </Link>
+            {hero.actions.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                className={actionStyles[action.variant]}
+              >
+                {action.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
