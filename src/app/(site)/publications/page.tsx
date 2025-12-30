@@ -1,9 +1,10 @@
 import Link from "next/link";
-
-import { getArticles } from "@/lib/content-loader";
+import { articles } from "@/content/articles";
 
 export default function Page() {
-  const publications = getArticles().filter((article) => article.category === "Publication");
+  const publications = [...articles]
+    .filter((article) => article.category === "Publication")
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -28,29 +29,19 @@ export default function Page() {
               <span aria-hidden="true">•</span>
               <span>{publication.authorName}</span>
             </div>
-            <Link
-              href={`/actualites/${publication.slug}`}
-              className="mt-3 block text-xl font-semibold text-neutral-900 underline-offset-4 hover:underline"
-            >
-              {publication.title}
-            </Link>
+            <h2 className="mt-3 text-xl font-semibold text-neutral-900">{publication.title}</h2>
             <p className="mt-2 text-sm text-neutral-700">{publication.summary}</p>
-            <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold text-neutral-900">
-              <Link href={`/actualites/${publication.slug}`} className="underline underline-offset-4">
-                Voir la fiche
+            {publication.sourceUrl ? (
+              <Link
+                href={publication.sourceUrl}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 underline underline-offset-4"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Lire la publication
+                <span aria-hidden>↗</span>
               </Link>
-              {publication.sourceUrl ? (
-                <Link
-                  href={publication.sourceUrl}
-                  className="inline-flex items-center gap-2 underline underline-offset-4"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Lire la publication
-                  <span aria-hidden>↗</span>
-                </Link>
-              ) : null}
-            </div>
+            ) : null}
           </article>
         ))}
       </div>

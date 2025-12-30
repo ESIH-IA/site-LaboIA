@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getArticles } from "@/lib/content-loader";
+import { articles } from "@/content/articles";
 
 const categoryColors: Record<string, string> = {
   Partenariat: "bg-indigo-100 text-indigo-800",
@@ -10,7 +10,9 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function Page() {
-  const sortedArticles = getArticles();
+  const sortedArticles = [...articles].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -39,29 +41,19 @@ export default function Page() {
               <span aria-hidden="true">•</span>
               <span>{article.authorName}</span>
             </div>
-            <Link href={`/actualites/${article.slug}`} className="mt-3 block text-xl font-semibold text-neutral-900 underline-offset-4 hover:underline">
-              {article.title}
-            </Link>
+            <h2 className="mt-3 text-xl font-semibold text-neutral-900">{article.title}</h2>
             <p className="mt-2 text-sm text-neutral-700">{article.summary}</p>
-            <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold text-neutral-900">
+            {article.sourceUrl ? (
               <Link
-                href={`/actualites/${article.slug}`}
-                className="inline-flex items-center gap-2 underline underline-offset-4"
+                href={article.sourceUrl}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900 underline underline-offset-4"
+                target="_blank"
+                rel="noreferrer"
               >
-                Voir la fiche
+                Lire la source
+                <span aria-hidden>↗</span>
               </Link>
-              {article.sourceUrl ? (
-                <Link
-                  href={article.sourceUrl}
-                  className="inline-flex items-center gap-2 underline underline-offset-4"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Lire la source
-                  <span aria-hidden>↗</span>
-                </Link>
-              ) : null}
-            </div>
+            ) : null}
           </article>
         ))}
       </div>

@@ -12,7 +12,7 @@ export const hero = {
     {
       label: "Collaborer avec nous",
       href: "/collaborer",
-      variant: "secondary",
+      variant: "secondary", 
     },
     {
       label: "Voir nos publications",

@@ -1,9 +1,7 @@
-import Link from "next/link";
-
-import { getProjects } from "@/lib/content-loader";
+import { projects } from "@/content/projects";
 
 export default function Page() {
-  const sortedProjects = getProjects().sort((a, b) => (b.yearStart ?? 0) - (a.yearStart ?? 0));
+  const sortedProjects = [...projects].sort((a, b) => (b.yearStart ?? 0) - (a.yearStart ?? 0));
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -29,12 +27,7 @@ export default function Page() {
               </span>
               {project.yearStart ? <span>Depuis {project.yearStart}</span> : null}
             </div>
-            <Link
-              href={`/projets/${project.slug}`}
-              className="text-xl font-semibold text-neutral-900 underline-offset-4 hover:underline"
-            >
-              {project.title}
-            </Link>
+            <h2 className="text-xl font-semibold text-neutral-900">{project.title}</h2>
             <p className="text-sm text-neutral-700">{project.shortDescription}</p>
             {project.tags?.length ? (
               <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-wide text-neutral-500">
@@ -45,19 +38,18 @@ export default function Page() {
                 ))}
               </div>
             ) : null}
-            <div className="mt-auto flex flex-wrap gap-3 text-sm font-semibold text-neutral-900 underline underline-offset-4">
-              <Link href={`/projets/${project.slug}`}>Voir le détail</Link>
-              {project.portals?.length
-                ? project.portals.map((portal) => (
-                    <a key={portal.url} href={portal.url} target="_blank" rel="noreferrer">
-                      {portal.label}
-                      <span className="ml-1" aria-hidden>
-                        ↗
-                      </span>
-                    </a>
-                  ))
-                : null}
-            </div>
+            {project.portals?.length ? (
+              <div className="mt-auto flex flex-wrap gap-3 text-sm font-semibold text-neutral-900 underline underline-offset-4">
+                {project.portals.map((portal) => (
+                  <a key={portal.url} href={portal.url} target="_blank" rel="noreferrer">
+                    {portal.label}
+                    <span className="ml-1" aria-hidden>
+                      ↗
+                    </span>
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </article>
         ))}
       </div>

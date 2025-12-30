@@ -16,12 +16,18 @@ const actionStyles = {
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
-      <Banner cover className="opacity-40" />
+      <Image
+        src={site.assets.banner.src}
+        alt={site.assets.banner.alt}
+        fill
+        priority
+        className="object-cover opacity-40"
+        sizes="100vw"
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/80 to-neutral-950" />
       <div className="relative mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-3xl">
-          <Logo size="hero" />
-          <p className="mt-4 text-sm uppercase tracking-[0.2em] text-white/60">{site.shortName}</p>
+          <p className="text-sm uppercase tracking-[0.2em] text-white/60">{site.shortName}</p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight md:text-5xl">
             {site.name}
           </h1>

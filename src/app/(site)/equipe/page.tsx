@@ -1,9 +1,7 @@
-import Link from "next/link";
-
-import { getPeople } from "@/lib/content-loader";
+import { people } from "@/content/people";
 
 export default function Page() {
-  const featuredPeople = getPeople().sort((a, b) => a.fullName.localeCompare(b.fullName));
+  const featuredPeople = [...people].sort((a, b) => a.fullName.localeCompare(b.fullName));
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -21,12 +19,7 @@ export default function Page() {
             className="flex h-full flex-col gap-3 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
           >
             <div className="text-sm uppercase tracking-wide text-neutral-500">{member.role}</div>
-            <Link
-              href={`/equipe/${member.slug}`}
-              className="text-lg font-semibold text-neutral-900 underline-offset-4 hover:underline"
-            >
-              {member.fullName}
-            </Link>
+            <h2 className="text-lg font-semibold text-neutral-900">{member.fullName}</h2>
             <p className="text-sm text-neutral-700">{member.bio}</p>
             {member.links?.length ? (
               <div className="mt-auto flex flex-col gap-2 text-sm font-semibold text-neutral-900 underline underline-offset-4">

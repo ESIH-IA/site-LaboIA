@@ -19,11 +19,6 @@ export const people = [
           "https://infosnation.com/un-tuteur-numerique-intelligent-pour-accompagner-les-producteurs-de-mangues-en-haiti/",
       },
     ],
-    related: {
-      projects: ["deep-farm"],
-      articles: ["livenson-tuteur-numerique-rag"],
-      documents: ["certificat-publications-infosnation-2025"],
-    },
     featured: true,
   },
   {
@@ -39,11 +34,6 @@ export const people = [
           "https://infosnation.com/quand-lintelligence-artificielle-vient-au-secours-des-manguiers-haitiens/",
       },
     ],
-    related: {
-      projects: ["deep-farm"],
-      articles: ["aishael-ia-manguiers"],
-      documents: ["certificat-publications-infosnation-2025"],
-    },
     featured: true,
   },
 ] as const;

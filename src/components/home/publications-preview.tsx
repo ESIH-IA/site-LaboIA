@@ -1,9 +1,10 @@
-import Link from "next/link";
-
-import { getFeaturedArticles } from "@/lib/content-loader";
+import { articles } from "@/content/articles";
 
 export default function PublicationsPreview() {
-  const featuredPublications = getFeaturedArticles(3);
+  const featuredPublications = [...articles]
+    .filter((article) => article.featured)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
 
   return (
     <section className="bg-neutral-950 text-white">
@@ -37,27 +38,19 @@ export default function PublicationsPreview() {
                 <span aria-hidden="true">•</span>
                 <span>{publication.authorName}</span>
               </div>
-              <Link
-                href={`/actualites/${publication.slug}`}
-                className="text-base font-semibold underline-offset-4 hover:underline"
-              >
-                {publication.title}
-              </Link>
+              <h3 className="text-base font-semibold">{publication.title}</h3>
               <p className="text-sm text-white/70">{publication.summary}</p>
-              <div className="mt-2 flex flex-wrap gap-3 text-sm font-semibold text-white underline underline-offset-4">
-                <Link href={`/actualites/${publication.slug}`}>Voir la fiche</Link>
-                {publication.sourceUrl ? (
-                  <a
-                    href={publication.sourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2"
-                  >
-                    Lire la source
-                    <span aria-hidden>↗</span>
-                  </a>
-                ) : null}
-              </div>
+              {publication.sourceUrl ? (
+                <a
+                  href={publication.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-white underline underline-offset-4"
+                >
+                  Lire la source
+                  <span aria-hidden>↗</span>
+                </a>
+              ) : null}
             </div>
           ))}
         </div>
