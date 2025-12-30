@@ -1,25 +1,8 @@
-const projects = [
-  {
-    title: "Observatoire agricole",
-    description:
-      "Cartographie des cultures, prévisions de rendement et alertes climatiques pour les acteurs du terrain.",
-    tag: "Agriculture",
-  },
-  {
-    title: "Plateforme d'analyse des services publics",
-    description:
-      "Tableaux de bord décisionnels pour améliorer l'accès et la qualité des services essentiels.",
-    tag: "Gouvernance",
-  },
-  {
-    title: "Santé communautaire augmentée",
-    description:
-      "Analyse de données épidémiologiques et systèmes d'alerte précoce pour la santé publique.",
-    tag: "Santé",
-  },
-];
+import { projects } from "@/content/projects";
 
 export default function FeaturedProjects() {
+  const featuredProjects = projects.filter((project) => project.featured);
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 py-12">
@@ -36,21 +19,28 @@ export default function FeaturedProjects() {
           <button className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-neutral-400">
             Découvrir tous les projets
           </button>
-        </div>
+          </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {projects.map((project) => (
+          {featuredProjects.map((project) => (
             <article
-              key={project.title}
+              key={project.id}
               className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6"
             >
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
-                {project.tag}
+                {project.type} · {project.status}
               </span>
-              <h3 className="mt-3 text-lg font-semibold text-neutral-900">
-                {project.title}
-              </h3>
-              <p className="mt-3 text-sm text-neutral-600">{project.description}</p>
+              <h3 className="mt-3 text-lg font-semibold text-neutral-900">{project.title}</h3>
+              <p className="mt-3 text-sm text-neutral-600">{project.shortDescription}</p>
+              {project.tags?.length ? (
+                <div className="mt-4 flex flex-wrap gap-2 text-xs uppercase tracking-wide text-neutral-500">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="rounded-full bg-white px-3 py-1">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </article>
           ))}
         </div>

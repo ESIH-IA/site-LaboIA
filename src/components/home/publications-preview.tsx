@@ -1,19 +1,11 @@
-const publications = [
-  {
-    title: "Détection d'anomalies climatiques en milieu tropical",
-    source: "Journal of Climate Analytics, 2024",
-  },
-  {
-    title: "IA frugale pour la gestion des services publics",
-    source: "Revue Data & Gouvernance, 2023",
-  },
-  {
-    title: "Modèles prédictifs pour la sécurité alimentaire",
-    source: "Conférence AI4Good, 2023",
-  },
-];
+import { articles } from "@/content/articles";
 
 export default function PublicationsPreview() {
+  const featuredPublications = [...articles]
+    .filter((article) => article.featured)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
   return (
     <section className="bg-neutral-950 text-white">
       <div className="mx-auto max-w-6xl px-4 py-12">
@@ -30,13 +22,32 @@ export default function PublicationsPreview() {
         </div>
 
         <div className="mt-8 grid gap-4">
-          {publications.map((publication) => (
+          {featuredPublications.map((publication) => (
             <div
               key={publication.title}
               className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-5"
             >
+              <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-white/60">
+                <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold text-white">
+                  {publication.category}
+                </span>
+                <span>{publication.date}</span>
+                <span aria-hidden="true">•</span>
+                <span>{publication.authorName}</span>
+              </div>
               <h3 className="text-base font-semibold">{publication.title}</h3>
-              <p className="text-sm text-white/60">{publication.source}</p>
+              <p className="text-sm text-white/70">{publication.summary}</p>
+              {publication.sourceUrl ? (
+                <a
+                  href={publication.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-white underline underline-offset-4"
+                >
+                  Lire la source
+                  <span aria-hidden>↗</span>
+                </a>
+              ) : null}
             </div>
           ))}
         </div>
