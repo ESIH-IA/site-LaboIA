@@ -1,6 +1,6 @@
 # Ce qui reste à faire
 
-Ce document résume les prochaines étapes pour finaliser le site du LaDIA.
+Ce document résume les prochaines étapes pour finaliser le site du LaCDIA.
 
 ## 1) Contenus à compléter
 - Mettre à jour les textes des sections (projets, publications, équipe, actualités) avec les contenus officiels.

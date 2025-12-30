@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { hero } from "@/content/home";
 import { site } from "@/content/site";
+import { Banner } from "../media/banner";
+import { Logo } from "../media/logo";
 
 const actionStyles = {
   primary:
@@ -15,24 +16,17 @@ const actionStyles = {
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
-      <Image
-        src={hero.bannerSrc}
-        alt={hero.bannerAlt}
-        fill
-        priority
-        className="object-cover opacity-40"
-      />
+      <Banner cover className="opacity-40" />
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/80 to-neutral-950" />
       <div className="relative mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.2em] text-white/60">
-            {site.shortName}
-          </p>
+          <Logo size="hero" />
+          <p className="mt-4 text-sm uppercase tracking-[0.2em] text-white/60">{site.shortName}</p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight md:text-5xl">
             {site.name}
           </h1>
           <p className="mt-5 text-base text-white/75 md:text-lg">
-            {hero.description}
+            {hero.description ?? site.description}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
