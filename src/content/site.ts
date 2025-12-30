@@ -1,6 +1,6 @@
 export const site = {
-  name: "Laboratoire des sciences de Données et l'Intelligence Artificielle",
-  shortName: "LaDIA",
+  name: "Laboratoire Caribéen des sciences de Données et de l'Intelligence Artificielle",
+  shortName: "LaCDIA",
   description:
-    "Laboratoire de recherche en IA et science des données : projets, publications, partenariats et formation.",
+    "Laboratoire de recherche et d'innovation en IA et science des données : projets, publications, partenariats et formation.",
 } as const;
