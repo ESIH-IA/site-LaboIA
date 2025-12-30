@@ -1,9 +1,9 @@
-const kpis = [
-  { label: "Projets actifs", value: "12" },
-  { label: "Publications", value: "48" },
-  { label: "Partenaires", value: "18" },
-  { label: "Étudiants impliqués", value: "60+" },
-];
+import { kpiMeta, kpis } from "@/content/kpis";
+
+const statusLabels = {
+  draft: "Données provisoires",
+  confirmed: "Données validées",
+} as const;
 
 export default function Kpis() {
   return (
@@ -18,8 +18,26 @@ export default function Kpis() {
               {item.value}
             </div>
             <div className="mt-2 text-sm text-neutral-600">{item.label}</div>
+            <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-medium text-neutral-600">
+              <span
+                className={`inline-block h-2 w-2 rounded-full ${
+                  item.status === "confirmed" ? "bg-emerald-500" : "bg-amber-400"
+                }`}
+                aria-hidden
+              />
+              {statusLabels[item.status]}
+            </div>
+            {item.note ? (
+              <p className="mt-3 text-xs text-neutral-500">{item.note}</p>
+            ) : null}
           </div>
         ))}
+      </div>
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 pb-4 text-xs text-neutral-500">
+        <span className="font-medium text-neutral-700">Dernière mise à jour :</span>
+        <span>{kpiMeta.lastUpdated}</span>
+        <span aria-hidden="true">•</span>
+        <span>{kpiMeta.disclaimer}</span>
       </div>
     </section>
   );

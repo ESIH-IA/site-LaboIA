@@ -16,23 +16,22 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
       <Image
-        src={hero.bannerSrc}
-        alt={hero.bannerAlt}
+        src={site.assets.banner.src}
+        alt={site.assets.banner.alt}
         fill
         priority
         className="object-cover opacity-40"
+        sizes="100vw"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/80 to-neutral-950" />
       <div className="relative mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.2em] text-white/60">
-            {site.shortName}
-          </p>
+          <p className="text-sm uppercase tracking-[0.2em] text-white/60">{site.shortName}</p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight md:text-5xl">
             {site.name}
           </h1>
           <p className="mt-5 text-base text-white/75 md:text-lg">
-            {hero.description}
+            {hero.description ?? site.description}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
