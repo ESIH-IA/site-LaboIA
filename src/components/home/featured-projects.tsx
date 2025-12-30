@@ -16,7 +16,10 @@ export default function FeaturedProjects() {
               des données au service des communautés.
             </p>
           </div>
-          <button className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-neutral-400">
+          <Link
+            href="/projets"
+            className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-neutral-400"
+          >
             Découvrir tous les projets
           </button>
           </div>
@@ -42,8 +45,12 @@ export default function FeaturedProjects() {
                 </div>
               ) : null}
             </article>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="mt-8 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
+            Contenu en cours de publication.
+          </div>
+        )}
       </div>
     </section>
   );

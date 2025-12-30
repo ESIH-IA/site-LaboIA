@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { hero } from "@/content/home";
 import { site } from "@/content/site";
+import { Banner } from "../media/banner";
+import { Logo } from "../media/logo";
 
 const actionStyles = {
   primary:

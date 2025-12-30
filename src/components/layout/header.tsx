@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { mainNav } from "@/content/nav";
 import { site } from "@/content/site";
+import { Logo } from "../media/logo";
 
 export default function Header() {
   return (

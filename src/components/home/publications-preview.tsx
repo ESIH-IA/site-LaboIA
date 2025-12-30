@@ -16,9 +16,12 @@ export default function PublicationsPreview() {
               Articles, rapports et communications qui documentent nos avancées scientifiques.
             </p>
           </div>
-          <button className="rounded-full border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70">
+          <Link
+            href="/publications"
+            className="rounded-full border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70"
+          >
             Voir toutes les publications
-          </button>
+          </Link>
         </div>
 
         <div className="mt-8 grid gap-4">
