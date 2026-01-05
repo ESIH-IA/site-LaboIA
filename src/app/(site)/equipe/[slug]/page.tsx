@@ -1,81 +1,144 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { people } from "@/content/people";
-import { projects } from "@/content/projects";
-import { getArticles } from "@/lib/content-loader";
+import { sanityFetch } from "@/lib/sanity/client";
+import { getServerLocale } from "@/lib/i18n-server";
+import { localizedPath } from "@/lib/i18n";
+import { memberBySlugQuery, memberListQuery } from "@/lib/sanity/queries";
+import type { MemberListItem } from "@/lib/sanity/types";
+import { buildMetadata } from "@/lib/seo";
 
 type PageProps = { params: { slug: string } };
 
-export default function Page({ params }: PageProps) {
-  const person = people.find((p) => p.slug === params.slug);
-  if (!person) notFound();
+type MemberDetail = {
+  _id: string;
+  fullName: string;
+  role?: string;
+  affiliation?: string;
+  bio?: string;
+  expertise?: string[];
+  links?: Array<{ label?: string; url?: string }>;
+  slugIntl?: { fr?: { current: string }; en?: { current: string } };
+  projects?: Array<{ _id: string; title: string; slug?: { current: string }; summary?: string }>;
+  publications?: Array<{ _id: string; title: string; slug?: { current: string }; date?: string }>;
+};
 
-  const allArticles = getArticles();
-  const relatedProjects = projects.filter((project) =>
-    person.related.projects.includes(project.id),
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const locale = await getServerLocale();
+  const member = await sanityFetch<MemberDetail | null>(
+    memberBySlugQuery,
+    { slug: params.slug, locale },
+    null,
   );
-  const relatedArticles = allArticles.filter((article) =>
-    person.related.articles.includes(article.id),
+
+  const frSlug = member?.slugIntl?.fr?.current ?? params.slug;
+  const enSlug = member?.slugIntl?.en?.current ?? params.slug;
+
+  return buildMetadata({
+    title: member?.fullName,
+    description: member?.bio,
+    path: localizedPath(`/equipe/${params.slug}`, locale),
+    alternates: {
+      fr: localizedPath(`/equipe/${frSlug}`, "fr"),
+      en: localizedPath(`/equipe/${enSlug}`, "en"),
+    },
+  });
+}
+
+export default async function Page({ params }: PageProps) {
+  const locale = await getServerLocale();
+  const member = await sanityFetch<MemberDetail | null>(
+    memberBySlugQuery,
+    { slug: params.slug, locale },
+    null,
   );
+
+  if (!member) {
+    notFound();
+  }
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-3xl font-semibold text-neutral-900">{person.fullName}</h1>
-      <p className="mt-2 text-sm font-semibold text-neutral-600">{person.role}</p>
+      <h1 className="text-3xl font-semibold text-neutral-900">{member.fullName}</h1>
+      {member.role ? <p className="mt-2 text-sm font-semibold text-neutral-600">{member.role}</p> : null}
+      {member.affiliation ? (
+        <p className="mt-1 text-sm text-neutral-500">{member.affiliation}</p>
+      ) : null}
 
-      <p className="mt-6 text-neutral-700">{person.bio}</p>
+      {member.bio ? <p className="mt-6 text-neutral-700">{member.bio}</p> : null}
 
-      {person.links?.length ? (
+      {member.expertise?.length ? (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold text-neutral-900">Domaines</h2>
+          <div className="mt-3 flex flex-wrap gap-2 text-sm text-neutral-700">
+            {member.expertise.map((item) => (
+              <span key={item} className="rounded-full bg-neutral-100 px-3 py-1">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {member.links?.length ? (
         <div className="mt-8">
           <h2 className="text-lg font-semibold text-neutral-900">Liens</h2>
           <ul className="mt-3 space-y-2">
-            {person.links.map((l) => (
-              <li key={l.url}>
-                <Link
-                  href={l.url}
-                  className="text-neutral-900 underline underline-offset-4"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {l.label}
-                </Link>
+            {member.links.map((link, index) => (
+              <li key={`${link.url ?? "link"}-${index}`}>
+                {link.url ? (
+                  <Link
+                    href={link.url}
+                    className="text-neutral-900 underline underline-offset-4"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {link.label ?? link.url}
+                  </Link>
+                ) : (
+                  <span>{link.label}</span>
+                )}
               </li>
             ))}
           </ul>
         </div>
       ) : null}
 
-      {relatedProjects.length ? (
+      {member.projects?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets liés</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Projets lies</h2>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {relatedProjects.map((p) => (
+            {member.projects.map((project) => (
               <Link
-                key={p.id}
-                href={`/projets/${p.id}`}
+                key={project._id}
+                href={`/projets/${project.slug?.current ?? ""}`}
                 className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-400"
               >
-                <div className="text-sm font-semibold text-neutral-900">{p.title}</div>
-                <div className="mt-2 text-sm text-neutral-600">{p.shortDescription}</div>
+                <div className="text-sm font-semibold text-neutral-900">{project.title}</div>
+                {project.summary ? (
+                  <div className="mt-2 text-sm text-neutral-600">{project.summary}</div>
+                ) : null}
               </Link>
             ))}
           </div>
         </div>
       ) : null}
 
-      {relatedArticles.length ? (
+      {member.publications?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Articles liés</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Publications liees</h2>
           <div className="mt-4 grid gap-4">
-            {relatedArticles.map((a) => (
+            {member.publications.map((publication) => (
               <Link
-                key={a.id}
-                href={`/actualites/${a.slug}`}
+                key={publication._id}
+                href={`/publications/${publication.slug?.current ?? ""}`}
                 className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-400"
               >
-                <div className="text-sm font-semibold text-neutral-900">{a.title}</div>
-                <div className="mt-2 text-sm text-neutral-600">{a.summary}</div>
+                <div className="text-sm font-semibold text-neutral-900">{publication.title}</div>
+                {publication.date ? (
+                  <div className="mt-2 text-sm text-neutral-600">{publication.date}</div>
+                ) : null}
               </Link>
             ))}
           </div>
@@ -85,6 +148,13 @@ export default function Page({ params }: PageProps) {
   );
 }
 
-export function generateStaticParams() {
-  return people.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const members = await sanityFetch<MemberListItem[]>(memberListQuery, { locale: "fr" }, []);
+  const slugs = new Set<string>();
+  members.forEach((member) => {
+    if (member.slug?.current) slugs.add(member.slug.current);
+    if (member.slugIntl?.fr?.current) slugs.add(member.slugIntl.fr.current);
+    if (member.slugIntl?.en?.current) slugs.add(member.slugIntl.en.current);
+  });
+  return Array.from(slugs).map((slug) => ({ slug }));
 }

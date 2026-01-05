@@ -1,58 +1,62 @@
-import { projects } from "@/content/projects";
+import type { Metadata } from "next";
+import PortableTextRenderer from "@/components/content/portable-text";
+import { ProjectCard } from "@/components/cards/cards";
+import { sanityFetch } from "@/lib/sanity/client";
+import { getServerLocale } from "@/lib/i18n-server";
+import { localizedPath } from "@/lib/i18n";
+import { institutionalPageBySlugQuery, projectListQuery } from "@/lib/sanity/queries";
+import type { InstitutionalPage, ProjectListItem } from "@/lib/sanity/types";
+import { buildMetadata } from "@/lib/seo";
 
-export default function Page() {
-  const sortedProjects = [...projects].sort((a, b) => (b.yearStart ?? 0) - (a.yearStart ?? 0));
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale();
+  const page = await sanityFetch<InstitutionalPage | null>(
+    institutionalPageBySlugQuery,
+    { slug: "projets", locale },
+    null,
+  );
+
+  return buildMetadata({
+    title: page?.title,
+    description: page?.summary,
+    path: localizedPath("/projets", locale),
+    alternates: {
+      fr: localizedPath("/projets", "fr"),
+      en: localizedPath("/projets", "en"),
+    },
+  });
+}
+
+export default async function Page() {
+  const locale = await getServerLocale();
+  const page = await sanityFetch<InstitutionalPage | null>(
+    institutionalPageBySlugQuery,
+    { slug: "projets", locale },
+    null,
+  );
+  const projects = await sanityFetch<ProjectListItem[]>(projectListQuery, { locale }, []);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
       <div className="max-w-3xl">
-        <h1 className="text-3xl font-semibold">Projets</h1>
-        <p className="mt-3 text-neutral-600">
-          Projets de recherche en cours, terminés et démonstrateurs du laboratoire.
-        </p>
+        {page?.title ? <h1 className="text-3xl font-semibold">{page.title}</h1> : null}
+        {page?.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
+      </div>
+      <div className="mt-6">
+        <PortableTextRenderer value={page?.content} />
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
-        {sortedProjects.map((project) => (
-          <article
-            key={project.id}
-            className="flex h-full flex-col gap-3 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
-          >
-            <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-neutral-500">
-              <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700">
-                {project.type}
-              </span>
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700">
-                {project.status}
-              </span>
-              {project.yearStart ? <span>Depuis {project.yearStart}</span> : null}
-            </div>
-            <h2 className="text-xl font-semibold text-neutral-900">{project.title}</h2>
-            <p className="text-sm text-neutral-700">{project.shortDescription}</p>
-            {project.tags?.length ? (
-              <div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-wide text-neutral-500">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="rounded-full bg-neutral-100 px-3 py-1">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-            {project.portals?.length ? (
-              <div className="mt-auto flex flex-wrap gap-3 text-sm font-semibold text-neutral-900 underline underline-offset-4">
-                {project.portals.map((portal) => (
-                  <a key={portal.url} href={portal.url} target="_blank" rel="noreferrer">
-                    {portal.label}
-                    <span className="ml-1" aria-hidden>
-                      ↗
-                    </span>
-                  </a>
-                ))}
-              </div>
-            ) : null}
-          </article>
-        ))}
-      </div>
+      {projects.length === 0 ? (
+        <div className="mt-8 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
+          Contenu en cours de publication.
+        </div>
+      ) : (
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
