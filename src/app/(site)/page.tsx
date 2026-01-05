@@ -1,4 +1,5 @@
 import Hero from "@/components/home/hero";
+import Intro from "@/components/home/intro";
 import EventBanner from "@/components/home/event-banner";
 import Kpis from "@/components/home/kpis";
 import Highlights from "@/components/home/highlights";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Intro />
       <EventBanner />
       <Kpis />
       <Highlights />

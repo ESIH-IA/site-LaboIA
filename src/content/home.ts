@@ -1,18 +1,18 @@
 export const hero = {
   bannerSrc: "/banners/banner-neutral.svg",
-  bannerAlt: "Bannière principale du LaDIA",
+  bannerAlt: "Bannière principale du LaCDIA",
   description:
     "Nous concevons des solutions en intelligence artificielle et science des données pour l’agriculture, les services publics, la santé, l’environnement et l’innovation en Haïti et à l’international.",
   actions: [
     {
-      label: "Découvrir nos projets",
-      href: "/projets",
+      label: "Collaborer avec nous",
+      href: "/collaborer",
       variant: "primary",
     },
     {
-      label: "Collaborer avec nous",
-      href: "/collaborer",
-      variant: "secondary", 
+      label: "Découvrir nos projets",
+      href: "/projets",
+      variant: "secondary",
     },
     {
       label: "Voir nos publications",

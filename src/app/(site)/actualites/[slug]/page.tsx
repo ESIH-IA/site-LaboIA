@@ -1,12 +1,22 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { ContentBlocks } from "@/components/content/blocks";
 import { getArticleBySlug, getArticles } from "@/lib/content-loader";
 
-type Params = { params: { slug: string } };
+type PageProps = {
+  params: {
+    slug: string;
+  };
+};
 
-export default function ArticlePage({ params }: Params) {
+export default function ArticlePage({ params }: PageProps) {
   const article = getArticleBySlug(params.slug);
+
+  // ✅ OBLIGATOIRE pour Next.js (évite crash build/runtime)
+  if (!article) {
+    notFound();
+  }
 
   return (
     <article className="mx-auto max-w-4xl px-4 py-12">
@@ -19,7 +29,10 @@ export default function ArticlePage({ params }: Params) {
         <span>{article.authorName}</span>
       </div>
 
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{article.title}</h1>
+      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">
+        {article.title}
+      </h1>
+
       <p className="mt-3 text-lg text-neutral-700">{article.summary}</p>
 
       <div className="mt-8 space-y-8">
@@ -45,5 +58,7 @@ export default function ArticlePage({ params }: Params) {
 }
 
 export function generateStaticParams() {
-  return getArticles().map((article) => ({ slug: article.slug }));
+  return getArticles().map((article) => ({
+    slug: article.slug, // ⚠️ DOIT exister
+  }));
 }

@@ -24,3 +24,32 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* =========================================================
+   ANIMATION FOND IA (subtile, académique)
+   ========================================================= */
+
+@keyframes hero-float {
+  0% {
+    transform: scale(1.05) translate3d(0px, 0px, 0px);
+  }
+  50% {
+    transform: scale(1.10) translate3d(-12px, -10px, 0px);
+  }
+  100% {
+    transform: scale(1.05) translate3d(0px, 0px, 0px);
+  }
+}
+
+.animate-hero-float {
+  animation: hero-float 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Respect accessibilité : réduire les animations si demandé */
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-float {
+    animation: none !important;
+    transform: none !important;
+  }
+}

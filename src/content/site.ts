@@ -11,8 +11,8 @@ export const site = {
       alt: "Bannière du laboratoire",
     },
     logo: {
-      src: "/logo/logo-site.png",
-      width: 689,
+      src: "/logo/logo-site.svg",
+      width: 689, 
       height: 249,
       alt: "Logo du laboratoire",
     },

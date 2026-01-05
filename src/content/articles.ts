@@ -5,11 +5,32 @@ export type ArticleCategory =
   | "Soutenance"
   | "Actualité";
 
+// export type ContentBlock =
+//   | { type: "paragraph"; text: string }
+//   | { type: "heading"; level: 2 | 3 | 4; text: string }
+//   | { type: "list"; items: string[] }
+//   | { type: "callout"; variant: "link"; text: string; href: string };
+
 export type ContentBlock =
-  | { type: "paragraph"; text: string }
-  | { type: "heading"; level: 2 | 3 | 4; text: string }
-  | { type: "list"; items: string[] }
-  | { type: "callout"; variant: "link"; text: string; href: string };
+  | {
+      readonly type: "paragraph";
+      readonly text: string;
+    }
+  | {
+      readonly type: "heading";
+      readonly level: 1 | 2 | 3 | 4 | 5 | 6;
+      readonly text: string;
+    }
+  | {
+      readonly type: "list";
+      readonly items: readonly string[];
+    }
+  | {
+      readonly type: "callout";
+      readonly text: string;
+      readonly href: string;
+    };
+
 
 export const articles = [
   {

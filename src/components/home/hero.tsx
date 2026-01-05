@@ -1,51 +1,39 @@
-import Link from "next/link";
-import { hero } from "@/content/home";
+import Image from "next/image";
 import { site } from "@/content/site";
-import { Banner } from "../media/banner";
-import { Logo } from "../media/logo";
-
-const actionStyles = {
-  primary:
-    "rounded-xl bg-white px-4 py-2 text-sm font-medium text-neutral-950 transition hover:bg-white/90",
-  secondary:
-    "rounded-xl border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70",
-  tertiary:
-    "rounded-xl border border-white/20 px-4 py-2 text-sm font-medium text-white/80 transition hover:text-white",
-} as const;
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-neutral-950 text-white">
-      <Image
-        src={site.assets.banner.src}
-        alt={site.assets.banner.alt}
-        fill
-        priority
-        className="object-cover opacity-40"
-        sizes="100vw"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/80 to-neutral-950" />
-      <div className="relative mx-auto max-w-6xl px-4 py-16">
-        <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.2em] text-white/60">{site.shortName}</p>
-          <h1 className="mt-3 text-4xl font-semibold leading-tight md:text-5xl">
-            {site.name}
-          </h1>
-          <p className="mt-5 text-base text-white/75 md:text-lg">
-            {hero.description ?? site.description}
-          </p>
+    <section className="relative overflow-hidden bg-neutral-950 py-16">
+      {/* FOND IA (animé, décoratif) */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 animate-hero-float">
+          <Image
+            src="/images/ai-network-bg.webp"
+            alt="Fond intelligence artificielle et réseaux neuronaux"
+            fill
+            priority
+            className="object-cover opacity-60"
+            sizes="100vw"
+          />
+        </div>
+        {/* Voile pour calmer le fond */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60" />
+      </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            {hero.actions.map((action) => (
-              <Link
-                key={action.href}
-                href={action.href}
-                className={actionStyles[action.variant]}
-              >
-                {action.label}
-              </Link>
-            ))}
-          </div>
+      {/* CONTENU AU-DESSUS */}
+      <div className="relative z-10 mx-auto max-w-6xl px-4">
+        {/* BANNER OFFICIEL — ratio strict */}
+        <div
+          className="relative mx-auto w-full overflow-hidden rounded-2xl bg-neutral-900 shadow-lg"
+          style={{ aspectRatio: "894 / 160" }}
+        >
+          <Image
+            src={site.assets.banner.src}
+            alt={site.assets.banner.alt}
+            fill
+            className="object-contain"
+            sizes="(max-width: 1024px) 100vw, 1024px"
+          />
         </div>
       </div>
     </section>

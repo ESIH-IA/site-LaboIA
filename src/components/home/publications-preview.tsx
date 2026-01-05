@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { articles } from "@/content/articles";
 
 export default function PublicationsPreview() {
@@ -16,6 +18,7 @@ export default function PublicationsPreview() {
               Articles, rapports et communications qui documentent nos avancées scientifiques.
             </p>
           </div>
+
           <Link
             href="/publications"
             className="rounded-full border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70"
@@ -27,7 +30,7 @@ export default function PublicationsPreview() {
         <div className="mt-8 grid gap-4">
           {featuredPublications.map((publication) => (
             <div
-              key={publication.title}
+              key={publication.id}
               className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-5"
             >
               <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-white/60">
@@ -38,8 +41,10 @@ export default function PublicationsPreview() {
                 <span aria-hidden="true">•</span>
                 <span>{publication.authorName}</span>
               </div>
+
               <h3 className="text-base font-semibold">{publication.title}</h3>
               <p className="text-sm text-white/70">{publication.summary}</p>
+
               {publication.sourceUrl ? (
                 <a
                   href={publication.sourceUrl}

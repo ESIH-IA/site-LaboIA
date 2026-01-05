@@ -8,8 +8,10 @@ export async function GET(request: Request) {
   const secret = searchParams.get("secret");
   const disable = searchParams.get("disable");
 
+  const dm = await draftMode();
+
   if (disable === "true") {
-    draftMode().disable();
+    dm.disable();
     return NextResponse.json({ preview: false });
   }
 
@@ -17,6 +19,6 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: "Secret invalide" }, { status: 401 });
   }
 
-  draftMode().enable();
+  dm.enable();
   return NextResponse.json({ preview: true });
 }

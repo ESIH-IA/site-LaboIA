@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
+
 import { mainNav } from "@/content/nav";
 import { site } from "@/content/site";
-import { Logo } from "../media/logo";
 
 export default function Header() {
   return (
@@ -14,6 +15,7 @@ export default function Header() {
             width={40}
             height={40}
             className="h-10 w-10"
+            priority
           />
           <div>
             <div className="text-xs uppercase tracking-wide text-neutral-500">
@@ -37,6 +39,7 @@ export default function Header() {
               </Link>
             ))}
           </nav>
+
           <div className="hidden items-center gap-2 text-xs text-neutral-500 lg:flex">
             <span className="font-medium text-neutral-900">FR</span>
             <span aria-hidden="true">|</span>
