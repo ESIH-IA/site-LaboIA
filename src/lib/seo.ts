@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 import { site } from "@/content/site";
+import { getSiteUrl } from "@/lib/site-url";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+export const siteUrl = getSiteUrl();
 
 type MetadataInput = {
   title?: string;

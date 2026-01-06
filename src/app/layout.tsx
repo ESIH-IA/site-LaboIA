@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "@/content/site";
 import { getServerLocale } from "@/lib/i18n-server";
+import { getSiteUrlObject } from "@/lib/site-url";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: getSiteUrlObject(),
   title: {
     default: site.name,
     template: `%s | ${site.shortName}`,
