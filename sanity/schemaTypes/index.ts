@@ -1,5 +1,10 @@
-import { type SchemaTypeDefinition } from 'sanity'
+import { type SchemaTypeDefinition } from "sanity";
 
-export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [],
-}
+const schemaTypes: SchemaTypeDefinition[] = [
+  // Ajoute ici tes schémas au fur et à mesure, ex:
+  // project,
+  // publication,
+  // member,
+];
+
+export default schemaTypes;
