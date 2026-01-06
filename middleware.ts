@@ -1,5 +1,4 @@
 import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
 
 import { locales, isLocale } from "./src/lib/i18n";
 
@@ -25,12 +24,48 @@ function isBypassPath(pathname: string) {
   );
 }
 
+function next() {
+  return new Response(null, { headers: { "x-middleware-next": "1" } });
+}
+
+function redirect(url: URL, status = 307) {
+  return Response.redirect(url.toString(), status);
+}
+
+function rewrite(url: URL, headers?: Headers) {
+  const responseHeaders = headers ?? new Headers();
+  responseHeaders.set("x-middleware-rewrite", url.toString());
+  return new Response(null, { headers: responseHeaders });
+}
+
+function getCookieValue(request: Request, name: string): string | undefined {
+  const cookieHeader = request.headers.get("cookie");
+  if (!cookieHeader) return undefined;
+
+  const parts = cookieHeader.split(";").map((p) => p.trim());
+  for (const part of parts) {
+    if (!part) continue;
+    const eq = part.indexOf("=");
+    if (eq < 0) continue;
+    const key = part.slice(0, eq);
+    if (key !== name) continue;
+    const value = part.slice(eq + 1);
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  }
+  return undefined;
+}
+
 export function middleware(request: NextRequest) {
   try {
-    const { pathname } = request.nextUrl;
+    const url = new URL(request.url);
+    const { pathname } = url;
 
     if (isBypassPath(pathname)) {
-      return NextResponse.next();
+      return next();
     }
 
     const localeInPath = locales.find(
@@ -39,30 +74,27 @@ export function middleware(request: NextRequest) {
 
     // No locale prefix -> redirect to cookie locale if present and valid
     if (!localeInPath) {
-      const cookieLocale = request.cookies.get("lacdia_locale")?.value;
+      const cookieLocale = getCookieValue(request, "lacdia_locale");
       if (isLocale(cookieLocale)) {
-        const url = request.nextUrl.clone();
         url.pathname = `/${cookieLocale}${pathname}`;
-        return NextResponse.redirect(url);
+        return redirect(url);
       }
-      return NextResponse.next();
+      return next();
     }
 
     // Locale prefix present -> rewrite to non-prefixed route
     const newPathname = pathname.replace(`/${localeInPath}`, "") || "/";
-    const url = request.nextUrl.clone();
     url.pathname = newPathname;
 
-    const response = NextResponse.rewrite(url);
-    response.cookies.set("lacdia_locale", localeInPath, {
-      path: "/",
-      sameSite: "lax",
-    });
-
-    return response;
+    const headers = new Headers();
+    headers.append(
+      "set-cookie",
+      `lacdia_locale=${encodeURIComponent(localeInPath)}; Path=/; SameSite=Lax`
+    );
+    return rewrite(url, headers);
   } catch {
     // Never break the site because of middleware
-    return NextResponse.next();
+    return next();
   }
 }
 
