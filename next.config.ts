@@ -10,4 +10,4 @@ const nextConfig: NextConfig = {
   // assetPrefix: '/lria-sesih-website/',
 }
 
-export default nextConfig
+export default nextConfig;
