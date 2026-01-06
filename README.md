@@ -135,7 +135,7 @@ Quality checklist: `docs/quality-checklist.md`.
 - Primary: `primary` (deep indigo) for institutional CTAs/links.
 - Accent: `accent` (teal) and `accent-2` (subtle violet) for scientific/data highlights.
 - Footer: `bg-footer` (night blue) with structured columns.
-
+cls
 ## Development
 
 ```bash
