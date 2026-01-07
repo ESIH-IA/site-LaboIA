@@ -45,6 +45,8 @@ export function PersonCard({
   return (
     <>
       <article
+        id={`person-${person.id}`}
+        tabIndex={-1}
         className={[
           "relative flex h-full flex-col rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:shadow-md",
           accent,

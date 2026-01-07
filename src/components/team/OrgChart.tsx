@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { OrgNode } from "@/lib/team/getTeamPageData";
 
-type PositionedNode = OrgNode & { x: number; y: number };
+type PositionedNode = OrgNode & { x: number; y: number; cx: number; cy: number };
 
 function initials(name: string) {
   const parts = name
@@ -29,7 +29,17 @@ function groupTheme(group?: OrgNode["group"]) {
   }
 }
 
-function buildLayout(nodes: OrgNode[]) {
+type Layout = {
+  positioned: PositionedNode[];
+  edges: Array<[string, string]>;
+  size: { width: number; height: number };
+  nodeWidth: number;
+  nodeHeight: number;
+};
+
+// Tree layout: subtree widths are computed bottom-up; then nodes are placed top-down so that
+// every parent is centered above the full width of its children.
+function buildTreeLayout(nodes: OrgNode[]): Layout {
   const byId = new Map<string, OrgNode>();
   const children = new Map<string, OrgNode[]>();
   for (const node of nodes) byId.set(node.id, node);
@@ -41,99 +51,202 @@ function buildLayout(nodes: OrgNode[]) {
     children.set(parentId, list);
   }
 
-  const nodeWidth = 240;
-  const nodeHeight = 90;
-  const hGap = 56;
-  const vGap = 88;
+  const nodeWidth = 260;
+  const nodeHeight = 92;
+  const hGap = 46;
+  const vGap = 92;
+  const padding = 80;
 
-  const roots = nodes.filter((node) => !node.parentId);
-  const root = roots[0] ?? null;
+  const root = nodes.find((n) => !n.parentId) ?? null;
   if (!root) {
     return {
-      positioned: [] as PositionedNode[],
-      edges: [] as Array<[string, string]>,
-      size: { width: nodeWidth + 120, height: nodeHeight + 120 },
+      positioned: [],
+      edges: [],
+      size: { width: nodeWidth + padding * 2, height: nodeHeight + padding * 2 },
       nodeWidth,
       nodeHeight,
     };
   }
 
-  const levels: OrgNode[][] = [];
-  let current: OrgNode[] = [root];
+  const widths = new Map<string, number>();
   const edges: Array<[string, string]> = [];
-  while (current.length > 0) {
-    levels.push(current);
-    const next: OrgNode[] = [];
-    for (const parent of current) {
-      const kids = (children.get(parent.id) ?? []).slice();
-      for (const child of kids) edges.push([parent.id, child.id]);
-      next.push(...kids);
+
+  function computeWidth(id: string): number {
+    const kids = children.get(id) ?? [];
+    for (const child of kids) edges.push([id, child.id]);
+    if (kids.length === 0) {
+      widths.set(id, nodeWidth);
+      return nodeWidth;
     }
-    current = next;
+
+    let total = 0;
+    kids.forEach((kid, index) => {
+      total += computeWidth(kid.id);
+      if (index > 0) total += hGap;
+    });
+    const w = Math.max(nodeWidth, total);
+    widths.set(id, w);
+    return w;
   }
 
-  const maxCols = Math.max(...levels.map((l) => l.length), 1);
-  const width = maxCols * nodeWidth + Math.max(0, maxCols - 1) * hGap + 120;
-  const height = levels.length * nodeHeight + Math.max(0, levels.length - 1) * vGap + 120;
+  computeWidth(root.id);
 
   const positioned: PositionedNode[] = [];
-  levels.forEach((levelNodes, levelIndex) => {
-    const rowWidth =
-      levelNodes.length * nodeWidth + Math.max(0, levelNodes.length - 1) * hGap;
-    const startX = (width - rowWidth) / 2;
-    const y = 60 + levelIndex * (nodeHeight + vGap);
-    levelNodes.forEach((node, i) => {
-      const x = startX + i * (nodeWidth + hGap);
-      positioned.push({ ...node, x, y });
-    });
-  });
+  let maxDepth = 0;
 
-  return { positioned, edges, size: { width, height }, nodeWidth, nodeHeight };
+  function assign(id: string, left: number, depth: number) {
+    maxDepth = Math.max(maxDepth, depth);
+    const node = byId.get(id);
+    if (!node) return;
+
+    const subtreeWidth = widths.get(id) ?? nodeWidth;
+    const centerX = left + subtreeWidth / 2;
+    const x = centerX - nodeWidth / 2;
+    const y = padding + depth * (nodeHeight + vGap);
+    positioned.push({ ...node, x, y, cx: centerX, cy: y + nodeHeight / 2 });
+
+    const kids = children.get(id) ?? [];
+    if (kids.length === 0) return;
+
+    const kidsWidth =
+      kids.reduce((acc, k) => acc + (widths.get(k.id) ?? nodeWidth), 0) +
+      Math.max(0, kids.length - 1) * hGap;
+
+    let childLeft = left + (subtreeWidth - kidsWidth) / 2;
+    for (const child of kids) {
+      const w = widths.get(child.id) ?? nodeWidth;
+      assign(child.id, childLeft, depth + 1);
+      childLeft += w + hGap;
+    }
+  }
+
+  assign(root.id, padding, 0);
+
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (const n of positioned) {
+    minX = Math.min(minX, n.x);
+    maxX = Math.max(maxX, n.x + nodeWidth);
+    maxY = Math.max(maxY, n.y + nodeHeight);
+  }
+
+  const dx = minX < padding ? padding - minX : 0;
+  if (dx !== 0) {
+    for (const n of positioned) {
+      n.x += dx;
+      n.cx += dx;
+    }
+    maxX += dx;
+  }
+
+  return {
+    positioned,
+    edges,
+    size: { width: maxX + padding, height: maxY + padding },
+    nodeWidth,
+    nodeHeight,
+  };
 }
 
 export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [{ scale, x, y }, setTransform] = useState({ scale: 1, x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
-  const dragRef = useRef<{ startX: number; startY: number; originX: number; originY: number } | null>(null);
+  const dragRef = useRef<{ startX: number; startY: number; originX: number; originY: number } | null>(
+    null,
+  );
 
-  const layout = useMemo(() => buildLayout(nodes), [nodes]);
+  const layout = useMemo(() => buildTreeLayout(nodes), [nodes]);
   const positionedById = useMemo(() => {
     const map = new Map<string, PositionedNode>();
     for (const n of layout.positioned) map.set(n.id, n);
     return map;
   }, [layout.positioned]);
 
-  function zoom(nextScale: number) {
-    const clamped = Math.max(0.6, Math.min(1.6, nextScale));
-    setTransform((prev) => ({ ...prev, scale: clamped }));
+  function clamp(next: { scale: number; x: number; y: number }) {
+    const el = containerRef.current;
+    if (!el) return next;
+
+    const viewportW = el.clientWidth;
+    const viewportH = el.clientHeight;
+    const margin = 72;
+
+    const scaledW = layout.size.width * next.scale;
+    const scaledH = layout.size.height * next.scale;
+
+    const centeredX = (viewportW - scaledW) / 2;
+    const centeredY = (viewportH - scaledH) / 2;
+
+    const minX = scaledW <= viewportW ? centeredX : viewportW - scaledW - margin;
+    const maxX = scaledW <= viewportW ? centeredX : margin;
+    const minY = scaledH <= viewportH ? centeredY : viewportH - scaledH - margin;
+    const maxY = scaledH <= viewportH ? centeredY : margin;
+
+    return {
+      scale: next.scale,
+      x: Math.max(minX, Math.min(maxX, next.x)),
+      y: Math.max(minY, Math.min(maxY, next.y)),
+    };
+  }
+
+  function reset() {
+    setTransform((prev) => clamp({ ...prev, scale: 1, x: 0, y: 0 }));
+  }
+
+  function zoomTo(nextScale: number, anchor?: { clientX: number; clientY: number }) {
+    const clampedScale = Math.max(0.6, Math.min(1.7, nextScale));
+    setTransform((prev) => {
+      if (!containerRef.current || !anchor) return clamp({ ...prev, scale: clampedScale });
+      const rect = containerRef.current.getBoundingClientRect();
+      const px = anchor.clientX - rect.left;
+      const py = anchor.clientY - rect.top;
+      const worldX = (px - prev.x) / prev.scale;
+      const worldY = (py - prev.y) / prev.scale;
+      const nextX = px - worldX * clampedScale;
+      const nextY = py - worldY * clampedScale;
+      return clamp({ scale: clampedScale, x: nextX, y: nextY });
+    });
+  }
+
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout.size.width, layout.size.height]);
+
+  function scrollToPerson(nodeId: string) {
+    const target = document.getElementById(`person-${nodeId}`);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    target.focus({ preventScroll: true });
   }
 
   return (
     <div className="mt-6">
       <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="text-xs uppercase tracking-[0.18em] text-muted">Navigation</div>
+        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Navigation</div>
         <div className="flex items-center gap-2">
           <button
             type="button"
             className="rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted"
-            onClick={() => zoom(scale - 0.1)}
-            aria-label="Zoom out"
+            onClick={() => zoomTo(scale - 0.1)}
+            aria-label="Zoom arrière"
           >
             -
           </button>
           <button
             type="button"
             className="rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted"
-            onClick={() => setTransform({ scale: 1, x: 0, y: 0 })}
-            aria-label="Reset view"
+            onClick={reset}
+            aria-label="Réinitialiser"
           >
-            Reset
+            Réinitialiser
           </button>
           <button
             type="button"
             className="rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted"
-            onClick={() => zoom(scale + 0.1)}
-            aria-label="Zoom in"
+            onClick={() => zoomTo(scale + 0.1)}
+            aria-label="Zoom avant"
           >
             +
           </button>
@@ -141,9 +254,11 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
       </div>
 
       <div
-        className="relative h-[520px] w-full overflow-auto rounded-2xl bg-surface-muted/40"
+        ref={containerRef}
+        className="relative h-[520px] w-full touch-none select-none overflow-hidden rounded-2xl bg-surface-muted/40"
         onPointerDown={(event) => {
           if (event.button !== 0) return;
+          if ((event.target as HTMLElement | null)?.closest?.("button[data-org-node]")) return;
           setDragging(true);
           dragRef.current = { startX: event.clientX, startY: event.clientY, originX: x, originY: y };
           (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
@@ -152,7 +267,7 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
           if (!dragging || !dragRef.current) return;
           const dx = event.clientX - dragRef.current.startX;
           const dy = event.clientY - dragRef.current.startY;
-          setTransform((prev) => ({ ...prev, x: dragRef.current!.originX + dx, y: dragRef.current!.originY + dy }));
+          setTransform((prev) => clamp({ ...prev, x: dragRef.current!.originX + dx, y: dragRef.current!.originY + dy }));
         }}
         onPointerUp={() => {
           setDragging(false);
@@ -162,8 +277,14 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
           setDragging(false);
           dragRef.current = null;
         }}
+        onWheel={(event) => {
+          event.preventDefault();
+          const delta = event.deltaY;
+          const factor = delta > 0 ? -0.12 : 0.12;
+          zoomTo(scale + factor, { clientX: event.clientX, clientY: event.clientY });
+        }}
         role="region"
-        aria-label="Organizational chart"
+        aria-label="Organigramme"
       >
         <div
           className="relative"
@@ -185,16 +306,18 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
               const child = positionedById.get(childId);
               if (!parent || !child) return null;
 
-              const parentCx = parent.x + layout.nodeWidth / 2;
-              const parentCy = parent.y + layout.nodeHeight;
-              const childCx = child.x + layout.nodeWidth / 2;
-              const childCy = child.y;
-              const midY = (parentCy + childCy) / 2;
+              const startX = parent.cx;
+              const startY = parent.y + layout.nodeHeight;
+              const endX = child.cx;
+              const endY = child.y;
+
+              const c1y = startY + 26;
+              const c2y = endY - 26;
 
               return (
                 <path
                   key={`${parentId}-${childId}`}
-                  d={`M ${parentCx} ${parentCy} V ${midY} H ${childCx} V ${childCy}`}
+                  d={`M ${startX} ${startY} C ${startX} ${c1y}, ${endX} ${c2y}, ${endX} ${endY}`}
                   stroke="rgba(148,163,184,0.65)"
                   strokeWidth={2}
                   fill="none"
@@ -211,13 +334,18 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
             return (
               <div
                 key={node.id}
-                className={[
-                  "absolute rounded-2xl border border-border bg-surface p-4 shadow-sm transition",
-                  "hover:border-primary/25 hover:shadow-md",
-                ].join(" ")}
+                className="absolute"
                 style={{ left: node.x, top: node.y, width: layout.nodeWidth, height: layout.nodeHeight }}
               >
-                <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  data-org-node
+                  className={[
+                    "group flex h-full w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-left shadow-sm transition",
+                    "hover:border-primary/25 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/25",
+                  ].join(" ")}
+                  onClick={() => scrollToPerson(node.id)}
+                >
                   <div
                     className={[
                       "relative h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2",
@@ -245,16 +373,21 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
                   <div className="min-w-0">
                     <div className="truncate text-sm font-semibold text-foreground">{node.name}</div>
                     <div className="mt-0.5 line-clamp-2 text-xs text-muted">{node.role}</div>
+                    <div className="mt-2 text-xs text-muted opacity-0 transition-opacity group-hover:opacity-100">
+                      Cliquer pour aller au profil
+                    </div>
                   </div>
-                </div>
+                </button>
               </div>
             );
           })}
         </div>
       </div>
+
       <div className="mt-3 text-xs text-muted">
-        Astuce : glisser pour d\u00e9placer, utiliser +/- pour zoomer.
+        Astuce : glisser pour déplacer, utiliser la molette ou +/- pour zoomer.
       </div>
     </div>
   );
 }
+

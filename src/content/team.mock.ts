@@ -45,92 +45,7 @@ export type TeamMockData = {
   associateMembers: PersonCard[];
 };
 
-const mockEn: TeamMockData = {
-  page: {
-    title: "Équipe de recherche",
-    intro:
-      "L’équipe de recherche de LaCDIA développe des approches rigoureuses et des solutions appliquées en science des données et intelligence artificielle. Nous produisons des résultats scientifiques, collaborons avec des institutions partenaires et accueillons chercheurs, ingénieurs et étudiants.",
-    researchSectionTitle: "Équipe de recherche",
-    associatesSectionTitle: "Chercheurs associés & contributeurs",
-    associateBadgeLabel: "Associé",
-    readMoreLabel: "Lire la suite",
-    emptyResearchText: "L’équipe de recherche est en cours de structuration.",
-    emptyAssociatesText: "La liste des chercheurs associés est en cours de structuration.",
-  },
-  orgChartNodes: [
-    {
-      id: "patrick-attie",
-      parentId: null,
-      name: "Patrick Attié",
-      role: "Institutional Founder — Director General (ESIH)",
-      group: "governance",
-    },
-    {
-      id: "direction-scientifique",
-      parentId: "patrick-attie",
-      name: "Direction scientifique",
-      role: "Pilotage des activités",
-      group: "research",
-    },
-    {
-      id: "livenson-nicolas",
-      parentId: "direction-scientifique",
-      name: "Livenson Nicolas",
-      role: "Co-founder — AI Engineer (Multi-Agent Systems)",
-      group: "research",
-    },
-    {
-      id: "aishael-picard",
-      parentId: "direction-scientifique",
-      name: "Aïshael Picard",
-      role: "Co-founder — Scientific Lead (AI & Data Science)",
-      group: "research",
-    },
-    {
-      id: "associates-group",
-      parentId: "direction-scientifique",
-      name: "Chercheurs associés",
-      role: "Chercheurs associés & contributeurs",
-      group: "associate",
-    },
-  ],
-  researchMembers: [
-    {
-      id: "mock-aishael-picard",
-      fullName: "Aïshael Picard",
-      roleTitle: "Chercheuse en IA (Vision & Data Science)",
-      expertise: ["Vision par ordinateur", "Data Science", "Apprentissage automatique"],
-      affiliation: "LaCDIA",
-      longBio:
-        "Aïshael Picard mène des travaux de recherche en intelligence artificielle, avec un accent sur la vision par ordinateur et la science des données. Ses contributions portent sur des méthodes robustes d’apprentissage, des protocoles d’évaluation et des déploiements adaptés aux contraintes du terrain. Elle participe aux productions scientifiques et au pilotage d’activités de recherche appliquée.",
-      teamGroup: "research",
-    },
-    {
-      id: "mock-livenson-nicolas",
-      fullName: "Livenson Nicolas",
-      roleTitle: "Ingénieur IA (Systèmes multi-agents & systèmes intelligents)",
-      expertise: ["Systèmes multi-agents", "Systèmes intelligents", "Ingénierie IA"],
-      affiliation: "LaCDIA",
-      longBio:
-        "Livenson Nicolas conçoit et implémente des systèmes intelligents, avec une spécialisation en approches multi-agents et en ingénierie IA appliquée. Il intervient sur la modélisation, le prototypage et l’intégration de composants IA dans les projets et activités de recherche de LaCDIA, en veillant à la reproductibilité des expérimentations.",
-      teamGroup: "research",
-    },
-  ],
-  associateMembers: [
-    {
-      id: "mock-benediqe-paul",
-      fullName: "Bénédique Paul",
-      roleTitle: "Chercheur associé (PhD, HDR)",
-      expertise: ["Recherche appliquée", "Encadrement scientifique"],
-      affiliation: "FSAE / Université Quisqueya",
-      longBio:
-        "Bénédique Paul intervient comme chercheur associé et contributeur externe. Il apporte un appui à l’orientation scientifique, contribue sur les aspects méthodologiques et participe aux activités de collaboration en cohérence avec les projets et partenariats académiques de LaCDIA.",
-      teamGroup: "associate",
-    },
-  ],
-};
-
-const mockFr: TeamMockData = {
+const base: TeamMockData = {
   page: {
     title: "Équipe de recherche",
     intro:
@@ -161,7 +76,7 @@ const mockFr: TeamMockData = {
       id: "livenson-nicolas",
       parentId: "direction-scientifique",
       name: "Livenson Nicolas",
-      role: "Co-fondateur — Ingénieur IA (SMA)",
+      role: "Co-fondateur — Ingénieur en Intelligence Artificielle (SMA)",
       group: "research",
     },
     {
@@ -178,12 +93,19 @@ const mockFr: TeamMockData = {
       role: "Chercheurs associés & contributeurs",
       group: "associate",
     },
+    {
+      id: "benedique-paul",
+      parentId: "associates-group",
+      name: "Bénédique Paul",
+      role: "Chercheur associé, PhD, HDR (FSAE / Université Quisqueya)",
+      group: "associate",
+    },
   ],
   researchMembers: [
     {
-      id: "mock-aishael-picard-fr",
+      id: "aishael-picard",
       fullName: "Aïshael Picard",
-      roleTitle: "Chercheuse en IA (Vision & Data Science)",
+      roleTitle: "Chercheuse en IA",
       expertise: ["Vision par ordinateur", "Data Science", "Apprentissage automatique"],
       affiliation: "LaCDIA",
       longBio:
@@ -191,9 +113,9 @@ const mockFr: TeamMockData = {
       teamGroup: "research",
     },
     {
-      id: "mock-livenson-nicolas-fr",
+      id: "livenson-nicolas",
       fullName: "Livenson Nicolas",
-      roleTitle: "Ingénieur IA (Systèmes multi-agents & systèmes intelligents)",
+      roleTitle: "Ingénieur en intelligence artificielle",
       expertise: ["Systèmes multi-agents", "Systèmes intelligents", "Ingénierie IA"],
       affiliation: "LaCDIA",
       longBio:
@@ -203,9 +125,9 @@ const mockFr: TeamMockData = {
   ],
   associateMembers: [
     {
-      id: "mock-benediqe-paul-fr",
+      id: "benedique-paul",
       fullName: "Bénédique Paul",
-      roleTitle: "Chercheur associé (PhD, HDR)",
+      roleTitle: "Chercheur associé, PhD, HDR",
       expertise: ["Recherche appliquée", "Encadrement scientifique"],
       affiliation: "FSAE / Université Quisqueya",
       longBio:
@@ -216,5 +138,6 @@ const mockFr: TeamMockData = {
 };
 
 export function getTeamMockData(locale: TeamMockLocale): TeamMockData {
-  return locale === "fr" ? mockFr : mockEn;
+  void locale;
+  return base;
 }

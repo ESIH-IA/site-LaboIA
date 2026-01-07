@@ -59,6 +59,7 @@ type SanityTeamPage = {
 
 type SanityPerson = {
   _id: string;
+  id?: string;
   name: string;
   roleTitle: string;
   photo?: unknown;
@@ -69,6 +70,7 @@ type SanityPerson = {
   order?: number;
   teamGroup?: "research" | "associate";
   governanceGroup?: "direction" | "gouvernance" | "comite_scientifique";
+  slug?: { current?: string };
 };
 
 const teamPageQuery = groq`
@@ -92,6 +94,7 @@ const teamMembersQuery = groq`
   *[_type == "person" && teamGroup == $group]
     | order(coalesce(order, 999999) asc, name asc){
       _id,
+      "id": coalesce(slug.current, _id),
       name,
       roleTitle,
       photo,
@@ -110,9 +113,11 @@ const orgChartPeopleQuery = groq`
     && name in $names
   ]{
     _id,
+    "id": coalesce(slug.current, _id),
     name,
     roleTitle,
     photo,
+    slug,
     governanceGroup,
     teamGroup,
     affiliation
@@ -126,7 +131,7 @@ function toPersonCard(person: SanityPerson): PersonCard {
       : undefined;
 
   return {
-    id: person._id,
+    id: person.id ?? person.slug?.current ?? person._id,
     fullName: person.name,
     roleTitle: person.roleTitle ?? "",
     photoUrl,
@@ -139,7 +144,10 @@ function toPersonCard(person: SanityPerson): PersonCard {
   };
 }
 
-function getOrgChartFromPeople(locale: "en" | "fr", people: SanityPerson[]): OrgNode[] {
+function getOrgChartFromPeople(
+  people: SanityPerson[],
+  associates: PersonCard[],
+): OrgNode[] {
   const byName = new Map<string, SanityPerson>();
   for (const person of people) byName.set(person.name, person);
 
@@ -165,9 +173,13 @@ function getOrgChartFromPeople(locale: "en" | "fr", people: SanityPerson[]): Org
   const associatesName = "Chercheurs associés";
   const associatesRole = "Chercheurs associés & contributeurs";
 
-  return [
+  const patrickId = patrick?.id ?? patrick?.slug?.current ?? "patrick-attie";
+  const livensonId = livenson?.id ?? livenson?.slug?.current ?? "livenson-nicolas";
+  const aishaelId = aishael?.id ?? aishael?.slug?.current ?? "aishael-picard";
+
+  const nodes: OrgNode[] = [
     {
-      id: "patrick-attie",
+      id: patrickId,
       parentId: null,
       name: patrick?.name ?? "Patrick Attié",
       role: patrick?.roleTitle
@@ -176,9 +188,15 @@ function getOrgChartFromPeople(locale: "en" | "fr", people: SanityPerson[]): Org
       photoUrl: patrickPhoto,
       group: "governance",
     },
-    { id: "direction-scientifique", parentId: "patrick-attie", name: directionLabel, role: directionRole, group: "research" },
     {
-      id: "livenson-nicolas",
+      id: "direction-scientifique",
+      parentId: patrickId,
+      name: directionLabel,
+      role: directionRole,
+      group: "research",
+    },
+    {
+      id: livensonId,
       parentId: "direction-scientifique",
       name: livenson?.name ?? "Livenson Nicolas",
       role: livenson?.roleTitle ?? "Co-fondateur — Ingénieur IA (SMA)",
@@ -186,7 +204,7 @@ function getOrgChartFromPeople(locale: "en" | "fr", people: SanityPerson[]): Org
       group: "research",
     },
     {
-      id: "aishael-picard",
+      id: aishaelId,
       parentId: "direction-scientifique",
       name: aishael?.name ?? "Aïshael Picard",
       role:
@@ -195,8 +213,25 @@ function getOrgChartFromPeople(locale: "en" | "fr", people: SanityPerson[]): Org
       photoUrl: aishaelPhoto,
       group: "research",
     },
-    { id: "associates-group", parentId: "direction-scientifique", name: associatesName, role: associatesRole, group: "associate" },
+    {
+      id: "associates-group",
+      parentId: "direction-scientifique",
+      name: associatesName,
+      role: associatesRole,
+      group: "associate",
+    },
   ];
+
+  const associateNodes = associates.slice(0, 6).map((person) => ({
+    id: person.id,
+    parentId: "associates-group",
+    name: person.fullName,
+    role: person.roleTitle + (person.affiliation ? ` (${person.affiliation})` : ""),
+    photoUrl: person.photoUrl,
+    group: "associate" as const,
+  }));
+
+  return [...nodes, ...associateNodes];
 }
 
 export async function getTeamPageData(locale: "en" | "fr"): Promise<TeamPageData> {
@@ -215,7 +250,9 @@ export async function getTeamPageData(locale: "en" | "fr"): Promise<TeamPageData
     sanityFetch<SanityPerson[]>(orgChartPeopleQuery, { names: ["Patrick Attié", "Livenson Nicolas", "Aïshael Picard"] }, []),
   ]);
 
-  const derivedOrg = getOrgChartFromPeople(locale, orgPeople);
+  const researchCards = researchMembers.map(toPersonCard);
+  const associateCards = associateMembers.map(toPersonCard);
+  const derivedOrg = getOrgChartFromPeople(orgPeople, associateCards);
 
   return {
     source: "sanity",
@@ -234,7 +271,7 @@ export async function getTeamPageData(locale: "en" | "fr"): Promise<TeamPageData
         page?.emptyAssociatesText ?? "La liste des chercheurs associés est en cours de structuration.",
     },
     orgChartNodes: derivedOrg,
-    researchMembers: researchMembers.map(toPersonCard),
-    associateMembers: associateMembers.map(toPersonCard),
+    researchMembers: researchCards,
+    associateMembers: associateCards,
   };
 }
