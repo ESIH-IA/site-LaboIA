@@ -6,7 +6,7 @@ import { Logo } from "@/components/media/logo";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-footer text-footer-foreground">
+    <footer className="border-t border-border bg-gradient-to-b from-footer to-slate-950 text-footer-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-12">
         <div className="md:col-span-5">
           <div className="flex items-center gap-3">
@@ -31,7 +31,7 @@ export default function Footer() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-slate-200 transition hover:text-white"
+                className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4"
               >
                 {item.label}
               </Link>
@@ -57,13 +57,22 @@ export default function Footer() {
               © {new Date().getFullYear()} {site.shortName}. Tous droits réservés.
             </div>
             <div className="flex flex-wrap gap-4">
-              <Link href="/mentions-legales" className="hover:text-slate-200">
+              <Link
+                href="/mentions-legales"
+                className="hover:text-slate-200 hover:underline hover:decoration-accent/40 hover:underline-offset-4"
+              >
                 Mentions légales
               </Link>
-              <Link href="/confidentialite" className="hover:text-slate-200">
+              <Link
+                href="/confidentialite"
+                className="hover:text-slate-200 hover:underline hover:decoration-accent/40 hover:underline-offset-4"
+              >
                 Confidentialité
               </Link>
-              <Link href="/cookies" className="hover:text-slate-200">
+              <Link
+                href="/cookies"
+                className="hover:text-slate-200 hover:underline hover:decoration-accent/40 hover:underline-offset-4"
+              >
                 Cookies
               </Link>
             </div>

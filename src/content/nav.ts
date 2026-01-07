@@ -1,14 +1,11 @@
 export const mainNav = [
-  // Home is available via the brand link in the header.
+  { label: "Accueil", href: "/" },
   { label: "Recherche", href: "/recherche" },
-  { label: "Innovation", href: "/innovation" },
+  { label: "Innovation & Projets", href: "/innovation" },
   { label: "Formation", href: "/formation" },
-  { label: "Projets", href: "/projets" },
   { label: "Publications", href: "/publications" },
-  { label: "Ressources", href: "/ressources" },
-  { label: "Équipe", href: "/equipe" },
-  { label: "Gouvernance", href: "/gouvernance" },
   { label: "Actualités", href: "/actualites" },
+  { label: "Équipe", href: "/equipe" },
   { label: "Collaborer", href: "/collaborer" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -19,3 +16,4 @@ export const footerNav = [
   { label: "Politique cookies", href: "/cookies" },
   { label: "Newsletter", href: "/newsletter" },
 ] as const;
+

@@ -9,6 +9,11 @@ export type LocalizedSlug = {
   en?: SanitySlug;
 };
 
+export type SanityImage = {
+  _type: "image";
+  asset?: { _ref: string; _type?: "reference" };
+} & Record<string, unknown>;
+
 export type ProjectListItem = {
   _id: string;
   title: string;
@@ -146,4 +151,84 @@ export type InstitutionalPage = {
   slugIntl?: LocalizedSlug;
   summary?: string;
   content?: PortableTextBlock[];
+};
+
+export type Person = {
+  _id: string;
+  name: string;
+  slug?: SanitySlug;
+  photo?: SanityImage;
+  roleTitle?: string;
+  roleCategory?: string;
+  shortBio?: string;
+  longBio?: string;
+  affiliation?: string;
+  governanceGroup?: "direction" | "gouvernance" | "comite_scientifique";
+  teamGroup?: "research" | "associate";
+  expertise?: string[];
+  links?: {
+    linkedin?: string;
+    scholar?: string;
+    orcid?: string;
+    website?: string;
+  };
+  order?: number;
+};
+
+export type OrgUnit = {
+  _id: string;
+  title: string;
+  slug?: SanitySlug;
+  description?: string;
+  colorKey?: string;
+  order?: number;
+  lead?: Person | null;
+  members?: Person[];
+};
+
+export type OrgNode = {
+  _id: string;
+  label: string;
+  subtitle?: string;
+  theme?: string;
+  order?: number;
+  person?: Person | null;
+  orgUnit?: OrgUnit | null;
+  children?: OrgNode[];
+};
+
+export type OrgChart = {
+  _id: string;
+  title: string;
+  slug?: SanitySlug;
+  rootNodeId?: string | null;
+};
+
+export type GovernancePage = {
+  _id: string;
+  title: string;
+  slug: SanitySlug;
+  intro?: PortableTextBlock[];
+  showOrgChart?: boolean;
+  orgChartSectionTitle?: string;
+  orgChartSectionIntro?: PortableTextBlock[];
+  showMembers?: boolean;
+  membersSectionTitle?: string;
+  membersSectionIntro?: PortableTextBlock[];
+  membersGroupsToShow?: Array<"direction" | "gouvernance" | "comite_scientifique">;
+  membersOrder?: "nameAsc" | "orderAsc";
+  orgChart?: OrgChart | null;
+};
+
+export type TeamPage = {
+  _id: string;
+  title: string;
+  slug: SanitySlug;
+  intro?: PortableTextBlock[];
+  researchSectionTitle?: string;
+  associatesSectionTitle?: string;
+  readMoreLabel?: string;
+  associateBadgeLabel?: string;
+  emptyResearchText?: string;
+  emptyAssociatesText?: string;
 };

@@ -1,4 +1,7 @@
 import { groq } from "next-sanity";
+import type { Locale } from "@/lib/i18n";
+import { sanityFetch } from "@/lib/sanity/client";
+import type { GovernancePage, OrgChart, OrgNode, OrgUnit, Person, TeamPage } from "@/lib/sanity/types";
 
 export const projectListQuery = groq`
   *[_type == "project" && status == "published"] | order(startDate desc){
@@ -315,3 +318,178 @@ export const searchQuery = groq`
     "summary": coalesce(summaryIntl[$locale], summary, bioIntl[$locale], bio)
   }
 `;
+
+const personProjection = `
+  _id,
+  name,
+  slug,
+  photo,
+  roleTitle,
+  roleCategory,
+  shortBio,
+  longBio,
+  affiliation,
+  teamGroup,
+  governanceGroup,
+  expertise,
+  links,
+  order
+`;
+
+const orgUnitProjection = `
+  _id,
+  title,
+  slug,
+  description,
+  colorKey,
+  order,
+  "lead": lead->{${personProjection}},
+  "members": members[]->{${personProjection}} | order(order asc, name asc)
+`;
+
+const orgNodeProjection = `
+  _id,
+  label,
+  subtitle,
+  theme,
+  order,
+  "person": person->{${personProjection}},
+  "orgUnit": orgUnit->{${orgUnitProjection}}
+`;
+
+export const governancePageBySlugQuery = groq`
+  *[
+    _type == "governancePage"
+    && status == "published"
+    && (slug.current == $slug || slugIntl[$locale].current == $slug)
+  ][0]{
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "slug": coalesce(slugIntl[$locale], slug),
+    "intro": coalesce(introIntl[$locale], intro),
+    showOrgChart,
+    orgChartSectionTitle,
+    "orgChartSectionIntro": coalesce(orgChartSectionIntroIntl[$locale], orgChartSectionIntro),
+    showMembers,
+    membersSectionTitle,
+    "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
+    membersGroupsToShow,
+    membersOrder,
+    "orgChart": orgChart->{
+      _id,
+      title,
+      slug,
+      "rootNodeId": rootNode->_id
+    }
+  }
+`;
+
+export const orgChartBySlugQuery = groq`
+  *[_type == "orgChart" && slug.current == $slug][0]{
+    _id,
+    title,
+    slug,
+    "rootNodeId": rootNode->_id
+  }
+`;
+
+export const orgUnitWithMembersQuery = groq`
+  *[_type == "orgUnit" && _id == $id][0]{${orgUnitProjection}}
+`;
+
+export const orgNodeTreeQuery = groq`
+  *[_type == "orgNode" && _id == $id][0]{
+    ${orgNodeProjection},
+    "children": children[]-> | order(order asc){
+      ${orgNodeProjection},
+      "children": children[]-> | order(order asc){
+        ${orgNodeProjection},
+        "children": children[]-> | order(order asc){
+          ${orgNodeProjection},
+          "children": children[]-> | order(order asc){
+            ${orgNodeProjection},
+            "children": children[]-> | order(order asc){
+              ${orgNodeProjection}
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function getGovernancePage(locale: Locale) {
+  return sanityFetch<GovernancePage | null>(
+    governancePageBySlugQuery,
+    { slug: "gouvernance", locale },
+    null,
+  );
+}
+
+export async function getOrgChartBySlug(slug: string) {
+  return sanityFetch<OrgChart | null>(orgChartBySlugQuery, { slug }, null);
+}
+
+export async function getOrgNodeTree(rootId: string) {
+  return sanityFetch<OrgNode | null>(orgNodeTreeQuery, { id: rootId }, null);
+}
+
+export async function getOrgUnitWithMembers(unitId: string) {
+  return sanityFetch<OrgUnit | null>(orgUnitWithMembersQuery, { id: unitId }, null);
+}
+
+export const governanceMembersByNameQuery = groq`
+  *[_type == "person" && governanceGroup in $groups]
+    | order(name asc){
+      ${personProjection}
+    }
+`;
+
+export const governanceMembersByOrderQuery = groq`
+  *[_type == "person" && governanceGroup in $groups]
+    | order(order asc, name asc){
+      ${personProjection}
+    }
+`;
+
+export async function getGovernanceMembers(
+  groups: Array<"direction" | "gouvernance" | "comite_scientifique">,
+  order: "nameAsc" | "orderAsc",
+) {
+  const query = order === "orderAsc" ? governanceMembersByOrderQuery : governanceMembersByNameQuery;
+  return sanityFetch<Person[]>(query, { groups }, []);
+}
+
+export const teamPageBySlugQuery = groq`
+  *[
+    _type == "teamPage"
+    && status == "published"
+    && slug.current == $slug
+  ][0]{
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "slug": coalesce(slugIntl[$locale], slug),
+    "intro": coalesce(introIntl[$locale], intro),
+    "researchSectionTitle": coalesce(researchSectionTitleIntl[$locale], researchSectionTitle),
+    "associatesSectionTitle": coalesce(associatesSectionTitleIntl[$locale], associatesSectionTitle),
+    "readMoreLabel": coalesce(readMoreLabelIntl[$locale], readMoreLabel),
+    "associateBadgeLabel": coalesce(associateBadgeLabelIntl[$locale], associateBadgeLabel),
+    "emptyResearchText": coalesce(emptyResearchTextIntl[$locale], emptyResearchText),
+    "emptyAssociatesText": coalesce(emptyAssociatesTextIntl[$locale], emptyAssociatesText)
+  }
+`;
+
+export const teamMembersByGroupQuery = groq`
+  *[_type == "person" && teamGroup == $group]
+    | order(coalesce(order, 999999) asc, name asc){
+      ${personProjection}
+    }
+`;
+
+export async function getTeamPage(locale: Locale) {
+  return sanityFetch<TeamPage | null>(teamPageBySlugQuery, { slug: "equipe", locale }, null);
+}
+
+export async function getTeamMembersByGroup(group: "research" | "associate") {
+  return sanityFetch<Person[]>(teamMembersByGroupQuery, { group }, []);
+}

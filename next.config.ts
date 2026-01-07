@@ -1,8 +1,14 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Retirez output: 'export' et images.unoptimized
-  // Laissez vide ou vos autres configs
-}
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
+  },
+};
 
-export default nextConfig
+export default nextConfig;
