@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     locale,
     title: "Services et Solutions IA",
     description:
-      "Decouvrez nos services et solutions d'intelligence artificielle concretes. Des solutions testees et eprouvees, avec des projets deja realises.",
+      "D\u00e9couvrez nos services et solutions d'intelligence artificielle concr\u00e8tes. Des solutions test\u00e9es et \u00e9prouv\u00e9es, avec des projets d\u00e9j\u00e0 r\u00e9alis\u00e9s.",
     path: localizedPath("/solutions", locale),
     alternates: {
       fr: localizedPath("/solutions", "fr"),

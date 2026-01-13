@@ -104,7 +104,7 @@ export default async function Page() {
 
       {hasResearchProjects || hasPublications ? (
         <div className="mt-12 rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-          <h2 className="text-xl font-semibold text-neutral-900">Recherche avancee</h2>
+          <h2 className="text-xl font-semibold text-neutral-900">Recherche avanc\u00e9e</h2>
           <p className="mt-2 text-sm text-neutral-600">
             Explorez les publications, projets et membres avec une recherche plein texte.
           </p>
@@ -130,7 +130,7 @@ export default async function Page() {
 
       {hasPublications ? (
         <div className="mt-12">
-          <h2 className="text-2xl font-semibold text-neutral-900">Publications liees</h2>
+          <h2 className="text-2xl font-semibold text-neutral-900">Publications li\u00e9es</h2>
           <div className="mt-6 grid gap-6">
             {publications.slice(0, 4).map((publication) => (
               <PublicationCard key={publication._id} publication={publication} />

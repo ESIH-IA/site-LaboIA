@@ -119,7 +119,7 @@ export default async function Page({ params }: PageProps) {
 
       {article?.relatedProjects?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets associes</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Projets associ\u00e9s</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {article.relatedProjects.map((project) => (
               <li key={project._id}>
@@ -141,7 +141,7 @@ export default async function Page({ params }: PageProps) {
 
       {article?.relatedMembers?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Membres cites</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Membres cit\u00e9s</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {article.relatedMembers.map((member) => (
               <li key={member._id} className="flex items-center justify-between gap-3">

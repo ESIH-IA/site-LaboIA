@@ -40,12 +40,12 @@ export default function Intro({ eyebrow, title, body, actions }: IntroProps) {
         </div>
 
         <h2 className="mt-6 max-w-4xl text-3xl font-bold text-slate-900 md:text-4xl leading-tight">
-          {title ?? "Laboratoire de recherche et d'innovation en IA et science des donnees."}
+          {title ?? "Laboratoire de recherche et d'innovation en IA et science des donn\u00e9es."}
         </h2>
 
         <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-600">
           {body ??
-            "Nous menons des travaux de recherche appliquee et fondamentale, et nous accompagnons egalement des partenaires et des institutions dans la conception de solutions fondees sur l'intelligence artificielle, la science des donnees et les systemes intelligents."}
+            "Nous menons des travaux de recherche appliqu\u00e9e et fondamentale, et nous accompagnons \u00e9galement des partenaires et des institutions dans la conception de solutions fond\u00e9es sur l'intelligence artificielle, la science des donn\u00e9es et les syst\u00e8mes intelligents."}
         </p>
 
         {actions?.length ? (

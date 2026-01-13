@@ -75,7 +75,7 @@ export default async function Page() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Telecharger
+                    T\u00e9l\u00e9charger
                   </Link>
                 ) : null}
                 {resource.url ? (

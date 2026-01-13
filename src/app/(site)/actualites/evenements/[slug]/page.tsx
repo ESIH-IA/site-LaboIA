@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
         href="/actualites"
         className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
       >
-        Retour aux actualites
+        Retour aux actualit\u00e9s
       </Link>
 
       <div className="mt-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">

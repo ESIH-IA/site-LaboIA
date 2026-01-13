@@ -126,7 +126,7 @@ export default async function Page({ params }: PageProps) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Telecharger le PDF
+                T\u00e9l\u00e9charger le PDF
               </Link>
             </div>
           ) : null}
@@ -135,7 +135,7 @@ export default async function Page({ params }: PageProps) {
 
       {publication.projects?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets lies</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Projets li\u00e9s</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {publication.projects.map((project) => (
               <li key={project._id}>
@@ -179,7 +179,7 @@ export default async function Page({ params }: PageProps) {
 
       {publication.resources?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Ressources associees</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Ressources associ\u00e9es</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {publication.resources.map((resource) => (
               <li key={resource._id} className="flex flex-wrap items-center gap-3">
@@ -196,7 +196,7 @@ export default async function Page({ params }: PageProps) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Telecharger
+                    T\u00e9l\u00e9charger
                   </Link>
                 ) : null}
                 {resource.url ? (

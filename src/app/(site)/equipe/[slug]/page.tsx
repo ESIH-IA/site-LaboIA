@@ -130,7 +130,7 @@ export default async function Page({ params }: PageProps) {
 
       {member.publications?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Publications liees</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Publications li\u00e9es</h2>
           <div className="mt-4 grid gap-4">
             {member.publications.map((publication) => (
               <Link

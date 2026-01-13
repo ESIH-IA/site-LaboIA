@@ -65,7 +65,7 @@ export default async function Page() {
           <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
             <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
             <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
-              Actualites & Innovation
+              Actualit\u00e9s & Innovation
             </span>
           </div>
 
@@ -95,7 +95,7 @@ export default async function Page() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              Dernieres actualites
+              Dernières actualités
             </h2>
           </div>
 

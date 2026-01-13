@@ -88,7 +88,7 @@ export default function ContactForm() {
           <span>
             J&apos;accepte que mes informations soient traitees conformement a la{" "}
             <Link href="/confidentialite" className="underline underline-offset-4">
-              politique de confidentialite
+              politique de confidentialit\u00e9
             </Link>
             .
           </span>

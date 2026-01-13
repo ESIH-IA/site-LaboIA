@@ -32,7 +32,7 @@ export default function EventBanner({
               </p>
             ) : null}
             <h2 className="mt-2 text-xl font-semibold text-neutral-900">
-              {title ?? "Evenement"}
+              {title ?? "\u00c9v\u00e9nement"}
             </h2>
             {(date || location) && (
               <p className="mt-2 text-sm text-neutral-600">

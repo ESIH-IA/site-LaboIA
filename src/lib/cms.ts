@@ -58,7 +58,8 @@ function fallbackSolutionsPage(): SolutionsPage {
     approachSteps: [
       {
         title: "Diagnostic",
-        description: "Qualification des donnees, besoins metier et contraintes terrain.",
+        description:
+          "Qualification des donn\u00e9es, besoins m\u00e9tier et contraintes terrain.",
       },
       {
         title: "Modelisation",
@@ -93,19 +94,21 @@ function fallbackSolutionsPage(): SolutionsPage {
         }
       : null,
     flowTitle: "Flux IA applique",
-    flowDescription: "Donnees terrain -> Connaissances -> Modeles IA -> Decision",
+    flowDescription:
+      "Donn\u00e9es terrain -> Connaissances -> Mod\u00e8les IA -> D\u00e9cision",
     flowSteps: ["Collecte", "Analyse", "Recommandation", "Suivi terrain"],
     servicesTitle: "Services proposes",
     servicesIntro: "Un accompagnement complet, de l'idee au deploiement.",
     services: [
       "Conseil scientifique",
-      "Developpement IA",
+      "D\u00e9veloppement IA",
       "Data engineering",
-      "Systemes d'aide a la decision",
+      "Syst\u00e8mes d'aide \u00e0 la d\u00e9cision",
       "MLOps et deploiement",
     ],
     sectorsTitle: "Secteurs d'application",
-    sectorsIntro: "Des solutions adaptables a tous les secteurs disposant de donnees et de documents.",
+    sectorsIntro:
+      "Des solutions adaptables \u00e0 tous les secteurs disposant de donn\u00e9es et de documents.",
     sectors: localSectors.map((sector, index) => ({
       _id: sector.id,
       name: sector.name,
@@ -113,7 +116,7 @@ function fallbackSolutionsPage(): SolutionsPage {
       order: index,
     })),
     projectsTitle: "Projets en cours",
-    projectsIntro: "Nos projets de recherche appliquee et d'innovation.",
+    projectsIntro: "Nos projets de recherche appliqu\u00e9e et d'innovation.",
   };
 }
 
@@ -123,10 +126,10 @@ function fallbackSiteSettings(): SiteSettings {
     name: localSite.name,
     shortName: localSite.shortName,
     description: localSite.description,
-    tagline: "Laboratoire de recherche en IA & science des donnees",
+    tagline: "Laboratoire de recherche en IA & science des donn\u00e9es",
     footerContactTitle: "Contact",
     footerContactText: "Collaboration, projets, encadrement.",
-    footerContactCtaLabel: "Ecrire au laboratoire",
+    footerContactCtaLabel: "\u00c9crire au laboratoire",
     footerContactCtaHref: "/contact",
     footerLanguageNote: "Langues : francais (defaut), anglais.",
     logo: {
@@ -164,7 +167,7 @@ function fallbackHome(): HomePageData {
     introEyebrow: localSite.shortName,
     introTitle: localHero.description ?? localSite.description,
     introBody:
-      "Nous menons des travaux de recherche appliquee et fondamentale, et nous accompagnons egalement des partenaires et des institutions dans la conception de solutions fondees sur l'intelligence artificielle, la science des donnees et les systemes intelligents.",
+      "Nous menons des travaux de recherche appliqu\u00e9e et fondamentale, et nous accompagnons \u00e9galement des partenaires et des institutions dans la conception de solutions fond\u00e9es sur l'intelligence artificielle, la science des donn\u00e9es et les syst\u00e8mes intelligents.",
     introActions: localHero.actions?.map((action) => ({
       label: action.label,
       href: action.href,
@@ -172,36 +175,38 @@ function fallbackHome(): HomePageData {
     })),
     highlightsTitle: "Ce que nous faisons",
     highlightsIntro:
-      "Des axes de recherche appliquee et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
+      "Des axes de recherche appliqu\u00e9e et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
     highlights: [
       {
         title: "Agriculture intelligente",
         description:
-          "Systemes de prediction des rendements, monitoring des cultures et alertes precoces bases sur la donnee.",
+          "Syst\u00e8mes de pr\u00e9diction des rendements, monitoring des cultures et alertes pr\u00e9coces bas\u00e9es sur la donn\u00e9e.",
       },
       {
         title: "Services publics & gouvernance",
         description:
-          "Optimisation des services essentiels, observatoires de donnees et aide a la decision.",
+          "Optimisation des services essentiels, observatoires de donn\u00e9es et aide \u00e0 la d\u00e9cision.",
       },
       {
-        title: "Sante & environnement",
+        title: "Sant\u00e9 & environnement",
         description:
-          "Analyse de donnees epidemiologiques, detection de risques et modelisation de scenarios.",
+          "Analyse de donn\u00e9es \u00e9pid\u00e9miologiques, d\u00e9tection de risques et mod\u00e9lisation de sc\u00e9narios.",
       },
     ],
     kpisTitle: "Indicateurs cles",
-    kpisIntro: "Donnees quantitatives sur nos activites de recherche et d'innovation",
-    featuredProjectsTitle: "Projets a la une",
+    kpisIntro:
+      "Donn\u00e9es quantitatives sur nos activit\u00e9s de recherche et d'innovation",
+    featuredProjectsTitle: "Projets \u00e0 la une",
     featuredProjectsIntro:
-      "Des initiatives concretes qui demontrent la puissance de l'IA et de la science des donnees au service des communautes.",
-    featuredProjectsCtaLabel: "Decouvrir tous les projets",
+      "Des initiatives concr\u00e8tes qui d\u00e9montrent la puissance de l'IA et de la science des donn\u00e9es au service des communaut\u00e9s.",
+    featuredProjectsCtaLabel: "D\u00e9couvrir tous les projets",
     featuredProjectsCtaHref: "/projets",
-    publicationsTitle: "Publications recentes",
-    publicationsIntro: "Articles, rapports et communications qui documentent nos avancees scientifiques.",
+    publicationsTitle: "Publications r\u00e9centes",
+    publicationsIntro:
+      "Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques.",
     partnersTitle: "Partenaires & collaborations",
     partnersIntro:
-      "Nous travaillons avec des institutions academiques, publiques et privees pour accelerer l'impact de la recherche.",
+      "Nous travaillons avec des institutions acad\u00e9miques, publiques et priv\u00e9es pour acc\u00e9l\u00e9rer l'impact de la recherche.",
     partnersBadge: "Besoin de collaborer ? Contactez-nous.",
     collaborateTitle: "Collaborer avec le laboratoire",
     collaborateBody:

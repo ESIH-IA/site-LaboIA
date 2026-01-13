@@ -89,7 +89,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Projets associes</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900">Projets associ\u00e9s</h2>
         {!axis.projects?.length ? (
           <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
             Contenu en cours de publication.
@@ -104,7 +104,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Publications associees</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900">Publications associ\u00e9es</h2>
         {!axis.publications?.length ? (
           <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
             Contenu en cours de publication.

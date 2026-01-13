@@ -88,7 +88,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       <div className="mt-10">
-        <h2 className="text-xl font-semibold text-neutral-900">Publications associees</h2>
+        <h2 className="text-xl font-semibold text-neutral-900">Publications associ\u00e9es</h2>
         {axis.publications?.length ? (
           <div className="mt-6 grid gap-6">
             {axis.publications.map((publication) => (

@@ -88,9 +88,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return await buildMetadata({
     locale,
-    title: "Equipe & Gouvernance",
+    title: "\u00c9quipe & Gouvernance",
     description:
-      "Decouvrez la structure hierarchique du laboratoire LaCDIA, ses membres cles et leur expertise en intelligence artificielle, data science et agronomie appliquees au developpement d'Haiti.",
+      "D\u00e9couvrez la structure hi\u00e9rarchique du laboratoire LaCDIA, ses membres cl\u00e9s et leur expertise en intelligence artificielle, data science et agronomie appliqu\u00e9es au d\u00e9veloppement d'Ha\u00efti.",
     path: "/equipe",
   });
 }

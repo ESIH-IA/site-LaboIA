@@ -23,10 +23,10 @@ export default function PublicationsPreview({ title, intro, items }: Publication
       <div className="relative mx-auto max-w-6xl px-4 py-20">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-3xl font-bold">{title ?? "Publications recentes"}</h2>
+            <h2 className="text-3xl font-bold">{title ?? "Publications r\u00e9centes"}</h2>
             <p className="mt-3 text-base text-slate-300">
               {intro ??
-                "Articles, rapports et communications qui documentent nos avancees scientifiques."}
+                "Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques."}
             </p>
           </div>
         </div>

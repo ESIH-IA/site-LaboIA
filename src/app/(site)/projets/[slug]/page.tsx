@@ -93,7 +93,7 @@ export default async function Page({ params }: PageProps) {
           ) : null}
           {project.methods ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Methodes</h2>
+              <h2 className="text-lg font-semibold text-neutral-900">M\u00e9thodes</h2>
               <div className="mt-3">
                 <PortableTextRenderer value={project.methods} />
               </div>
@@ -101,7 +101,7 @@ export default async function Page({ params }: PageProps) {
           ) : null}
           {project.results ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Resultats</h2>
+              <h2 className="text-lg font-semibold text-neutral-900">R\u00e9sultats</h2>
               <div className="mt-3">
                 <PortableTextRenderer value={project.results} />
               </div>
@@ -130,7 +130,7 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Equipe impliquee</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">\u00c9quipe impliqu\u00e9e</h2>
           {!project.members?.length ? (
             <p className="mt-2 text-sm text-neutral-600">Contenu en cours de publication.</p>
           ) : (
@@ -159,7 +159,7 @@ export default async function Page({ params }: PageProps) {
 
       {project.publications?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Publications liees</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Publications li\u00e9es</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {project.publications.map((publication) => (
               <li key={publication._id}>

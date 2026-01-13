@@ -29,7 +29,7 @@ export default function Hero({ badge, actions, banner }: HeroProps) {
       <div className="absolute inset-0 opacity-20">
         <Image
           src="/images/ai-network-bg.webp"
-          alt="Fond intelligence artificielle et reseaux neuronaux"
+          alt="Fond intelligence artificielle et r\u00e9seaux neuronaux"
           fill
           priority
           className="object-cover animate-float"
@@ -58,14 +58,14 @@ export default function Hero({ badge, actions, banner }: HeroProps) {
             href={primary?.href ?? "/solutions"}
             className="group relative overflow-hidden rounded-xl bg-linear-to-r from-cyan-500 to-cyan-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
           >
-            <span className="relative z-10">{primary?.label ?? "Decouvrir nos solutions"}</span>
+            <span className="relative z-10">{primary?.label ?? "D\u00e9couvrir nos solutions"}</span>
             <div className="absolute inset-0 bg-linear-to-r from-cyan-400 to-cyan-500 opacity-0 transition-opacity group-hover:opacity-100" />
           </Link>
           <Link
             href={secondary?.href ?? "/equipe"}
             className="rounded-xl border-2 border-white/20 bg-white/10 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-cyan-400/50 hover:bg-white/20"
           >
-            {secondary?.label ?? "Rencontrer l'equipe"}
+            {secondary?.label ?? "Rencontrer l'\u00e9quipe"}
           </Link>
         </div>
       </div>
