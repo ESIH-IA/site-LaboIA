@@ -1,11 +1,18 @@
-import { kpiMeta, kpis } from "@/content/kpis";
+import type { KpiItem, KpiSettings } from "@/lib/sanity/types";
+
+type KpisProps = {
+  title?: string;
+  intro?: string;
+  items: KpiItem[];
+  meta?: KpiSettings;
+};
 
 const statusLabels = {
-  draft: "Données provisoires",
-  confirmed: "Données validées",
+  draft: "Donnees provisoires",
+  confirmed: "Donnees validees",
 } as const;
 
-export default function Kpis() {
+export default function Kpis({ title, intro, items, meta }: KpisProps) {
   return (
     <section className="relative bg-slate-50 py-20">
       {/* Dot pattern subtil */}
@@ -14,17 +21,17 @@ export default function Kpis() {
       <div className="relative mx-auto max-w-6xl px-4">
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-            Indicateurs clés
+            {title ?? "Indicateurs cles"}
           </h2>
           <p className="mt-3 text-base text-slate-600">
-            Données quantitatives sur nos activités de recherche et d&apos;innovation
+            {intro ?? "Donnees quantitatives sur nos activites de recherche et d'innovation"}
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {kpis.map((item, idx) => (
+          {items.map((item, idx) => (
             <div
-              key={item.label}
+              key={item._id}
               className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
@@ -54,13 +61,22 @@ export default function Kpis() {
           ))}
         </div>
 
-        {/* Footer info */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500">
-          <span className="font-semibold text-slate-700">Dernière mise à jour :</span>
-          <span>{kpiMeta.lastUpdated}</span>
-          <span aria-hidden="true">•</span>
-          <span>{kpiMeta.disclaimer}</span>
-        </div>
+        {meta?.lastUpdated || meta?.disclaimer ? (
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500">
+            {meta?.lastUpdated ? (
+              <>
+                <span className="font-semibold text-slate-700">Derniere mise a jour :</span>
+                <span>{meta.lastUpdated}</span>
+              </>
+            ) : null}
+            {meta?.disclaimer ? (
+              <>
+                <span aria-hidden="true">-</span>
+                <span>{meta.disclaimer}</span>
+              </>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </section>
   );

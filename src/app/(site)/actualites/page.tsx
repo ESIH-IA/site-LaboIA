@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import PortableTextRenderer from "@/components/content/portable-text";
 import NewsCard from "@/components/news/news-card";
 import { getArticles } from "@/lib/content-loader";
@@ -17,7 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title,
     description: page?.summary,
     path: localizedPath("/actualites", locale),
@@ -56,7 +57,6 @@ export default async function Page() {
   );
   return (
     <main className="bg-white">
-      {/* Hero Section */}
       <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
@@ -65,7 +65,7 @@ export default async function Page() {
           <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
             <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
             <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
-              Actualités & Innovation
+              Actualites & Innovation
             </span>
           </div>
 
@@ -83,7 +83,6 @@ export default async function Page() {
         </div>
       </section>
 
-      {/* Page Content */}
       {page?.content && (
         <section className="py-12 md:py-16 bg-slate-50">
           <div className="mx-auto max-w-6xl px-4">
@@ -92,21 +91,18 @@ export default async function Page() {
         </section>
       )}
 
-      {/* News Section */}
       <section className="py-20 md:py-28 bg-white">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              Dernières actualités
+              Dernieres actualites
             </h2>
           </div>
 
           {news.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
               <div className="mx-auto max-w-md">
-                <p className="text-base text-slate-600">
-                  Contenu en cours de publication.
-                </p>
+                <p className="text-base text-slate-600">Contenu en cours de publication.</p>
               </div>
             </div>
           ) : (

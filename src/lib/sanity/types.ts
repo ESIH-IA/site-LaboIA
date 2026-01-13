@@ -23,6 +23,10 @@ export type ProjectListItem = {
   startDate?: string;
   endDate?: string;
   summary?: string;
+  shortDescription?: string;
+  statusLabel?: string;
+  tags?: string[];
+  featured?: boolean;
 };
 
 export type PublicationListItem = {
@@ -94,6 +98,7 @@ export type NewsListItem = {
   mainImageUrl?: string;
   mainImageAlt?: string;
   sourceUrl?: string;
+  featured?: boolean;
 };
 
 export type EventListItem = {
@@ -115,6 +120,8 @@ export type PartnerListItem = {
   partnerType?: string;
   shortDescription?: string;
   website?: string;
+  tags?: string[];
+  featured?: boolean;
 };
 
 export type OfferListItem = {
@@ -223,4 +230,138 @@ export type TeamPage = {
   associateBadgeLabel?: string;
   emptyResearchText?: string;
   emptyAssociatesText?: string;
+};
+
+export type SiteAsset = {
+  url: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+};
+
+export type SiteSettings = {
+  _id: string;
+  name: string;
+  shortName: string;
+  description?: string;
+  tagline?: string;
+  footerContactTitle?: string;
+  footerContactText?: string;
+  footerContactCtaLabel?: string;
+  footerContactCtaHref?: string;
+  footerLanguageNote?: string;
+  logo?: SiteAsset;
+  banner?: SiteAsset;
+};
+
+export type NavItem = {
+  label: string;
+  href: string;
+};
+
+export type Navigation = {
+  _id: string;
+  mainNav: NavItem[];
+  footerNav: NavItem[];
+};
+
+export type HomePageData = {
+  _id: string;
+  heroBadge?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroDescription?: string;
+  heroActions?: Array<{ label: string; href: string; variant?: string }>;
+  introEyebrow?: string;
+  introTitle?: string;
+  introBody?: string;
+  introActions?: Array<{ label: string; href: string; variant?: string }>;
+  highlightsTitle?: string;
+  highlightsIntro?: string;
+  highlights?: Array<{ title: string; description: string }>;
+  kpisTitle?: string;
+  kpisIntro?: string;
+  featuredProjectsTitle?: string;
+  featuredProjectsIntro?: string;
+  featuredProjectsCtaLabel?: string;
+  featuredProjectsCtaHref?: string;
+  publicationsTitle?: string;
+  publicationsIntro?: string;
+  partnersTitle?: string;
+  partnersIntro?: string;
+  partnersBadge?: string;
+  collaborateTitle?: string;
+  collaborateBody?: string;
+  collaborateActions?: Array<{ label: string; href: string; variant?: string }>;
+  eventBanner?: {
+    enabled?: boolean;
+    label?: string;
+    title?: string;
+    date?: string;
+    location?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+  };
+};
+
+export type KpiSettings = {
+  _id: string;
+  lastUpdated?: string;
+  disclaimer?: string;
+};
+
+export type AiSolution = {
+  _id: string;
+  title: string;
+  shortDescription?: string;
+  benefits?: string[];
+  examples?: string[];
+  icon?: string;
+  order?: number;
+};
+
+export type UseCase = {
+  _id: string;
+  title: string;
+  context?: string;
+  solution?: string;
+  benefits?: string[];
+  order?: number;
+};
+
+export type Sector = {
+  _id: string;
+  name: string;
+  icon?: string;
+  order?: number;
+};
+
+export type SolutionsPage = {
+  _id: string;
+  heroBadge?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroDescription?: string;
+  heroPrimaryCta?: { label: string; href: string; variant?: string };
+  heroSecondaryCta?: { label: string; href: string; variant?: string };
+  approachTitle?: string;
+  approachIntro?: string;
+  approachSteps?: Array<{ title: string; description: string }>;
+  solutionsTitle?: string;
+  solutionsIntro?: string;
+  solutions?: AiSolution[];
+  useCasesTitle?: string;
+  useCasesIntro?: string;
+  featuredUseCase?: UseCase | null;
+  flowTitle?: string;
+  flowDescription?: string;
+  flowSteps?: string[];
+  servicesTitle?: string;
+  servicesIntro?: string;
+  services?: string[];
+  sectorsTitle?: string;
+  sectorsIntro?: string;
+  sectors?: Sector[];
+  projectsTitle?: string;
+  projectsIntro?: string;
 };

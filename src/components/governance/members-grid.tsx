@@ -1,7 +1,9 @@
 "use client";
 
 import { MemberCard } from "@/components/governance/member-card";
-import type { Person, PersonCategory } from "@/data/governance/types";
+import type { Person } from "@/lib/sanity/types";
+
+type PersonCategory = "gouvernance" | "direction" | "recherche" | "conseil";
 
 const categoryLabels: Record<PersonCategory, string> = {
   gouvernance: "Gouvernance institutionnelle",
@@ -17,6 +19,16 @@ const categoryOrder: PersonCategory[] = [
   "conseil",
 ];
 
+function getCategory(person: Person): PersonCategory {
+  const roleCategory = person.roleCategory as PersonCategory | undefined;
+  if (roleCategory) return roleCategory;
+  if (person.governanceGroup === "comite_scientifique") return "conseil";
+  if (person.governanceGroup === "direction") return "direction";
+  if (person.governanceGroup === "gouvernance") return "gouvernance";
+  if (person.teamGroup === "research") return "recherche";
+  return "gouvernance";
+}
+
 export function MembersGrid({
   title,
   intro,
@@ -26,10 +38,9 @@ export function MembersGrid({
   intro?: string;
   members: Person[];
 }) {
-  // Grouper les membres par catégorie
   const membersByCategory = members.reduce(
     (acc, person) => {
-      const cat = person.roleCategory;
+      const cat = getCategory(person);
       if (!acc[cat]) acc[cat] = [];
       acc[cat].push(person);
       return acc;
@@ -37,7 +48,6 @@ export function MembersGrid({
     {} as Record<PersonCategory, Person[]>,
   );
 
-  // Trier chaque catégorie par ordre
   Object.values(membersByCategory).forEach((group) => {
     group.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
   });
@@ -55,7 +65,7 @@ export function MembersGrid({
 
       {members.length === 0 ? (
         <div className="mt-8 rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
-          Aucun membre configuré pour cette section.
+          Aucun membre configure pour cette section.
         </div>
       ) : (
         <div className="w-full space-y-16">
@@ -70,7 +80,7 @@ export function MembersGrid({
                 </h3>
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
                   {categoryMembers.map((person) => (
-                    <MemberCard key={person.id} person={person} />
+                    <MemberCard key={person._id} person={person} />
                   ))}
                 </div>
               </div>

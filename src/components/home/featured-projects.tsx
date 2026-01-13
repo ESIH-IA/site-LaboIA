@@ -1,36 +1,49 @@
 import Link from "next/link";
-import { projects } from "@/content/projects";
 
-export default function FeaturedProjects() {
-  const featuredProjects = projects.filter((project) => project.featured);
+import type { ProjectListItem } from "@/lib/sanity/types";
 
+type FeaturedProjectsProps = {
+  title?: string;
+  intro?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  projects: ProjectListItem[];
+};
+
+export default function FeaturedProjects({
+  title,
+  intro,
+  ctaLabel,
+  ctaHref,
+  projects,
+}: FeaturedProjectsProps) {
   return (
     <section className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-              Projets à la une
+              {title ?? "Projets a la une"}
             </h2>
             <p className="mt-3 max-w-2xl text-base text-slate-600 leading-relaxed">
-              Des initiatives concrètes qui démontrent la puissance de l&apos;IA et
-              de la science des données au service des communautés.
+              {intro ??
+                "Des initiatives concretes qui demontrent la puissance de l'IA et de la science des donnees au service des communautes."}
             </p>
           </div>
 
           <Link
-            href="/projets"
+            href={ctaHref ?? "/projets"}
             className="inline-flex items-center justify-center rounded-xl border-2 border-cyan-500 px-6 py-3 text-sm font-semibold text-cyan-600 transition-all hover:-translate-y-1 hover:bg-cyan-50"
           >
-            Découvrir tous les projets
+            {ctaLabel ?? "Decouvrir tous les projets"}
           </Link>
         </div>
 
-        {featuredProjects.length > 0 ? (
+        {projects.length > 0 ? (
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.map((project, idx) => (
+            {projects.map((project, idx) => (
               <article
-                key={project.id}
+                key={project._id}
                 className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
@@ -38,16 +51,19 @@ export default function FeaturedProjects() {
                 <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
 
                 {/* Badge status */}
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-700">
-                  {project.type} • {project.status}
-                </div>
+                {(project.projectType || project.statusLabel) && (
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-700">
+                    {project.projectType ?? "Projet"}
+                    {project.statusLabel ? ` - ${project.statusLabel}` : ""}
+                  </div>
+                )}
 
                 <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-cyan-600 transition-colors">
                   {project.title}
                 </h3>
 
                 <p className="mt-4 text-sm text-slate-600 leading-relaxed">
-                  {project.shortDescription}
+                  {project.shortDescription ?? project.summary}
                 </p>
 
                 {project.tags?.length ? (

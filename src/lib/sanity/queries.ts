@@ -12,7 +12,11 @@ export const projectListQuery = groq`
     projectType,
     startDate,
     endDate,
-    "summary": coalesce(summaryIntl[$locale], summary)
+    "summary": coalesce(summaryIntl[$locale], summary),
+    "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
+    statusLabel,
+    tags,
+    featured
   }
 `;
 
@@ -112,7 +116,8 @@ export const newsListQuery = groq`
     "summary": coalesce(summaryIntl[$locale], summary),
     sourceUrl,
     "mainImageUrl": mainImage.asset->url,
-    "mainImageAlt": mainImage.alt
+    "mainImageAlt": mainImage.alt,
+    featured
   }
 `;
 
@@ -172,7 +177,9 @@ export const partnerListQuery = groq`
     slugIntl,
     partnerType,
     "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
-    website
+    website,
+    tags,
+    featured
   }
 `;
 
@@ -271,9 +278,9 @@ export const kpiListQuery = groq`
   *[_type == "kpi"] | order(label asc){
     _id,
     key,
-    label,
+    "label": coalesce(labelIntl[$locale], label),
     value,
-    note,
+    "note": coalesce(noteIntl[$locale], note),
     status
   }
 `;
@@ -288,6 +295,206 @@ export const labReportListQuery = groq`
     "summary": coalesce(summaryIntl[$locale], summary),
     "fileUrl": file.asset->url,
     url
+  }
+`;
+
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0]{
+    _id,
+    name,
+    shortName,
+    description,
+    "tagline": coalesce(taglineIntl[$locale], tagline),
+    "footerContactTitle": coalesce(footerContactTitleIntl[$locale], footerContactTitle),
+    "footerContactText": coalesce(footerContactTextIntl[$locale], footerContactText),
+    "footerContactCtaLabel": coalesce(footerContactCtaLabelIntl[$locale], footerContactCtaLabel),
+    footerContactCtaHref,
+    "footerLanguageNote": coalesce(footerLanguageNoteIntl[$locale], footerLanguageNote),
+    "logo": {
+      "url": logo.image.asset->url,
+      "alt": logo.alt,
+      "width": logo.image.asset->metadata.dimensions.width,
+      "height": logo.image.asset->metadata.dimensions.height
+    },
+    "banner": {
+      "url": banner.image.asset->url,
+      "alt": banner.alt,
+      "width": banner.image.asset->metadata.dimensions.width,
+      "height": banner.image.asset->metadata.dimensions.height
+    }
+  }
+`;
+
+export const navigationQuery = groq`
+  *[_type == "navigation"][0]{
+    _id,
+    "mainNav": mainNav[]{
+      "label": coalesce(labelIntl[$locale], label),
+      href
+    },
+    "footerNav": footerNav[]{
+      "label": coalesce(labelIntl[$locale], label),
+      href
+    }
+  }
+`;
+
+export const homePageQuery = groq`
+  *[_type == "homePage"][0]{
+    _id,
+    "heroBadge": coalesce(heroBadge[$locale], heroBadge.fr, heroBadge.en),
+    "heroTitle": coalesce(heroTitle[$locale], heroTitle.fr, heroTitle.en),
+    "heroSubtitle": coalesce(heroSubtitle[$locale], heroSubtitle.fr, heroSubtitle.en),
+    "heroDescription": coalesce(heroDescription[$locale], heroDescription.fr, heroDescription.en),
+    "heroActions": heroActions[]{
+      "label": coalesce(labelIntl[$locale], label),
+      href,
+      variant
+    },
+    "introEyebrow": coalesce(introEyebrow[$locale], introEyebrow.fr, introEyebrow.en),
+    "introTitle": coalesce(introTitle[$locale], introTitle.fr, introTitle.en),
+    "introBody": coalesce(introBody[$locale], introBody.fr, introBody.en),
+    "introActions": introActions[]{
+      "label": coalesce(labelIntl[$locale], label),
+      href,
+      variant
+    },
+    "highlightsTitle": coalesce(highlightsTitle[$locale], highlightsTitle.fr, highlightsTitle.en),
+    "highlightsIntro": coalesce(highlightsIntro[$locale], highlightsIntro.fr, highlightsIntro.en),
+    "highlights": highlights[]{
+      "title": coalesce(titleIntl[$locale], title),
+      "description": coalesce(descriptionIntl[$locale], description)
+    },
+    "kpisTitle": coalesce(kpisTitle[$locale], kpisTitle.fr, kpisTitle.en),
+    "kpisIntro": coalesce(kpisIntro[$locale], kpisIntro.fr, kpisIntro.en),
+    "featuredProjectsTitle": coalesce(featuredProjectsTitle[$locale], featuredProjectsTitle.fr, featuredProjectsTitle.en),
+    "featuredProjectsIntro": coalesce(featuredProjectsIntro[$locale], featuredProjectsIntro.fr, featuredProjectsIntro.en),
+    "featuredProjectsCtaLabel": coalesce(featuredProjectsCtaLabel[$locale], featuredProjectsCtaLabel.fr, featuredProjectsCtaLabel.en),
+    featuredProjectsCtaHref,
+    "publicationsTitle": coalesce(publicationsTitle[$locale], publicationsTitle.fr, publicationsTitle.en),
+    "publicationsIntro": coalesce(publicationsIntro[$locale], publicationsIntro.fr, publicationsIntro.en),
+    "partnersTitle": coalesce(partnersTitle[$locale], partnersTitle.fr, partnersTitle.en),
+    "partnersIntro": coalesce(partnersIntro[$locale], partnersIntro.fr, partnersIntro.en),
+    "partnersBadge": coalesce(partnersBadge[$locale], partnersBadge.fr, partnersBadge.en),
+    "collaborateTitle": coalesce(collaborateTitle[$locale], collaborateTitle.fr, collaborateTitle.en),
+    "collaborateBody": coalesce(collaborateBody[$locale], collaborateBody.fr, collaborateBody.en),
+    "collaborateActions": collaborateActions[]{
+      "label": coalesce(labelIntl[$locale], label),
+      href,
+      variant
+    },
+    "eventBanner": {
+      "enabled": eventBanner.enabled,
+      "label": coalesce(eventBanner.label[$locale], eventBanner.label.fr, eventBanner.label.en),
+      "title": coalesce(eventBanner.title[$locale], eventBanner.title.fr, eventBanner.title.en),
+      "date": coalesce(eventBanner.date[$locale], eventBanner.date.fr, eventBanner.date.en),
+      "location": coalesce(eventBanner.location[$locale], eventBanner.location.fr, eventBanner.location.en),
+      "ctaLabel": coalesce(eventBanner.ctaLabel[$locale], eventBanner.ctaLabel.fr, eventBanner.ctaLabel.en),
+      "ctaHref": eventBanner.ctaHref
+    }
+  }
+`;
+
+export const kpiSettingsQuery = groq`
+  *[_type == "kpiSettings"][0]{
+    _id,
+    "lastUpdated": coalesce(lastUpdatedIntl[$locale], lastUpdated),
+    "disclaimer": coalesce(disclaimerIntl[$locale], disclaimer)
+  }
+`;
+
+export const aiSolutionListQuery = groq`
+  *[_type == "aiSolution"] | order(order asc){
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
+    benefits,
+    examples,
+    icon,
+    order
+  }
+`;
+
+export const useCaseListQuery = groq`
+  *[_type == "useCase"] | order(order asc){
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "context": coalesce(contextIntl[$locale], context),
+    "solution": coalesce(solutionIntl[$locale], solution),
+    benefits,
+    order
+  }
+`;
+
+export const sectorListQuery = groq`
+  *[_type == "sector"] | order(order asc){
+    _id,
+    "name": coalesce(nameIntl[$locale], name),
+    icon,
+    order
+  }
+`;
+
+export const solutionsPageQuery = groq`
+  *[_type == "solutionsPage"][0]{
+    _id,
+    "heroBadge": coalesce(heroBadge[$locale], heroBadge.fr, heroBadge.en),
+    "heroTitle": coalesce(heroTitle[$locale], heroTitle.fr, heroTitle.en),
+    "heroSubtitle": coalesce(heroSubtitle[$locale], heroSubtitle.fr, heroSubtitle.en),
+    "heroDescription": coalesce(heroDescription[$locale], heroDescription.fr, heroDescription.en),
+    "heroPrimaryCta": {
+      "label": coalesce(heroPrimaryCta.labelIntl[$locale], heroPrimaryCta.label),
+      "href": heroPrimaryCta.href,
+      "variant": heroPrimaryCta.variant
+    },
+    "heroSecondaryCta": {
+      "label": coalesce(heroSecondaryCta.labelIntl[$locale], heroSecondaryCta.label),
+      "href": heroSecondaryCta.href,
+      "variant": heroSecondaryCta.variant
+    },
+    "approachTitle": coalesce(approachTitle[$locale], approachTitle.fr, approachTitle.en),
+    "approachIntro": coalesce(approachIntro[$locale], approachIntro.fr, approachIntro.en),
+    "approachSteps": approachSteps[]{
+      "title": coalesce(titleIntl[$locale], title),
+      "description": coalesce(descriptionIntl[$locale], description)
+    },
+    "solutionsTitle": coalesce(solutionsTitle[$locale], solutionsTitle.fr, solutionsTitle.en),
+    "solutionsIntro": coalesce(solutionsIntro[$locale], solutionsIntro.fr, solutionsIntro.en),
+    "solutions": solutions[]->{
+      _id,
+      "title": coalesce(titleIntl[$locale], title),
+      "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
+      benefits,
+      examples,
+      icon,
+      order
+    },
+    "useCasesTitle": coalesce(useCasesTitle[$locale], useCasesTitle.fr, useCasesTitle.en),
+    "useCasesIntro": coalesce(useCasesIntro[$locale], useCasesIntro.fr, useCasesIntro.en),
+    "featuredUseCase": featuredUseCase->{
+      _id,
+      "title": coalesce(titleIntl[$locale], title),
+      "context": coalesce(contextIntl[$locale], context),
+      "solution": coalesce(solutionIntl[$locale], solution),
+      benefits,
+      order
+    },
+    "flowTitle": coalesce(flowTitle[$locale], flowTitle.fr, flowTitle.en),
+    "flowDescription": coalesce(flowDescription[$locale], flowDescription.fr, flowDescription.en),
+    flowSteps,
+    "servicesTitle": coalesce(servicesTitle[$locale], servicesTitle.fr, servicesTitle.en),
+    "servicesIntro": coalesce(servicesIntro[$locale], servicesIntro.fr, servicesIntro.en),
+    services,
+    "sectorsTitle": coalesce(sectorsTitle[$locale], sectorsTitle.fr, sectorsTitle.en),
+    "sectorsIntro": coalesce(sectorsIntro[$locale], sectorsIntro.fr, sectorsIntro.en),
+    "sectors": sectors[]->{
+      _id,
+      "name": coalesce(nameIntl[$locale], name),
+      icon,
+      order
+    },
+    "projectsTitle": coalesce(projectsTitle[$locale], projectsTitle.fr, projectsTitle.en),
+    "projectsIntro": coalesce(projectsIntro[$locale], projectsIntro.fr, projectsIntro.en)
   }
 `;
 

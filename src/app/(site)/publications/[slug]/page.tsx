@@ -9,7 +9,7 @@ import { publicationBySlugQuery, publicationListQuery } from "@/lib/sanity/queri
 import type { PublicationListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type PublicationDetail = {
   _id: string;
@@ -30,20 +30,22 @@ type PublicationDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const publication = await sanityFetch<PublicationDetail | null>(
     publicationBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = publication?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = publication?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = publication?.slugIntl?.fr?.current ?? slug;
+  const enSlug = publication?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: publication?.title,
     description: publication?.summary,
-    path: localizedPath(`/publications/${params.slug}`, locale),
+    path: localizedPath(`/publications/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/publications/${frSlug}`, "fr"),
       en: localizedPath(`/publications/${enSlug}`, "en"),
@@ -52,10 +54,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const publication = await sanityFetch<PublicationDetail | null>(
     publicationBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 

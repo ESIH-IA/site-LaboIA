@@ -18,7 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title ?? "Publications par axe",
     description: page?.summary,
     path: localizedPath("/publications/axes", locale),

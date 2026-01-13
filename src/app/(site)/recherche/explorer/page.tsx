@@ -21,7 +21,8 @@ type SearchResult = {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: "Recherche scientifique",
     description: "Recherche plein texte dans les publications, projets et membres du laboratoire.",
     path: localizedPath("/recherche/explorer", locale),

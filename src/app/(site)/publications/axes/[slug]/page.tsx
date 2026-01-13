@@ -11,7 +11,7 @@ import { researchAxisBySlugQuery, researchAxisListQuery } from "@/lib/sanity/que
 import type { ResearchAxisListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type AxisDetail = {
   _id: string;
@@ -30,20 +30,22 @@ type AxisDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const axis = await sanityFetch<AxisDetail | null>(
     researchAxisBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = axis?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = axis?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = axis?.slugIntl?.fr?.current ?? slug;
+  const enSlug = axis?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: axis?.title,
     description: axis?.summary,
-    path: localizedPath(`/publications/axes/${params.slug}`, locale),
+    path: localizedPath(`/publications/axes/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/publications/axes/${frSlug}`, "fr"),
       en: localizedPath(`/publications/axes/${enSlug}`, "en"),
@@ -52,10 +54,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const axis = await sanityFetch<AxisDetail | null>(
     researchAxisBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 

@@ -4,11 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 
-import { mainNav } from "@/content/nav";
-import { site } from "@/content/site";
 import { locales, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/media/logo";
 import LocaleSwitcher from "@/components/layout/locale-switcher";
+import type { Navigation, SiteSettings } from "@/lib/sanity/types";
 
 function getCurrentLocale(pathname: string): Locale | null {
   const segments = pathname.split("/").filter(Boolean);
@@ -87,25 +86,31 @@ function MobileNavLink({
     >
       <span>{label}</span>
       <span aria-hidden="true" className="text-neutral-400">
-        →
+        &gt;
       </span>
     </Link>
   );
 }
 
-export default function Header() {
+export default function Header({
+  nav,
+  site,
+}: {
+  nav: Navigation;
+  site: SiteSettings;
+}) {
   const pathname = usePathname() || "/";
   const currentLocale = useMemo(() => getCurrentLocale(pathname), [pathname]);
   const basePath = useMemo(() => stripLocale(pathname) || "/", [pathname]);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = useMemo(() => {
-    return mainNav.map((item) => {
+    return nav.mainNav.map((item) => {
       const localizedHref = withLocale(item.href, currentLocale);
       const active = isActivePath(basePath, item.href);
       return { ...item, localizedHref, active };
     });
-  }, [basePath, currentLocale]);
+  }, [basePath, currentLocale, nav.mainNav]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm shadow-black/5 backdrop-blur">
@@ -115,13 +120,13 @@ export default function Header() {
           title={site.name}
           className="flex items-center gap-3 leading-tight"
         >
-          <Logo size="header" className="h-9 w-9" />
+          <Logo size="header" className="h-9 w-9" logo={site.logo} />
           <div className="flex flex-col">
             <div className="text-base font-semibold tracking-tight text-foreground">
               {site.shortName}
             </div>
             <div className="hidden text-xs text-muted md:block">
-              Laboratoire de recherche en IA &amp; science des données
+              {site.tagline ?? "Laboratoire de recherche en IA & science des donnees"}
             </div>
           </div>
         </Link>

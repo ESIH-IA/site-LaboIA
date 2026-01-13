@@ -72,9 +72,16 @@ npm run build
 npm run start
 npm run lint
 npm run check:routes
+npm run sanity:seed
 ```
 
 `check:routes` verifie un ensemble de routes clefs. Il utilise `SITE_URL` ou `NEXT_PUBLIC_SITE_URL` et suppose que l'app tourne deja.
+
+## Sanity Studio & migration
+
+- Le Studio est integre dans l'app : lancer `npm run dev` puis ouvrir `/studio`.
+- La commande `npm run sanity:seed` initialise un contenu de base (navigation, home, solutions, gouvernance, etc.). Elle requiert `SANITY_API_TOKEN`.
+- Les collections publications, axes, ressources et formations sont a completer dans le Studio si besoin.
 
 ## Endpoints API
 

@@ -11,7 +11,7 @@ import { projectBySlugQuery, projectListQuery } from "@/lib/sanity/queries";
 import type { ProjectListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type ProjectDetail = {
   _id: string;
@@ -31,20 +31,22 @@ type ProjectDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const project = await sanityFetch<ProjectDetail | null>(
     projectBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = project?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = project?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = project?.slugIntl?.fr?.current ?? slug;
+  const enSlug = project?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: project?.title,
     description: project?.summary,
-    path: localizedPath(`/projets/${params.slug}`, locale),
+    path: localizedPath(`/projets/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/projets/${frSlug}`, "fr"),
       en: localizedPath(`/projets/${enSlug}`, "en"),
@@ -53,10 +55,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const project = await sanityFetch<ProjectDetail | null>(
     projectBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 

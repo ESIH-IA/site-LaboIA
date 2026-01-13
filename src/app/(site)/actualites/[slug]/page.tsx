@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -15,9 +15,9 @@ import type { NewsListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 type NewsDetail = {
@@ -36,21 +36,23 @@ type NewsDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const article = await sanityFetch<NewsDetail | null>(
     newsBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
-  const localArticle = getArticles().find((item) => item.slug === params.slug);
+  const localArticle = getArticles().find((item) => item.slug === slug);
 
-  const frSlug = article?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = article?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = article?.slugIntl?.fr?.current ?? slug;
+  const enSlug = article?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: article?.title ?? localArticle?.title,
     description: article?.summary ?? localArticle?.summary,
-    path: localizedPath(`/actualites/${params.slug}`, locale),
+    path: localizedPath(`/actualites/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/actualites/${frSlug}`, "fr"),
       en: localizedPath(`/actualites/${enSlug}`, "en"),
@@ -59,13 +61,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const article = await sanityFetch<NewsDetail | null>(
     newsBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
-  const localArticle = getArticles().find((item) => item.slug === params.slug);
+  const localArticle = getArticles().find((item) => item.slug === slug);
 
   if (!article && !localArticle) {
     notFound();
@@ -116,7 +119,7 @@ export default async function Page({ params }: PageProps) {
 
       {article?.relatedProjects?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets associés</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Projets associes</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {article.relatedProjects.map((project) => (
               <li key={project._id}>
@@ -138,7 +141,7 @@ export default async function Page({ params }: PageProps) {
 
       {article?.relatedMembers?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Membres cités</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Membres cites</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {article.relatedMembers.map((member) => (
               <li key={member._id} className="flex items-center justify-between gap-3">

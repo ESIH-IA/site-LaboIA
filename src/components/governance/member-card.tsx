@@ -3,7 +3,10 @@
 import Image from "next/image";
 import { useId, useMemo, useState } from "react";
 
-import type { Person } from "@/data/governance/types";
+import type { Person } from "@/lib/sanity/types";
+import { urlForImage } from "@/lib/sanity/image";
+
+type PersonCategory = "gouvernance" | "direction" | "recherche" | "conseil";
 
 function initialsFromName(name: string) {
   const parts = name
@@ -19,33 +22,40 @@ function truncate(text: string, maxChars: number) {
   if (text.length <= maxChars) return text;
   const clipped = text.slice(0, maxChars);
   const lastSpace = clipped.lastIndexOf(" ");
-  return (lastSpace > 120 ? clipped.slice(0, lastSpace) : clipped).trim() + "…";
+  return (lastSpace > 120 ? clipped.slice(0, lastSpace) : clipped).trim() + "...";
 }
 
 function hasLinks(links: Person["links"] | undefined) {
   if (!links) return false;
-  return Boolean(links.linkedin || links.scholar || links.orcid || links.website);
+  return Boolean(links.linkedin || links.scholar || links.orcid || links.website || links.email);
+}
+
+function getCategory(person: Person): PersonCategory {
+  const roleCategory = person.roleCategory as PersonCategory | undefined;
+  if (roleCategory) return roleCategory;
+  if (person.governanceGroup === "comite_scientifique") return "conseil";
+  if (person.governanceGroup === "direction") return "direction";
+  if (person.governanceGroup === "gouvernance") return "gouvernance";
+  if (person.teamGroup === "research") return "recherche";
+  return "gouvernance";
 }
 
 export function MemberCard({ person }: { person: Person }) {
   const dialogId = useId();
   const [open, setOpen] = useState(false);
+  const category = getCategory(person);
 
-  // Photo est maintenant un chemin direct depuis /public
   const imageUrl = useMemo(() => {
-    return person.photo || null;
+    if (!person.photo) return null;
+    return urlForImage(person.photo).width(400).height(400).fit("crop").url();
   }, [person.photo]);
 
-  const initials = person.initials || initialsFromName(person.name);
-  const isFuture = person.status === "futur";
-
-  // Utiliser shortBio en priorité pour l'aperçu
+  const initials = initialsFromName(person.name);
   const shortBio = person.shortBio?.trim() ?? "";
   const longBio = person.longBio?.trim() ?? "";
   const preview = shortBio || (longBio ? truncate(longBio, 200) : "");
   const showAnyLinks = hasLinks(person.links);
 
-  // Palette tech/IA moderne
   const categoryColors = {
     gouvernance: {
       gradient: "bg-linear-to-br from-slate-600 to-slate-700",
@@ -75,14 +85,14 @@ export function MemberCard({ person }: { person: Person }) {
       badge: "border-violet-200 bg-violet-50/50 text-violet-700",
       accent: "from-violet-500 to-cyan-500",
     },
-  };
+  } as const;
 
-  const colors = categoryColors[person.roleCategory];
+  const colors = categoryColors[category];
 
   return (
     <>
       <article
-        id={`profile-${person.id}`}
+        id={`profile-${person._id}`}
         className={[
           "group relative flex h-full flex-col overflow-hidden rounded-2xl gradient-card-bg border shadow-lg ring-1 transition-smooth",
           "hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10 scroll-mt-24 cursor-pointer",
@@ -102,7 +112,7 @@ export function MemberCard({ person }: { person: Person }) {
         {/* Accent Bar Top */}
         <div className={`absolute left-0 right-0 top-0 h-1 bg-linear-to-r ${colors.accent}`} />
 
-        {/* Zone haute — Photo/Initiales avec gradient moderne */}
+        {/* Zone haute - Photo/Initiales */}
         <div className={["relative h-36 flex items-center justify-center transition-all duration-500", colors.gradient].join(" ")}>
           {imageUrl ? (
             <div className="relative h-28 w-28 overflow-hidden rounded-full ring-4 ring-white/40 shadow-2xl">
@@ -113,14 +123,9 @@ export function MemberCard({ person }: { person: Person }) {
               <span className="text-4xl font-bold text-white">{initials}</span>
             </div>
           )}
-          {isFuture ? (
-            <div className="absolute right-4 top-4 rounded-full bg-amber-400 px-4 py-1.5 text-xs font-bold text-amber-900 shadow-lg">
-              À venir
-            </div>
-          ) : null}
         </div>
 
-        {/* Zone basse — Contenu avec fond clair */}
+        {/* Zone basse - Contenu */}
         <div className="flex flex-1 flex-col bg-white p-6">
           <div className="mb-4">
             <h3 className={["text-xl font-bold text-slate-900 mb-2 transition-all", `group-hover:${colors.text}`].join(" ")}>
@@ -179,7 +184,7 @@ export function MemberCard({ person }: { person: Person }) {
               </a>
             ) : null}
             <span className="text-xs font-medium text-center text-slate-400 group-hover:text-cyan-600 transition-colors">
-              Cliquez pour en savoir plus →
+              Cliquez pour en savoir plus &gt;
             </span>
           </div>
         </div>

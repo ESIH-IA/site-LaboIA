@@ -16,7 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title ?? "Ressources scientifiques",
     description: page?.summary,
     path: localizedPath("/ressources", locale),

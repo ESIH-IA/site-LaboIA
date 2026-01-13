@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { site } from "@/content/site";
+import { getSiteSettings } from "@/lib/cms";
+import type { Locale } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const siteUrl = getSiteUrl();
@@ -9,16 +10,25 @@ type MetadataInput = {
   title?: string;
   description?: string;
   path?: string;
+  locale: Locale;
   alternates?: {
     fr?: string;
     en?: string;
   };
 };
 
-export function buildMetadata({ title, description, path, alternates }: MetadataInput): Metadata {
+export async function buildMetadata({
+  title,
+  description,
+  path,
+  alternates,
+  locale,
+}: MetadataInput): Promise<Metadata> {
+  const site = await getSiteSettings(locale);
   const fullTitle = title ? `${title} | ${site.shortName}` : site.name;
   const resolvedDescription = description || site.description;
   const url = path ? new URL(path, siteUrl).toString() : siteUrl;
+  const banner = site.banner;
 
   const metadata: Metadata = {
     title: fullTitle,
@@ -29,20 +39,22 @@ export function buildMetadata({ title, description, path, alternates }: Metadata
       description: resolvedDescription,
       siteName: site.shortName,
       url,
-      images: [
-        {
-          url: site.assets.banner.src,
-          width: site.assets.banner.width,
-          height: site.assets.banner.height,
-          alt: site.assets.banner.alt,
-        },
-      ],
+      images: banner?.url
+        ? [
+            {
+              url: banner.url,
+              width: banner.width,
+              height: banner.height,
+              alt: banner.alt ?? site.name,
+            },
+          ]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description: resolvedDescription,
-      images: [site.assets.banner.src],
+      images: banner?.url ? [banner.url] : undefined,
     },
   };
 

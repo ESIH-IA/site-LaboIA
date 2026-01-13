@@ -11,7 +11,7 @@ import { programBySlugQuery, programListQuery } from "@/lib/sanity/queries";
 import type { ProgramListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type ProgramDetail = {
   _id: string;
@@ -26,20 +26,22 @@ type ProgramDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const program = await sanityFetch<ProgramDetail | null>(
     programBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = program?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = program?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = program?.slugIntl?.fr?.current ?? slug;
+  const enSlug = program?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: program?.title,
     description: program?.summary,
-    path: localizedPath(`/formation/programmes/${params.slug}`, locale),
+    path: localizedPath(`/formation/programmes/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/formation/programmes/${frSlug}`, "fr"),
       en: localizedPath(`/formation/programmes/${enSlug}`, "en"),
@@ -48,10 +50,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const program = await sanityFetch<ProgramDetail | null>(
     programBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
