@@ -1,12 +1,12 @@
-import Link from "next/link";
-
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import PortableTextRenderer from "@/components/content/portable-text";
-import { sanityFetch } from "@/lib/sanity/client";
+import NewsCard from "@/components/news/news-card";
+import { getArticles } from "@/lib/content-loader";
+import { isSanityConfigured, sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { eventListQuery, institutionalPageBySlugQuery, newsListQuery } from "@/lib/sanity/queries";
-import type { EventListItem, InstitutionalPage, NewsListItem } from "@/lib/sanity/types";
+import { institutionalPageBySlugQuery, newsListQuery } from "@/lib/sanity/queries";
+import type { InstitutionalPage, NewsListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,7 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title,
     description: page?.summary,
     path: localizedPath("/actualites", locale),
@@ -35,92 +36,90 @@ export default async function Page() {
     { slug: "actualites", locale },
     null,
   );
-  const news = await sanityFetch<NewsListItem[]>(newsListQuery, { locale }, []);
-  const events = await sanityFetch<EventListItem[]>(eventListQuery, { locale }, []);
-
+  const localNews = getArticles().map((article) => ({
+    _id: article.id,
+    title: article.title,
+    slug: { current: article.slug },
+    date: article.date,
+    category: article.category,
+    summary: article.summary,
+    mainImageUrl: article.mainImage?.src,
+    mainImageAlt: article.mainImage?.alt,
+    sourceUrl: article.sourceUrl,
+    blocks: article.blocks,
+  }));
+  const sanityNews = isSanityConfigured
+    ? await sanityFetch<NewsListItem[]>(newsListQuery, { locale }, [])
+    : [];
+  const sanitySlugs = new Set(sanityNews.map((item) => item.slug?.current).filter(Boolean));
+  const news = [...sanityNews, ...localNews.filter((item) => !sanitySlugs.has(item.slug.current))].sort(
+    (a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime(),
+  );
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12">
-      <div className="max-w-3xl">
-        {page?.title ? <h1 className="text-3xl font-semibold">{page.title}</h1> : null}
-        {page?.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
-      </div>
-      <div className="mt-6">
-        <PortableTextRenderer value={page?.content} />
-      </div>
+    <main className="bg-white">
+      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
 
-      <div className="mt-10">
-        <h2 className="text-2xl font-semibold text-neutral-900">Actualites</h2>
-        {news.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
+        <div className="relative mx-auto max-w-6xl px-4">
+          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
+            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+              Actualit\u00e9s & Innovation
+            </span>
           </div>
-        ) : (
-          <div className="mt-6 grid gap-6">
-            {news.map((item) => (
-              <article
-                key={item._id}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
-              >
-                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
-                  {item.category ? (
-                    <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700">
-                      {item.category}
-                    </span>
-                  ) : null}
-                  {item.date ? <span>{item.date}</span> : null}
-                </div>
-                <h2 className="mt-3 text-xl font-semibold text-neutral-900">{item.title}</h2>
-                {item.summary ? (
-                  <p className="mt-2 text-sm text-neutral-700">{item.summary}</p>
-                ) : null}
-                <Link
-                  href={`/actualites/${item.slug.current}`}
-                  className="mt-4 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  Lire l{"'"}article
-                </Link>
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Evenements academiques</h2>
-        {events.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
+          {page?.title ? (
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
+              {page.title}
+            </h1>
+          ) : null}
+
+          {page?.summary ? (
+            <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed">
+              {page.summary}
+            </p>
+          ) : null}
+        </div>
+      </section>
+
+      {page?.content && (
+        <section className="py-12 md:py-16 bg-slate-50">
+          <div className="mx-auto max-w-6xl px-4">
+            <PortableTextRenderer value={page.content} />
           </div>
-        ) : (
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            {events.map((event) => (
-              <article
-                key={event._id}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
-              >
-                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
-                  {event.eventType ? (
-                    <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700">
-                      {event.eventType}
-                    </span>
-                  ) : null}
-                  {event.startDate ? <span>{event.startDate}</span> : null}
-                </div>
-                <h3 className="mt-3 text-lg font-semibold text-neutral-900">{event.title}</h3>
-                {event.summary ? (
-                  <p className="mt-2 text-sm text-neutral-700">{event.summary}</p>
-                ) : null}
-                <Link
-                  href={`/actualites/evenements/${event.slug.current}`}
-                  className="mt-4 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+        </section>
+      )}
+
+      <section className="py-20 md:py-28 bg-white">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+              Dernières actualités
+            </h2>
+          </div>
+
+          {news.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+              <div className="mx-auto max-w-md">
+                <p className="text-base text-slate-600">Contenu en cours de publication.</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid gap-8">
+              {news.map((item, idx) => (
+                <div
+                  key={item._id}
+                  className="animate-fade-in-up"
+                  style={{ animationDelay: `${idx * 100}ms` }}
                 >
-                  Voir l{"'"}evenement
-                </Link>
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+                  <NewsCard item={item} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
   );
 }

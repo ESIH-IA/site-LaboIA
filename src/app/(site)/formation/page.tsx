@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import PortableTextRenderer from "@/components/content/portable-text";
 import { sanityFetch } from "@/lib/sanity/client";
@@ -21,7 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title,
     description: page?.summary,
     path: localizedPath("/formation", locale),
@@ -41,6 +43,14 @@ export default async function Page() {
   );
   const offers = await sanityFetch<OfferListItem[]>(offerListQuery, { locale }, []);
   const programs = await sanityFetch<ProgramListItem[]>(programListQuery, { locale }, []);
+  const hasPageContent = Boolean(page?.title || page?.summary || page?.content?.length);
+  const hasOffers = offers.length > 0;
+  const hasPrograms = programs.length > 0;
+  const isReady = hasPageContent && (hasOffers || hasPrograms);
+
+  if (!isReady) {
+    notFound();
+  }
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -50,13 +60,9 @@ export default async function Page() {
         <PortableTextRenderer value={page?.content} />
       </div>
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Offres et opportunites</h2>
-        {offers.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+      {hasOffers ? (
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-neutral-900">Offres et opportunites</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {offers.map((offer) => (
               <article
@@ -78,16 +84,12 @@ export default async function Page() {
               </article>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Programmes et ateliers</h2>
-        {programs.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+      {hasPrograms ? (
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-neutral-900">Programmes et ateliers</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {programs.map((program) => (
               <article
@@ -115,8 +117,8 @@ export default async function Page() {
               </article>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { site } from "@/content/site";
+
+import { getSiteSettings } from "@/lib/cms";
 import { getServerLocale } from "@/lib/i18n-server";
 import { getSiteUrlObject } from "@/lib/site-url";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -15,34 +16,43 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: getSiteUrlObject(),
-  title: {
-    default: site.name,
-    template: `%s | ${site.shortName}`,
-  },
-  description: site.description,
-  openGraph: {
-    type: "website",
-    title: site.name,
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale();
+  const site = await getSiteSettings(locale);
+  const banner = site.banner;
+  const bannerImage = banner?.url
+    ? [
+        {
+          url: banner.url,
+          width: banner.width,
+          height: banner.height,
+          alt: banner.alt ?? site.name,
+        },
+      ]
+    : undefined;
+
+  return {
+    metadataBase: getSiteUrlObject(),
+    title: {
+      default: site.name,
+      template: `%s | ${site.shortName}`,
+    },
     description: site.description,
-    siteName: site.shortName,
-    images: [
-      {
-        url: site.assets.banner.src,
-        width: site.assets.banner.width,
-        height: site.assets.banner.height,
-        alt: site.assets.banner.alt,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: site.name,
-    description: site.description,
-    images: [site.assets.banner.src],
-  },
-};
+    openGraph: {
+      type: "website",
+      title: site.name,
+      description: site.description,
+      siteName: site.shortName,
+      images: bannerImage,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.name,
+      description: site.description,
+      images: banner?.url ? [banner.url] : undefined,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -53,9 +63,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>

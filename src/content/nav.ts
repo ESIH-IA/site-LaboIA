@@ -1,9 +1,6 @@
 export const mainNav = [
   { label: "Accueil", href: "/" },
-  { label: "Recherche", href: "/recherche" },
-  { label: "Innovation & Projets", href: "/innovation" },
-  { label: "Formation", href: "/formation" },
-  { label: "Publications", href: "/publications" },
+  { label: "Services et Solutions IA", href: "/solutions" },
   { label: "Actualités", href: "/actualites" },
   { label: "Équipe", href: "/equipe" },
   { label: "Collaborer", href: "/collaborer" },
@@ -16,4 +13,3 @@ export const footerNav = [
   { label: "Politique cookies", href: "/cookies" },
   { label: "Newsletter", href: "/newsletter" },
 ] as const;
-

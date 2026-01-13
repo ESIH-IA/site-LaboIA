@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { searchQuery } from "@/lib/sanity/queries";
+import { memberListQuery, projectListQuery, publicationListQuery, searchQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
@@ -20,7 +21,8 @@ type SearchResult = {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: "Recherche scientifique",
     description: "Recherche plein texte dans les publications, projets et membres du laboratoire.",
     path: localizedPath("/recherche/explorer", locale),
@@ -33,6 +35,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page({ searchParams }: PageProps) {
   const locale = await getServerLocale();
+  const [projects, publications, members] = await Promise.all([
+    sanityFetch<{ _id: string }[]>(projectListQuery, { locale }, []),
+    sanityFetch<{ _id: string }[]>(publicationListQuery, { locale }, []),
+    sanityFetch<{ _id: string }[]>(memberListQuery, { locale }, []),
+  ]);
+  const hasData = projects.length > 0 || publications.length > 0 || members.length > 0;
+
+  if (!hasData) {
+    notFound();
+  }
   const query = searchParams?.q?.toString().trim() ?? "";
   const type = searchParams?.type?.toString().trim() || null;
   const term = query ? `${query}*` : null;
@@ -54,7 +66,7 @@ export default async function Page({ searchParams }: PageProps) {
         <input
           type="search"
           name="q"
-          placeholder="Mot-cle, auteur, projet..."
+          placeholder="Mot-cl\u00e9, auteur, projet..."
           defaultValue={query}
           className="w-full rounded-lg border border-neutral-200 px-3 py-2 md:w-80"
         />
@@ -78,7 +90,7 @@ export default async function Page({ searchParams }: PageProps) {
 
       {query && results.length === 0 ? (
         <div className="mt-8 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-          Aucun resultat pour votre recherche.
+          Aucun r\u00e9sultat pour votre recherche.
         </div>
       ) : null}
 

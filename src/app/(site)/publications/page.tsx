@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import PortableTextRenderer from "@/components/content/portable-text";
 import PublicationsFilter from "@/components/publications/publications-filter";
 import { sanityFetch } from "@/lib/sanity/client";
@@ -27,7 +28,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title,
     description: page?.summary,
     path: localizedPath("/publications", locale),
@@ -48,6 +50,12 @@ export default async function Page() {
   const publications = await sanityFetch<PublicationListItem[]>(publicationListQuery, { locale }, []);
   const axes = await sanityFetch<ResearchAxisListItem[]>(researchAxisListQuery, { locale }, []);
   const partners = await sanityFetch<PartnerListItem[]>(partnerListQuery, { locale }, []);
+  const hasPageContent = Boolean(page?.title || page?.summary || page?.content?.length);
+  const isReady = hasPageContent && publications.length > 0;
+
+  if (!isReady) {
+    notFound();
+  }
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -67,13 +75,7 @@ export default async function Page() {
         <PortableTextRenderer value={page?.content} />
       </div>
 
-      {publications.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-          Contenu en cours de publication.
-        </div>
-      ) : (
-        <PublicationsFilter publications={publications} axes={axes} partners={partners} />
-      )}
+      <PublicationsFilter publications={publications} axes={axes} partners={partners} />
     </section>
   );
 }

@@ -5,6 +5,5 @@ import { localizedPath } from "@/lib/i18n";
 
 export default async function Page() {
   const locale = await getServerLocale();
-  redirect(`${localizedPath("/innovation", locale)}#projets`);
+  redirect(`${localizedPath("/solutions", locale)}#projets`);
 }
-

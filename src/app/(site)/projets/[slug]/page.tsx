@@ -11,7 +11,7 @@ import { projectBySlugQuery, projectListQuery } from "@/lib/sanity/queries";
 import type { ProjectListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type ProjectDetail = {
   _id: string;
@@ -31,20 +31,22 @@ type ProjectDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const project = await sanityFetch<ProjectDetail | null>(
     projectBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = project?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = project?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = project?.slugIntl?.fr?.current ?? slug;
+  const enSlug = project?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: project?.title,
     description: project?.summary,
-    path: localizedPath(`/projets/${params.slug}`, locale),
+    path: localizedPath(`/projets/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/projets/${frSlug}`, "fr"),
       en: localizedPath(`/projets/${enSlug}`, "en"),
@@ -53,10 +55,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const project = await sanityFetch<ProjectDetail | null>(
     projectBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
@@ -90,7 +93,7 @@ export default async function Page({ params }: PageProps) {
           ) : null}
           {project.methods ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Methodes</h2>
+              <h2 className="text-lg font-semibold text-neutral-900">M\u00e9thodes</h2>
               <div className="mt-3">
                 <PortableTextRenderer value={project.methods} />
               </div>
@@ -98,7 +101,7 @@ export default async function Page({ params }: PageProps) {
           ) : null}
           {project.results ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Resultats</h2>
+              <h2 className="text-lg font-semibold text-neutral-900">R\u00e9sultats</h2>
               <div className="mt-3">
                 <PortableTextRenderer value={project.results} />
               </div>
@@ -127,7 +130,7 @@ export default async function Page({ params }: PageProps) {
         </div>
 
         <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Equipe impliquee</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">\u00c9quipe impliqu\u00e9e</h2>
           {!project.members?.length ? (
             <p className="mt-2 text-sm text-neutral-600">Contenu en cours de publication.</p>
           ) : (
@@ -156,7 +159,7 @@ export default async function Page({ params }: PageProps) {
 
       {project.publications?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Publications liees</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Publications li\u00e9es</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {project.publications.map((publication) => (
               <li key={publication._id}>

@@ -9,7 +9,7 @@ const paths = [
   "/fr/publications/axes",
   "/fr/projets",
   "/fr/equipe",
-  "/fr/innovation",
+  "/fr/solutions",
   "/fr/formation",
   "/fr/actualites",
   "/fr/collaborer",

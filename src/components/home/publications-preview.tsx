@@ -1,62 +1,79 @@
-import Link from "next/link";
+type PublicationPreview = {
+  _id: string;
+  title: string;
+  category?: string;
+  date?: string;
+  authorName?: string;
+  summary?: string;
+  sourceUrl?: string;
+};
 
-import { articles } from "@/content/articles";
+type PublicationsPreviewProps = {
+  title?: string;
+  intro?: string;
+  items: PublicationPreview[];
+};
 
-export default function PublicationsPreview() {
-  const featuredPublications = [...articles]
-    .filter((article) => article.featured)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3);
-
+export default function PublicationsPreview({ title, intro, items }: PublicationsPreviewProps) {
   return (
-    <section className="bg-neutral-950 text-white">
-      <div className="mx-auto max-w-6xl px-4 py-12">
+    <section className="relative bg-slate-900 text-white overflow-hidden">
+      {/* Grid pattern background */}
+      <div className="absolute inset-0 grid-pattern opacity-10" />
+
+      <div className="relative mx-auto max-w-6xl px-4 py-20">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-2xl font-semibold">Publications récentes</h2>
-            <p className="mt-2 text-white/70">
-              Articles, rapports et communications qui documentent nos avancées scientifiques.
+            <h2 className="text-3xl font-bold">{title ?? "Publications r\u00e9centes"}</h2>
+            <p className="mt-3 text-base text-slate-300">
+              {intro ??
+                "Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques."}
             </p>
           </div>
-
-          <Link
-            href="/publications"
-            className="rounded-full border border-white/40 px-4 py-2 text-sm font-medium text-white transition hover:border-white/70"
-          >
-            Voir toutes les publications
-          </Link>
         </div>
 
-        <div className="mt-8 grid gap-4">
-          {featuredPublications.map((publication) => (
-            <div
-              key={publication.id}
-              className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-5"
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {items.map((publication) => (
+            <article
+              key={publication._id}
+              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/20"
             >
-              <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-white/60">
-                <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold text-white">
-                  {publication.category}
-                </span>
-                <span>{publication.date}</span>
-                <span aria-hidden="true">•</span>
-                <span>{publication.authorName}</span>
-              </div>
+              {/* Top accent gradient */}
+              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
 
-              <h3 className="text-base font-semibold">{publication.title}</h3>
-              <p className="text-sm text-white/70">{publication.summary}</p>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-400">
+                  {publication.category ? (
+                    <span className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-[11px] font-semibold text-cyan-400">
+                      {publication.category}
+                    </span>
+                  ) : null}
+                  {publication.date ? <span>{publication.date}</span> : null}
+                  {publication.authorName ? (
+                    <>
+                      <span aria-hidden="true">-</span>
+                      <span>{publication.authorName}</span>
+                    </>
+                  ) : null}
+                </div>
+
+                <h3 className="text-lg font-semibold text-white leading-snug">{publication.title}</h3>
+                {publication.summary ? (
+                  <p className="text-base text-slate-300 leading-relaxed">{publication.summary}</p>
+                ) : null}
+              </div>
 
               {publication.sourceUrl ? (
                 <a
                   href={publication.sourceUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-white underline underline-offset-4"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 transition-smooth hover:text-cyan-300 hover:gap-3"
                 >
                   Lire la source
-                  <span aria-hidden>↗</span>
+                  <span aria-hidden>{">"}</span>
                 </a>
               ) : null}
-            </div>
+            </article>
           ))}
         </div>
       </div>

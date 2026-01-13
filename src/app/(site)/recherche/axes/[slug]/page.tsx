@@ -12,7 +12,7 @@ import { researchAxisBySlugQuery, researchAxisListQuery } from "@/lib/sanity/que
 import type { ResearchAxisListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type ResearchAxisDetail = {
   _id: string;
@@ -37,20 +37,22 @@ type ResearchAxisDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const axis = await sanityFetch<ResearchAxisDetail | null>(
     researchAxisBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = axis?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = axis?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = axis?.slugIntl?.fr?.current ?? slug;
+  const enSlug = axis?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: axis?.title,
     description: axis?.summary,
-    path: localizedPath(`/recherche/axes/${params.slug}`, locale),
+    path: localizedPath(`/recherche/axes/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/recherche/axes/${frSlug}`, "fr"),
       en: localizedPath(`/recherche/axes/${enSlug}`, "en"),
@@ -59,10 +61,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const axis = await sanityFetch<ResearchAxisDetail | null>(
     researchAxisBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
@@ -86,7 +89,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Projets associes</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900">Projets associ\u00e9s</h2>
         {!axis.projects?.length ? (
           <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
             Contenu en cours de publication.
@@ -101,7 +104,7 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Publications associees</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900">Publications associ\u00e9es</h2>
         {!axis.publications?.length ? (
           <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
             Contenu en cours de publication.

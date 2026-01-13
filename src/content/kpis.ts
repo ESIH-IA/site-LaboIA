@@ -33,6 +33,5 @@ export const kpis = [
 
 export const kpiMeta = {
   lastUpdated: "2025-12-30",
-  disclaimer:
-    "Certains indicateurs sont provisoires et seront confirmés après consolidation interne.",
+  disclaimer: "Certains indicateurs sont provisoires et seront confirmés après consolidation interne.",
 } as const;

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import PortableTextRenderer from "@/components/content/portable-text";
 import { sanityFetch } from "@/lib/sanity/client";
@@ -17,7 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title ?? "Publications par axe",
     description: page?.summary,
     path: localizedPath("/publications/axes", locale),
@@ -36,6 +38,12 @@ export default async function Page() {
     null,
   );
   const axes = await sanityFetch<ResearchAxisListItem[]>(researchAxisListQuery, { locale }, []);
+  const hasPageContent = Boolean(page?.title || page?.summary || page?.content?.length);
+  const isReady = hasPageContent && axes.length > 0;
+
+  if (!isReady) {
+    notFound();
+  }
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -47,29 +55,23 @@ export default async function Page() {
         <PortableTextRenderer value={page?.content} />
       </div>
 
-      {axes.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-          Contenu en cours de publication.
-        </div>
-      ) : (
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {axes.map((axis) => (
-            <article
-              key={axis._id}
-              className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+      <div className="mt-8 grid gap-6 md:grid-cols-2">
+        {axes.map((axis) => (
+          <article
+            key={axis._id}
+            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+          >
+            <h2 className="text-lg font-semibold text-neutral-900">{axis.title}</h2>
+            {axis.summary ? <p className="mt-2 text-sm text-neutral-700">{axis.summary}</p> : null}
+            <Link
+              href={`/publications/axes/${axis.slug.current}`}
+              className="mt-3 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
             >
-              <h2 className="text-lg font-semibold text-neutral-900">{axis.title}</h2>
-              {axis.summary ? <p className="mt-2 text-sm text-neutral-700">{axis.summary}</p> : null}
-              <Link
-                href={`/publications/axes/${axis.slug.current}`}
-                className="mt-3 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
-              >
-                Voir les publications
-              </Link>
-            </article>
-          ))}
-        </div>
-      )}
+              Voir les publications
+            </Link>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }

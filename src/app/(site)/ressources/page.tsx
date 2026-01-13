@@ -16,7 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: page?.title ?? "Ressources scientifiques",
     description: page?.summary,
     path: localizedPath("/ressources", locale),
@@ -74,7 +75,7 @@ export default async function Page() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Telecharger
+                    T\u00e9l\u00e9charger
                   </Link>
                 ) : null}
                 {resource.url ? (

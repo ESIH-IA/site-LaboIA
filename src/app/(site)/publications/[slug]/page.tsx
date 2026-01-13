@@ -9,7 +9,7 @@ import { publicationBySlugQuery, publicationListQuery } from "@/lib/sanity/queri
 import type { PublicationListItem } from "@/lib/sanity/types";
 import { buildMetadata } from "@/lib/seo";
 
-type PageProps = { params: { slug: string } };
+type PageProps = { params: Promise<{ slug: string }> };
 
 type PublicationDetail = {
   _id: string;
@@ -30,20 +30,22 @@ type PublicationDetail = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const publication = await sanityFetch<PublicationDetail | null>(
     publicationBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
-  const frSlug = publication?.slugIntl?.fr?.current ?? params.slug;
-  const enSlug = publication?.slugIntl?.en?.current ?? params.slug;
+  const frSlug = publication?.slugIntl?.fr?.current ?? slug;
+  const enSlug = publication?.slugIntl?.en?.current ?? slug;
 
-  return buildMetadata({
+  return await buildMetadata({
+    locale,
     title: publication?.title,
     description: publication?.summary,
-    path: localizedPath(`/publications/${params.slug}`, locale),
+    path: localizedPath(`/publications/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/publications/${frSlug}`, "fr"),
       en: localizedPath(`/publications/${enSlug}`, "en"),
@@ -52,10 +54,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const locale = await getServerLocale();
   const publication = await sanityFetch<PublicationDetail | null>(
     publicationBySlugQuery,
-    { slug: params.slug, locale },
+    { slug, locale },
     null,
   );
 
@@ -123,7 +126,7 @@ export default async function Page({ params }: PageProps) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Telecharger le PDF
+                T\u00e9l\u00e9charger le PDF
               </Link>
             </div>
           ) : null}
@@ -132,7 +135,7 @@ export default async function Page({ params }: PageProps) {
 
       {publication.projects?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets lies</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Projets li\u00e9s</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {publication.projects.map((project) => (
               <li key={project._id}>
@@ -176,7 +179,7 @@ export default async function Page({ params }: PageProps) {
 
       {publication.resources?.length ? (
         <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Ressources associees</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Ressources associ\u00e9es</h2>
           <ul className="mt-3 space-y-2 text-sm text-neutral-800">
             {publication.resources.map((resource) => (
               <li key={resource._id} className="flex flex-wrap items-center gap-3">
@@ -193,7 +196,7 @@ export default async function Page({ params }: PageProps) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Telecharger
+                    T\u00e9l\u00e9charger
                   </Link>
                 ) : null}
                 {resource.url ? (
