@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { searchQuery } from "@/lib/sanity/queries";
+import { memberListQuery, projectListQuery, publicationListQuery, searchQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
@@ -33,6 +34,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page({ searchParams }: PageProps) {
   const locale = await getServerLocale();
+  const [projects, publications, members] = await Promise.all([
+    sanityFetch<{ _id: string }[]>(projectListQuery, { locale }, []),
+    sanityFetch<{ _id: string }[]>(publicationListQuery, { locale }, []),
+    sanityFetch<{ _id: string }[]>(memberListQuery, { locale }, []),
+  ]);
+  const hasData = projects.length > 0 || publications.length > 0 || members.length > 0;
+
+  if (!hasData) {
+    notFound();
+  }
   const query = searchParams?.q?.toString().trim() ?? "";
   const type = searchParams?.type?.toString().trim() || null;
   const term = query ? `${query}*` : null;

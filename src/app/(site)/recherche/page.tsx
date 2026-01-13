@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 import PortableTextRenderer from "@/components/content/portable-text";
@@ -51,6 +52,15 @@ export default async function Page() {
   const publications = await sanityFetch<PublicationListItem[]>(publicationListQuery, { locale }, []);
 
   const researchProjects = projects.filter((project) => project.projectType === "research");
+  const hasPageContent = Boolean(page?.title || page?.summary || page?.content?.length);
+  const hasAxes = axes.length > 0;
+  const hasResearchProjects = researchProjects.length > 0;
+  const hasPublications = publications.length > 0;
+  const isReady = hasPageContent && (hasAxes || hasResearchProjects || hasPublications);
+
+  if (!isReady) {
+    notFound();
+  }
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
@@ -60,21 +70,17 @@ export default async function Page() {
         <PortableTextRenderer value={page?.content} />
       </div>
 
-      <div className="mt-12">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-2xl font-semibold text-neutral-900">Axes de recherche</h2>
-          <Link
-            href="/recherche/axes"
-            className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
-          >
-            Voir tous les axes
-          </Link>
-        </div>
-        {axes.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
+      {hasAxes ? (
+        <div className="mt-12">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-2xl font-semibold text-neutral-900">Axes de recherche</h2>
+            <Link
+              href="/recherche/axes"
+              className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
+            >
+              Voir tous les axes
+            </Link>
           </div>
-        ) : (
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {axes.slice(0, 4).map((axis) => (
               <article
@@ -92,54 +98,43 @@ export default async function Page() {
               </article>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
 
-      <div className="mt-12 rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-        <h2 className="text-xl font-semibold text-neutral-900">Recherche avancee</h2>
-        <p className="mt-2 text-sm text-neutral-600">
-          Explorez les publications, projets et membres avec une recherche plein texte.
-        </p>
-        <Link
-          href="/recherche/explorer"
-          className="mt-4 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
-        >
-          Lancer la recherche
-        </Link>
-      </div>
+      {hasResearchProjects || hasPublications ? (
+        <div className="mt-12 rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
+          <h2 className="text-xl font-semibold text-neutral-900">Recherche avancee</h2>
+          <p className="mt-2 text-sm text-neutral-600">
+            Explorez les publications, projets et membres avec une recherche plein texte.
+          </p>
+          <Link
+            href="/recherche/explorer"
+            className="mt-4 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+          >
+            Lancer la recherche
+          </Link>
+        </div>
+      ) : null}
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Projets de recherche</h2>
-        {researchProjects.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+      {hasResearchProjects ? (
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-neutral-900">Projets de recherche</h2>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             {researchProjects.slice(0, 4).map((project) => (
               <ProjectCard key={project._id} project={project} />
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Publications liees</h2>
-        {publications.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+      {hasPublications ? (
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold text-neutral-900">Publications liees</h2>
           <div className="mt-6 grid gap-6">
             {publications.slice(0, 4).map((publication) => (
               <PublicationCard key={publication._id} publication={publication} />
             ))}
           </div>
-        )}
-      </div>
-      {!page ? (
-        <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
-          Contenu en cours de publication.
         </div>
       ) : null}
     </section>

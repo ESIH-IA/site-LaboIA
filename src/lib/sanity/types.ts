@@ -91,6 +91,9 @@ export type NewsListItem = {
   date?: string;
   category?: string;
   summary?: string;
+  mainImageUrl?: string;
+  mainImageAlt?: string;
+  sourceUrl?: string;
 };
 
 export type EventListItem = {
@@ -167,41 +170,30 @@ export type Person = {
   teamGroup?: "research" | "associate";
   expertise?: string[];
   links?: {
+    email?: string;
     linkedin?: string;
     scholar?: string;
     orcid?: string;
     website?: string;
   };
+  contribution?: string;
   order?: number;
 };
 
-export type OrgUnit = {
+export type GovernanceChartStrict = {
   _id: string;
   title: string;
   slug?: SanitySlug;
-  description?: string;
-  colorKey?: string;
-  order?: number;
-  lead?: Person | null;
-  members?: Person[];
-};
-
-export type OrgNode = {
-  _id: string;
-  label: string;
-  subtitle?: string;
-  theme?: string;
-  order?: number;
-  person?: Person | null;
-  orgUnit?: OrgUnit | null;
-  children?: OrgNode[];
-};
-
-export type OrgChart = {
-  _id: string;
-  title: string;
-  slug?: SanitySlug;
-  rootNodeId?: string | null;
+  slugIntl?: LocalizedSlug;
+  status: "draft" | "published";
+  orgSectionTitle?: string;
+  orgSectionIntro?: PortableTextBlock[];
+  topPerson: Person;
+  coFounders: [Person, Person];
+  associateResearchers?: Person[];
+  membersSectionTitle?: string;
+  membersSectionIntro?: PortableTextBlock[];
+  membersToShow?: Person[];
 };
 
 export type GovernancePage = {
@@ -217,7 +209,7 @@ export type GovernancePage = {
   membersSectionIntro?: PortableTextBlock[];
   membersGroupsToShow?: Array<"direction" | "gouvernance" | "comite_scientifique">;
   membersOrder?: "nameAsc" | "orderAsc";
-  orgChart?: OrgChart | null;
+  governanceChartStrict?: GovernanceChartStrict | null;
 };
 
 export type TeamPage = {

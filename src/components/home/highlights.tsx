@@ -18,27 +18,40 @@ const highlights = [
 
 export default function Highlights() {
   return (
-    <section className="bg-neutral-100/60">
-      <div className="mx-auto max-w-6xl px-4 py-12">
+    <section className="relative bg-slate-50 overflow-hidden">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 dot-pattern opacity-30" />
+
+      <div className="relative mx-auto max-w-6xl px-4 py-20">
         <div className="max-w-2xl">
-          <h2 className="text-2xl font-semibold text-neutral-900">
+          <h2 className="text-3xl font-bold text-slate-900">
             Ce que nous faisons
           </h2>
-          <p className="mt-3 text-neutral-600">
-            Des axes de recherche appliquée et fondamentale qui valorisent l’IA au service
+          <p className="mt-4 text-base text-slate-600">
+            Des axes de recherche appliquée et fondamentale qui valorisent l&apos;IA au service
             des besoins locaux et des enjeux globaux.
           </p>
         </div>
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {highlights.map((item) => (
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          {highlights.map((item, index) => (
             <article
               key={item.title}
-              className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+              className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
             >
-              <h3 className="text-lg font-semibold text-neutral-900">
+              {/* Top accent gradient */}
+              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
+
+              {/* Number badge */}
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/20 bg-linear-to-br from-cyan-50 to-teal-50">
+                <span className="text-lg font-bold gradient-text-cyan">
+                  {(index + 1).toString().padStart(2, '0')}
+                </span>
+              </div>
+
+              <h3 className="text-lg font-semibold text-slate-900">
                 {item.title}
               </h3>
-              <p className="mt-3 text-sm text-neutral-600">{item.description}</p>
+              <p className="mt-3 text-base text-slate-600 leading-relaxed">{item.description}</p>
             </article>
           ))}
         </div>

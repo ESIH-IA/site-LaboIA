@@ -1,24 +1,21 @@
 "use client";
 
-import type { PortableTextBlock } from "@portabletext/types";
-import { useMemo, useState } from "react";
-
-import PortableTextRenderer from "@/components/content/portable-text";
 import { MemberCard } from "@/components/governance/member-card";
-import type { Person } from "@/lib/sanity/types";
+import type { Person, PersonCategory } from "@/data/governance/types";
 
-function groupLabel(group: Person["governanceGroup"]) {
-  switch (group) {
-    case "direction":
-      return "Direction";
-    case "gouvernance":
-      return "Gouvernance";
-    case "comite_scientifique":
-      return "Comité scientifique";
-    default:
-      return null;
-  }
-}
+const categoryLabels: Record<PersonCategory, string> = {
+  gouvernance: "Gouvernance institutionnelle",
+  direction: "Direction scientifique",
+  recherche: "Recherche",
+  conseil: "Conseil scientifique",
+};
+
+const categoryOrder: PersonCategory[] = [
+  "gouvernance",
+  "direction",
+  "recherche",
+  "conseil",
+];
 
 export function MembersGrid({
   title,
@@ -26,74 +23,59 @@ export function MembersGrid({
   members,
 }: {
   title: string;
-  intro?: PortableTextBlock[];
+  intro?: string;
   members: Person[];
 }) {
-  const [activeGroup, setActiveGroup] = useState<Person["governanceGroup"] | "all">("all");
+  // Grouper les membres par catégorie
+  const membersByCategory = members.reduce(
+    (acc, person) => {
+      const cat = person.roleCategory;
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push(person);
+      return acc;
+    },
+    {} as Record<PersonCategory, Person[]>,
+  );
 
-  const groups = useMemo(() => {
-    const values = new Set<Person["governanceGroup"]>();
-    for (const person of members) if (person.governanceGroup) values.add(person.governanceGroup);
-    return Array.from(values);
-  }, [members]);
-
-  const filtered = useMemo(() => {
-    if (activeGroup === "all") return members;
-    return members.filter((person) => person.governanceGroup === activeGroup);
-  }, [activeGroup, members]);
+  // Trier chaque catégorie par ordre
+  Object.values(membersByCategory).forEach((group) => {
+    group.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+  });
 
   return (
-    <section className="mt-12">
-      <div className="max-w-3xl">
-        <h2 className="text-2xl font-semibold text-foreground">{title}</h2>
-        {intro && intro.length > 0 ? (
-          <div className="mt-4">
-            <PortableTextRenderer value={intro} />
+    <section className="mt-16 flex flex-col items-center">
+      <div className="max-w-3xl text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{title}</h2>
+        {intro ? (
+          <div className="text-muted">
+            <p>{intro}</p>
           </div>
         ) : null}
       </div>
 
-      {groups.length > 1 ? (
-        <div className="mt-6 flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setActiveGroup("all")}
-            className={[
-              "rounded-full border px-4 py-2 text-sm font-medium transition",
-              activeGroup === "all"
-                ? "border-accent/30 bg-accent/10 text-foreground"
-                : "border-border bg-surface text-muted hover:border-accent/30 hover:text-foreground",
-            ].join(" ")}
-          >
-            Tous
-          </button>
-          {groups.map((group) => (
-            <button
-              key={group}
-              type="button"
-              onClick={() => setActiveGroup(group)}
-              className={[
-                "rounded-full border px-4 py-2 text-sm font-medium transition",
-                activeGroup === group
-                  ? "border-accent/30 bg-accent/10 text-foreground"
-                  : "border-border bg-surface text-muted hover:border-accent/30 hover:text-foreground",
-              ].join(" ")}
-            >
-              {groupLabel(group) ?? group}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {filtered.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
+      {members.length === 0 ? (
+        <div className="mt-8 rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
           Aucun membre configuré pour cette section.
         </div>
       ) : (
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((person) => (
-            <MemberCard key={person._id} person={person} />
-          ))}
+        <div className="w-full space-y-16">
+          {categoryOrder.map((category) => {
+            const categoryMembers = membersByCategory[category];
+            if (!categoryMembers || categoryMembers.length === 0) return null;
+
+            return (
+              <div key={category} className="flex flex-col items-center">
+                <h3 className="mb-8 text-xl font-semibold text-foreground uppercase tracking-wide">
+                  {categoryLabels[category]}
+                </h3>
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+                  {categoryMembers.map((person) => (
+                    <MemberCard key={person.id} person={person} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </section>

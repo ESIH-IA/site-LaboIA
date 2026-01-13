@@ -14,7 +14,7 @@ export default function EventBanner() {
               {event.title}
             </h2>
             <p className="mt-2 text-sm text-neutral-600">
-              {event.date} · {event.location}
+              {event.date} • {event.location}
             </p>
           </div>
           <Link

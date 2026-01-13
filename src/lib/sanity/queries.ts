@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 import type { Locale } from "@/lib/i18n";
 import { sanityFetch } from "@/lib/sanity/client";
-import type { GovernancePage, OrgChart, OrgNode, OrgUnit, Person, TeamPage } from "@/lib/sanity/types";
+import type { GovernancePage, GovernanceChartStrict, Person, TeamPage } from "@/lib/sanity/types";
 
 export const projectListQuery = groq`
   *[_type == "project" && status == "published"] | order(startDate desc){
@@ -109,7 +109,10 @@ export const newsListQuery = groq`
     slugIntl,
     date,
     category,
-    "summary": coalesce(summaryIntl[$locale], summary)
+    "summary": coalesce(summaryIntl[$locale], summary),
+    sourceUrl,
+    "mainImageUrl": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt
   }
 `;
 
@@ -123,6 +126,8 @@ export const newsBySlugQuery = groq`
     category,
     "summary": coalesce(summaryIntl[$locale], summary),
     "content": coalesce(contentIntl[$locale], content),
+    "mainImageUrl": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt,
     sourceUrl,
     "relatedProjects": relatedProjects[]->{ _id, title, slug },
     "relatedMembers": relatedMembers[]->{ _id, fullName, slug, role }
@@ -333,28 +338,48 @@ const personProjection = `
   governanceGroup,
   expertise,
   links,
+  contribution,
   order
 `;
 
-const orgUnitProjection = `
-  _id,
-  title,
-  slug,
-  description,
-  colorKey,
-  order,
-  "lead": lead->{${personProjection}},
-  "members": members[]->{${personProjection}} | order(order asc, name asc)
+export const governanceChartStrictBySlugQuery = groq`
+  *[
+    _type == "governanceChartStrict"
+    && status == "published"
+    && (slug.current == $slug || slugIntl[$locale].current == $slug)
+  ][0]{
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "slug": coalesce(slugIntl[$locale], slug),
+    slugIntl,
+    status,
+    "orgSectionTitle": coalesce(orgSectionTitleIntl[$locale], orgSectionTitle),
+    "orgSectionIntro": coalesce(orgSectionIntroIntl[$locale], orgSectionIntro),
+    "topPerson": topPerson->{${personProjection}},
+    "coFounders": coFounders[]->{${personProjection}},
+    "associateResearchers": associateResearchers[]->{${personProjection}},
+    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
+    "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
+    "membersToShow": membersToShow[]->{${personProjection}}
+  }
 `;
 
-const orgNodeProjection = `
-  _id,
-  label,
-  subtitle,
-  theme,
-  order,
-  "person": person->{${personProjection}},
-  "orgUnit": orgUnit->{${orgUnitProjection}}
+export const defaultGovernanceChartStrictQuery = groq`
+  *[_type == "governanceChartStrict" && status == "published"] | order(_updatedAt desc)[0]{
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "slug": coalesce(slugIntl[$locale], slug),
+    slugIntl,
+    status,
+    "orgSectionTitle": coalesce(orgSectionTitleIntl[$locale], orgSectionTitle),
+    "orgSectionIntro": coalesce(orgSectionIntroIntl[$locale], orgSectionIntro),
+    "topPerson": topPerson->{${personProjection}},
+    "coFounders": coFounders[]->{${personProjection}},
+    "associateResearchers": associateResearchers[]->{${personProjection}},
+    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
+    "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
+    "membersToShow": membersToShow[]->{${personProjection}}
+  }
 `;
 
 export const governancePageBySlugQuery = groq`
@@ -375,46 +400,7 @@ export const governancePageBySlugQuery = groq`
     "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
     membersGroupsToShow,
     membersOrder,
-    "orgChart": orgChart->{
-      _id,
-      title,
-      slug,
-      "rootNodeId": rootNode->_id
-    }
-  }
-`;
-
-export const orgChartBySlugQuery = groq`
-  *[_type == "orgChart" && slug.current == $slug][0]{
-    _id,
-    title,
-    slug,
-    "rootNodeId": rootNode->_id
-  }
-`;
-
-export const orgUnitWithMembersQuery = groq`
-  *[_type == "orgUnit" && _id == $id][0]{${orgUnitProjection}}
-`;
-
-export const orgNodeTreeQuery = groq`
-  *[_type == "orgNode" && _id == $id][0]{
-    ${orgNodeProjection},
-    "children": children[]-> | order(order asc){
-      ${orgNodeProjection},
-      "children": children[]-> | order(order asc){
-        ${orgNodeProjection},
-        "children": children[]-> | order(order asc){
-          ${orgNodeProjection},
-          "children": children[]-> | order(order asc){
-            ${orgNodeProjection},
-            "children": children[]-> | order(order asc){
-              ${orgNodeProjection}
-            }
-          }
-        }
-      }
-    }
+    "governanceChartStrictId": governanceChartStrict->_id
   }
 `;
 
@@ -426,16 +412,20 @@ export async function getGovernancePage(locale: Locale) {
   );
 }
 
-export async function getOrgChartBySlug(slug: string) {
-  return sanityFetch<OrgChart | null>(orgChartBySlugQuery, { slug }, null);
+export async function getGovernanceChartStrict(slug: string, locale: Locale) {
+  return sanityFetch<GovernanceChartStrict | null>(
+    governanceChartStrictBySlugQuery,
+    { slug, locale },
+    null,
+  );
 }
 
-export async function getOrgNodeTree(rootId: string) {
-  return sanityFetch<OrgNode | null>(orgNodeTreeQuery, { id: rootId }, null);
-}
-
-export async function getOrgUnitWithMembers(unitId: string) {
-  return sanityFetch<OrgUnit | null>(orgUnitWithMembersQuery, { id: unitId }, null);
+export async function getDefaultGovernanceChartStrict(locale: Locale) {
+  return sanityFetch<GovernanceChartStrict | null>(
+    defaultGovernanceChartStrictQuery,
+    { locale },
+    null,
+  );
 }
 
 export const governanceMembersByNameQuery = groq`

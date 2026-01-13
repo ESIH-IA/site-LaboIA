@@ -2,35 +2,13 @@ import type { MetadataRoute } from "next";
 
 import { locales, localizedPath } from "@/lib/i18n";
 import { sanityFetch } from "@/lib/sanity/client";
-import {
-  eventListQuery,
-  memberListQuery,
-  newsListQuery,
-  programListQuery,
-  projectListQuery,
-  publicationListQuery,
-  researchAxisListQuery,
-} from "@/lib/sanity/queries";
-import type {
-  EventListItem,
-  MemberListItem,
-  NewsListItem,
-  ProgramListItem,
-  ProjectListItem,
-  PublicationListItem,
-  ResearchAxisListItem,
-} from "@/lib/sanity/types";
+import { eventListQuery, memberListQuery, newsListQuery, projectListQuery } from "@/lib/sanity/queries";
+import type { EventListItem, MemberListItem, NewsListItem, ProjectListItem } from "@/lib/sanity/types";
 import { siteUrl } from "@/lib/seo";
 
 const staticPaths = [
   "/",
-  "/recherche",
-  "/recherche/axes",
-  "/recherche/explorer",
-  "/innovation",
-  "/formation",
-  "/publications",
-  "/publications/axes",
+  "/solutions",
   "/ressources",
   "/equipe",
   "/actualites",
@@ -48,14 +26,11 @@ function buildUrl(path: string, locale: (typeof locales)[number]) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const localeParam = { locale: "fr" };
-  const [projects, publications, members, news, events, programs, axes] = await Promise.all([
+  const [projects, members, news, events] = await Promise.all([
     sanityFetch<ProjectListItem[]>(projectListQuery, localeParam, []),
-    sanityFetch<PublicationListItem[]>(publicationListQuery, localeParam, []),
     sanityFetch<MemberListItem[]>(memberListQuery, localeParam, []),
     sanityFetch<NewsListItem[]>(newsListQuery, localeParam, []),
     sanityFetch<EventListItem[]>(eventListQuery, localeParam, []),
-    sanityFetch<ProgramListItem[]>(programListQuery, localeParam, []),
-    sanityFetch<ResearchAxisListItem[]>(researchAxisListQuery, localeParam, []),
   ]);
 
   const entries: MetadataRoute.Sitemap = [];
@@ -71,13 +46,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const enSlug = project.slugIntl?.en?.current ?? project.slug.current;
     entries.push({ url: buildUrl(`/projets/${frSlug}`, "fr") });
     entries.push({ url: buildUrl(`/projets/${enSlug}`, "en") });
-  });
-
-  publications.forEach((publication) => {
-    const frSlug = publication.slugIntl?.fr?.current ?? publication.slug.current;
-    const enSlug = publication.slugIntl?.en?.current ?? publication.slug.current;
-    entries.push({ url: buildUrl(`/publications/${frSlug}`, "fr") });
-    entries.push({ url: buildUrl(`/publications/${enSlug}`, "en") });
   });
 
   members.forEach((member) => {
@@ -99,22 +67,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const enSlug = event.slugIntl?.en?.current ?? event.slug.current;
     entries.push({ url: buildUrl(`/actualites/evenements/${frSlug}`, "fr") });
     entries.push({ url: buildUrl(`/actualites/evenements/${enSlug}`, "en") });
-  });
-
-  programs.forEach((program) => {
-    const frSlug = program.slugIntl?.fr?.current ?? program.slug.current;
-    const enSlug = program.slugIntl?.en?.current ?? program.slug.current;
-    entries.push({ url: buildUrl(`/formation/programmes/${frSlug}`, "fr") });
-    entries.push({ url: buildUrl(`/formation/programmes/${enSlug}`, "en") });
-  });
-
-  axes.forEach((axis) => {
-    const frSlug = axis.slugIntl?.fr?.current ?? axis.slug.current;
-    const enSlug = axis.slugIntl?.en?.current ?? axis.slug.current;
-    entries.push({ url: buildUrl(`/recherche/axes/${frSlug}`, "fr") });
-    entries.push({ url: buildUrl(`/recherche/axes/${enSlug}`, "en") });
-    entries.push({ url: buildUrl(`/publications/axes/${frSlug}`, "fr") });
-    entries.push({ url: buildUrl(`/publications/axes/${enSlug}`, "en") });
   });
 
   return entries;

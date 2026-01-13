@@ -1,5 +1,5 @@
 export type PersonRole =
-  | "Étudiant·e stagiaire"
+  | "Étudiant(e) stagiaire"
   | "Chercheur"
   | "Enseignant-chercheur"
   | "Coordination"
@@ -33,9 +33,9 @@ export const people: readonly Person[] = [
     id: "livenson-nicolas",
     slug: "livenson-nicolas",
     fullName: "Livenson Nicolas",
-    role: "Étudiant·e stagiaire",
+    role: "Étudiant(e) stagiaire",
     bio:
-      "Travaux sur un tuteur numérique intelligent basé sur une architecture RAG multi-agents, appliquée à l’accompagnement des producteurs de mangues en Haïti.",
+      "Travaux sur un tuteur numérique intelligent basé sur une architecture RAG multi-agents, appliquée à l'accompagnement des producteurs de mangues en Haïti.",
     links: [
       {
         label: "Article InfosNation (25 déc. 2025)",
@@ -54,9 +54,9 @@ export const people: readonly Person[] = [
     id: "aishael-picard",
     slug: "aishael-picard",
     fullName: "Aïshael Donata Laury Picard",
-    role: "Étudiant·e stagiaire",
+    role: "Étudiant(e) stagiaire",
     bio:
-      "Travaux sur la vision par ordinateur pour la détection de maladies du manguier (feuilles et fruits), intégrés à un système d’aide à la décision dans le cadre de Deep Farm.",
+      "Travaux sur la vision par ordinateur pour la détection de maladies du manguier (feuilles et fruits), intégrés à un système d'aide à la décision dans le cadre de Deep Farm.",
     links: [
       {
         label: "Article InfosNation (25 déc. 2025)",

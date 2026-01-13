@@ -5,37 +5,43 @@ import { site } from "@/content/site";
 
 const actionStyles = {
   primary:
-    "rounded-xl bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-800",
+    "group rounded-2xl bg-linear-to-r from-cyan-500 to-teal-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-smooth hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30",
   secondary:
-    "rounded-xl border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 transition hover:border-neutral-500",
+    "rounded-2xl border-2 border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-smooth hover:-translate-y-1 hover:border-teal-400 hover:bg-teal-50/50",
   tertiary:
-    "rounded-xl border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:text-neutral-900 hover:border-neutral-400",
+    "rounded-2xl border border-slate-200 px-6 py-3 text-sm font-medium text-slate-600 transition-smooth hover:-translate-y-1 hover:border-slate-400 hover:bg-slate-50",
 } as const;
 
 export default function Intro() {
   return (
-    <section className="relative bg-white">
+    <section className="relative bg-white overflow-hidden">
       {/* Transition douce depuis le Hero sombre */}
-      <div className="pointer-events-none absolute inset-x-0 -top-10 h-10 bg-gradient-to-b from-neutral-950 to-white" />
+      <div className="pointer-events-none absolute inset-x-0 -top-10 h-10 bg-linear-to-b from-slate-950 to-white" />
 
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">
-          {site.shortName}
-        </p>
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 dot-pattern opacity-20" />
 
-        <h2 className="mt-3 max-w-4xl text-2xl font-semibold text-neutral-900 md:text-3xl">
+      <div className="relative mx-auto max-w-6xl px-4 py-20">
+        <div className="inline-flex items-center gap-2 rounded-xl border border-cyan-500/20 bg-cyan-50/50 px-4 py-2">
+          <div className="h-2 w-2 rounded-full bg-cyan-500 animate-glow" />
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+            {site.shortName}
+          </p>
+        </div>
+
+        <h2 className="mt-6 max-w-4xl text-3xl font-bold text-slate-900 md:text-4xl leading-tight">
           {hero.description ?? site.description}
         </h2>
 
-        {/* Texte éditorial court (sans chiffres, recherche + business) */}
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-neutral-600">
+        {/* Texte éditorial court (sans chiffres, recherche + partenariat) */}
+        <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-600">
           Nous menons des travaux de recherche appliquée et fondamentale, et nous
-          accompagnons également des partenaires et des clients dans la conception de solutions
-          basées sur l’intelligence artificielle, la science des données et les systèmes intelligents.
+          accompagnons également des partenaires et des institutions dans la conception de solutions
+          fondées sur l&apos;intelligence artificielle, la science des données et les systèmes intelligents.
         </p>
 
         {hero.actions?.length ? (
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-4">
             {hero.actions.map((action) => (
               <Link
                 key={action.href}
