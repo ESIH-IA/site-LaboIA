@@ -54,25 +54,25 @@ function fallbackSolutionsPage(): SolutionsPage {
     heroPrimaryCta: { label: "Proposer un projet", href: "/contact", variant: "primary" },
     heroSecondaryCta: { label: "Voir les cas d'usage", href: "#cas-usage", variant: "secondary" },
     approachTitle: "Notre approche",
-    approachIntro: "Une demarche scientifique, rigoureuse et orientee impact.",
+    approachIntro: "Une démarche scientifique, rigoureuse et orientée impact.",
     approachSteps: [
       {
         title: "Diagnostic",
         description:
-          "Qualification des donn\u00e9es, besoins m\u00e9tier et contraintes terrain.",
+          "Qualification des données, besoins métier et contraintes terrain.",
       },
       {
-        title: "Modelisation",
+        title: "Modélisation",
         description: "Conception IA, prototypage rapide et validation scientifique.",
       },
       {
-        title: "Deploiement",
-        description: "Integration, accompagnement et mesure d'impact.",
+        title: "Déploiement",
+        description: "Intégration, accompagnement et mesure d'impact.",
       },
     ],
     solutionsTitle: "Solutions IA",
     solutionsIntro:
-      "Des solutions concretes pour analyser, automatiser, decider et rendre l'information accessible.",
+      "Des solutions concrètes pour analyser, automatiser, décider et rendre l'information accessible.",
     solutions: localSolutions.map((solution, index) => ({
       _id: solution.id,
       title: solution.title,
@@ -95,20 +95,20 @@ function fallbackSolutionsPage(): SolutionsPage {
       : null,
     flowTitle: "Flux IA applique",
     flowDescription:
-      "Donn\u00e9es terrain -> Connaissances -> Mod\u00e8les IA -> D\u00e9cision",
+      "Données terrain -> Connaissances -> Modèles IA -> Décision",
     flowSteps: ["Collecte", "Analyse", "Recommandation", "Suivi terrain"],
-    servicesTitle: "Services proposes",
-    servicesIntro: "Un accompagnement complet, de l'idee au deploiement.",
+    servicesTitle: "Services proposés",
+    servicesIntro: "Un accompagnement complet, de l'idée au déploiement.",
     services: [
       "Conseil scientifique",
-      "D\u00e9veloppement IA",
+      "Développement IA",
       "Data engineering",
-      "Syst\u00e8mes d'aide \u00e0 la d\u00e9cision",
+      "Systèmes d'aide à la décision",
       "MLOps et deploiement",
     ],
     sectorsTitle: "Secteurs d'application",
     sectorsIntro:
-      "Des solutions adaptables \u00e0 tous les secteurs disposant de donn\u00e9es et de documents.",
+      "Des solutions adaptables à tous les secteurs disposant de données et de documents.",
     sectors: localSectors.map((sector, index) => ({
       _id: sector.id,
       name: sector.name,
@@ -116,7 +116,7 @@ function fallbackSolutionsPage(): SolutionsPage {
       order: index,
     })),
     projectsTitle: "Projets en cours",
-    projectsIntro: "Nos projets de recherche appliqu\u00e9e et d'innovation.",
+    projectsIntro: "Nos projets de recherche appliquée et d'innovation.",
   };
 }
 
@@ -126,12 +126,12 @@ function fallbackSiteSettings(): SiteSettings {
     name: localSite.name,
     shortName: localSite.shortName,
     description: localSite.description,
-    tagline: "Laboratoire de recherche en IA & science des donn\u00e9es",
+    tagline: "Laboratoire de recherche en IA & science des données",
     footerContactTitle: "Contact",
     footerContactText: "Collaboration, projets, encadrement.",
-    footerContactCtaLabel: "\u00c9crire au laboratoire",
+    footerContactCtaLabel: "Écrire au laboratoire",
     footerContactCtaHref: "/contact",
-    footerLanguageNote: "Langues : francais (defaut), anglais.",
+    footerLanguageNote: "Langues : français (défaut), anglais.",
     logo: {
       url: localSite.assets.logo.src,
       alt: localSite.assets.logo.alt,
@@ -167,7 +167,7 @@ function fallbackHome(): HomePageData {
     introEyebrow: localSite.shortName,
     introTitle: localHero.description ?? localSite.description,
     introBody:
-      "Nous menons des travaux de recherche appliqu\u00e9e et fondamentale, et nous accompagnons \u00e9galement des partenaires et des institutions dans la conception de solutions fond\u00e9es sur l'intelligence artificielle, la science des donn\u00e9es et les syst\u00e8mes intelligents.",
+      "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons également des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents.",
     introActions: localHero.actions?.map((action) => ({
       label: action.label,
       href: action.href,
@@ -175,45 +175,45 @@ function fallbackHome(): HomePageData {
     })),
     highlightsTitle: "Ce que nous faisons",
     highlightsIntro:
-      "Des axes de recherche appliqu\u00e9e et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
+      "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
     highlights: [
       {
         title: "Agriculture intelligente",
         description:
-          "Syst\u00e8mes de pr\u00e9diction des rendements, monitoring des cultures et alertes pr\u00e9coces bas\u00e9es sur la donn\u00e9e.",
+          "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée.",
       },
       {
         title: "Services publics & gouvernance",
         description:
-          "Optimisation des services essentiels, observatoires de donn\u00e9es et aide \u00e0 la d\u00e9cision.",
+          "Optimisation des services essentiels, observatoires de données et aide à la décision.",
       },
       {
-        title: "Sant\u00e9 & environnement",
+        title: "Santé & environnement",
         description:
-          "Analyse de donn\u00e9es \u00e9pid\u00e9miologiques, d\u00e9tection de risques et mod\u00e9lisation de sc\u00e9narios.",
+          "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios.",
       },
     ],
-    kpisTitle: "Indicateurs cles",
+    kpisTitle: "Indicateurs clés",
     kpisIntro:
-      "Donn\u00e9es quantitatives sur nos activit\u00e9s de recherche et d'innovation",
-    featuredProjectsTitle: "Projets \u00e0 la une",
+      "Données quantitatives sur nos activités de recherche et d'innovation",
+    featuredProjectsTitle: "Projets à la une",
     featuredProjectsIntro:
-      "Des initiatives concr\u00e8tes qui d\u00e9montrent la puissance de l'IA et de la science des donn\u00e9es au service des communaut\u00e9s.",
-    featuredProjectsCtaLabel: "D\u00e9couvrir tous les projets",
+      "Des initiatives concrètes qui démontrent la puissance de l'IA et de la science des données au service des communautés.",
+    featuredProjectsCtaLabel: "Découvrir tous les projets",
     featuredProjectsCtaHref: "/projets",
-    publicationsTitle: "Publications r\u00e9centes",
+    publicationsTitle: "Publications récentes",
     publicationsIntro:
-      "Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques.",
+      "Articles, rapports et communications qui documentent nos avancées scientifiques.",
     partnersTitle: "Partenaires & collaborations",
     partnersIntro:
-      "Nous travaillons avec des institutions acad\u00e9miques, publiques et priv\u00e9es pour acc\u00e9l\u00e9rer l'impact de la recherche.",
+      "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche.",
     partnersBadge: "Besoin de collaborer ? Contactez-nous.",
     collaborateTitle: "Collaborer avec le laboratoire",
     collaborateBody:
-      "Partenariats institutionnels, stages, financements ou projets appliques : construisons ensemble des solutions d'impact.",
+      "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact.",
     collaborateActions: [
       { label: "Proposer un partenariat", href: "/collaborer", variant: "primary" },
-      { label: "Candidater a un stage", href: "/collaborer", variant: "secondary" },
+      { label: "Candidater à un stage", href: "/collaborer", variant: "secondary" },
     ],
     eventBanner: {
       enabled: true,

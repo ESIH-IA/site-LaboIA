@@ -31,7 +31,7 @@ export default function CollaborateCta({ title, body, actions }: CollaborateCtaP
               </h2>
               <p className="mt-4 max-w-2xl text-base text-slate-600 leading-relaxed">
                 {body ??
-                  "Partenariats institutionnels, stages, financements ou projets appliqu\u00e9s : construisons ensemble des solutions d'impact."}
+                  "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact."}
               </p>
             </div>
             <div className="flex flex-wrap gap-4">

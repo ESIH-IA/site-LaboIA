@@ -8,8 +8,8 @@ type KpisProps = {
 };
 
 const statusLabels = {
-  draft: "Donn\u00e9es provisoires",
-  confirmed: "Donn\u00e9es valid\u00e9es",
+  draft: "Données provisoires",
+  confirmed: "Données validées",
 } as const;
 
 export default function Kpis({ title, intro, items, meta }: KpisProps) {
@@ -21,11 +21,11 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
       <div className="relative mx-auto max-w-6xl px-4">
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-            {title ?? "Indicateurs cl\u00e9s"}
+            {title ?? "Indicateurs clés"}
           </h2>
           <p className="mt-3 text-base text-slate-600">
             {intro ??
-              "Donn\u00e9es quantitatives sur nos activit\u00e9s de recherche et d'innovation"}
+              "Données quantitatives sur nos activités de recherche et d'innovation"}
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500">
             {meta?.lastUpdated ? (
               <>
-                <span className="font-semibold text-slate-700">Derni\u00e8re mise \u00e0 jour :</span>
+                <span className="font-semibold text-slate-700">Dernière mise à jour :</span>
                 <span>{meta.lastUpdated}</span>
               </>
             ) : null}

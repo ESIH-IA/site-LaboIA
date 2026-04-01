@@ -13,17 +13,17 @@ const fallbackItems: HighlightItem[] = [
   {
     title: "Agriculture intelligente",
     description:
-      "Syst\u00e8mes de pr\u00e9diction des rendements, monitoring des cultures et alertes pr\u00e9coces bas\u00e9es sur la donn\u00e9e.",
+      "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée.",
   },
   {
     title: "Services publics & gouvernance",
     description:
-      "Optimisation des services essentiels, observatoires de donn\u00e9es et aide \u00e0 la d\u00e9cision.",
+      "Optimisation des services essentiels, observatoires de données et aide à la décision.",
   },
   {
-    title: "Sant\u00e9 & environnement",
+    title: "Santé & environnement",
     description:
-      "Analyse de donn\u00e9es \u00e9pid\u00e9miologiques, d\u00e9tection de risques et mod\u00e9lisation de sc\u00e9narios.",
+      "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios.",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
           </h2>
           <p className="mt-4 text-base text-slate-600">
             {intro ??
-              "Des axes de recherche appliqu\u00e9e et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux."}
+              "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux."}
           </p>
         </div>
         <div className="mt-12 grid gap-8 md:grid-cols-3">

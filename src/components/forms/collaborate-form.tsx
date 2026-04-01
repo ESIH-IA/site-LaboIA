@@ -8,16 +8,26 @@ import { trackEvent } from "@/lib/analytics";
 export default function CollaborateForm() {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
 
   return (
-    <div className="mt-10 max-w-3xl rounded-2xl border border-border bg-surface p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-foreground">Demande de collaboration</h2>
+    <div className="glass-card rounded-2xl backdrop-blur-lg border border-white/20 p-8 md:p-10">
+      <div className="mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent mb-2">
+          Formulaire de collaboration
+        </h2>
+        <p className="text-slate-300 text-sm md:text-base">
+          Remplissez ce formulaire et notre équipe vous recontactera rapidement.
+        </p>
+      </div>
+
       <form
-        className="mt-4 space-y-4"
+        className="space-y-6"
         onSubmit={async (event) => {
           event.preventDefault();
           setLoading(true);
           setMessage("");
+          setMessageType(null);
           const form = event.currentTarget;
           const formData = new FormData(form);
           const payload = {
@@ -39,68 +49,106 @@ export default function CollaborateForm() {
               throw new Error("Erreur");
             }
             trackEvent({ category: "form", action: "submit", name: "collaborer" });
-            setMessage("Merci. Votre demande a ete enregistree.");
+            setMessage("Merci. Votre demande a été enregistrée. Nous vous recontacterons très bientôt.");
+            setMessageType("success");
             form.reset();
           } catch {
-            setMessage("Impossible d'envoyer la demande.");
+            setMessage("Impossible d'envoyer la demande. Veuillez réessayer.");
+            setMessageType("error");
           } finally {
             setLoading(false);
           }
         }}
       >
-        <label className="block text-sm text-neutral-700">
-          Nom complet
-          <input
-            type="text"
-            name="fullName"
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
-            required
-          />
-        </label>
-        <label className="block text-sm text-neutral-700">
-          Email
-          <input
-            type="email"
-            name="email"
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
-            required
-          />
-        </label>
-        <label className="block text-sm text-neutral-700">
-          Organisation
+        <div className="grid gap-6 md:grid-cols-2">
+          <label className="block">
+            <span className="block text-sm font-semibold text-slate-200 mb-3">
+              Nom complet <span className="text-cyan-400">*</span>
+            </span>
+            <input
+              type="text"
+              name="fullName"
+              className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-slate-400 outline-none transition-all focus-visible:border-cyan-400/50 focus-visible:ring-2 focus-visible:ring-cyan-400/20 hover:border-white/20"
+              placeholder="Votre nom complet"
+              required
+            />
+          </label>
+
+          <label className="block">
+            <span className="block text-sm font-semibold text-slate-200 mb-3">
+              Email <span className="text-cyan-400">*</span>
+            </span>
+            <input
+              type="email"
+              name="email"
+              className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-slate-400 outline-none transition-all focus-visible:border-cyan-400/50 focus-visible:ring-2 focus-visible:ring-cyan-400/20 hover:border-white/20"
+              placeholder="votre.email@example.com"
+              required
+            />
+          </label>
+        </div>
+
+        <label className="block">
+          <span className="block text-sm font-semibold text-slate-200 mb-3">
+            Organisation
+          </span>
           <input
             type="text"
             name="organization"
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+            className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-slate-400 outline-none transition-all focus-visible:border-cyan-400/50 focus-visible:ring-2 focus-visible:ring-cyan-400/20 hover:border-white/20"
+            placeholder="Nom de votre organisation"
           />
         </label>
-        <label className="block text-sm text-neutral-700">
-          Message
+
+        <label className="block">
+          <span className="block text-sm font-semibold text-slate-200 mb-3">
+            Message <span className="text-cyan-400">*</span>
+          </span>
           <textarea
             name="message"
-            rows={5}
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+            rows={6}
+            className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-slate-400 outline-none transition-all focus-visible:border-cyan-400/50 focus-visible:ring-2 focus-visible:ring-cyan-400/20 hover:border-white/20 resize-none"
+            placeholder="Décrivez votre projet de collaboration..."
             required
           />
         </label>
-        <label className="flex items-start gap-3 text-sm text-neutral-600">
-          <input type="checkbox" required className="mt-1" />
+
+        <label className="flex items-start gap-3 text-sm text-slate-300">
+          <input
+            type="checkbox"
+            required
+            className="mt-1 w-4 h-4 rounded accent-cyan-400 cursor-pointer"
+          />
           <span>
-            J&apos;accepte que mes informations soient traitees conformement a la{" "}
-            <Link href="/confidentialite" className="underline underline-offset-4">
-              politique de confidentialit\u00e9
+            J&apos;accepte que mes informations soient traitées conformément à la{" "}
+            <Link href="/confidentialite" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors">
+              politique de confidentialité
             </Link>
             .
           </span>
         </label>
-        <button
-          type="submit"
-          className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-white shadow-sm shadow-black/10 transition hover:bg-primary/90 disabled:opacity-60"
-          disabled={loading}
-        >
-          Envoyer
-        </button>
-        {message ? <p className="text-sm text-neutral-600">{message}</p> : null}
+
+        <div className="pt-4">
+          <button
+            type="submit"
+            className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 disabled:opacity-60 disabled:cursor-not-allowed"
+            disabled={loading}
+          >
+            {loading ? "Envoi en cours..." : "Envoyer ma demande"}
+          </button>
+        </div>
+
+        {message ? (
+          <div
+            className={`mt-6 p-4 rounded-xl text-sm ${
+              messageType === "success"
+                ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-200"
+                : "bg-red-500/10 border border-red-500/30 text-red-200"
+            }`}
+          >
+            {message}
+          </div>
+        ) : null}
       </form>
     </div>
   );

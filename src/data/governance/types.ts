@@ -42,7 +42,7 @@ export interface GovernanceData {
     sectionTitle: string;
     sectionIntro?: string;
     topPerson: Person;
-    coFounders: [Person, Person];
+    scientificDirectors: [Person, Person];
     associateResearchers: Person[];
   };
   members: {

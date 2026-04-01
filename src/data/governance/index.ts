@@ -11,9 +11,9 @@ import {
  * Configuration de la page Équipe & Gouvernance de LaCDIA
  * CMS local - Toutes les données sont ici
  *
- * Structure harmonisée :
- * - Co-fondateurs du laboratoire (3 personnes) : statut juridique commun
- * - Fonctions opérationnelles distinctes : gouvernance institutionnelle + direction scientifique
+ * Structure organisationnelle :
+ * - Gouvernance institutionnelle : Directeur de l'ESIH
+ * - Direction scientifique : deux directeurs spécialistes (ML et IA)
  * - Conseil scientifique : chercheurs associés et conseillers internationaux
  */
 export const governanceData: GovernanceData = {
@@ -22,16 +22,16 @@ export const governanceData: GovernanceData = {
     "Découvrez la structure organisationnelle et l'équipe qui pilote LaCDIA dans sa mission de recherche et d'innovation en intelligence artificielle au service d'Haïti.",
 
   orgChart: {
-    sectionTitle: "Co-fondateurs du laboratoire",
+    sectionTitle: "Équipe de direction",
     sectionIntro:
-      "Le laboratoire a été co-fondé par des acteurs académiques et scientifiques. Sa gouvernance institutionnelle est assurée par l'ESIH, tandis que la direction scientifique est portée par les fondateurs spécialistes en intelligence artificielle et en apprentissage automatique. Le laboratoire s'appuie également sur un conseil scientifique composé de chercheurs associés et de conseillers scientifiques internationaux.",
+      "Le LaCDIA est dirigé par une équipe pluridisciplinaire associant gouvernance institutionnelle et expertise scientifique. La structure de direction combine la gouvernance institutionnelle assurée par la direction de l'ESIH et la direction scientifique portée par deux spécialistes en intelligence artificielle et en apprentissage automatique. Le laboratoire s'appuie également sur un conseil scientifique composé de chercheurs associés et de conseillers scientifiques internationaux.",
     topPerson: patrickAttie,
-    coFounders: [livensonNicolas, aishaelPicard],
+    scientificDirectors: [livensonNicolas, aishaelPicard],
     associateResearchers: [benediquePaul, sergeMranda],
   },
 
   members: {
-    sectionTitle: "Membres & Profils détaillés",
+    sectionTitle: "Équipe scientifique",
     sectionIntro:
       "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie. Leur expertise complémentaire permet d'aborder les enjeux de recherche avec une approche multidisciplinaire et innovante.",
     people: [patrickAttie, livensonNicolas, aishaelPicard, benediquePaul, sergeMranda],

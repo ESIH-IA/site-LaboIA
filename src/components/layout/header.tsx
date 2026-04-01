@@ -126,7 +126,7 @@ export default function Header({
               {site.shortName}
             </div>
             <div className="hidden text-xs text-muted md:block">
-              {site.tagline ?? "Laboratoire de recherche en IA & science des donn\u00e9es"}
+              {site.tagline ?? "Laboratoire de recherche en IA & science des données"}
             </div>
           </div>
         </Link>

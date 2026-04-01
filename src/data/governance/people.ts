@@ -10,12 +10,12 @@ export const patrickAttie: Person = {
   initials: "PA",
   slug: "patrick-attie",
   photo: "/images/team/patrick-attie.jpg",
-  roleTitle: "Gouvernance institutionnelle",
+  roleTitle: "Directeur institutionnel",
   roleCategory: "gouvernance",
   shortBio:
-    "Co-fondateur du laboratoire LaCDIA. Directeur général de l'ESIH depuis 2004. Assure l'ancrage institutionnel, la légitimité académique et le cadre stratégique du laboratoire.",
+    "Directeur général de l'ESIH depuis 2004. Assure la gouvernance institutionnelle, l'ancrage académique et le développement stratégique du LaCDIA.",
   affiliation: "ESIH - École Supérieure d'Infotronique d'Haïti",
-  longBio: `Patrick Attié est co-fondateur du laboratoire LaCDIA et Directeur général de l'École Supérieure d'Infotronique d'Haïti (ESIH) depuis sa création en 2004. Ingénieur de formation, il a développé une vision stratégique axée sur l'innovation pédagogique et la recherche appliquée en technologies de l'information. Sous sa direction, l'ESIH est devenue une institution de référence en Haïti pour la formation en génie informatique et télécommunications. En tant que co-fondateur de LaCDIA, il assure la gouvernance institutionnelle du laboratoire, garantissant son ancrage académique et le développement de partenariats stratégiques. Son engagement pour l'excellence académique et le développement technologique en Haïti fait de lui un acteur clé du secteur éducatif et de l'innovation dans la région.`,
+  longBio: `Patrick Attié est Directeur général de l'École Supérieure d'Infotronique d'Haïti (ESIH) depuis sa création en 2004. Ingénieur de formation, il a développé une vision stratégique axée sur l'innovation pédagogique et la recherche appliquée en technologies de l'information. Sous sa direction, l'ESIH est devenue une institution de référence en Haïti pour la formation en génie informatique et télécommunications. En tant que directeur institutionnel du LaCDIA, il assure la gouvernance du laboratoire, garantissant son ancrage académique, son intégrité scientifique et le développement de partenariats stratégiques avec des institutions internationales. Son engagement pour l'excellence académique et le développement technologique en Haïti en fait un acteur clé du secteur éducatif et de l'innovation dans la région.`,
   expertise: [
     "Gouvernance institutionnelle",
     "Direction stratégique",
@@ -36,12 +36,12 @@ export const aishaelPicard: Person = {
   initials: "AP",
   slug: "aishael-picard",
   photo: "/images/team/aishael-picard.jpg",
-  roleTitle: "Direction scientifique — Apprentissage automatique",
+  roleTitle: "Directrice scientifique — Apprentissage automatique",
   roleCategory: "direction",
   shortBio:
-    "Co-fondatrice du laboratoire LaCDIA. Titulaire d'un doctorat en sciences des données. Pilote les activités scientifiques en apprentissage automatique, modèles ML, méthodologies et qualité scientifique.",
+    "Docteure en sciences des données. Pilote les activités de recherche en apprentissage automatique, la méthodologie scientifique et la qualité des travaux du laboratoire.",
   affiliation: "LaCDIA",
-  longBio: `Aïshael Donata Laury Picard est co-fondatrice du laboratoire LaCDIA, où elle assure la direction scientifique des activités en apprentissage automatique. Titulaire d'un doctorat en sciences des données, elle possède une expertise approfondie en machine learning, vision par ordinateur et analyse de données complexes. Elle pilote le développement de modèles ML rigoureux et supervise plusieurs projets de recherche appliquée axés sur les problématiques locales haïtiennes, notamment dans les domaines de l'agriculture de précision et de l'analyse d'images satellites. Aïshael est également engagée dans la formation de la prochaine génération de chercheurs haïtiens en IA et dans la promotion de l'éthique et de la transparence dans l'utilisation des technologies d'intelligence artificielle.`,
+  longBio: `Aïshael Donata Laury Picard est Directrice scientifique du LaCDIA en charge de l'apprentissage automatique. Titulaire d'un doctorat en sciences des données, elle possède une expertise approfondie en machine learning, vision par ordinateur et analyse de données complexes. Elle pilote le développement de modèles ML rigoureux et supervise plusieurs projets de recherche appliquée axés sur les problématiques locales haïtiennes, notamment dans les domaines de l'agriculture de précision et de l'analyse d'images satellites. Aïshael est également engagée dans l'encadrement doctorale et la formation de la prochaine génération de chercheurs haïtiens en intelligence artificielle. Elle promeut activement l'éthique et la transparence dans l'utilisation des technologies d'intelligence artificielle, en veillant à ce que les recherches du laboratoire servent les enjeux de développement durable.`,
   expertise: [
     "Direction scientifique",
     "Machine Learning",
@@ -65,12 +65,12 @@ export const livensonNicolas: Person = {
   initials: "LN",
   slug: "livenson-nicolas",
   photo: "/images/team/livenson-nicolas.jpg",
-  roleTitle: "Direction scientifique — Intelligence artificielle",
+  roleTitle: "Directeur scientifique — Intelligence artificielle",
   roleCategory: "direction",
   shortBio:
-    "Co-fondateur du laboratoire LaCDIA. Ingénieur en intelligence artificielle spécialisé dans les systèmes multi-agents et l'apprentissage profond. Assure le pilotage scientifique, la conception des solutions IA et la supervision des projets.",
+    "Ingénieur IA spécialisé en deep learning et systèmes multi-agents. Pilote la conception des solutions IA et la supervision des projets de recherche appliquée.",
   affiliation: "LaCDIA - ESTIA",
-  longBio: `Livenson Nicolas est co-fondateur du laboratoire LaCDIA, où il assure la direction scientifique des activités en intelligence artificielle. Ingénieur en intelligence artificielle spécialisé dans les systèmes multi-agents et l'apprentissage profond, il travaille en collaboration avec l'ESTIA (École Supérieure des Technologies Industrielles Avancées) en France. Ses recherches portent principalement sur le développement de modèles de deep learning pour la vision par ordinateur, avec des applications concrètes dans la détection de maladies végétales et l'analyse d'images agricoles. Livenson pilote la conception des solutions IA du laboratoire et supervise les projets de recherche appliquée. Il contribue activement à la diffusion des connaissances en IA au sein de la communauté scientifique haïtienne. Son expertise technique et son engagement pour l'innovation font de lui un pilier du développement des compétences locales en intelligence artificielle.`,
+  longBio: `Livenson Nicolas est Directeur scientifique du LaCDIA en charge de l'intelligence artificielle. Ingénieur spécialisé dans les systèmes multi-agents et l'apprentissage profond, il travaille en collaboration avec l'ESTIA (École Supérieure des Technologies Industrielles Avancées) en France. Ses recherches portent principalement sur le développement de modèles de deep learning pour la vision par ordinateur, avec des applications concrètes et mesurables dans la détection de maladies végétales et l'analyse d'images agricoles. Livenson pilote la conception des solutions IA du laboratoire, supervise les projets de recherche appliquée et contribue activement à l'encadrement des chercheurs et doctorants. Il diffuse activement les connaissances en intelligence artificielle au sein de la communauté scientifique haïtienne. Son expertise technique et son engagement pour l'innovation constituent un pilier du développement des compétences locales en intelligence artificielle.`,
   expertise: [
     "Direction scientifique",
     "Intelligence artificielle",

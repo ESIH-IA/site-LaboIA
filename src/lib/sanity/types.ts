@@ -196,7 +196,7 @@ export type GovernanceChartStrict = {
   orgSectionTitle?: string;
   orgSectionIntro?: PortableTextBlock[];
   topPerson: Person;
-  coFounders: [Person, Person];
+  scientificDirectors: [Person, Person];
   associateResearchers?: Person[];
   membersSectionTitle?: string;
   membersSectionIntro?: PortableTextBlock[];

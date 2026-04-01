@@ -23,11 +23,11 @@ export default function FeaturedProjects({
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-              {title ?? "Projets \u00e0 la une"}
+              {title ?? "Projets à la une"}
             </h2>
             <p className="mt-3 max-w-2xl text-base text-slate-600 leading-relaxed">
               {intro ??
-                "Des initiatives concr\u00e8tes qui d\u00e9montrent la puissance de l'IA et de la science des donn\u00e9es au service des communaut\u00e9s."}
+                "Des initiatives concrètes qui démontrent la puissance de l'IA et de la science des données au service des communautés."}
             </p>
           </div>
 
@@ -35,7 +35,7 @@ export default function FeaturedProjects({
             href={ctaHref ?? "/projets"}
             className="inline-flex items-center justify-center rounded-xl border-2 border-cyan-500 px-6 py-3 text-sm font-semibold text-cyan-600 transition-all hover:-translate-y-1 hover:bg-cyan-50"
           >
-            {ctaLabel ?? "D\u00e9couvrir tous les projets"}
+            {ctaLabel ?? "Découvrir tous les projets"}
           </Link>
         </div>
 

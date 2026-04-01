@@ -6,7 +6,7 @@ interface GovernanceChartStrictProps {
   orgSectionTitle?: string;
   orgSectionIntro?: string;
   topPerson: Person;
-  coFounders: [Person, Person];
+  scientificDirectors: [Person, Person];
   associateResearchers?: Person[];
 }
 
@@ -17,7 +17,7 @@ function PersonCard({
 }: {
   person: Person;
   borderColor: string;
-  level: "top" | "cofounder" | "associate";
+  level: "top" | "director" | "associate";
   onClick?: () => void;
 }) {
   const initials = person.initials;
@@ -87,13 +87,13 @@ function scrollToProfile(personId: string) {
 
 export function GovernanceChartStrict({
   topPerson,
-  coFounders,
+  scientificDirectors,
   associateResearchers = [],
 }: GovernanceChartStrictProps) {
-  if (!topPerson || coFounders.length !== 2) {
+  if (!topPerson || scientificDirectors.length !== 2) {
     return (
       <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center text-sm text-muted">
-        Configuration invalide : 1 directeur général et exactement 2 co-fondateurs requis.
+        Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis.
       </div>
     );
   }
@@ -146,10 +146,10 @@ export function GovernanceChartStrict({
           />
         </svg>
 
-        {/* Level 2: Co-Founders */}
+        {/* Level 2: Scientific Directors */}
         <div className="grid w-full max-w-4xl grid-cols-2 gap-8">
-          {coFounders.map((coFounder) => (
-            <div key={coFounder.id} className="flex flex-col items-center">
+          {scientificDirectors.map((director) => (
+            <div key={director.id} className="flex flex-col items-center">
               {/* Vertical line to card */}
               <svg
                 width="2"
@@ -167,10 +167,10 @@ export function GovernanceChartStrict({
                 />
               </svg>
               <PersonCard
-                person={coFounder}
+                person={director}
                 borderColor="border-blue-500"
-                level="cofounder"
-                onClick={() => scrollToProfile(coFounder.id)}
+                level="director"
+                onClick={() => scrollToProfile(director.id)}
               />
             </div>
           ))}
@@ -227,13 +227,13 @@ export function GovernanceChartStrict({
 
         <div className="border-l-2 border-border pl-6">
           <div className="flex flex-col gap-6">
-            {coFounders.map((coFounder) => (
+            {scientificDirectors.map((director) => (
               <PersonCard
-                key={coFounder.id}
-                person={coFounder}
+                key={director.id}
+                person={director}
                 borderColor="border-blue-500"
-                level="cofounder"
-                onClick={() => scrollToProfile(coFounder.id)}
+                level="director"
+                onClick={() => scrollToProfile(director.id)}
               />
             ))}
           </div>

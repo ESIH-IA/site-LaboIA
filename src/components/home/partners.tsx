@@ -17,8 +17,8 @@ type PartnersProps = {
 const typeLabels: Record<string, string> = {
   partner: "Partenaire",
   client: "Client",
-  media: "M\u00e9dia",
-  academic: "Acad\u00e9mique",
+  media: "Média",
+  academic: "Académique",
 };
 
 export default function Partners({ title, intro, badge, items }: PartnersProps) {
@@ -32,7 +32,7 @@ export default function Partners({ title, intro, badge, items }: PartnersProps) 
             </h2>
             <p className="mt-3 text-base text-slate-600">
               {intro ??
-                "Nous travaillons avec des institutions acad\u00e9miques, publiques et priv\u00e9es pour acc\u00e9l\u00e9rer l'impact de la recherche."}
+                "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche."}
             </p>
           </div>
           <div className="rounded-2xl border border-teal-200 bg-linear-to-br from-teal-50 to-cyan-50 px-5 py-3 text-sm text-teal-700 md:whitespace-nowrap">

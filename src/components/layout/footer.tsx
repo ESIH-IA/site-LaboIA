@@ -54,7 +54,7 @@ export default function Footer({
               href={site.footerContactCtaHref ?? "/contact"}
               className="inline-flex text-slate-200 underline underline-offset-4"
             >
-              {site.footerContactCtaLabel ?? "\u00c9crire au laboratoire"}
+              {site.footerContactCtaLabel ?? "Écrire au laboratoire"}
             </Link>
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function Footer({
         <div className="md:col-span-12">
           <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-400 md:flex-row md:items-center md:justify-between">
             <div>
-              Copyright {new Date().getFullYear()} {site.shortName}. Tous droits r\u00e9serv\u00e9s.
+              Copyright {new Date().getFullYear()} {site.shortName}. Tous droits réservés.
             </div>
             <div className="flex flex-wrap gap-4">
               {nav.footerNav.map((item) => (

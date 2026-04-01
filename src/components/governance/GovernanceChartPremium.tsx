@@ -4,7 +4,7 @@ import type { Person } from "@/data/governance/types";
 
 interface GovernanceChartPremiumProps {
   topPerson: Person;
-  coFounders: [Person, Person];
+  scientificDirectors: [Person, Person];
   associateResearchers?: Person[];
 }
 
@@ -179,14 +179,14 @@ function ConnectionLine({
 
 export function GovernanceChartPremium({
   topPerson,
-  coFounders,
+  scientificDirectors,
   associateResearchers = [],
 }: GovernanceChartPremiumProps) {
-  if (!topPerson || coFounders.length !== 2) {
+  if (!topPerson || scientificDirectors.length !== 2) {
     return (
       <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
         <p className="text-base text-slate-600">
-          Configuration invalide : 1 personne en gouvernance et exactement 2 co-fondateurs en direction scientifique requis.
+          Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis.
         </p>
       </div>
     );
@@ -216,15 +216,15 @@ export function GovernanceChartPremium({
         {/* Niveau 2 : Direction scientifique — Deux cartes équilibrées centrées */}
         <div className="flex justify-center w-full mt-8 mb-16">
           <div className="grid grid-cols-2 gap-16 max-w-4xl">
-            {coFounders.map((coFounder) => (
-              <div key={coFounder.id} className="flex flex-col items-center">
+            {scientificDirectors.map((director) => (
+              <div key={director.id} className="flex flex-col items-center">
                 {/* Ligne verticale vers la carte */}
                 <ConnectionLine orientation="vertical" length={32} />
                 <div className="mt-6 w-full max-w-xs">
                   <PremiumCard
-                    person={coFounder}
+                    person={director}
                     level="direction"
-                    onClick={() => scrollToProfile(coFounder.id)}
+                    onClick={() => scrollToProfile(director.id)}
                   />
                 </div>
               </div>
@@ -270,12 +270,12 @@ export function GovernanceChartPremium({
 
         <div className="border-l-2 border-dashed border-slate-300 pl-6">
           <div className="flex flex-col gap-8">
-            {coFounders.map((coFounder) => (
+            {scientificDirectors.map((director) => (
               <PremiumCard
-                key={coFounder.id}
-                person={coFounder}
+                key={director.id}
+                person={director}
                 level="direction"
-                onClick={() => scrollToProfile(coFounder.id)}
+                onClick={() => scrollToProfile(director.id)}
               />
             ))}
           </div>

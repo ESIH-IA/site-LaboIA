@@ -37,7 +37,7 @@ export default function NewsletterUnsubscribeForm() {
         throw new Error(payload?.message || "Erreur.");
       }
       setStatus("success");
-      setMessage("Votre demande a ete prise en compte.");
+      setMessage("Votre demande a été prise en compte.");
     } catch {
       setStatus("error");
       setMessage("Impossible de traiter la demande.");
