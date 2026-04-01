@@ -8,7 +8,8 @@ import { locales, defaultLocale } from "@/lib/i18n";
 export const routing = defineRouting({
   locales,
   defaultLocale,
-  // La locale par défaut n'est PAS préfixée dans l'URL
-  // / = français, /en = english, /es = español, /ht = kreyòl
-  localePrefix: "as-needed",
+  // Toutes les locales sont préfixées dans l'URL
+  // /fr = français, /en = english, /es = español, /ht = kreyòl
+  // La racine / redirige automatiquement vers /fr
+  localePrefix: "always",
 });

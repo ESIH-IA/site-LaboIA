@@ -93,7 +93,7 @@ export default async function Page() {
             </h1>
           ) : (
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8 animate-fade-in-up leading-tight" style={{ animationDelay: "100ms" }}>
-              Actualit\u00e9s & Innovation
+              Actualités & Innovation
             </h1>
           )}
 
@@ -103,7 +103,7 @@ export default async function Page() {
             </p>
           ) : (
             <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-              Suivez les derni\u00e8res avanc\u00e9es en intelligence artificielle, science des donn\u00e9es et innovation technologique au LaCDIA.
+              Suivez les dernières avancées en intelligence artificielle, science des données et innovation technologique au LaCDIA.
             </p>
           )}
         </div>
@@ -147,10 +147,10 @@ export default async function Page() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
-              Derni\u00e8res actualit\u00e9s
+              Dernières actualités
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-400">
-              D\u00e9couvrez nos derni\u00e8res publications et actualit\u00e9s.
+              Découvrez nos dernières publications et actualités.
             </p>
           </div>
 
