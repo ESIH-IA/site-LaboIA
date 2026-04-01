@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "research": "Recherche",
+    "lacdiaTech": "LaCDIA Tech",
+    "news": "Actualités",
+    "team": "Équipe",
+    "collaborate": "Collaborer",
+    "contact": "Contact",
+    "partnerships": "Partenariats",
+    "publications": "Publications",
+    "training": "Formation",
+    "resources": "Ressources",
+    "solutions": "Solutions IA"
+  },
+  "footer": {
+    "legalNotice": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Politique cookies",
+    "newsletter": "Newsletter",
+    "copyright": "Tous droits réservés.",
+    "laboratory": "Le Laboratoire",
+    "navigation": "Navigation",
+    "contact": "Contact"
+  },
+  "common": {
+    "learnMore": "En savoir plus",
+    "seeAll": "Voir tout",
+    "backHome": "Retour à l'accueil",
+    "download": "Télécharger",
+    "share": "Partager",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "noResults": "Aucun résultat",
+    "loading": "Chargement...",
+    "readMore": "Lire la suite",
+    "contactUs": "Nous contacter",
+    "collaborate": "Collaborer avec nous",
+    "discoverServices": "Découvrir nos services",
+    "discoverResearch": "Découvrir nos recherches",
+    "requestQuote": "Demander un devis",
+    "becomePartner": "Devenir partenaire"
+  },
+  "home": {
+    "heroBadge": "Laboratoire de recherche en IA",
+    "heroDescription": "Premier laboratoire de recherche en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
+    "discoverLab": "Découvrir le laboratoire",
+    "researchAxes": "Nos axes de recherche",
+    "techServices": "LaCDIA Tech — Services"
+  },
+  "about": {
+    "title": "À propos du LaCDIA",
+    "badge": "Laboratoire de recherche",
+    "fullName": "Laboratoire Caribéen des Sciences de Données et de l'Intelligence Artificielle",
+    "vision": "Vision",
+    "visionQuote": "Devenir le pôle de référence en intelligence artificielle et science des données dans la Caraïbe, en produisant une recherche d'excellence au service du développement durable de la région.",
+    "mission": "Mission",
+    "values": "Valeurs",
+    "positioning": "Positionnement stratégique",
+    "context": "Contexte et enjeux",
+    "roadmap": "Plan de développement 2025-2029"
+  },
+  "research": {
+    "badge": "Département Scientifique",
+    "title": "Recherche en Intelligence Artificielle et Science des Données",
+    "axes": "Axes de recherche",
+    "methodologies": "Approches méthodologiques",
+    "expertise": "Domaines d'expertise",
+    "publications": "Politique de publication",
+    "doctoral": "Encadrement doctoral",
+    "animation": "Animation scientifique",
+    "collaborations": "Collaborations et partenariats"
+  },
+  "tech": {
+    "badge": "LaCDIA Tech",
+    "title": "Département Technologique et Innovation",
+    "tagline": "Transformer la recherche en solutions concrètes pour les institutions et les entreprises",
+    "mission": "Mission",
+    "pipeline": "Pipeline Recherche → Produit",
+    "poles": "Nos pôles d'expertise",
+    "services": "Catalogue de services",
+    "useCases": "Cas d'usage concrets",
+    "clients": "Clients et partenaires cibles",
+    "models": "Modèles de collaboration"
+  },
+  "partnerships": {
+    "title": "Partenariats",
+    "subtitle": "Un réseau de collaborations au service de la recherche et de l'innovation",
+    "national": "Partenaires nationaux",
+    "regional": "Partenaires régionaux caribéens",
+    "international": "Partenaires internationaux",
+    "industrial": "Partenaires industriels et institutionnels",
+    "modalities": "Modalités de collaboration",
+    "sdg": "Contribution aux ODD"
+  },
+  "values": {
+    "excellence": "Excellence scientifique",
+    "excellenceDesc": "Les plus hauts standards de rigueur méthodologique et d'intégrité scientifique.",
+    "innovation": "Innovation responsable",
+    "innovationDesc": "L'innovation technologique accompagnée d'une réflexion éthique approfondie.",
+    "inclusivity": "Inclusivité",
+    "inclusivityDesc": "Des technologies accessibles, tenant compte des diversités linguistiques et culturelles.",
+    "interdisciplinarity": "Interdisciplinarité",
+    "interdisciplinarityDesc": "Le croisement des regards disciplinaires pour résoudre des défis complexes.",
+    "openness": "Ouverture",
+    "opennessDesc": "Une recherche transparente, reproductible et partagée."
+  },
+  "locale": {
+    "switchLanguage": "Changer de langue",
+    "currentLanguage": "Langue actuelle"
+  }
+}

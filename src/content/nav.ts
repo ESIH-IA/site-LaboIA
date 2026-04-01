@@ -1,10 +1,11 @@
 export const mainNav = [
   { label: "Accueil", href: "/" },
-  { label: "Services et Solutions IA", href: "/solutions" },
+  { label: "À propos", href: "/a-propos" },
+  { label: "Recherche", href: "/recherche/departement-scientifique" },
+  { label: "LaCDIA Tech", href: "/lacdia-tech" },
   { label: "Actualités", href: "/actualites" },
   { label: "Équipe", href: "/equipe" },
   { label: "Collaborer", href: "/collaborer" },
-  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const footerNav = [

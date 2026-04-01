@@ -2,21 +2,21 @@ export const hero = {
   bannerSrc: "/banners/banner-neutral.svg",
   bannerAlt: "Bannière principale du LaCDIA",
   description:
-    "Nous menons des recherches en intelligence artificielle et science des données pour l'agriculture, les services publics, la santé et l'innovation en Haïti et à l'international.",
+    "Premier laboratoire de recherche en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
   actions: [
     {
-      label: "Collaborer avec le laboratoire",
-      href: "/collaborer",
+      label: "Découvrir le laboratoire",
+      href: "/a-propos",
       variant: "primary",
     },
     {
-      label: "Explorer nos projets",
-      href: "/projets",
+      label: "Nos axes de recherche",
+      href: "/recherche/departement-scientifique",
       variant: "secondary",
     },
     {
-      label: "Voir les actualités",
-      href: "/actualites",
+      label: "LaCDIA Tech — Services",
+      href: "/lacdia-tech",
       variant: "tertiary",
     },
   ],

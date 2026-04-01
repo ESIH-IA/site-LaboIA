@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "check:routes": "node scripts/check-routes.mjs",
-    "sanity:seed": "node scripts/sanity-seed.mjs"
+    "sanity:seed": "node scripts/sanity-seed.mjs",
+    "translate": "node scripts/auto-translate.mjs",
+    "translate:en": "node scripts/auto-translate.mjs --target en",
+    "translate:es": "node scripts/auto-translate.mjs --target es",
+    "translate:ht": "node scripts/auto-translate.mjs --target ht"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",
@@ -16,6 +20,7 @@
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^5.3.0",
     "next": "16.1.0",
+    "next-intl": "^4.8.4",
     "next-sanity": "^12.0.12",
     "react": "19.2.3",
     "react-dom": "19.2.3",

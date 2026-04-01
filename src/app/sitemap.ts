@@ -8,10 +8,16 @@ import { siteUrl } from "@/lib/seo";
 
 const staticPaths = [
   "/",
+  "/a-propos",
+  "/recherche/departement-scientifique",
+  "/lacdia-tech",
   "/solutions",
+  "/partenariats",
+  "/publications",
   "/ressources",
   "/equipe",
   "/actualites",
+  "/formation",
   "/collaborer",
   "/contact",
   "/mentions-legales",

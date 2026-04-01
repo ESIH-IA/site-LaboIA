@@ -31,18 +31,16 @@ export default function Footer({
 
         <div className="md:col-span-4">
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-            Navigation
+            Le Laboratoire
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-            {nav.footerNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4"
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="mt-4 grid grid-cols-1 gap-y-2.5 text-sm">
+            <Link href="/a-propos" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">À propos</Link>
+            <Link href="/recherche/departement-scientifique" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">Département Scientifique</Link>
+            <Link href="/lacdia-tech" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">LaCDIA Tech</Link>
+            <Link href="/equipe" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">Équipe</Link>
+            <Link href="/partenariats" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">Partenariats</Link>
+            <Link href="/publications" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">Publications</Link>
+            <Link href="/actualites" className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4">Actualités</Link>
           </div>
         </div>
 

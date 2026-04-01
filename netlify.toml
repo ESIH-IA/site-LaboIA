@@ -1,0 +1,36 @@
+# Configuration Netlify pour LaCDIA
+# ================================
+# Déploiement : connecter le repo GitHub/GitLab à Netlify
+# ou utiliser `netlify deploy` en CLI
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_PUBLIC_SANITY_PROJECT_ID = ""
+  NEXT_PUBLIC_SANITY_DATASET = "production"
+
+# Plugin Next.js pour Netlify
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Redirections pour le routage i18n
+[[redirects]]
+  from = "/api/*"
+  to = "/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/studio/*"
+  to = "/studio/:splat"
+  status = 200

@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "research": "Research",
+    "lacdiaTech": "LaCDIA Tech",
+    "news": "News",
+    "team": "Team",
+    "collaborate": "Collaborate",
+    "contact": "Contact",
+    "partnerships": "Partnerships",
+    "publications": "Publications",
+    "training": "Training",
+    "resources": "Resources",
+    "solutions": "AI Solutions"
+  },
+  "footer": {
+    "legalNotice": "Legal Notice",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy",
+    "newsletter": "Newsletter",
+    "copyright": "All rights reserved.",
+    "laboratory": "The Laboratory",
+    "navigation": "Navigation",
+    "contact": "Contact"
+  },
+  "common": {
+    "learnMore": "Learn more",
+    "seeAll": "See all",
+    "backHome": "Back to home",
+    "download": "Download",
+    "share": "Share",
+    "search": "Search",
+    "filter": "Filter",
+    "noResults": "No results",
+    "loading": "Loading...",
+    "readMore": "Read more",
+    "contactUs": "Contact us",
+    "collaborate": "Collaborate with us",
+    "discoverServices": "Discover our services",
+    "discoverResearch": "Discover our research",
+    "requestQuote": "Request a quote",
+    "becomePartner": "Become a partner"
+  },
+  "home": {
+    "heroBadge": "AI Research Laboratory",
+    "heroDescription": "The first AI and data science research laboratory in the Caribbean, LaCDIA produces original scientific knowledge and develops technological solutions adapted to Caribbean realities.",
+    "discoverLab": "Discover the laboratory",
+    "researchAxes": "Our research axes",
+    "techServices": "LaCDIA Tech — Services"
+  },
+  "about": {
+    "title": "About LaCDIA",
+    "badge": "Research laboratory",
+    "fullName": "Caribbean Laboratory of Data Science and Artificial Intelligence",
+    "vision": "Vision",
+    "visionQuote": "To become the reference hub for artificial intelligence and data science in the Caribbean, producing research excellence in service of the region's sustainable development.",
+    "mission": "Mission",
+    "values": "Values",
+    "positioning": "Strategic positioning",
+    "context": "Context and challenges",
+    "roadmap": "Development Plan 2025-2029"
+  },
+  "research": {
+    "badge": "Scientific Department",
+    "title": "Research in Artificial Intelligence and Data Science",
+    "axes": "Research Axes",
+    "methodologies": "Methodological Approaches",
+    "expertise": "Areas of Expertise",
+    "publications": "Publication Policy",
+    "doctoral": "Doctoral Supervision",
+    "animation": "Scientific Activities",
+    "collaborations": "Collaborations and Partnerships"
+  },
+  "tech": {
+    "badge": "LaCDIA Tech",
+    "title": "Technology and Innovation Department",
+    "tagline": "Transforming research into concrete solutions for institutions and businesses",
+    "mission": "Mission",
+    "pipeline": "Research → Product Pipeline",
+    "poles": "Our Expertise Poles",
+    "services": "Service Catalog",
+    "useCases": "Concrete Use Cases",
+    "clients": "Target Clients and Partners",
+    "models": "Collaboration Models"
+  },
+  "partnerships": {
+    "title": "Partnerships",
+    "subtitle": "A network of collaborations serving research and innovation",
+    "national": "National Partners",
+    "regional": "Caribbean Regional Partners",
+    "international": "International Partners",
+    "industrial": "Industrial and Institutional Partners",
+    "modalities": "Collaboration Modalities",
+    "sdg": "Contribution to SDGs"
+  },
+  "values": {
+    "excellence": "Scientific Excellence",
+    "excellenceDesc": "The highest standards of methodological rigor and scientific integrity.",
+    "innovation": "Responsible Innovation",
+    "innovationDesc": "Technological innovation accompanied by deep ethical reflection.",
+    "inclusivity": "Inclusivity",
+    "inclusivityDesc": "Accessible technologies, considering linguistic and cultural diversity.",
+    "interdisciplinarity": "Interdisciplinarity",
+    "interdisciplinarityDesc": "Crossing disciplinary perspectives to address complex challenges.",
+    "openness": "Openness",
+    "opennessDesc": "Transparent, reproducible, and shared research."
+  },
+  "locale": {
+    "switchLanguage": "Switch language",
+    "currentLanguage": "Current language"
+  }
+}

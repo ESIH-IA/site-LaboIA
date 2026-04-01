@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { getSiteSettings } from "@/lib/cms";
 import { getServerLocale } from "@/lib/i18n-server";
 import { getSiteUrlObject } from "@/lib/site-url";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
+/* ──────────────────────────────────────────
+   Polices : utilisation de CSS @font-face avec
+   Google Fonts via <link> dans le head.
+   Cela découple le chargement des polices du
+   build Next.js et fonctionne offline + online.
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+   Pour Vercel/Netlify : remplacer par next/font/google
+   si souhaité pour l'optimisation automatique.
+   ────────────────────────────────────────── */
+const fontVars = "--font-inter --font-geist-mono";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
@@ -63,7 +63,15 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="antialiased" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
         {children}
       </body>
     </html>
