@@ -8,7 +8,7 @@ import { memberListQuery, projectListQuery, publicationListQuery, searchQuery } 
 import { buildMetadata } from "@/lib/seo";
 
 type PageProps = {
-  searchParams?: { q?: string; type?: string };
+  searchParams?: Promise<{ q?: string; type?: string }>;
 };
 
 type SearchResult = {
@@ -34,6 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
   const locale = await getServerLocale();
   const [projects, publications, members] = await Promise.all([
     sanityFetch<{ _id: string }[]>(projectListQuery, { locale }, []),
@@ -45,8 +46,8 @@ export default async function Page({ searchParams }: PageProps) {
   if (!hasData) {
     notFound();
   }
-  const query = searchParams?.q?.toString().trim() ?? "";
-  const type = searchParams?.type?.toString().trim() || null;
+  const query = resolvedSearchParams?.q?.toString().trim() ?? "";
+  const type = resolvedSearchParams?.type?.toString().trim() || null;
   const term = query ? `${query}*` : null;
 
   const results = term
