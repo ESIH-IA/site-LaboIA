@@ -17,18 +17,6 @@ function initials(name: string) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
-function groupTheme(group?: OrgNode["group"]) {
-  switch (group) {
-    case "governance":
-      return { ring: "ring-orange-500/30", bg: "bg-orange-500/10", accent: "text-orange-700" };
-    case "associate":
-      return { ring: "ring-violet-500/25", bg: "bg-violet-500/10", accent: "text-violet-700" };
-    case "research":
-    default:
-      return { ring: "ring-accent/25", bg: "bg-accent/10", accent: "text-accent" };
-  }
-}
-
 type Layout = {
   positioned: PositionedNode[];
   edges: Array<[string, string]>;
@@ -222,13 +210,13 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
   }
 
   return (
-    <div className="mt-6">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Navigation</div>
-        <div className="flex items-center gap-2">
+    <div className="org-chart">
+      <div className="org-chart-controls">
+        <div className="org-chart-controls-label">Navigation</div>
+        <div className="org-chart-controls-buttons">
           <button
             type="button"
-            className="rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted"
+            className="org-chart-btn"
             onClick={() => zoomTo(scale - 0.1)}
             aria-label="Zoom arrière"
           >
@@ -236,7 +224,7 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
           </button>
           <button
             type="button"
-            className="rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted"
+            className="org-chart-btn"
             onClick={reset}
             aria-label="Réinitialiser"
           >
@@ -244,7 +232,7 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
           </button>
           <button
             type="button"
-            className="rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface-muted"
+            className="org-chart-btn"
             onClick={() => zoomTo(scale + 0.1)}
             aria-label="Zoom avant"
           >
@@ -255,7 +243,7 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
 
       <div
         ref={containerRef}
-        className="relative h-[520px] w-full touch-none select-none overflow-hidden rounded-2xl bg-surface-muted/40"
+        className="org-chart-viewport"
         onPointerDown={(event) => {
           if (event.button !== 0) return;
           if ((event.target as HTMLElement | null)?.closest?.("button[data-org-node]")) return;
@@ -287,7 +275,7 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
         aria-label="Organigramme"
       >
         <div
-          className="relative"
+          className="org-chart-canvas"
           style={{
             width: layout.size.width,
             height: layout.size.height,
@@ -296,7 +284,7 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
           }}
         >
           <svg
-            className="pointer-events-none absolute inset-0"
+            className="org-chart-svg"
             width={layout.size.width}
             height={layout.size.height}
             aria-hidden="true"
@@ -329,40 +317,32 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
           </svg>
 
           {layout.positioned.map((node) => {
-            const theme = groupTheme(node.group);
             const crown = node.group === "governance" && !node.parentId;
             return (
               <div
                 key={node.id}
-                className="absolute"
+                className="org-chart-node"
                 style={{ left: node.x, top: node.y, width: layout.nodeWidth, height: layout.nodeHeight }}
               >
                 <button
                   type="button"
                   data-org-node
-                  className={[
-                    "group flex h-full w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-left shadow-sm transition",
-                    "hover:border-primary/25 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/25",
-                  ].join(" ")}
+                  className="org-chart-node-btn"
                   onClick={() => scrollToPerson(node.id)}
                 >
                   <div
-                    className={[
-                      "relative h-12 w-12 shrink-0 overflow-hidden rounded-full ring-2",
-                      theme.ring,
-                      theme.bg,
-                    ].join(" ")}
+                    className={["org-chart-node-avatar", `org-chart-node-avatar--${node.group || "research"}`].join(" ")}
                     aria-hidden="true"
                   >
                     {node.photoUrl ? (
-                      <Image src={node.photoUrl} alt={node.name} fill sizes="48px" className="object-cover" />
+                      <Image src={node.photoUrl} alt={node.name} fill sizes="48px" style={{objectFit:'cover'}} />
                     ) : (
-                      <div className={["flex h-full w-full items-center justify-center text-sm font-semibold", theme.accent].join(" ")}>
+                      <div className={["org-chart-node-initials", `org-chart-node-initials--${node.group || "research"}`].join(" ")}>
                         {initials(node.name)}
                       </div>
                     )}
                     {crown ? (
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-orange-600" aria-hidden="true">
+                      <div className="org-chart-node-crown" aria-hidden="true">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M4 18l2-10 6 6 6-6 2 10H4zm2 2h12v2H6v-2z" />
                         </svg>
@@ -370,10 +350,10 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
                     ) : null}
                   </div>
 
-                  <div className="min-w-0">
-                    <div className="truncate text-sm font-semibold text-foreground">{node.name}</div>
-                    <div className="mt-0.5 line-clamp-2 text-xs text-muted">{node.role}</div>
-                    <div className="mt-2 text-xs text-muted opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="org-chart-node-info">
+                    <div className="org-chart-node-name">{node.name}</div>
+                    <div className="org-chart-node-role">{node.role}</div>
+                    <div className="org-chart-node-hint">
                       Cliquer pour aller au profil
                     </div>
                   </div>
@@ -384,10 +364,9 @@ export function OrgChart({ nodes }: { nodes: OrgNode[] }) {
         </div>
       </div>
 
-      <div className="mt-3 text-xs text-muted">
+      <div className="org-chart-tip">
         Astuce : glisser pour déplacer, utiliser la molette ou +/- pour zoomer.
       </div>
     </div>
   );
 }
-

@@ -67,17 +67,17 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-12">
+    <article className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
       <Link
         href="/actualites"
-        className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
+        className="btn-link"
       >
         Retour aux actualités
       </Link>
 
-      <div className="mt-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+      <div className="simple-card-meta" style={{marginTop:'1rem'}}>
         {event.eventType ? (
-          <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700">
+          <span className="tag-small">
             {event.eventType}
           </span>
         ) : null}
@@ -85,31 +85,31 @@ export default async function Page({ params }: PageProps) {
         {event.location ? <span>{event.location}</span> : null}
       </div>
 
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{event.title}</h1>
-      {event.summary ? <p className="mt-3 text-lg text-neutral-700">{event.summary}</p> : null}
+      <h1 className="section-title" style={{marginTop:'1rem'}}>{event.title}</h1>
+      {event.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{event.summary}</p> : null}
 
-      <div className="mt-8">
+      <div style={{marginTop:'2rem'}}>
         <PortableTextRenderer value={event.content} />
       </div>
 
       {event.speakers?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Intervenants</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Intervenants</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {event.speakers.map((speaker) => (
-              <li key={speaker._id} className="flex items-center justify-between gap-3">
+              <li key={speaker._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
                 {speaker.slug?.current ? (
                   <Link
                     href={`/equipe/${speaker.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {speaker.fullName}
                   </Link>
                 ) : (
-                  <span className="font-medium">{speaker.fullName}</span>
+                  <span style={{fontWeight:500}}>{speaker.fullName}</span>
                 )}
                 {speaker.role ? (
-                  <span className="text-xs uppercase text-neutral-500">{speaker.role}</span>
+                  <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{speaker.role}</span>
                 ) : null}
               </li>
             ))}
@@ -118,10 +118,10 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {event.registrationUrl ? (
-        <div className="mt-8">
+        <div style={{marginTop:'2rem'}}>
           <Link
             href={event.registrationUrl}
-            className="inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+            className="btn-link"
             target="_blank"
             rel="noreferrer"
           >

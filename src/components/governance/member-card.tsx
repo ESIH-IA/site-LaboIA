@@ -40,6 +40,20 @@ function getCategory(person: Person): PersonCategory {
   return "gouvernance";
 }
 
+const categoryAccentColors: Record<PersonCategory, { from: string; to: string }> = {
+  gouvernance: { from: "#64748b", to: "#475569" },
+  direction: { from: "#06b6d4", to: "#14b8a6" },
+  recherche: { from: "#14b8a6", to: "#06b6d4" },
+  conseil: { from: "#8b5cf6", to: "#06b6d4" },
+};
+
+const categoryBadgeStyles: Record<PersonCategory, { borderColor: string; background: string; color: string }> = {
+  gouvernance: { borderColor: "#cbd5e1", background: "rgba(248,250,252,0.5)", color: "#334155" },
+  direction: { borderColor: "#a5f3fc", background: "rgba(236,254,255,0.5)", color: "#0e7490" },
+  recherche: { borderColor: "#99f6e4", background: "rgba(240,253,250,0.5)", color: "#0f766e" },
+  conseil: { borderColor: "#c4b5fd", background: "rgba(245,243,255,0.5)", color: "#6d28d9" },
+};
+
 export function MemberCard({ person }: { person: Person }) {
   const dialogId = useId();
   const [open, setOpen] = useState(false);
@@ -56,48 +70,15 @@ export function MemberCard({ person }: { person: Person }) {
   const preview = shortBio || (longBio ? truncate(longBio, 200) : "");
   const showAnyLinks = hasLinks(person.links);
 
-  const categoryColors = {
-    gouvernance: {
-      gradient: "bg-linear-to-br from-slate-600 to-slate-700",
-      ring: "ring-slate-200",
-      text: "gradient-text-cyan",
-      badge: "border-slate-300 bg-slate-50/50 text-slate-700",
-      accent: "from-slate-500 to-slate-600",
-    },
-    direction: {
-      gradient: "bg-linear-to-br from-cyan-500 to-teal-600",
-      ring: "ring-cyan-200",
-      text: "gradient-text-cyan",
-      badge: "border-cyan-200 bg-cyan-50/50 text-cyan-700",
-      accent: "from-cyan-500 to-teal-500",
-    },
-    recherche: {
-      gradient: "bg-linear-to-br from-teal-500 to-teal-700",
-      ring: "ring-teal-200",
-      text: "gradient-text-cyan",
-      badge: "border-teal-200 bg-teal-50/50 text-teal-700",
-      accent: "from-teal-500 to-cyan-500",
-    },
-    conseil: {
-      gradient: "bg-linear-to-br from-violet-600 to-violet-700",
-      ring: "ring-violet-200",
-      text: "gradient-text-accent",
-      badge: "border-violet-200 bg-violet-50/50 text-violet-700",
-      accent: "from-violet-500 to-cyan-500",
-    },
-  } as const;
-
-  const colors = categoryColors[category];
+  const accent = categoryAccentColors[category];
+  const accentGradient = `linear-gradient(to right, ${accent.from}, ${accent.to})`;
+  const badgeStyle = categoryBadgeStyles[category];
 
   return (
     <>
       <article
         id={`profile-${person._id}`}
-        className={[
-          "group relative flex h-full flex-col overflow-hidden rounded-2xl gradient-card-bg border shadow-lg ring-1 transition-smooth",
-          "hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10 scroll-mt-24 cursor-pointer",
-          colors.ring,
-        ].join(" ")}
+        className="member-card"
         onClick={() => setOpen(true)}
         role="button"
         tabIndex={0}
@@ -110,42 +91,50 @@ export function MemberCard({ person }: { person: Person }) {
         aria-label={`Voir le profil complet de ${person.name}`}
       >
         {/* Accent Bar Top */}
-        <div className={`absolute left-0 right-0 top-0 h-1 bg-linear-to-r ${colors.accent}`} />
+        <div className={`member-card-accent member-card-accent--${category}`} />
 
         {/* Zone haute - Photo/Initiales */}
-        <div className={["relative h-36 flex items-center justify-center transition-all duration-500", colors.gradient].join(" ")}>
+        <div className={`member-card-photo member-card-photo--${category}`}>
           {imageUrl ? (
-            <div className="relative h-28 w-28 overflow-hidden rounded-full ring-4 ring-white/40 shadow-2xl">
-              <Image src={imageUrl} alt={person.name} fill sizes="112px" className="object-cover" />
+            <div className="member-card-photo-circle">
+              <Image src={imageUrl} alt={person.name} fill sizes="112px" style={{objectFit:'cover'}} />
             </div>
           ) : (
-            <div className="flex h-28 w-28 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-4 ring-white/40 shadow-2xl">
-              <span className="text-4xl font-bold text-white">{initials}</span>
+            <div className="member-card-initials-circle">
+              <span className="member-card-initials">{initials}</span>
             </div>
           )}
         </div>
 
         {/* Zone basse - Contenu */}
-        <div className="flex flex-1 flex-col bg-white p-6">
-          <div className="mb-4">
-            <h3 className={["text-xl font-bold text-slate-900 mb-2 transition-all", `group-hover:${colors.text}`].join(" ")}>
+        <div className="member-card-body">
+          <div style={{marginBottom:'1rem'}}>
+            <h3 className="member-card-name">
               {person.name}
             </h3>
-            {person.roleTitle ? <p className="mt-2 text-sm font-medium text-slate-600">{person.roleTitle}</p> : null}
-            {person.affiliation ? <p className="mt-1 text-xs text-slate-500 italic">{person.affiliation}</p> : null}
+            {person.roleTitle ? <p className="member-card-role">{person.roleTitle}</p> : null}
+            {person.affiliation ? <p className="member-card-affiliation">{person.affiliation}</p> : null}
           </div>
 
           {person.expertise && person.expertise.length > 0 ? (
-            <div className="mb-4">
-              <div className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500">Expertise</div>
-              <div className="flex flex-wrap gap-2">
+            <div className="member-card-expertise">
+              <div className="member-card-expertise-title">Expertise</div>
+              <div className="member-card-expertise-tags">
                 {person.expertise.slice(0, 3).map((item, idx) => (
-                  <span key={idx} className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${colors.badge}`}>
+                  <span
+                    key={idx}
+                    className="member-card-expertise-tag"
+                    style={{
+                      borderColor: badgeStyle.borderColor,
+                      background: badgeStyle.background,
+                      color: badgeStyle.color,
+                    }}
+                  >
                     {item}
                   </span>
                 ))}
                 {person.expertise.length > 3 ? (
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-500">
+                  <span className="member-card-expertise-count">
                     +{person.expertise.length - 3}
                   </span>
                 ) : null}
@@ -154,27 +143,24 @@ export function MemberCard({ person }: { person: Person }) {
           ) : null}
 
           {preview ? (
-            <div className="mb-4 text-sm text-slate-600 leading-relaxed">
-              <p className="line-clamp-3">{preview}</p>
+            <div className="member-card-preview" style={{display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden'}}>
+              <p>{preview}</p>
             </div>
           ) : null}
 
           {person.contribution ? (
-            <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-4 text-sm">
-              <div className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">Contribution</div>
-              <p className="text-slate-600 italic line-clamp-2 leading-relaxed">{person.contribution}</p>
+            <div className="member-card-contribution">
+              <div className="member-card-contribution-title">Contribution</div>
+              <p style={{fontStyle:'italic'}}>{person.contribution}</p>
             </div>
           ) : null}
 
-          <div className="mt-auto flex flex-col gap-3 pt-4 border-t border-slate-200">
+          <div className="member-card-footer">
             {person.links?.email ? (
               <a
                 href={`mailto:${person.links.email}`}
-                className={[
-                  "inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-md transition-all",
-                  `bg-linear-to-r ${colors.accent}`,
-                  "hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20",
-                ].join(" ")}
+                className="member-card-email"
+                style={{background: accentGradient}}
                 onClick={(e) => e.stopPropagation()}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +169,7 @@ export function MemberCard({ person }: { person: Person }) {
                 Contact
               </a>
             ) : null}
-            <span className="text-xs font-medium text-center text-slate-400 group-hover:text-cyan-600 transition-colors">
+            <span className="member-card-hint">
               Cliquez pour en savoir plus &gt;
             </span>
           </div>
@@ -192,7 +178,7 @@ export function MemberCard({ person }: { person: Person }) {
 
       {open ? (
         <div
-          className="fixed inset-0 z-60 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4"
+          className="member-modal-overlay"
           role="dialog"
           aria-modal="true"
           aria-label={`Bio de ${person.name}`}
@@ -200,21 +186,21 @@ export function MemberCard({ person }: { person: Person }) {
           onClick={() => setOpen(false)}
         >
           <div
-            className="relative w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-3xl bg-white shadow-2xl"
+            className="member-modal"
             onClick={(event) => event.stopPropagation()}
           >
             {/* Header */}
-            <div className="relative overflow-hidden border-b border-slate-200 bg-linear-to-br from-slate-50 to-white px-8 py-6">
-              <div className={`absolute left-0 right-0 top-0 h-1 bg-linear-to-r ${colors.accent}`} />
-              <div className="flex items-start justify-between gap-6">
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{person.name}</h3>
-                  {person.roleTitle ? <p className="text-base text-slate-600 mb-1">{person.roleTitle}</p> : null}
-                  {person.affiliation ? <p className="text-sm text-slate-500 italic">{person.affiliation}</p> : null}
+            <div className="member-modal-header">
+              <div className={`member-modal-accent member-card-accent--${category}`} />
+              <div className="member-modal-header-row">
+                <div style={{minWidth:0, flex:1}}>
+                  <h3 className="member-modal-name">{person.name}</h3>
+                  {person.roleTitle ? <p className="member-modal-role">{person.roleTitle}</p> : null}
+                  {person.affiliation ? <p className="member-modal-affiliation">{person.affiliation}</p> : null}
                 </div>
                 <button
                   type="button"
-                  className="shrink-0 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50"
+                  className="member-modal-close"
                   aria-label="Fermer"
                   onClick={() => setOpen(false)}
                 >
@@ -224,15 +210,23 @@ export function MemberCard({ person }: { person: Person }) {
             </div>
 
             {/* Content */}
-            <div className="max-h-[calc(90vh-120px)] overflow-y-auto px-8 py-6">
+            <div className="member-modal-content">
               {person.expertise && person.expertise.length > 0 ? (
-                <div className="mb-6">
-                  <div className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-500">
+                <div className="member-modal-section">
+                  <div className="member-modal-section-title">
                     Domaines d&apos;expertise
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="member-card-expertise-tags">
                     {person.expertise.map((item, idx) => (
-                      <span key={idx} className={`rounded-full border px-3 py-1.5 text-sm font-semibold ${colors.badge}`}>
+                      <span
+                        key={idx}
+                        className="member-card-expertise-tag"
+                        style={{
+                          borderColor: badgeStyle.borderColor,
+                          background: badgeStyle.background,
+                          color: badgeStyle.color,
+                        }}
+                      >
                         {item}
                       </span>
                     ))}
@@ -241,25 +235,26 @@ export function MemberCard({ person }: { person: Person }) {
               ) : null}
 
               {longBio ? (
-                <div className="mb-6">
-                  <div className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-500">Biographie</div>
-                  <p className="whitespace-pre-wrap text-base text-slate-700 leading-relaxed">{longBio}</p>
+                <div className="member-modal-section">
+                  <div className="member-modal-section-title">Biographie</div>
+                  <p className="member-modal-bio">{longBio}</p>
                 </div>
               ) : null}
 
               {person.contribution ? (
-                <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50/50 p-5">
-                  <div className="mb-2 text-sm font-bold uppercase tracking-wider text-slate-500">Contribution</div>
-                  <p className="text-base text-slate-700 italic leading-relaxed">{person.contribution}</p>
+                <div className="member-modal-contribution">
+                  <div className="member-modal-section-title">Contribution</div>
+                  <p style={{fontStyle:'italic'}}>{person.contribution}</p>
                 </div>
               ) : null}
 
               {showAnyLinks ? (
-                <div className="flex flex-wrap gap-3">
+                <div className="member-modal-links">
                   {person.links?.email ? (
                     <a
                       href={`mailto:${person.links.email}`}
-                      className={`inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-md transition-all bg-linear-to-r ${colors.accent} hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20`}
+                      className="member-modal-link-primary"
+                      style={{background: accentGradient}}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -272,7 +267,7 @@ export function MemberCard({ person }: { person: Person }) {
                       href={person.links.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-slate-400 hover:bg-slate-50"
+                      className="member-modal-link-secondary"
                     >
                       LinkedIn
                     </a>
@@ -282,7 +277,7 @@ export function MemberCard({ person }: { person: Person }) {
                       href={person.links.scholar}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-slate-400 hover:bg-slate-50"
+                      className="member-modal-link-secondary"
                     >
                       Google Scholar
                     </a>
@@ -292,7 +287,7 @@ export function MemberCard({ person }: { person: Person }) {
                       href={person.links.orcid}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-slate-400 hover:bg-slate-50"
+                      className="member-modal-link-secondary"
                     >
                       ORCID
                     </a>
@@ -302,7 +297,7 @@ export function MemberCard({ person }: { person: Person }) {
                       href={person.links.website}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-slate-400 hover:bg-slate-50"
+                      className="member-modal-link-secondary"
                     >
                       Site web
                     </a>

@@ -51,19 +51,19 @@ export default function LocaleSwitcher() {
   }
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="locale-switcher">
       <button
         onClick={() => setOpen(!open)}
         disabled={isPending}
-        className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 disabled:opacity-50"
+        className="locale-btn"
         aria-label="Changer de langue"
         aria-expanded={open}
       >
         <span>{localeFlags[locale]}</span>
-        <span className="hidden sm:inline">{localeNames[locale]}</span>
-        <span className="sm:hidden">{locale.toUpperCase()}</span>
+        <span className="locale-btn-label">{localeNames[locale]}</span>
+        <span className="locale-btn-short">{locale.toUpperCase()}</span>
         <svg
-          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`locale-chevron ${open ? "locale-chevron--open" : ""}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -74,23 +74,19 @@ export default function LocaleSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 min-w-[160px] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+        <div className="locale-dropdown">
           {locales.map((loc) => {
             const isActive = loc === locale;
             return (
               <button
                 key={loc}
                 onClick={() => switchLocale(loc)}
-                className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition ${
-                  isActive
-                    ? "bg-cyan-50 font-semibold text-cyan-700"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                }`}
+                className={`locale-option ${isActive ? "locale-option--active" : ""}`}
               >
-                <span className="text-base">{localeFlags[loc]}</span>
+                <span className="locale-option-flag">{localeFlags[loc]}</span>
                 <span>{localeNames[loc]}</span>
                 {isActive && (
-                  <svg className="ml-auto h-4 w-4 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="locale-option-check" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"
                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"

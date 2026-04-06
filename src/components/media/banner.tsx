@@ -24,16 +24,16 @@ export function Banner({
         alt={bannerData.alt}
         fill
         sizes="100vw"
-        className={`object-cover ${className}`}
+        className={className}
         priority
       />
     );
   }
 
   return (
-    <div className={`relative w-full overflow-hidden ${className}`}>
-      <div className="relative aspect-[894/160] w-full">
-        <Image src={bannerData.src} alt={bannerData.alt} fill sizes="100vw" className="object-cover" priority />
+    <div className={`banner-image ${className}`}>
+      <div className="banner-aspect">
+        <Image src={bannerData.src} alt={bannerData.alt} fill sizes="100vw" priority />
       </div>
     </div>
   );

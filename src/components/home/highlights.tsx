@@ -31,38 +31,38 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
   const list = items?.length ? items : fallbackItems;
 
   return (
-    <section className="relative bg-slate-50 overflow-hidden">
+    <section className="highlights section">
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 dot-pattern opacity-30" />
+      <div className="section-pattern dot-pattern pattern-30" />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold text-slate-900">
+      <div className="section-inner" style={{ position: "relative", paddingTop: "5rem", paddingBottom: "5rem" }}>
+        <div className="section-header">
+          <h2 className="section-title">
             {title ?? "Ce que nous faisons"}
           </h2>
-          <p className="mt-4 text-base text-slate-600">
+          <p className="section-subtitle" style={{ marginTop: "1rem" }}>
             {intro ??
               "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux."}
           </p>
         </div>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
+        <div className="card-grid card-grid-3" style={{ marginTop: "3rem" }}>
           {list.map((item, index) => (
             <article
               key={item.title}
-              className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
+              className="highlights-card card-hover"
             >
               {/* Top accent gradient */}
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
+              <div className="card-accent-top" />
 
               {/* Number badge */}
-              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/20 bg-linear-to-br from-cyan-50 to-teal-50">
-                <span className="text-lg font-bold gradient-text-cyan">
+              <div className="highlights-number">
+                <span>
                   {(index + 1).toString().padStart(2, "0")}
                 </span>
               </div>
 
-              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-3 text-base text-slate-600 leading-relaxed">{item.description}</p>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
             </article>
           ))}
         </div>

@@ -58,18 +58,18 @@ export default async function Page() {
     (a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime(),
   );
   return (
-    <main className="bg-white dark:bg-slate-950">
+    <main className="section-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden gradient-mesh-bg py-24 md:py-40">
+      <section className="page-hero page-hero-dark" style={{paddingTop:'6rem', paddingBottom:'10rem'}}>
         {/* Background effects */}
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl animate-glow" />
-        <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-cyan-500/15 blur-3xl animate-glow" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute left-1/2 -bottom-32 h-96 w-96 -translate-x-1/2 rounded-full bg-teal-500/10 blur-3xl animate-glow" style={{ animationDelay: "0.75s" }} />
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', left:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(139,92,246,0.1)', filter:'blur(48px)'}} />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'20rem', width:'20rem', borderRadius:'9999px', background:'rgba(6,182,212,0.15)', filter:'blur(48px)', animationDelay: "1.5s"}} />
+        <div className="animate-glow" style={{position:'absolute', left:'50%', bottom:'-8rem', height:'24rem', width:'24rem', transform:'translateX(-50%)', borderRadius:'9999px', background:'rgba(20,184,166,0.1)', filter:'blur(48px)', animationDelay: "0.75s"}} />
 
         {/* Decorative SVG Pattern */}
-        <div className="absolute top-20 right-0 opacity-20 pointer-events-none">
-          <svg width="400" height="300" viewBox="0 0 400 300" className="text-cyan-400">
+        <div style={{position:'absolute', top:'5rem', right:0, opacity:0.2, pointerEvents:'none'}}>
+          <svg width="400" height="300" viewBox="0 0 400 300" style={{color:'#22d3ee'}}>
             <defs>
               <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
                 <circle cx="20" cy="20" r="2" fill="currentColor" />
@@ -79,30 +79,30 @@ export default async function Page() {
           </svg>
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-8 animate-fade-in-up">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+        <div className="container" style={{position:'relative'}}>
+          <div className="glass-card animate-fade-in-up" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'2rem'}}>
+            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
               Actualités & Innovation
             </span>
           </div>
 
           {page?.title ? (
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8 animate-fade-in-up leading-tight" style={{ animationDelay: "100ms" }}>
+            <h1 className="animate-fade-in-up" style={{fontSize:'clamp(3rem,6vw,4.5rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'2rem', lineHeight:1.1, animationDelay: "100ms"}}>
               {page.title}
             </h1>
           ) : (
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8 animate-fade-in-up leading-tight" style={{ animationDelay: "100ms" }}>
+            <h1 className="animate-fade-in-up" style={{fontSize:'clamp(3rem,6vw,4.5rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'2rem', lineHeight:1.1, animationDelay: "100ms"}}>
               Actualités & Innovation
             </h1>
           )}
 
           {page?.summary ? (
-            <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+            <p className="animate-fade-in-up" style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7, animationDelay: "200ms"}}>
               {page.summary}
             </p>
           ) : (
-            <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+            <p className="animate-fade-in-up" style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7, animationDelay: "200ms"}}>
               Suivez les dernières avancées en intelligence artificielle, science des données et innovation technologique au LaCDIA.
             </p>
           )}
@@ -110,58 +110,58 @@ export default async function Page() {
       </section>
 
       {/* Statistics Strip */}
-      <section className="relative z-10 -mt-12 mb-8 md:mb-12">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="glass-card rounded-2xl backdrop-blur-lg border border-white/20 p-8 text-center animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent mb-2">
+      <section style={{position:'relative', zIndex:10, marginTop:'-3rem', marginBottom:'2rem'}}>
+        <div className="container">
+          <div className="card-grid card-grid-3" style={{gap:'1rem'}}>
+            <div className="glass-card animate-fade-in-up" style={{borderRadius:'1rem', padding:'2rem', textAlign:'center', animationDelay: "300ms"}}>
+              <div className="gradient-text-cyan" style={{fontSize:'clamp(2.25rem,4vw,3rem)', fontWeight:700, marginBottom:'0.5rem'}}>
                 {news.length}+
               </div>
-              <p className="text-slate-300 text-sm md:text-base">Articles & Actualités</p>
+              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Articles & Actualités</p>
             </div>
-            <div className="glass-card rounded-2xl backdrop-blur-lg border border-white/20 p-8 text-center animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+            <div className="glass-card animate-fade-in-up" style={{borderRadius:'1rem', padding:'2rem', textAlign:'center', animationDelay: "400ms"}}>
+              <div className="gradient-text-accent" style={{fontSize:'clamp(2.25rem,4vw,3rem)', fontWeight:700, marginBottom:'0.5rem'}}>
                 2025
               </div>
-              <p className="text-slate-300 text-sm md:text-base">Projets actifs</p>
+              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Projets actifs</p>
             </div>
-            <div className="glass-card rounded-2xl backdrop-blur-lg border border-white/20 p-8 text-center animate-fade-in-up" style={{ animationDelay: "500ms" }}>
-              <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+            <div className="glass-card animate-fade-in-up" style={{borderRadius:'1rem', padding:'2rem', textAlign:'center', animationDelay: "500ms"}}>
+              <div className="gradient-text-cyan" style={{fontSize:'clamp(2.25rem,4vw,3rem)', fontWeight:700, marginBottom:'0.5rem'}}>
                 100%
               </div>
-              <p className="text-slate-300 text-sm md:text-base">Innovation & Excellence</p>
+              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Innovation & Excellence</p>
             </div>
           </div>
         </div>
       </section>
 
       {page?.content && (
-        <section className="py-12 md:py-16 bg-slate-50 dark:bg-slate-900">
-          <div className="mx-auto max-w-6xl px-4">
+        <section className="section section-light">
+          <div className="container">
             <PortableTextRenderer value={page.content} />
           </div>
         </section>
       )}
 
-      <section className="py-20 md:py-28 bg-white dark:bg-slate-950">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{marginBottom:'4rem'}}>
+            <h2 className="section-title" style={{marginBottom:'1rem'}}>
               Dernières actualités
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400">
+            <p className="section-subtitle" style={{fontSize:'1.125rem'}}>
               Découvrez nos dernières publications et actualités.
             </p>
           </div>
 
           {news.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-12 text-center">
-              <div className="mx-auto max-w-md">
-                <p className="text-base text-slate-600 dark:text-slate-400">Contenu en cours de publication.</p>
+            <div className="empty-state" style={{padding:'3rem', textAlign:'center'}}>
+              <div style={{maxWidth:'28rem', margin:'0 auto'}}>
+                <p className="section-subtitle">Contenu en cours de publication.</p>
               </div>
             </div>
           ) : (
-            <div className="grid gap-8">
+            <div className="card-grid">
               {news.map((item, idx) => (
                 <div
                   key={item._id}

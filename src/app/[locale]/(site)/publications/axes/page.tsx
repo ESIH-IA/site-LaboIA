@@ -48,26 +48,26 @@ export default async function Page() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12">
-      <div className="max-w-3xl">
-        {page?.title ? <h1 className="text-3xl font-semibold">{page.title}</h1> : null}
-        {page?.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
+    <section className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div style={{maxWidth:'48rem'}}>
+        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+        {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
       </div>
-      <div className="mt-6">
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={page?.content} />
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
+      <div className="card-grid card-grid-2" style={{marginTop:'2rem'}}>
         {axes.map((axis) => (
           <article
             key={axis._id}
-            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+            className="simple-card"
           >
-            <h2 className="text-lg font-semibold text-neutral-900">{axis.title}</h2>
-            {axis.summary ? <p className="mt-2 text-sm text-neutral-700">{axis.summary}</p> : null}
+            <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>{axis.title}</h2>
+            {axis.summary ? <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>{axis.summary}</p> : null}
             <Link
               href={`/publications/axes/${axis.slug.current}`}
-              className="mt-3 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+              className="btn-link" style={{marginTop:'0.75rem'}}
             >
               Voir les publications
             </Link>

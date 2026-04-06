@@ -27,44 +27,43 @@ export default async function PartenariatsPage() {
   const locale = await getServerLocale();
 
   return (
-    <main className="bg-white">
+    <main className="section-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
+      <section className="page-hero page-hero-dark">
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
         <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
+          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(139,92,246,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
         />
 
-        <div className="relative mx-auto max-w-6xl px-4">
+        <div className="container" style={{position:'relative'}}>
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+          <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'1.5rem'}}>
+            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
               Partenariats
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
+          <h1 style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'1.5rem'}}>
             Un réseau de collaborations au service de la recherche et de l'innovation
           </h1>
-          <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed">
+          <p style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7}}>
             LaCDIA s'inscrit dans une stratégie de partenariats triple : national, régional et international.
           </p>
-          <p className="mt-3 max-w-2xl text-base text-slate-300">
+          <p style={{marginTop:'0.75rem', maxWidth:'42rem', fontSize:'1rem', color:'#cbd5e1'}}>
             Ces collaborations créent un écosystème dynamique favorisant l'échange de savoirs, la mobilité académique et la création de solutions d'IA au service des défis haïtiens et caribéens.
           </p>
 
           {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div style={{marginTop:'2rem', display:'flex', flexWrap:'wrap', gap:'1rem'}}>
             <Link
               href={localizedPath("/collaborer", locale)}
-              className="group inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-cyan-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
+              className="btn btn-cta-primary" style={{padding:'0.875rem 2rem', fontSize:'1rem'}}
             >
               Devenir partenaire
               <svg
-                className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                style={{height:'1.25rem', width:'1.25rem'}}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -79,7 +78,12 @@ export default async function PartenariatsPage() {
             </Link>
             <Link
               href={localizedPath("/contact", locale)}
-              className="rounded-xl glass-card px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20"
+              className="btn btn-secondary"
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+              }}
             >
               Contacter le laboratoire
             </Link>
@@ -88,17 +92,17 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Vision Partenariale */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Stratégie de partenariats inclusifs
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               LaCDIA adopte une vision ouverte et inclusive des partenariats, basée sur la complémentarité des forces, l'échange mutuel et la création de valeur partagée.
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="card-grid card-grid-3">
             {[
               {
                 title: "Cercle National",
@@ -118,13 +122,12 @@ export default async function PartenariatsPage() {
             ].map((circle, idx) => (
               <article
                 key={`${circle.title}-${idx}`}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
+                className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                <div className="mb-4 text-4xl">{circle.icon}</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{circle.title}</h3>
-                <p className="text-base text-slate-600 leading-relaxed">{circle.description}</p>
+                <div className="card-accent-top" />
+                <div style={{marginBottom:'1rem', fontSize:'2.25rem'}}>{circle.icon}</div>
+                <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'0.75rem'}}>{circle.title}</h3>
+                <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7}}>{circle.description}</p>
               </article>
             ))}
           </div>
@@ -132,27 +135,27 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Partenaires Nationaux */}
-      <section className="py-20 md:py-28 bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 dot-pattern opacity-20" />
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-light" style={{position:'relative', overflow:'hidden'}}>
+        <div className="section-pattern dot-pattern pattern-20" />
+        <div className="container" style={{position:'relative'}}>
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Partenaires Nationaux (Haïti)
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               Au cœur du système d'innovation haïtien, LaCDIA collaborate avec des institutions académiques, publiques et privées pour renforcer l'écosystème local.
             </p>
           </div>
 
           {/* Institutions Académiques */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-100 text-cyan-700 font-semibold">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.5rem', fontWeight:700, color:'#0f172a', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem'}}>
+              <span style={{display:'inline-flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#cffafe', color:'#0e7490', fontWeight:600}}>
                 📚
               </span>
               Institutions Académiques
             </h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "ESIH",
@@ -172,29 +175,29 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-cyan-700 mb-3">
+                  <div className="card-accent-top" />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#0e7490', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Institutions Publiques */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-teal-100 text-teal-700 font-semibold">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.5rem', fontWeight:700, color:'#0f172a', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem'}}>
+              <span style={{display:'inline-flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#ccfbf1', color:'#0f766e', fontWeight:600}}>
                 🏛️
               </span>
               Institutions Publiques
             </h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "Ministère de l'Éducation",
@@ -214,15 +217,15 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-indigo-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-teal-700 mb-3">
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #6366f1)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#0f766e', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -230,13 +233,13 @@ export default async function PartenariatsPage() {
 
           {/* Secteur Privé */}
           <div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 font-semibold">
+            <h3 style={{fontSize:'1.5rem', fontWeight:700, color:'#0f172a', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem'}}>
+              <span style={{display:'inline-flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#e0e7ff', color:'#4338ca', fontWeight:600}}>
                 💼
               </span>
               Secteur Privé
             </h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "Entreprises Technologiques",
@@ -256,15 +259,15 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-indigo-500 to-cyan-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-indigo-700 mb-3">
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #6366f1, #06b6d4)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#4338ca', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -273,23 +276,23 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Partenaires Régionaux Caribéens */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Partenaires Régionaux Caribéens
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               Renforcer les liens scientifiques et académiques au sein de la Caraïbe pour créer un espace d'innovation régional.
             </p>
           </div>
 
           {/* Caraïbe Francophone */}
-          <div className="mb-16">
-            <h3 className="text-xl font-bold text-slate-900 mb-6 text-cyan-700">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0e7490', marginBottom:'1.5rem'}}>
               Caraïbe Francophone
             </h3>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="card-grid card-grid-2">
               {[
                 {
                   name: "Université des Antilles",
@@ -304,24 +307,24 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-1">{partner.name}</h4>
-                  <p className="text-sm font-semibold text-cyan-700 mb-3">{partner.location}</p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <div className="card-accent-top" />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.25rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.875rem', fontWeight:600, color:'#0e7490', marginBottom:'0.75rem'}}>{partner.location}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Caraïbe Hispanophone */}
-          <div className="mb-16">
-            <h3 className="text-xl font-bold text-slate-900 mb-6 text-teal-700">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f766e', marginBottom:'1.5rem'}}>
               Caraïbe Hispanophone
             </h3>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="card-grid card-grid-2">
               {[
                 {
                   name: "Universidad Autónoma de Santo Domingo",
@@ -336,13 +339,13 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-1">{partner.name}</h4>
-                  <p className="text-sm font-semibold text-teal-700 mb-3">{partner.location}</p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.25rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.875rem', fontWeight:600, color:'#0f766e', marginBottom:'0.75rem'}}>{partner.location}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -350,10 +353,10 @@ export default async function PartenariatsPage() {
 
           {/* Caraïbe Anglophone */}
           <div>
-            <h3 className="text-xl font-bold text-slate-900 mb-6 text-indigo-700">
+            <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#4338ca', marginBottom:'1.5rem'}}>
               Caraïbe Anglophone
             </h3>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="card-grid card-grid-2">
               {[
                 {
                   name: "University of the West Indies",
@@ -368,13 +371,13 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-indigo-500 to-cyan-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-1">{partner.name}</h4>
-                  <p className="text-sm font-semibold text-indigo-700 mb-3">{partner.location}</p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #6366f1, #06b6d4)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.25rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.875rem', fontWeight:600, color:'#4338ca', marginBottom:'0.75rem'}}>{partner.location}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -383,27 +386,27 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Partenaires Internationaux */}
-      <section className="py-20 md:py-28 bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 dot-pattern opacity-20" />
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-light" style={{position:'relative', overflow:'hidden'}}>
+        <div className="section-pattern dot-pattern pattern-20" />
+        <div className="container" style={{position:'relative'}}>
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Partenaires Internationaux
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               Une présence scientifique globale via des collaborations avec des universités de prestige et des organismes internationaux.
             </p>
           </div>
 
           {/* Europe */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-100 text-cyan-700 font-semibold">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.5rem', fontWeight:700, color:'#0f172a', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem'}}>
+              <span style={{display:'inline-flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#cffafe', color:'#0e7490', fontWeight:600}}>
                 🇪🇺
               </span>
               Europe
             </h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "Université Côte d'Azur",
@@ -423,29 +426,29 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-cyan-700 mb-3">
+                  <div className="card-accent-top" />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#0e7490', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Amérique du Nord */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-teal-100 text-teal-700 font-semibold">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.5rem', fontWeight:700, color:'#0f172a', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem'}}>
+              <span style={{display:'inline-flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#ccfbf1', color:'#0f766e', fontWeight:600}}>
                 🇨🇦
               </span>
               Amérique du Nord
             </h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "Universités Québécoises",
@@ -465,15 +468,15 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-indigo-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-teal-700 mb-3">
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #6366f1)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#0f766e', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -481,13 +484,13 @@ export default async function PartenariatsPage() {
 
           {/* Organismes Internationaux */}
           <div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700 font-semibold">
+            <h3 style={{fontSize:'1.5rem', fontWeight:700, color:'#0f172a', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem'}}>
+              <span style={{display:'inline-flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#e0e7ff', color:'#4338ca', fontWeight:600}}>
                 🌐
               </span>
               Organismes Internationaux
             </h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "AUF",
@@ -507,15 +510,15 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-indigo-500 to-cyan-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-indigo-700 mb-3">
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #6366f1, #06b6d4)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#4338ca', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -524,21 +527,21 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Partenaires Industriels et Institutionnels */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Partenaires Industriels et Institutionnels Mondiaux
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               Des collaborations avec les leaders mondiaux pour apporter technologies et expertise au service de l'innovation.
             </p>
           </div>
 
           {/* Tech Companies */}
-          <div className="mb-16">
-            <h3 className="text-xl font-bold text-slate-900 mb-6">Géants Technologiques</h3>
-            <div className="grid gap-6 md:grid-cols-3">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'1.5rem'}}>Géants Technologiques</h3>
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "Microsoft",
@@ -558,24 +561,24 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-cyan-700 mb-3">
+                  <div className="card-accent-top" />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#0e7490', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* International Organizations */}
-          <div className="mb-16">
-            <h3 className="text-xl font-bold text-slate-900 mb-6">Organismes Internationaux</h3>
-            <div className="grid gap-6 md:grid-cols-3">
+          <div style={{marginBottom:'4rem'}}>
+            <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'1.5rem'}}>Organismes Internationaux</h3>
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "BID",
@@ -595,15 +598,15 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-indigo-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-teal-700 mb-3">
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #6366f1)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#0f766e', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -611,8 +614,8 @@ export default async function PartenariatsPage() {
 
           {/* Specialized Agencies */}
           <div>
-            <h3 className="text-xl font-bold text-slate-900 mb-6">Organismes Spécialisés</h3>
-            <div className="grid gap-6 md:grid-cols-3">
+            <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'1.5rem'}}>Organismes Spécialisés</h3>
+            <div className="card-grid card-grid-3">
               {[
                 {
                   name: "FAO",
@@ -632,15 +635,15 @@ export default async function PartenariatsPage() {
               ].map((partner, idx) => (
                 <div
                   key={`${partner.name}-${idx}`}
-                  className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/10"
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  className="card card-hover gradient-card-bg"
+                  style={{padding:'1.5rem', animationDelay: `${idx * 50}ms`}}
                 >
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-indigo-500 to-cyan-500" />
-                  <h4 className="text-lg font-bold text-slate-900 mb-2">{partner.name}</h4>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-indigo-700 mb-3">
+                  <div className="card-accent-top" style={{background:'linear-gradient(to right, #6366f1, #06b6d4)'}} />
+                  <h4 style={{fontSize:'1.125rem', fontWeight:700, color:'#0f172a', marginBottom:'0.5rem'}}>{partner.name}</h4>
+                  <p style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#4338ca', marginBottom:'0.75rem'}}>
                     {partner.detail}
                   </p>
-                  <p className="text-sm text-slate-600">{partner.desc}</p>
+                  <p style={{fontSize:'0.875rem', color:'#475569'}}>{partner.desc}</p>
                 </div>
               ))}
             </div>
@@ -649,18 +652,18 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Modalités de Collaboration */}
-      <section className="py-20 md:py-28 bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 dot-pattern opacity-20" />
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-light" style={{position:'relative', overflow:'hidden'}}>
+        <div className="section-pattern dot-pattern pattern-20" />
+        <div className="container" style={{position:'relative'}}>
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Modalités de Collaboration
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               LaCDIA offre diverses formes de collaborations adaptées aux besoins et ambitions de ses partenaires.
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="card-grid card-grid-2">
             {[
               {
                 title: "Projets de Recherche Conjoints",
@@ -695,13 +698,12 @@ export default async function PartenariatsPage() {
             ].map((modality, idx) => (
               <article
                 key={`${modality.title}-${idx}`}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
+                className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                <div className="mb-4 text-4xl">{modality.icon}</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{modality.title}</h3>
-                <p className="text-base text-slate-600 leading-relaxed">{modality.description}</p>
+                <div className="card-accent-top" />
+                <div style={{marginBottom:'1rem', fontSize:'2.25rem'}}>{modality.icon}</div>
+                <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'0.75rem'}}>{modality.title}</h3>
+                <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7}}>{modality.description}</p>
               </article>
             ))}
           </div>
@@ -709,17 +711,18 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* ODD - Sustainable Development Goals */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               Alignement avec les Objectifs de Développement Durable (ODD)
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               Les partenariats de LaCDIA s'inscrivent dans une vision d'impact social et environnemental, alignée avec l'agenda 2030 des Nations Unies.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-5">
+          <div className="card-grid" style={{gridTemplateColumns:'repeat(auto-fit, minmax(12rem, 1fr))'}}>
+
             {[
               {
                 odd: "ODD 2",
@@ -754,7 +757,7 @@ export default async function PartenariatsPage() {
             ].map((odd, idx) => (
               <article
                 key={`${odd.odd}-${idx}`}
-                className={`group relative overflow-hidden rounded-2xl border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl`}
+                className="card card-hover"
                 style={{
                   animationDelay: `${idx * 50}ms`,
                   background: `linear-gradient(135deg, ${
@@ -770,10 +773,10 @@ export default async function PartenariatsPage() {
                   })`,
                 }}
               >
-                <div className="relative">
-                  <p className="text-sm font-bold text-white/90 mb-2">{odd.odd}</p>
-                  <h3 className="text-lg font-bold text-white mb-2">{odd.title}</h3>
-                  <p className="text-sm text-white/80 leading-relaxed">{odd.description}</p>
+                <div style={{position:'relative'}}>
+                  <p style={{fontSize:'0.875rem', fontWeight:700, color:'rgba(255,255,255,0.9)', marginBottom:'0.5rem'}}>{odd.odd}</p>
+                  <h3 style={{fontSize:'1.125rem', fontWeight:700, color:'#fff', marginBottom:'0.5rem'}}>{odd.title}</h3>
+                  <p style={{fontSize:'0.875rem', color:'rgba(255,255,255,0.8)', lineHeight:1.7}}>{odd.description}</p>
                 </div>
               </article>
             ))}
@@ -782,31 +785,30 @@ export default async function PartenariatsPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 gradient-mesh-bg opacity-60" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl animate-glow" />
+      <section className="page-hero page-hero-dark">
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.2)', filter:'blur(48px)'}} />
         <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-teal-500/20 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
+          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(20,184,166,0.2)', filter:'blur(48px)', animationDelay: "1s"}}
         />
 
-        <div className="relative mx-auto max-w-6xl px-4 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-6">
+        <div className="container" style={{position:'relative', textAlign:'center'}}>
+          <h2 className="section-title section-title-white" style={{marginBottom:'1.5rem'}}>
             Rejoignez Notre Écosystème de Collaboration
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-lg md:text-xl text-slate-100 leading-relaxed mb-8">
+          <p style={{margin:'0 auto', maxWidth:'48rem', fontSize:'1.125rem', color:'#e2e8f0', lineHeight:1.7, marginBottom:'2rem'}}>
             Que vous soyez une institution académique, une organisation publique ou une entreprise privée, LaCDIA vous invite à explorer des opportunités de collaboration.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div style={{display:'flex', flexWrap:'wrap', gap:'1rem', justifyContent:'center'}}>
             <Link
               href={localizedPath("/collaborer", locale)}
-              className="group inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-cyan-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
+              className="btn btn-cta-primary" style={{padding:'0.875rem 2rem', fontSize:'1rem'}}
             >
               Devenir Partenaire
               <svg
-                className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                style={{height:'1.25rem', width:'1.25rem'}}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -821,7 +823,12 @@ export default async function PartenariatsPage() {
             </Link>
             <Link
               href={localizedPath("/contact", locale)}
-              className="rounded-xl glass-card px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20"
+              className="btn btn-secondary"
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+              }}
             >
               Contacter le Laboratoire
             </Link>

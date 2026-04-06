@@ -66,29 +66,28 @@ export default async function Page() {
   const displayAxes = hasAxes ? axes : researchAxes.slice(0, 6);
 
   return (
-    <main className="w-full">
+    <main style={{width:'100%'}}>
       {/* Hero Section (always shown) */}
-      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
+      <section className="page-hero page-hero-dark">
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
         <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
+          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(139,92,246,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
         />
 
-        <div className="relative mx-auto max-w-6xl px-4">
+        <div className="container" style={{position:'relative'}}>
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+          <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'1.5rem'}}>
+            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
               Département Scientifique
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in-up">
+          <h1 className="animate-fade-in-up" style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'1.5rem'}}>
             Recherche en Intelligence Artificielle et Science des Données
           </h1>
-          <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed animate-fade-in-up">
+          <p className="animate-fade-in-up" style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7}}>
             Explorez nos axes de recherche scientifique fondamentale et appliquée.
           </p>
         </div>
@@ -96,28 +95,28 @@ export default async function Page() {
 
       {/* CMS Content Section (if available) */}
       {page && (page.title || page.summary || page.content?.length) ? (
-        <section className="mx-auto max-w-6xl px-4 py-12">
-          <div className="max-w-3xl">
-            {page.title ? <h2 className="text-3xl font-semibold text-slate-900">{page.title}</h2> : null}
-            {page.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
+        <section className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+          <div style={{maxWidth:'48rem'}}>
+            {page.title ? <h2 className="section-title">{page.title}</h2> : null}
+            {page.summary ? <p className="section-subtitle">{page.summary}</p> : null}
           </div>
 
-          <div className="mt-6">
+          <div style={{marginTop:'1.5rem'}}>
             <PortableTextRenderer value={page.content} />
           </div>
         </section>
       ) : null}
 
       {/* Research Axes Section */}
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Axes de recherche</h2>
-          <p className="mt-4 text-base text-slate-600 max-w-2xl">
+      <section className="container" style={{paddingTop:'5rem', paddingBottom:'5rem'}}>
+        <div style={{marginBottom:'3rem'}}>
+          <h2 className="section-title">Axes de recherche</h2>
+          <p className="section-subtitle" style={{maxWidth:'42rem'}}>
             Les six axes de recherche du LaCDIA combinant méthodes fondamentales en IA et applications concrètes adaptées au contexte caribéen.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="card-grid card-grid-3">
           {displayAxes.map((axis, idx) => {
             const a = axis as Record<string, unknown>;
             const key = (a._id ?? a.id ?? `axis-${idx}`) as string;
@@ -127,22 +126,21 @@ export default async function Page() {
             return (
             <article
               key={key}
-              className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10 animate-fade-in-up"
-              style={{ animationDelay: `${idx * 100}ms` }}
+              className="card card-hover gradient-card-bg animate-fade-in-up" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
             >
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600 font-bold text-sm">
+              <div className="card-accent-top" />
+              <div style={{marginBottom:'1rem', display:'flex', height:'2.5rem', width:'2.5rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#ecfeff', color:'#0891b2', fontWeight:700, fontSize:'0.875rem'}}>
                 {num}
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">
+              <h3 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a', marginBottom:'0.5rem'}}>
                 {title}
               </h3>
-              <p className="text-sm text-slate-600 mb-4 line-clamp-3">
+              <p style={{fontSize:'0.875rem', color:'#475569', marginBottom:'1rem', display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical' as const, overflow:'hidden'}}>
                 {desc}
               </p>
               <Link
                 href={`/recherche/departement-scientifique`}
-                className="inline-flex text-sm font-semibold text-cyan-600 hover:text-cyan-700 underline underline-offset-2 transition-colors"
+                className="btn-link" style={{color:'#0891b2'}}
               >
                 Explorer l'axe
               </Link>
@@ -151,14 +149,14 @@ export default async function Page() {
         </div>
 
         {/* Action Links */}
-        <div className="mt-12 flex flex-wrap gap-4">
+        <div style={{marginTop:'3rem', display:'flex', flexWrap:'wrap', gap:'1rem'}}>
           <Link
             href="/recherche/departement-scientifique"
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 px-8 py-3 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
+            className="btn btn-cta-primary" style={{padding:'0.75rem 2rem', fontSize:'1rem'}}
           >
             Explorer nos recherches
             <svg
-              className="h-5 w-5"
+              style={{height:'1.25rem', width:'1.25rem'}}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -173,7 +171,7 @@ export default async function Page() {
           </Link>
           <Link
             href="/partenariats"
-            className="inline-flex items-center gap-2 rounded-xl glass-card px-8 py-3 text-base font-semibold text-slate-900 border border-slate-300 transition-all hover:-translate-y-1 hover:border-cyan-300 hover:bg-cyan-50 hover:shadow-lg hover:shadow-cyan-500/10"
+            className="btn btn-cta-secondary"
           >
             Nos collaborations
           </Link>
@@ -184,15 +182,15 @@ export default async function Page() {
       {isReady ? (
         <>
           {hasResearchProjects || hasPublications ? (
-            <div className="mx-auto max-w-6xl px-4 py-12">
-              <div className="mt-12 rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-                <h2 className="text-xl font-semibold text-neutral-900">Recherche avancée</h2>
-                <p className="mt-2 text-sm text-neutral-600">
+            <div className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+              <div className="simple-card" style={{marginTop:'3rem'}}>
+                <h2 style={{fontSize:'1.25rem', fontWeight:600, color:'#0f172a'}}>Recherche avancée</h2>
+                <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'var(--muted)'}}>
                   Explorez les publications, projets et membres avec une recherche plein texte.
                 </p>
                 <Link
                   href="/recherche/explorer"
-                  className="mt-4 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+                  className="btn-link" style={{marginTop:'1rem'}}
                 >
                   Lancer la recherche
                 </Link>
@@ -201,9 +199,9 @@ export default async function Page() {
           ) : null}
 
           {hasResearchProjects ? (
-            <div className="mx-auto max-w-6xl px-4 py-12">
-              <h2 className="text-2xl font-semibold text-neutral-900">Projets de recherche</h2>
-              <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+              <h2 className="section-title" style={{fontSize:'1.5rem'}}>Projets de recherche</h2>
+              <div className="card-grid card-grid-2" style={{marginTop:'1.5rem'}}>
                 {researchProjects.slice(0, 4).map((project) => (
                   <ProjectCard key={project._id} project={project} />
                 ))}
@@ -212,9 +210,9 @@ export default async function Page() {
           ) : null}
 
           {hasPublications ? (
-            <div className="mx-auto max-w-6xl px-4 py-12">
-              <h2 className="text-2xl font-semibold text-neutral-900">Publications liées</h2>
-              <div className="mt-6 grid gap-6">
+            <div className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+              <h2 className="section-title" style={{fontSize:'1.5rem'}}>Publications liées</h2>
+              <div className="card-grid" style={{marginTop:'1.5rem'}}>
                 {publications.slice(0, 4).map((publication) => (
                   <PublicationCard key={publication._id} publication={publication} />
                 ))}

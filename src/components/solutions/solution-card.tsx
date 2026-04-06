@@ -11,27 +11,27 @@ export function SolutionCard({ solution }: SolutionCardProps) {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <article className="solution-card">
       {/* Header avec titre */}
-      <div className="bg-slate-50 px-6 py-5 border-b border-slate-200">
-        <h3 className="text-xl font-bold text-slate-900">{solution.title}</h3>
-        <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+      <div className="solution-card-header">
+        <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a'}}>{solution.title}</h3>
+        <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#475569', lineHeight:1.7}}>
           {solution.shortDescription}
         </p>
       </div>
 
       {/* Contenu principal */}
-      <div className="flex flex-1 flex-col p-6">
+      <div className="solution-card-body">
         {/* Bénéfices */}
-        <div className="mb-4">
+        <div className="solution-benefits" style={{ marginBottom: "1rem" }}>
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
             Ce que ça apporte
           </h4>
           <ul className="space-y-2">
             {solution.benefits.map((benefit, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-sm text-slate-700">
+              <li key={idx} className="solution-benefit-item">
                 <svg
-                  className="mt-0.5 h-4 w-4 shrink-0 text-blue-600"
+                  className="solution-benefit-icon"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -50,7 +50,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
         </div>
 
         {/* Badge applicable à tous */}
-        <div className="mb-4 rounded-lg bg-blue-50 px-3 py-2 text-xs font-medium text-blue-800">
+        <div className="solution-applicable">
           ✓ Applicable à tous les secteurs
         </div>
 
@@ -60,11 +60,11 @@ export function SolutionCard({ solution }: SolutionCardProps) {
             <button
               type="button"
               onClick={() => setShowDetails(!showDetails)}
-              className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition-colors hover:text-blue-800"
+              className="solution-toggle"
             >
               {showDetails ? "Masquer les exemples" : "Voir les exemples d&apos;usage"}
               <svg
-                className={`h-4 w-4 transition-transform duration-200 ${showDetails ? "rotate-180" : ""}`}
+                className={`solution-toggle-chevron ${showDetails ? "solution-toggle-chevron--open" : ""}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -75,13 +75,13 @@ export function SolutionCard({ solution }: SolutionCardProps) {
 
             {/* Exemples d'usage (collapsible) */}
             {showDetails && (
-              <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <div className="solution-examples-box">
                 <h5 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
                   Exemples d&apos;usage
                 </h5>
                 <ul className="space-y-2">
                   {solution.examples.map((example, idx) => (
-                    <li key={idx} className="text-sm text-slate-600">
+                    <li key={idx} className="solution-example-item">
                       • {example}
                     </li>
                   ))}

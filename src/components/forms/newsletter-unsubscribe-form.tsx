@@ -45,24 +45,25 @@ export default function NewsletterUnsubscribeForm() {
   }
 
   return (
-    <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-      <label className="block text-sm text-neutral-700">
+    <form className="form-section" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
+      <label className="form-label-light">
         Email
         <input
           type="email"
           name="email"
-          className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+          className="form-input-light"
+          style={{ marginTop: "0.5rem" }}
           required
         />
       </label>
       <button
         type="submit"
-        className="rounded-full border border-border bg-surface px-5 py-2 text-sm font-medium text-foreground transition hover:bg-surface-muted disabled:opacity-60"
+        className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
         Se desinscrire
       </button>
-      {message ? <p className="text-sm text-neutral-600">{message}</p> : null}
+      {message ? <p className="form-status-text">{message}</p> : null}
     </form>
   );
 }

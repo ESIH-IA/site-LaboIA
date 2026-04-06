@@ -6,16 +6,16 @@ interface UseCaseCardProps {
 
 export function UseCaseCard({ useCase }: UseCaseCardProps) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-slate-200 transition-all duration-300 hover:shadow-lg">
+    <article className="usecase-card">
       {/* Header */}
-      <div className="bg-gradient-to-br from-blue-800 to-blue-900 px-6 py-5">
+      <div className="usecase-card-header">
         <h3 className="text-lg font-bold text-white">{useCase.title}</h3>
       </div>
 
       {/* Contenu */}
-      <div className="flex flex-1 flex-col bg-slate-50 p-6">
+      <div className="usecase-card-body">
         {/* Contexte */}
-        <div className="mb-4">
+        <div className="usecase-section">
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
             Contexte
           </h4>
@@ -23,7 +23,7 @@ export function UseCaseCard({ useCase }: UseCaseCardProps) {
         </div>
 
         {/* Solution */}
-        <div className="mb-4">
+        <div className="usecase-section">
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
             Solution mise en place
           </h4>
@@ -31,7 +31,7 @@ export function UseCaseCard({ useCase }: UseCaseCardProps) {
         </div>
 
         {/* Bénéfices */}
-        <div className="mt-auto">
+        <div className="usecase-benefits">
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
             Bénéfices concrets
           </h4>
@@ -39,7 +39,7 @@ export function UseCaseCard({ useCase }: UseCaseCardProps) {
             {useCase.benefits.map((benefit, idx) => (
               <span
                 key={idx}
-                className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800"
+                className="usecase-benefit"
               >
                 {benefit}
               </span>

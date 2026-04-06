@@ -64,21 +64,21 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <section className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-3xl font-semibold text-neutral-900">{member.fullName}</h1>
-      {member.role ? <p className="mt-2 text-sm font-semibold text-neutral-600">{member.role}</p> : null}
+    <section className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <h1 className="section-title">{member.fullName}</h1>
+      {member.role ? <p style={{marginTop:'0.5rem', fontSize:'0.875rem', fontWeight:600, color:'var(--muted)'}}>{member.role}</p> : null}
       {member.affiliation ? (
-        <p className="mt-1 text-sm text-neutral-500">{member.affiliation}</p>
+        <p style={{marginTop:'0.25rem', fontSize:'0.875rem', color:'var(--muted)'}}>{member.affiliation}</p>
       ) : null}
 
-      {member.bio ? <p className="mt-6 text-neutral-700">{member.bio}</p> : null}
+      {member.bio ? <p style={{marginTop:'1.5rem', color:'#334155'}}>{member.bio}</p> : null}
 
       {member.expertise?.length ? (
-        <div className="mt-8">
-          <h2 className="text-lg font-semibold text-neutral-900">Domaines</h2>
-          <div className="mt-3 flex flex-wrap gap-2 text-sm text-neutral-700">
+        <div style={{marginTop:'2rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Domaines</h2>
+          <div style={{marginTop:'0.75rem', display:'flex', flexWrap:'wrap', gap:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>
             {member.expertise.map((item) => (
-              <span key={item} className="rounded-full bg-neutral-100 px-3 py-1">
+              <span key={item} className="tag-expertise">
                 {item}
               </span>
             ))}
@@ -87,15 +87,15 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {member.links?.length ? (
-        <div className="mt-8">
-          <h2 className="text-lg font-semibold text-neutral-900">Liens</h2>
-          <ul className="mt-3 space-y-2">
+        <div style={{marginTop:'2rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Liens</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem'}}>
             {member.links.map((link, index) => (
               <li key={`${link.url ?? "link"}-${index}`}>
                 {link.url ? (
                   <Link
                     href={link.url}
-                    className="text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -111,18 +111,18 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {member.projects?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets lies</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Projets lies</h2>
+          <div className="card-grid card-grid-2" style={{marginTop:'1rem'}}>
             {member.projects.map((project) => (
               <Link
                 key={project._id}
                 href={`/projets/${project.slug?.current ?? ""}`}
-                className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-400"
+                className="simple-card"
               >
-                <div className="text-sm font-semibold text-neutral-900">{project.title}</div>
+                <div className="simple-card-title" style={{fontSize:'0.875rem'}}>{project.title}</div>
                 {project.summary ? (
-                  <div className="mt-2 text-sm text-neutral-600">{project.summary}</div>
+                  <div className="simple-card-text" style={{marginTop:'0.5rem'}}>{project.summary}</div>
                 ) : null}
               </Link>
             ))}
@@ -131,18 +131,18 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {member.publications?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Publications liées</h2>
-          <div className="mt-4 grid gap-4">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Publications liées</h2>
+          <div className="card-grid" style={{marginTop:'1rem'}}>
             {member.publications.map((publication) => (
               <Link
                 key={publication._id}
                 href={`/publications/${publication.slug?.current ?? ""}`}
-                className="rounded-2xl border border-neutral-200 bg-white p-5 hover:border-neutral-400"
+                className="simple-card"
               >
-                <div className="text-sm font-semibold text-neutral-900">{publication.title}</div>
+                <div className="simple-card-title" style={{fontSize:'0.875rem'}}>{publication.title}</div>
                 {publication.date ? (
-                  <div className="mt-2 text-sm text-neutral-600">{publication.date}</div>
+                  <div className="simple-card-text" style={{marginTop:'0.5rem'}}>{publication.date}</div>
                 ) : null}
               </Link>
             ))}

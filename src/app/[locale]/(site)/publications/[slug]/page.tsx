@@ -69,36 +69,36 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-12">
-      <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+    <article className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div className="simple-card-meta">
         {publication.publicationType ? (
-          <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700">
+          <span className="badge badge-teal">
             {publication.publicationType}
           </span>
         ) : null}
         {publication.date ? <span>{publication.date}</span> : null}
       </div>
 
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{publication.title}</h1>
+      <h1 className="section-title" style={{marginTop:'1rem'}}>{publication.title}</h1>
       {publication.summary ? (
-        <p className="mt-3 text-lg text-neutral-700">{publication.summary}</p>
+        <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{publication.summary}</p>
       ) : null}
 
       {publication.authors?.length || publication.externalAuthors ? (
-        <div className="mt-8">
-          <h2 className="text-lg font-semibold text-neutral-900">Auteurs</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Auteurs</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.authors?.map((author) => (
               <li key={author._id}>
                 {author.slug?.current ? (
                   <Link
                     href={`/equipe/${author.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {author.fullName}
                   </Link>
                 ) : (
-                  <span className="font-medium">{author.fullName}</span>
+                  <span style={{fontWeight:500}}>{author.fullName}</span>
                 )}
               </li>
             ))}
@@ -108,12 +108,12 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {publication.doi || publication.url || publication.pdfUrl ? (
-        <div className="mt-8 text-sm text-neutral-800">
+        <div style={{marginTop:'2rem', fontSize:'0.875rem', color:'#1e293b'}}>
           {publication.doi ? <div>DOI: {publication.doi}</div> : null}
           {publication.url ? (
             <Link
               href={publication.url}
-              className="inline-flex text-neutral-900 underline underline-offset-4"
+              className="btn-link"
               target="_blank"
               rel="noreferrer"
             >
@@ -121,10 +121,10 @@ export default async function Page({ params }: PageProps) {
             </Link>
           ) : null}
           {publication.pdfUrl ? (
-            <div className="mt-2">
+            <div style={{marginTop:'0.5rem'}}>
               <Link
                 href={publication.pdfUrl}
-                className="inline-flex text-neutral-900 underline underline-offset-4"
+                className="btn-link"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -136,20 +136,20 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {publication.projects?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets liés</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Projets liés</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.projects.map((project) => (
               <li key={project._id}>
                 {project.slug?.current ? (
                   <Link
                     href={`/projets/${project.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {project.title}
                   </Link>
                 ) : (
-                  <span className="font-medium">{project.title}</span>
+                  <span style={{fontWeight:500}}>{project.title}</span>
                 )}
               </li>
             ))}
@@ -158,20 +158,20 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {publication.axes?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Axes de recherche</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Axes de recherche</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.axes.map((axis) => (
               <li key={axis._id}>
                 {axis.slug?.current ? (
                   <Link
                     href={`/publications/axes/${axis.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {axis.title}
                   </Link>
                 ) : (
-                  <span className="font-medium">{axis.title}</span>
+                  <span style={{fontWeight:500}}>{axis.title}</span>
                 )}
               </li>
             ))}
@@ -180,21 +180,21 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {publication.resources?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Ressources associées</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Ressources associées</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.resources.map((resource) => (
-              <li key={resource._id} className="flex flex-wrap items-center gap-3">
-                <span className="font-medium">{resource.title}</span>
+              <li key={resource._id} style={{display:'flex', flexWrap:'wrap', alignItems:'center', gap:'0.75rem'}}>
+                <span style={{fontWeight:500}}>{resource.title}</span>
                 {resource.resourceType ? (
-                  <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] uppercase tracking-wide text-neutral-600">
+                  <span className="tag-small">
                     {resource.resourceType}
                   </span>
                 ) : null}
                 {resource.fileUrl ? (
                   <Link
                     href={resource.fileUrl}
-                    className="text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -204,7 +204,7 @@ export default async function Page({ params }: PageProps) {
                 {resource.url ? (
                   <Link
                     href={resource.url}
-                    className="text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -218,9 +218,9 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {publication.bibtex ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">BibTeX</h2>
-          <pre className="mt-3 overflow-auto rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-xs text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>BibTeX</h2>
+          <pre style={{marginTop:'0.75rem', overflow:'auto', borderRadius:'0.75rem', border:'1px solid var(--border)', background:'var(--surface-muted)', padding:'1rem', fontSize:'0.75rem', color:'#1e293b'}}>
             {publication.bibtex}
           </pre>
         </div>

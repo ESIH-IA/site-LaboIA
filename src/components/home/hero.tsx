@@ -21,49 +21,50 @@ export default function Hero({ badge, actions, banner }: HeroProps) {
   const secondary = actions?.find((action) => action.variant === "secondary") ?? actions?.[1];
 
   return (
-    <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
+    <section className="hero">
       {/* Grid pattern overlay */}
-      <div className="absolute inset-0 grid-pattern opacity-40" />
+      <div className="hero-grid-overlay" />
 
       {/* Background image avec animation subtile */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="hero-bg-image">
         <Image
           src="/images/ai-network-bg.webp"
           alt="Fond intelligence artificielle et réseaux neuronaux"
           fill
           priority
-          className="object-cover animate-float"
+          className="animate-float"
+          style={{ objectFit: "cover" }}
           sizes="100vw"
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4">
+      <div className="hero-content">
         {/* Badge tech au-dessus du titre */}
-        <div className="mb-8 flex justify-center">
-          <div className="glass-card rounded-full px-6 py-2.5">
-            <span className="text-sm font-semibold text-white/90 uppercase tracking-wider">
+        <div className="hero-badge-wrapper">
+          <div className="hero-badge">
+            <span className="hero-badge-text">
               {badge ?? "Intelligence Artificielle - Recherche - Innovation"}
             </span>
           </div>
         </div>
 
         {/* Banner principal avec effet glassmorphism */}
-        <div className="mx-auto w-full overflow-hidden rounded-3xl glass-card banner-fused shadow-2xl shadow-cyan-500/20 transition-smooth hover:shadow-glow-cyan">
-          <Banner className="rounded-3xl" banner={banner} />
+        <div className="hero-banner">
+          <Banner banner={banner} />
         </div>
 
         {/* CTA buttons */}
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
+        <div className="hero-cta">
           <Link
             href={primary?.href ?? "/solutions"}
-            className="group relative overflow-hidden rounded-xl bg-linear-to-r from-cyan-500 to-cyan-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
+            className="btn btn-primary"
           >
-            <span className="relative z-10">{primary?.label ?? "Découvrir nos solutions"}</span>
-            <div className="absolute inset-0 bg-linear-to-r from-cyan-400 to-cyan-500 opacity-0 transition-opacity group-hover:opacity-100" />
+            <span className="btn-primary-overlay" />
+            <span style={{ position: "relative", zIndex: 10 }}>{primary?.label ?? "Découvrir nos solutions"}</span>
           </Link>
           <Link
             href={secondary?.href ?? "/equipe"}
-            className="rounded-xl border-2 border-white/20 bg-white/10 px-8 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-cyan-400/50 hover:bg-white/20"
+            className="btn btn-secondary"
           >
             {secondary?.label ?? "Rencontrer l'équipe"}
           </Link>
@@ -71,7 +72,7 @@ export default function Hero({ badge, actions, banner }: HeroProps) {
       </div>
 
       {/* Gradient fade bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
+      <div className="hero-fade-bottom" />
     </section>
   );
 }

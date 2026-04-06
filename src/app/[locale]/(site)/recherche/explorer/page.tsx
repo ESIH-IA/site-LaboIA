@@ -33,26 +33,26 @@ export default async function ExplorerPage({
     : [];
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
-      <div className="max-w-3xl">
-        <h1 className="text-3xl font-semibold">Recherche scientifique</h1>
-        <p className="mt-3 text-neutral-600">
+    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div style={{maxWidth:'48rem'}}>
+        <h1 className="section-title">Recherche scientifique</h1>
+        <p className="section-subtitle">
           Interrogez les publications, projets et membres du laboratoire.
         </p>
       </div>
 
-      <form className="mt-6 flex flex-wrap gap-3" method="get">
+      <form style={{marginTop:'1.5rem', display:'flex', flexWrap:'wrap', gap:'0.75rem'}} method="get">
         <input
           type="search"
           name="q"
           placeholder="Mot-clé, auteur, projet..."
           defaultValue={query}
-          className="w-full rounded-lg border border-neutral-200 px-3 py-2 md:w-80"
+          className="form-input-light" style={{width:'100%', maxWidth:'20rem'}}
         />
         <select
           name="type"
           defaultValue={type ?? ""}
-          className="rounded-lg border border-neutral-200 px-3 py-2"
+          className="form-select"
         >
           <option value="">Tous les contenus</option>
           <option value="publication">Publications</option>
@@ -61,20 +61,20 @@ export default async function ExplorerPage({
         </select>
         <button
           type="submit"
-          className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white"
+          className="btn btn-small btn-small-primary"
         >
           Rechercher
         </button>
       </form>
 
       {query && results.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
+        <div className="empty-state" style={{marginTop:'2rem'}}>
           Aucun résultat pour votre recherche.
         </div>
       ) : null}
 
       {results.length > 0 ? (
-        <div className="mt-8 grid gap-4">
+        <div className="card-grid" style={{marginTop:'2rem', gap:'1rem'}}>
           {results.map((item) => {
             const href =
               item._type === "publication"
@@ -86,16 +86,16 @@ export default async function ExplorerPage({
             return (
               <article
                 key={item._id}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+                className="simple-card"
               >
-                <div className="text-xs uppercase tracking-wide text-neutral-500">{item._type}</div>
+                <div style={{fontSize:'0.75rem', textTransform:'uppercase', letterSpacing:'0.05em', color:'var(--muted)'}}>{item._type}</div>
                 <a
                   href={href}
-                  className="mt-2 inline-flex text-lg font-semibold text-neutral-900 underline underline-offset-4"
+                  className="btn-link" style={{marginTop:'0.5rem', fontSize:'1.125rem'}}
                 >
                   {item.title}
                 </a>
-                {item.summary ? <p className="mt-2 text-sm text-neutral-700">{item.summary}</p> : null}
+                {item.summary ? <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>{item.summary}</p> : null}
               </article>
             );
           })}

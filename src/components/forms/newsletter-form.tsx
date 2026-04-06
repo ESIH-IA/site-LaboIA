@@ -46,21 +46,22 @@ export default function NewsletterForm() {
   }
 
   return (
-    <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-      <label className="block text-sm text-neutral-700">
+    <form className="form-section" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
+      <label className="form-label-light">
         Email
         <input
           type="email"
           name="email"
-          className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+          className="form-input-light"
+          style={{ marginTop: "0.5rem" }}
           required
         />
       </label>
-      <label className="flex items-start gap-3 text-sm text-neutral-600">
-        <input type="checkbox" required className="mt-1" />
+      <label className="form-checkbox-light-row">
+        <input type="checkbox" required style={{ marginTop: "0.25rem" }} />
         <span>
           J&apos;accepte de recevoir les communications du laboratoire. Voir la{" "}
-          <Link href="/confidentialite" className="underline underline-offset-4">
+          <Link href="/confidentialite" style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>
             politique de confidentialité
           </Link>
           .
@@ -68,12 +69,12 @@ export default function NewsletterForm() {
       </label>
       <button
         type="submit"
-        className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-white shadow-sm shadow-black/10 transition hover:bg-primary/90 disabled:opacity-60"
+        className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
         S{"'"}inscrire
       </button>
-      {message ? <p className="text-sm text-neutral-600">{message}</p> : null}
+      {message ? <p className="form-status-text">{message}</p> : null}
     </form>
   );
 }

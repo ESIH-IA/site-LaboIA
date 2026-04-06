@@ -65,36 +65,36 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-12">
+    <article className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
       <Link
         href="/formation"
-        className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
+        className="btn-link"
       >
         Retour a la formation
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{program.title}</h1>
-      {program.summary ? <p className="mt-3 text-lg text-neutral-700">{program.summary}</p> : null}
-      <div className="mt-6">
+      <h1 className="section-title" style={{marginTop:'1rem'}}>{program.title}</h1>
+      {program.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{program.summary}</p> : null}
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={program.content} />
       </div>
 
       {program.members?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Encadrement</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Encadrement</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {program.members.map((member) => (
-              <li key={member._id} className="flex items-center justify-between gap-3">
+              <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
                 {member.slug?.current ? (
                   <Link
                     href={`/equipe/${member.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {member.fullName}
                   </Link>
                 ) : (
-                  <span className="font-medium">{member.fullName}</span>
+                  <span style={{fontWeight:500}}>{member.fullName}</span>
                 )}
-                {member.role ? <span className="text-xs uppercase text-neutral-500">{member.role}</span> : null}
+                {member.role ? <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{member.role}</span> : null}
               </li>
             ))}
           </ul>

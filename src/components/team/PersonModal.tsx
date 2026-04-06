@@ -35,39 +35,34 @@ export function PersonModal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm"
+      className="modal-overlay"
       role="dialog"
       aria-modal="true"
       aria-label={person.fullName}
       onClick={onClose}
     >
       <div
-        className="mx-auto mt-16 w-[min(48rem,calc(100%-2rem))] rounded-2xl border border-border bg-surface p-6 shadow-lg"
+        className="modal-panel"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="text-lg font-semibold text-foreground">{person.fullName}</div>
+        <div className="modal-header">
+          <div style={{minWidth:0}}>
+              <div className="person-card-name-row">
+                <div className="modal-name">{person.fullName}</div>
                 {badgeLabel ? (
                   <span
-                    className={[
-                      "rounded-full px-3 py-1 text-[11px] font-semibold",
-                      tone === "associate"
-                        ? "bg-violet-600/10 text-violet-800"
-                        : "bg-accent/10 text-accent",
-                    ].join(" ")}
+                    className={tone === "associate" ? "person-badge--associate" : "person-badge--research"}
                   >
                     {badgeLabel}
                   </span>
                 ) : null}
               </div>
-            <div className="mt-1 text-sm text-muted">{person.roleTitle}</div>
-            {person.affiliation ? <div className="mt-1 text-sm text-muted">{person.affiliation}</div> : null}
+            <div className="modal-role">{person.roleTitle}</div>
+            {person.affiliation ? <div className="modal-role">{person.affiliation}</div> : null}
           </div>
           <button
             type="button"
-            className="rounded-lg p-2 text-muted transition hover:bg-surface-muted hover:text-foreground"
+            className="modal-close"
             aria-label="Close"
             onClick={onClose}
           >
@@ -78,11 +73,11 @@ export function PersonModal({
         </div>
 
         {person.expertise.length > 0 ? (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="modal-tags">
             {person.expertise.map((tag) => (
               <span
                 key={`${person.id}-${tag}`}
-                className="rounded-full border border-border bg-surface-muted px-3 py-1 text-xs font-medium text-muted"
+                className="tag-expertise"
               >
                 {tag}
               </span>
@@ -91,19 +86,19 @@ export function PersonModal({
         ) : null}
 
         {person.longBio ? (
-          <p className="mt-5 whitespace-pre-wrap text-sm text-muted">{person.longBio}</p>
+          <p className="modal-bio">{person.longBio}</p>
         ) : (
-          <p className="mt-5 text-sm text-muted">{readMoreLabel}</p>
+          <p className="modal-bio">{readMoreLabel}</p>
         )}
 
         {hasLinks ? (
-          <div className="mt-5 flex flex-wrap gap-3 text-sm font-semibold">
+          <div className="modal-links">
             {links.linkedin ? (
               <a
                 href={links.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                className="modal-link"
               >
                 LinkedIn
               </a>
@@ -113,7 +108,7 @@ export function PersonModal({
                 href={links.orcid}
                 target="_blank"
                 rel="noreferrer"
-                className="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                className="modal-link"
               >
                 ORCID
               </a>
@@ -123,7 +118,7 @@ export function PersonModal({
                 href={links.scholar}
                 target="_blank"
                 rel="noreferrer"
-                className="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                className="modal-link"
               >
                 Scholar
               </a>
@@ -133,7 +128,7 @@ export function PersonModal({
                 href={links.website}
                 target="_blank"
                 rel="noreferrer"
-                className="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
+                className="modal-link"
               >
                 Website
               </a>

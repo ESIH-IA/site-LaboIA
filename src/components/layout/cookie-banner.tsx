@@ -39,27 +39,27 @@ export default function CookieBanner() {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 rounded-2xl border border-border bg-surface p-5 shadow-lg md:left-auto md:right-6 md:max-w-lg">
-      <h2 className="text-sm font-semibold text-foreground">Cookies</h2>
-      <p className="mt-2 text-sm text-muted">
+    <div className="cookie-banner">
+      <h2 className="cookie-title">Cookies</h2>
+      <p className="cookie-text">
         Ce site utilise des cookies de mesure d&apos;audience et de fonctionnement. Vous pouvez
         accepter ou refuser ces cookies. Consultez la{" "}
-        <Link href="/cookies" className="underline underline-offset-4">
+        <Link href="/cookies">
           politique cookies
         </Link>
         .
       </p>
-      <div className="mt-4 flex flex-wrap gap-3">
+      <div className="cookie-actions">
         <button
           type="button"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm shadow-black/10 transition hover:bg-primary/90"
+          className="btn btn-small btn-small-primary"
           onClick={() => handleChoice("accepted")}
         >
           Accepter
         </button>
         <button
           type="button"
-          className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition hover:bg-surface-muted"
+          className="btn btn-small btn-small-outline"
           onClick={() => handleChoice("rejected")}
         >
           Refuser

@@ -39,12 +39,12 @@ export default async function Page() {
   );
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
-      <div className="max-w-3xl">
-        {page?.title ? <h1 className="text-3xl font-semibold">{page.title}</h1> : null}
-        {page?.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
+    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div style={{maxWidth:'48rem'}}>
+        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+        {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
       </div>
-      <div className="mt-6">
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={page?.content} />
       </div>
     </section>

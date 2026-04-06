@@ -23,9 +23,9 @@ export default async function SiteLayout({
   const [site, nav] = await Promise.all([getSiteSettings(locale), getNavigation(locale)]);
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="site-layout">
       <Header nav={nav} site={site} />
-      <main className="flex-1">{children}</main>
+      <main className="site-main">{children}</main>
       <Footer nav={nav} site={site} />
       <CookieBanner />
       <AnalyticsScripts />

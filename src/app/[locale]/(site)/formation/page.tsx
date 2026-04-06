@@ -55,33 +55,33 @@ export default async function Page() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12">
-      {page?.title ? <h1 className="text-3xl font-semibold">{page.title}</h1> : null}
-      {page?.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
-      <div className="mt-6">
+    <section className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+      {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+      {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={page?.content} />
       </div>
 
       {hasOffers ? (
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold text-neutral-900">Offres et opportunites</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div style={{marginTop:'3rem'}}>
+          <h2 className="section-title" style={{fontSize:'1.5rem'}}>Offres et opportunites</h2>
+          <div className="card-grid card-grid-2" style={{marginTop:'1.5rem', gap:'1rem'}}>
             {offers.map((offer) => (
               <article
                 key={offer._id}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+                className="simple-card"
               >
-                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+                <div className="simple-card-meta">
                   {offer.offerType ? (
-                    <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700">
+                    <span className="tag-small">
                       {offer.offerType}
                     </span>
                   ) : null}
                   {offer.openDate ? <span>{offer.openDate}</span> : null}
                 </div>
-                <h3 className="mt-3 text-lg font-semibold text-neutral-900">{offer.title}</h3>
+                <h3 style={{marginTop:'0.75rem', fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>{offer.title}</h3>
                 {offer.summary ? (
-                  <p className="mt-2 text-sm text-neutral-700">{offer.summary}</p>
+                  <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>{offer.summary}</p>
                 ) : null}
               </article>
             ))}
@@ -90,29 +90,29 @@ export default async function Page() {
       ) : null}
 
       {hasPrograms ? (
-        <div className="mt-12">
-          <h2 className="text-2xl font-semibold text-neutral-900">Programmes et ateliers</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div style={{marginTop:'3rem'}}>
+          <h2 className="section-title" style={{fontSize:'1.5rem'}}>Programmes et ateliers</h2>
+          <div className="card-grid card-grid-2" style={{marginTop:'1.5rem', gap:'1rem'}}>
             {programs.map((program) => (
               <article
                 key={program._id}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+                className="simple-card"
               >
-                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+                <div className="simple-card-meta">
                   {program.programType ? (
-                    <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-semibold text-neutral-700">
+                    <span className="tag-small">
                       {program.programType}
                     </span>
                   ) : null}
                   {program.startDate ? <span>{program.startDate}</span> : null}
                 </div>
-                <h3 className="mt-3 text-lg font-semibold text-neutral-900">{program.title}</h3>
+                <h3 style={{marginTop:'0.75rem', fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>{program.title}</h3>
                 {program.summary ? (
-                  <p className="mt-2 text-sm text-neutral-700">{program.summary}</p>
+                  <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>{program.summary}</p>
                 ) : null}
                 <Link
                   href={`/formation/programmes/${program.slug.current}`}
-                  className="mt-3 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+                  className="btn-link" style={{marginTop:'0.75rem'}}
                 >
                   Voir le programme
                 </Link>

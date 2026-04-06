@@ -47,13 +47,7 @@ function DesktopNavLink({
   return (
     <Link
       href={href}
-      className={[
-        "relative rounded-full px-2 py-1 text-sm font-medium transition-colors",
-        "text-muted hover:bg-surface-muted hover:text-accent",
-        "after:absolute after:inset-x-2 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-accent after:origin-left after:scale-x-0 after:transition-transform after:duration-200",
-        "hover:after:scale-x-100",
-        active ? "bg-surface-muted text-foreground after:scale-x-100" : "",
-      ].join(" ")}
+      className={`nav-link ${active ? "nav-link--active" : ""}`}
       aria-current={active ? "page" : undefined}
     >
       {label}
@@ -76,16 +70,11 @@ function MobileNavLink({
     <Link
       href={href}
       onClick={onNavigate}
-      className={[
-        "flex w-full items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors",
-        active
-          ? "bg-surface-muted text-foreground"
-          : "text-muted hover:bg-surface-muted hover:text-foreground",
-      ].join(" ")}
+      className={`mobile-nav-link ${active ? "mobile-nav-link--active" : ""}`}
       aria-current={active ? "page" : undefined}
     >
       <span>{label}</span>
-      <span aria-hidden="true" className="text-neutral-400">
+      <span aria-hidden="true" className="mobile-nav-arrow">
         &gt;
       </span>
     </Link>
@@ -113,26 +102,26 @@ export default function Header({
   }, [basePath, currentLocale, nav.mainNav]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm shadow-black/5 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-3">
+    <header className="header">
+      <div className="header-inner">
         <Link
           href={withLocale("/", currentLocale)}
           title={site.name}
-          className="flex items-center gap-3 leading-tight"
+          className="header-logo"
         >
-          <Logo size="header" className="h-9 w-9" logo={site.logo} />
-          <div className="flex flex-col">
-            <div className="text-base font-semibold tracking-tight text-foreground">
+          <Logo size="header" className="header-logo-img" logo={site.logo} />
+          <div className="header-logo-name">
+            <div>
               {site.shortName}
             </div>
-            <div className="hidden text-xs text-muted md:block">
+            <div className="header-logo-tagline">
               {site.tagline ?? "Laboratoire de recherche en IA & science des données"}
             </div>
           </div>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <nav className="hidden items-center gap-5 md:flex">
+        <div className="header-actions">
+          <nav className="header-nav">
             {navItems.map((item) => (
               <DesktopNavLink
                 key={item.href}
@@ -145,7 +134,7 @@ export default function Header({
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-xl border border-border bg-background px-3 py-2 text-sm font-medium text-foreground shadow-sm shadow-black/5 transition hover:bg-surface-muted md:hidden"
+            className="mobile-menu-btn"
             aria-label="Ouvrir le menu"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
@@ -174,21 +163,21 @@ export default function Header({
 
       {mobileOpen ? (
         <div
-          className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm md:hidden"
+          className="mobile-overlay"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation"
           onClick={() => setMobileOpen(false)}
         >
           <div
-            className="absolute right-4 top-16 w-[min(22rem,calc(100%-2rem))] rounded-2xl border border-border bg-background p-4 shadow-lg"
+            className="mobile-panel"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center justify-between">
-              <div className="text-sm font-semibold text-foreground">Menu</div>
+            <div className="mobile-panel-header">
+              <div className="mobile-panel-title">Menu</div>
               <button
                 type="button"
-                className="rounded-lg p-2 text-muted transition hover:bg-surface-muted hover:text-foreground"
+                className="mobile-close-btn"
                 aria-label="Fermer le menu"
                 onClick={() => setMobileOpen(false)}
               >
@@ -210,7 +199,7 @@ export default function Header({
               </button>
             </div>
 
-            <div className="mt-3 grid gap-1">
+            <div className="mobile-nav">
               {navItems.map((item) => (
                 <MobileNavLink
                   key={item.href}

@@ -66,8 +66,8 @@ export default async function Page({ params }: PageProps) {
 
   if (!axis) {
     return (
-      <section className="mx-auto max-w-5xl px-4 py-12">
-        <div className="rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
+      <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+        <div className="empty-state">
           Contenu en cours de publication.
         </div>
       </section>
@@ -75,24 +75,24 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
+    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
       <Link
         href="/publications/axes"
-        className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
+        className="btn-link"
       >
         Retour aux axes
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{axis.title}</h1>
-      {axis.summary ? <p className="mt-3 text-lg text-neutral-700">{axis.summary}</p> : null}
+      <h1 className="section-title" style={{marginTop:'1rem'}}>{axis.title}</h1>
+      {axis.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{axis.summary}</p> : null}
 
-      <div className="mt-6">
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={axis.content} />
       </div>
 
-      <div className="mt-10">
-        <h2 className="text-xl font-semibold text-neutral-900">Publications associées</h2>
+      <div style={{marginTop:'2.5rem'}}>
+        <h2 className="section-title" style={{fontSize:'1.25rem'}}>Publications associées</h2>
         {axis.publications?.length ? (
-          <div className="mt-6 grid gap-6">
+          <div className="card-grid" style={{marginTop:'1.5rem'}}>
             {axis.publications.map((publication) => (
               <PublicationCard key={publication._id} publication={publication} />
             ))}

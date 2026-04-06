@@ -39,32 +39,31 @@ export default async function Page() {
   );
 
   return (
-    <main className="w-full">
+    <main style={{width:'100%'}}>
       {/* Hero Section */}
-      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
+      <section className="page-hero page-hero-dark">
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
         <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
+          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(139,92,246,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
         />
 
-        <div className="relative mx-auto max-w-6xl px-4">
+        <div className="container" style={{position:'relative'}}>
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+          <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'1.5rem'}}>
+            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
               Contact
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in-up">
+          <h1 className="animate-fade-in-up" style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'1.5rem'}}>
             Nous Contacter
           </h1>
-          <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed animate-fade-in-up">
+          <p className="animate-fade-in-up" style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7}}>
             Vous avez une question, un projet ou une opportunité de collaboration ?
           </p>
-          <p className="mt-3 max-w-2xl text-base text-slate-300 animate-fade-in-up">
+          <p className="animate-fade-in-up" style={{marginTop:'0.75rem', maxWidth:'42rem', fontSize:'1rem', color:'#cbd5e1'}}>
             Contactez l'équipe du LaCDIA pour discuter de vos besoins en intelligence artificielle et science des données.
           </p>
         </div>
@@ -72,29 +71,29 @@ export default async function Page() {
 
       {/* CMS Content Section (if available) */}
       {page && (page.title || page.summary || page.content?.length) ? (
-        <section className="mx-auto max-w-6xl px-4 py-12">
-          <div className="max-w-3xl">
-            {page.title ? <h2 className="text-3xl font-semibold text-slate-900">{page.title}</h2> : null}
-            {page.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
+        <section className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
+          <div style={{maxWidth:'48rem'}}>
+            {page.title ? <h2 className="section-title">{page.title}</h2> : null}
+            {page.summary ? <p className="section-subtitle">{page.summary}</p> : null}
           </div>
 
-          <div className="mt-6">
+          <div style={{marginTop:'1.5rem'}}>
             <PortableTextRenderer value={page.content} />
           </div>
         </section>
       ) : null}
 
       {/* Contact Info & Form Section */}
-      <section className="relative py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
+      <section className="section section-white" style={{position:'relative'}}>
+        <div className="container">
           {/* Contact Info Cards */}
-          <div className="grid gap-8 md:grid-cols-3 mb-16">
+          <div className="card-grid card-grid-3" style={{marginBottom:'4rem'}}>
             {/* Email Card */}
-            <article className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+            <article className="card card-hover gradient-card-bg" style={{padding:'2rem'}}>
+              <div className="card-accent-top" />
+              <div style={{marginBottom:'1rem', display:'flex', height:'3rem', width:'3rem', alignItems:'center', justifyContent:'center', borderRadius:'0.75rem', background:'#ecfeff', color:'#0891b2'}}>
                 <svg
-                  className="h-6 w-6"
+                  style={{height:'1.5rem', width:'1.5rem'}}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -107,16 +106,16 @@ export default async function Page() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Email</h3>
-              <p className="text-base text-slate-600">contact@lacdia.org</p>
+              <h3 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a', marginBottom:'0.5rem'}}>Email</h3>
+              <p style={{fontSize:'1rem', color:'#475569'}}>contact@lacdia.org</p>
             </article>
 
             {/* Address Card */}
-            <article className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-600">
+            <article className="card card-hover gradient-card-bg" style={{padding:'2rem'}}>
+              <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
+              <div style={{marginBottom:'1rem', display:'flex', height:'3rem', width:'3rem', alignItems:'center', justifyContent:'center', borderRadius:'0.75rem', background:'#f0fdfa', color:'#0d9488'}}>
                 <svg
-                  className="h-6 w-6"
+                  style={{height:'1.5rem', width:'1.5rem'}}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -135,16 +134,16 @@ export default async function Page() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Adresse</h3>
-              <p className="text-base text-slate-600 leading-relaxed">Campus ESIH, Route de Frères, Pétion-Ville, Haïti</p>
+              <h3 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a', marginBottom:'0.5rem'}}>Adresse</h3>
+              <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7}}>Campus ESIH, Route de Frères, Pétion-Ville, Haïti</p>
             </article>
 
             {/* Hours Card */}
-            <article className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-violet-500/10">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-violet-500 to-cyan-500" />
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
+            <article className="card card-hover gradient-card-bg" style={{padding:'2rem'}}>
+              <div className="card-accent-top" style={{background:'linear-gradient(to right, #8b5cf6, #06b6d4)'}} />
+              <div style={{marginBottom:'1rem', display:'flex', height:'3rem', width:'3rem', alignItems:'center', justifyContent:'center', borderRadius:'0.75rem', background:'#f5f3ff', color:'#7c3aed'}}>
                 <svg
-                  className="h-6 w-6"
+                  style={{height:'1.5rem', width:'1.5rem'}}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -157,13 +156,13 @@ export default async function Page() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Horaires</h3>
-              <p className="text-base text-slate-600">Lundi-Vendredi, 8h-17h</p>
+              <h3 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a', marginBottom:'0.5rem'}}>Horaires</h3>
+              <p style={{fontSize:'1rem', color:'#475569'}}>Lundi-Vendredi, 8h-17h</p>
             </article>
           </div>
 
           {/* Contact Form */}
-          <div className="max-w-3xl mx-auto">
+          <div style={{maxWidth:'48rem', margin:'0 auto'}}>
             <ContactForm />
           </div>
         </div>

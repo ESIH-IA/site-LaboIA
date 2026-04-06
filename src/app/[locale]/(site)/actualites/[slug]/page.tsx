@@ -80,10 +80,10 @@ export default async function Page({ params }: PageProps) {
   const mainImageAlt = article?.mainImageAlt ?? localArticle?.mainImage?.alt ?? localArticle?.title;
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-12">
-      <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+    <article className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div className="simple-card-meta">
         {(article?.category ?? localArticle?.category) ? (
-          <span className="rounded-full bg-neutral-900 px-3 py-1 text-[11px] font-semibold text-white">
+          <span className="badge badge-primary">
             {article?.category ?? localArticle?.category}
           </span>
         ) : null}
@@ -92,26 +92,26 @@ export default async function Page({ params }: PageProps) {
         ) : null}
       </div>
 
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">
+      <h1 className="section-title" style={{marginTop:'1rem'}}>
         {article?.title ?? localArticle?.title}
       </h1>
       {(article?.summary ?? localArticle?.summary) ? (
-        <p className="mt-3 text-lg text-neutral-700">{article?.summary ?? localArticle?.summary}</p>
+        <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{article?.summary ?? localArticle?.summary}</p>
       ) : null}
 
       {mainImageUrl ? (
-        <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-2xl">
+        <div style={{position:'relative', marginTop:'1.5rem', aspectRatio:'16/9', width:'100%', overflow:'hidden', borderRadius:'1rem'}}>
           <Image
             src={mainImageUrl}
             alt={mainImageAlt ?? "Illustration de l'article"}
             fill
             sizes="(min-width: 1024px) 768px, 100vw"
-            className="object-cover"
+            style={{objectFit:'cover'}}
           />
         </div>
       ) : null}
 
-      <div className="mt-8">
+      <div style={{marginTop:'2rem'}}>
         {article?.content ? (
           <PortableTextRenderer value={article.content} />
         ) : localArticle?.blocks ? (
@@ -120,20 +120,20 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {article?.relatedProjects?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Projets associés</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Projets associés</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {article.relatedProjects.map((project) => (
               <li key={project._id}>
                 {project.slug?.current ? (
                   <Link
                     href={`/projets/${project.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {project.title}
                   </Link>
                 ) : (
-                  <span className="font-medium">{project.title}</span>
+                  <span style={{fontWeight:500}}>{project.title}</span>
                 )}
               </li>
             ))}
@@ -142,22 +142,22 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {article?.relatedMembers?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Membres cités</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Membres cités</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {article.relatedMembers.map((member) => (
-              <li key={member._id} className="flex items-center justify-between gap-3">
+              <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
                 {member.slug?.current ? (
                   <Link
                     href={`/equipe/${member.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {member.fullName}
                   </Link>
                 ) : (
-                  <span className="font-medium">{member.fullName}</span>
+                  <span style={{fontWeight:500}}>{member.fullName}</span>
                 )}
-                {member.role ? <span className="text-xs uppercase text-neutral-500">{member.role}</span> : null}
+                {member.role ? <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{member.role}</span> : null}
               </li>
             ))}
           </ul>
@@ -165,11 +165,11 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       {(article?.sourceUrl ?? localArticle?.sourceUrl) ? (
-        <div className="mt-10 flex flex-wrap gap-3 text-sm text-neutral-700">
-          <span className="font-semibold text-neutral-900">Source:</span>
+        <div style={{marginTop:'2.5rem', display:'flex', flexWrap:'wrap', gap:'0.75rem', fontSize:'0.875rem', color:'#334155'}}>
+          <span style={{fontWeight:600, color:'#0f172a'}}>Source:</span>
           <Link
             href={(article?.sourceUrl ?? localArticle?.sourceUrl) as string}
-            className="inline-flex items-center gap-2 text-neutral-900 underline underline-offset-4"
+            className="btn-link"
             target="_blank"
             rel="noreferrer"
           >

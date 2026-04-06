@@ -76,28 +76,28 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-5xl px-4 py-12">
+    <article className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
       <Link
         href="/recherche/axes"
-        className="text-sm font-semibold text-neutral-900 underline underline-offset-4"
+        className="btn-link"
       >
         Retour aux axes
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{axis.title}</h1>
-      {axis.summary ? <p className="mt-3 text-lg text-neutral-700">{axis.summary}</p> : null}
+      <h1 className="section-title" style={{marginTop:'1rem'}}>{axis.title}</h1>
+      {axis.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{axis.summary}</p> : null}
 
-      <div className="mt-6">
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={axis.content} />
       </div>
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Projets associés</h2>
+      <div style={{marginTop:'3rem'}}>
+        <h2 className="section-title" style={{fontSize:'1.5rem'}}>Projets associés</h2>
         {!axis.projects?.length ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
+          <div className="empty-state">
             Contenu en cours de publication.
           </div>
         ) : (
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="card-grid card-grid-2" style={{marginTop:'1.5rem'}}>
             {axis.projects.map((project) => (
               <ProjectCard key={project._id} project={project} />
             ))}
@@ -105,14 +105,14 @@ export default async function Page({ params }: PageProps) {
         )}
       </div>
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold text-neutral-900">Publications associées</h2>
+      <div style={{marginTop:'3rem'}}>
+        <h2 className="section-title" style={{fontSize:'1.5rem'}}>Publications associées</h2>
         {!axis.publications?.length ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-600">
+          <div className="empty-state">
             Contenu en cours de publication.
           </div>
         ) : (
-          <div className="mt-6 grid gap-6">
+          <div className="card-grid" style={{marginTop:'1.5rem'}}>
             {axis.publications.map((publication) => (
               <PublicationCard key={publication._id} publication={publication} />
             ))}

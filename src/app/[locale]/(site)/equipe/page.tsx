@@ -104,52 +104,51 @@ export default async function EquipePage() {
   if (governance.mode === "local") {
     const data = governance.data;
     return (
-      <main className="relative min-h-screen overflow-hidden bg-white">
-        <section className="relative overflow-hidden gradient-mesh-bg py-28 md:py-36">
-          <div className="absolute inset-0 grid-pattern opacity-40" />
-          <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
+      <main style={{position:'relative', minHeight:'100vh', overflow:'hidden'}}>
+        <section className="page-hero page-hero-dark" style={{paddingTop:'7rem', paddingBottom:'9rem'}}>
+          <div className="section-pattern grid-pattern pattern-40" />
+          <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
           <div
-            className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl animate-glow"
-            style={{ animationDelay: "1s" }}
+            className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(20,184,166,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
           />
 
-          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-            <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-8">
-              <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+          <div className="container" style={{position:'relative', zIndex:10, maxWidth:'64rem', textAlign:'center'}}>
+            <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'2rem'}}>
+              <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+              <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
                 Intelligence Artificielle - Recherche - Innovation
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 tracking-tight">
+            <h1 style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, color:'#fff', marginBottom:'2rem', letterSpacing:'-0.01em'}}>
               {data.title}
             </h1>
 
             {data.intro ? (
-              <p className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed">
+              <p style={{fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', maxWidth:'48rem', margin:'0 auto', lineHeight:1.7}}>
                 {data.intro}
               </p>
             ) : null}
 
-            <div className="mt-12 flex justify-center gap-3">
-              <div className="h-1 w-20 rounded-full bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
-              <div className="h-1 w-20 rounded-full bg-linear-to-r from-transparent via-teal-400 to-transparent opacity-80" />
-              <div className="h-1 w-20 rounded-full bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
+            <div style={{marginTop:'3rem', display:'flex', justifyContent:'center', gap:'0.75rem'}}>
+              <div style={{height:'0.25rem', width:'5rem', borderRadius:'9999px', background:'linear-gradient(to right, transparent, #22d3ee, transparent)', opacity:0.6}} />
+              <div style={{height:'0.25rem', width:'5rem', borderRadius:'9999px', background:'linear-gradient(to right, transparent, #2dd4bf, transparent)', opacity:0.8}} />
+              <div style={{height:'0.25rem', width:'5rem', borderRadius:'9999px', background:'linear-gradient(to right, transparent, #22d3ee, transparent)', opacity:0.6}} />
             </div>
           </div>
         </section>
 
-        <section className="relative py-20 md:py-28 bg-white" aria-labelledby="governance-section">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+        <section className="section section-white" style={{position:'relative'}} aria-labelledby="governance-section">
+          <div className="container" style={{maxWidth:'80rem'}}>
+            <div className="section-header-centered" style={{marginBottom:'4rem'}}>
               <h2
                 id="governance-section"
-                className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6"
+                className="section-title" style={{marginBottom:'1.5rem'}}
               >
                 {data.orgChart.sectionTitle}
               </h2>
               {data.orgChart.sectionIntro ? (
-                <p className="text-base text-slate-600 leading-relaxed">
+                <p className="section-subtitle">
                   {data.orgChart.sectionIntro}
                 </p>
               ) : null}
@@ -163,9 +162,9 @@ export default async function EquipePage() {
           </div>
         </section>
 
-        <section className="relative py-20 md:py-28 bg-slate-50 overflow-hidden">
-          <div className="absolute inset-0 dot-pattern opacity-10" />
-          <div className="relative max-w-7xl mx-auto px-4">
+        <section className="section section-light" style={{position:'relative', overflow:'hidden'}}>
+          <div className="section-pattern dot-pattern pattern-10" />
+          <div className="container" style={{position:'relative', maxWidth:'80rem'}}>
             <MembersGrid
               title={data.members.sectionTitle}
               intro={data.members.sectionIntro}
@@ -187,53 +186,52 @@ export default async function EquipePage() {
   const associates = chart?.associateResearchers ? chart.associateResearchers.map(toLocalPerson) : [];
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white">
-      <section className="relative overflow-hidden gradient-mesh-bg py-28 md:py-36">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
+    <main style={{position:'relative', minHeight:'100vh', overflow:'hidden'}}>
+      <section className="page-hero page-hero-dark" style={{paddingTop:'7rem', paddingBottom:'9rem'}}>
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
         <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
+          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(20,184,166,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
         />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-8">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+        <div className="container" style={{position:'relative', zIndex:10, maxWidth:'64rem', textAlign:'center'}}>
+          <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'2rem'}}>
+            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
               Intelligence Artificielle - Recherche - Innovation
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 tracking-tight">
+          <h1 style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, color:'#fff', marginBottom:'2rem', letterSpacing:'-0.01em'}}>
             {page.title}
           </h1>
 
           {page.intro ? (
-            <div className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed">
+            <div style={{fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', maxWidth:'48rem', margin:'0 auto', lineHeight:1.7}}>
               <PortableTextRenderer value={page.intro} />
             </div>
           ) : null}
 
-          <div className="mt-12 flex justify-center gap-3">
-            <div className="h-1 w-20 rounded-full bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
-            <div className="h-1 w-20 rounded-full bg-linear-to-r from-transparent via-teal-400 to-transparent opacity-80" />
-            <div className="h-1 w-20 rounded-full bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-60" />
+          <div style={{marginTop:'3rem', display:'flex', justifyContent:'center', gap:'0.75rem'}}>
+            <div style={{height:'0.25rem', width:'5rem', borderRadius:'9999px', background:'linear-gradient(to right, transparent, #22d3ee, transparent)', opacity:0.6}} />
+            <div style={{height:'0.25rem', width:'5rem', borderRadius:'9999px', background:'linear-gradient(to right, transparent, #2dd4bf, transparent)', opacity:0.8}} />
+            <div style={{height:'0.25rem', width:'5rem', borderRadius:'9999px', background:'linear-gradient(to right, transparent, #22d3ee, transparent)', opacity:0.6}} />
           </div>
         </div>
       </section>
 
       {page.showOrgChart && topPerson && scientificDirectors.length === 2 ? (
-        <section className="relative py-20 md:py-28 bg-white" aria-labelledby="governance-section">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+        <section className="section section-white" style={{position:'relative'}} aria-labelledby="governance-section">
+          <div className="container" style={{maxWidth:'80rem'}}>
+            <div className="section-header-centered" style={{marginBottom:'4rem'}}>
               <h2
                 id="governance-section"
-                className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6"
+                className="section-title" style={{marginBottom:'1.5rem'}}
               >
                 {page.orgChartSectionTitle ?? chart?.orgSectionTitle}
               </h2>
               {page.orgChartSectionIntro ? (
-                <div className="text-base text-slate-600 leading-relaxed">
+                <div className="section-subtitle">
                   <PortableTextRenderer value={page.orgChartSectionIntro} />
                 </div>
               ) : null}
@@ -249,9 +247,9 @@ export default async function EquipePage() {
       ) : null}
 
       {page.showMembers ? (
-        <section className="relative py-20 md:py-28 bg-slate-50 overflow-hidden">
-          <div className="absolute inset-0 dot-pattern opacity-10" />
-          <div className="relative max-w-7xl mx-auto px-4">
+        <section className="section section-light" style={{position:'relative', overflow:'hidden'}}>
+          <div className="section-pattern dot-pattern pattern-10" />
+          <div className="container" style={{position:'relative', maxWidth:'80rem'}}>
             <MembersGrid
               title={page.membersSectionTitle ?? "Membres & Profils"}
               intro={membersIntro}

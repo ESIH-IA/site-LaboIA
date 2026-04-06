@@ -53,39 +53,41 @@ export function MembersGrid({
   });
 
   return (
-    <section className="mt-16 flex flex-col items-center">
-      <div className="max-w-3xl text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{title}</h2>
+    <section className="members-grid-section">
+      <div className="members-grid-header">
+        <h2 className="members-grid-title">{title}</h2>
         {intro ? (
-          <div className="text-muted">
+          <div className="members-grid-intro">
             <p>{intro}</p>
           </div>
         ) : null}
       </div>
 
       {members.length === 0 ? (
-        <div className="mt-8 rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
+        <div className="empty-state">
           Aucun membre configure pour cette section.
         </div>
       ) : (
-        <div className="w-full space-y-16">
-          {categoryOrder.map((category) => {
-            const categoryMembers = membersByCategory[category];
-            if (!categoryMembers || categoryMembers.length === 0) return null;
+        <div className="members-grid-content">
+          <div className="members-grid-categories">
+            {categoryOrder.map((category) => {
+              const categoryMembers = membersByCategory[category];
+              if (!categoryMembers || categoryMembers.length === 0) return null;
 
-            return (
-              <div key={category} className="flex flex-col items-center">
-                <h3 className="mb-8 text-xl font-semibold text-foreground uppercase tracking-wide">
-                  {categoryLabels[category]}
-                </h3>
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-                  {categoryMembers.map((person) => (
-                    <MemberCard key={person._id} person={person} />
-                  ))}
+              return (
+                <div key={category} className="members-category">
+                  <h3 className="members-category-title">
+                    {categoryLabels[category]}
+                  </h3>
+                  <div className="members-category-grid">
+                    {categoryMembers.map((person) => (
+                      <MemberCard key={person._id} person={person} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       )}
     </section>

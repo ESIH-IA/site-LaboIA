@@ -41,23 +41,23 @@ export default async function Page() {
   );
 
   return (
-    <section className="mx-auto max-w-5xl px-4 py-12">
-      <div className="max-w-3xl">
-        {page?.title ? <h1 className="text-3xl font-semibold">{page.title}</h1> : null}
-        {page?.summary ? <p className="mt-3 text-neutral-600">{page.summary}</p> : null}
+    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div style={{maxWidth:'48rem'}}>
+        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+        {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
       </div>
 
-      <div className="mt-6">
+      <div style={{marginTop:'1.5rem'}}>
         <PortableTextRenderer value={page?.content} />
       </div>
 
-      <div className="mt-10 grid gap-8 lg:grid-cols-2">
-        <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Inscription</h2>
+      <div className="card-grid card-grid-2" style={{marginTop:'2.5rem'}}>
+        <div className="simple-card">
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Inscription</h2>
           <NewsletterForm />
         </div>
-        <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Gerer mon abonnement</h2>
+        <div className="simple-card">
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Gerer mon abonnement</h2>
           <NewsletterUnsubscribeForm />
         </div>
       </div>

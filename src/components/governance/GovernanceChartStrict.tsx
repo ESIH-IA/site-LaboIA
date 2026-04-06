@@ -12,11 +12,11 @@ interface GovernanceChartStrictProps {
 
 function PersonCard({
   person,
-  borderColor,
+  color,
   onClick,
 }: {
   person: Person;
-  borderColor: string;
+  color: "red" | "blue" | "purple";
   level: "top" | "director" | "associate";
   onClick?: () => void;
 }) {
@@ -27,39 +27,30 @@ function PersonCard({
     <button
       type="button"
       onClick={onClick}
-      className={[
-        "flex flex-col items-center rounded-2xl border-2 bg-surface p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 w-full",
-        borderColor,
-        isFuture ? "opacity-60" : "",
-      ].join(" ")}
+      className={["strict-card", `strict-card--${color}`].join(" ")}
+      style={isFuture ? {opacity: 0.6} : undefined}
       aria-label={`Voir le profil de ${person.name}`}
     >
       {/* Cercle avec initiales - pas de photo dans l'organigramme */}
       <div
-        className={[
-          "relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2",
-          isFuture ? "bg-surface-muted ring-border" : "bg-primary/10 ring-primary/20",
-        ].join(" ")}
+        className={["strict-card-avatar", isFuture ? "strict-card-avatar--future" : "strict-card-avatar--active"].join(" ")}
       >
         <div
-          className={[
-            "flex h-full w-full items-center justify-center text-lg font-bold",
-            isFuture ? "text-muted" : "text-primary",
-          ].join(" ")}
+          className={["strict-card-initials", isFuture ? "strict-card-initials--future" : "strict-card-initials--active"].join(" ")}
         >
           {initials}
         </div>
       </div>
 
-      <div className="mt-4 text-center">
-        <div className="text-base font-semibold text-foreground">
+      <div className="strict-card-info">
+        <div className="strict-card-name">
           {person.name}
         </div>
         {person.roleTitle ? (
-          <div className="mt-1 text-sm text-muted">{person.roleTitle}</div>
+          <div className="strict-card-role">{person.roleTitle}</div>
         ) : null}
         {isFuture ? (
-          <div className="mt-2 inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">
+          <div className="strict-card-future-badge">
             À venir
           </div>
         ) : null}
@@ -92,21 +83,21 @@ export function GovernanceChartStrict({
 }: GovernanceChartStrictProps) {
   if (!topPerson || scientificDirectors.length !== 2) {
     return (
-      <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center text-sm text-muted">
+      <div className="empty-state">
         Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis.
       </div>
     );
   }
 
   return (
-    <div className="mt-10 rounded-3xl border border-border bg-surface p-6 shadow-sm md:p-10">
+    <div className="strict-chart">
       {/* Desktop layout */}
-      <div className="hidden flex-col items-center md:flex">
+      <div className="strict-chart-desktop">
         {/* Level 1: Top Person */}
-        <div className="w-full max-w-xs">
+        <div style={{width:'100%', maxWidth:'20rem'}}>
           <PersonCard
             person={topPerson}
-            borderColor="border-red-500"
+            color="red"
             level="top"
             onClick={() => scrollToProfile(topPerson.id)}
           />
@@ -116,7 +107,7 @@ export function GovernanceChartStrict({
         <svg
           width="2"
           height="48"
-          className="my-4"
+          className="strict-chart-connector"
           aria-hidden="true"
         >
           <line
@@ -133,7 +124,7 @@ export function GovernanceChartStrict({
         <svg
           width="400"
           height="2"
-          className="mb-4"
+          className="strict-chart-connector"
           aria-hidden="true"
         >
           <line
@@ -147,14 +138,14 @@ export function GovernanceChartStrict({
         </svg>
 
         {/* Level 2: Scientific Directors */}
-        <div className="grid w-full max-w-4xl grid-cols-2 gap-8">
+        <div className="strict-chart-level2">
           {scientificDirectors.map((director) => (
-            <div key={director.id} className="flex flex-col items-center">
+            <div key={director.id} className="strict-chart-level2-item">
               {/* Vertical line to card */}
               <svg
                 width="2"
                 height="24"
-                className="mb-4"
+                className="strict-chart-connector"
                 aria-hidden="true"
               >
                 <line
@@ -168,7 +159,7 @@ export function GovernanceChartStrict({
               </svg>
               <PersonCard
                 person={director}
-                borderColor="border-blue-500"
+                color="blue"
                 level="director"
                 onClick={() => scrollToProfile(director.id)}
               />
@@ -183,7 +174,7 @@ export function GovernanceChartStrict({
             <svg
               width="2"
               height="48"
-              className="my-4"
+              className="strict-chart-connector"
               aria-hidden="true"
             >
               <line
@@ -196,16 +187,16 @@ export function GovernanceChartStrict({
               />
             </svg>
 
-            <div className="w-full text-center">
-              <div className="mb-6 text-sm font-semibold text-muted">
+            <div className="strict-chart-level3">
+              <div className="strict-chart-level3-title">
                 Conseil scientifique
               </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="strict-chart-level3-grid">
                 {associateResearchers.map((researcher) => (
                   <PersonCard
                     key={researcher.id}
                     person={researcher}
-                    borderColor="border-purple-500"
+                    color="purple"
                     level="associate"
                     onClick={() => scrollToProfile(researcher.id)}
                   />
@@ -217,21 +208,21 @@ export function GovernanceChartStrict({
       </div>
 
       {/* Mobile layout */}
-      <div className="flex flex-col gap-6 md:hidden">
+      <div className="strict-chart-mobile">
         <PersonCard
           person={topPerson}
-          borderColor="border-red-500"
+          color="red"
           level="top"
           onClick={() => scrollToProfile(topPerson.id)}
         />
 
-        <div className="border-l-2 border-border pl-6">
-          <div className="flex flex-col gap-6">
+        <div className="strict-mobile-indent">
+          <div className="strict-mobile-indent-inner">
             {scientificDirectors.map((director) => (
               <PersonCard
                 key={director.id}
                 person={director}
-                borderColor="border-blue-500"
+                color="blue"
                 level="director"
                 onClick={() => scrollToProfile(director.id)}
               />
@@ -240,16 +231,16 @@ export function GovernanceChartStrict({
         </div>
 
         {associateResearchers.length > 0 ? (
-          <div className="border-l-2 border-border pl-6">
-            <div className="mb-4 text-sm font-semibold text-muted">
+          <div className="strict-mobile-indent">
+            <div className="strict-mobile-level3-title">
               Conseil scientifique
             </div>
-            <div className="flex flex-col gap-6">
+            <div className="strict-mobile-indent-inner">
               {associateResearchers.map((researcher) => (
                 <PersonCard
                   key={researcher.id}
                   person={researcher}
-                  borderColor="border-purple-500"
+                  color="purple"
                   level="associate"
                   onClick={() => scrollToProfile(researcher.id)}
                 />

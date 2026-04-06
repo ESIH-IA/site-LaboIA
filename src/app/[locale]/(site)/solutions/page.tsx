@@ -45,45 +45,44 @@ export default async function SolutionsPage() {
   const collaborate = homeData.home;
 
   return (
-    <main className="bg-white">
+    <main className="section-white">
       {/* Hero Section - Style Tech/IA avec gradient mesh */}
-      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
+      <section className="page-hero page-hero-dark">
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
         <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
+          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(139,92,246,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
         />
 
-        <div className="relative mx-auto max-w-6xl px-4">
+        <div className="container" style={{position:'relative'}}>
           {/* Badge Tech */}
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
+          <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'1.5rem'}}>
+            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
+            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
               {solutionsPage.heroBadge ?? "Services & Solutions IA"}
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
+          <h1 style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'1.5rem'}}>
             {solutionsPage.heroTitle}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed">
+          <p style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7}}>
             {solutionsPage.heroSubtitle}
           </p>
-          <p className="mt-3 max-w-2xl text-base text-slate-300">
+          <p style={{marginTop:'0.75rem', maxWidth:'42rem', fontSize:'1rem', color:'#cbd5e1'}}>
             {solutionsPage.heroDescription}
           </p>
 
           {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div style={{marginTop:'2rem', display:'flex', flexWrap:'wrap', gap:'1rem'}}>
             {solutionsPage.heroPrimaryCta ? (
               <Link
                 href={solutionsPage.heroPrimaryCta.href}
-                className="group inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-cyan-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
+                className="btn btn-cta-primary" style={{padding:'0.875rem 2rem', fontSize:'1rem'}}
               >
                 {solutionsPage.heroPrimaryCta.label}
                 <svg
-                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
+                  style={{height:'1.25rem', width:'1.25rem'}}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -100,7 +99,7 @@ export default async function SolutionsPage() {
             {solutionsPage.heroSecondaryCta ? (
               <a
                 href={solutionsPage.heroSecondaryCta.href}
-                className="rounded-xl glass-card px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20"
+                className="btn btn-secondary"
               >
                 {solutionsPage.heroSecondaryCta.label}
               </a>
@@ -110,29 +109,28 @@ export default async function SolutionsPage() {
       </section>
 
       {/* Section Approche */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               {solutionsPage.approachTitle ?? "Notre approche"}
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               {solutionsPage.approachIntro}
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="card-grid card-grid-3">
             {solutionsPage.approachSteps?.map((step, idx) => (
               <article
                 key={`${step.title}-${idx}`}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
+                className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
-                  <span className="text-2xl font-bold">{idx + 1}</span>
+                <div className="card-accent-top" />
+                <div style={{marginBottom:'1rem', display:'flex', height:'3rem', width:'3rem', alignItems:'center', justifyContent:'center', borderRadius:'0.75rem', background:'#ecfeff', color:'#0891b2'}}>
+                  <span style={{fontSize:'1.5rem', fontWeight:700}}>{idx + 1}</span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-                <p className="text-base text-slate-600 leading-relaxed">{step.description}</p>
+                <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'0.75rem'}}>{step.title}</h3>
+                <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7}}>{step.description}</p>
               </article>
             ))}
           </div>
@@ -140,32 +138,31 @@ export default async function SolutionsPage() {
       </section>
 
       {/* Section Solutions IA */}
-      <section id="solutions" className="relative py-20 md:py-28 bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 dot-pattern opacity-20" />
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section id="solutions" className="section section-light" style={{position:'relative', overflow:'hidden'}}>
+        <div className="section-pattern dot-pattern pattern-20" />
+        <div className="container" style={{position:'relative'}}>
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               {solutionsPage.solutionsTitle ?? "Solutions IA"}
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               {solutionsPage.solutionsIntro}
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="card-grid card-grid-2">
             {solutionsPage.solutions?.map((solution, idx) => (
               <article
                 key={solution._id}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
+                className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-                <span className="inline-block rounded-full border border-cyan-200 bg-cyan-50/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-700 mb-4">
+                <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
+                <span className="badge badge-cyan" style={{marginBottom:'1rem', textTransform:'uppercase', letterSpacing:'0.05em'}}>
                   Solution
                 </span>
-                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:gradient-text-cyan transition-smooth">
+                <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'0.75rem'}}>
                   {solution.title}
                 </h3>
-                <p className="text-base text-slate-600 leading-relaxed">
+                <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7}}>
                   {solution.shortDescription}
                 </p>
               </article>
@@ -175,52 +172,52 @@ export default async function SolutionsPage() {
       </section>
 
       {/* Section Cas d'usage */}
-      <section id="cas-usage" className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <section id="cas-usage" className="section section-white">
+        <div className="container">
+          <div style={{display:'grid', gap:'3rem', gridTemplateColumns:'1fr', alignItems:'center'}} className="card-grid">
             <div>
-              <span className="inline-block rounded-full border border-teal-200 bg-teal-50/50 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-teal-700 mb-6">
+              <span className="badge badge-teal" style={{marginBottom:'1.5rem', textTransform:'uppercase', letterSpacing:'0.05em'}}>
                 {solutionsPage.useCasesTitle ?? "Cas d'usage"}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6">
+              <h2 className="section-title" style={{marginBottom:'1.5rem'}}>
                 {featuredUseCase?.title}
               </h2>
-              <p className="text-base text-slate-600 leading-relaxed mb-4">
+              <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7, marginBottom:'1rem'}}>
                 {featuredUseCase?.context}
               </p>
-              <p className="text-base text-slate-600 leading-relaxed mb-6">
+              <p style={{fontSize:'1rem', color:'#475569', lineHeight:1.7, marginBottom:'1.5rem'}}>
                 {featuredUseCase?.solution}
               </p>
               {featuredUseCase?.benefits?.length ? (
-                <ul className="space-y-3">
+                <ul style={{display:'flex', flexDirection:'column', gap:'0.75rem'}}>
                   {featuredUseCase.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-start gap-3">
-                      <div className="mt-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-teal-500/10">
-                        <span className="h-2 w-2 rounded-full bg-teal-500" aria-hidden />
+                    <li key={benefit} style={{display:'flex', alignItems:'flex-start', gap:'0.75rem'}}>
+                      <div style={{marginTop:'0.375rem', display:'flex', height:'1.25rem', width:'1.25rem', alignItems:'center', justifyContent:'center', borderRadius:'9999px', background:'rgba(20,184,166,0.1)'}}>
+                        <span style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#14b8a6'}} aria-hidden />
                       </div>
-                      <span className="text-base text-slate-700 leading-relaxed">{benefit}</span>
+                      <span style={{fontSize:'1rem', color:'#334155', lineHeight:1.7}}>{benefit}</span>
                     </li>
                   ))}
                 </ul>
               ) : null}
             </div>
-            <div className="relative overflow-hidden rounded-3xl gradient-card-bg border border-slate-200 p-8 shadow-lg">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(6,182,212,0.08),transparent_55%)]" />
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-              <div className="relative">
-                <p className="text-base font-bold text-slate-900 mb-4">
+            <div className="card gradient-card-bg" style={{position:'relative', borderRadius:'1.5rem', padding:'2rem', boxShadow:'var(--shadow-lg)'}}>
+              <div style={{position:'absolute', inset:0, background:'radial-gradient(circle at 20% 20%, rgba(6,182,212,0.08), transparent 55%)'}} />
+              <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
+              <div style={{position:'relative'}}>
+                <p style={{fontSize:'1rem', fontWeight:700, color:'#0f172a', marginBottom:'1rem'}}>
                   {solutionsPage.flowTitle ?? "Flux IA applique"}
                 </p>
-                <p className="text-sm text-slate-600 leading-relaxed mb-8">
+                <p style={{fontSize:'0.875rem', color:'#475569', lineHeight:1.7, marginBottom:'2rem'}}>
                   {solutionsPage.flowDescription}
                 </p>
-                <div className="space-y-4">
+                <div style={{display:'flex', flexDirection:'column', gap:'1rem'}}>
                   {solutionsPage.flowSteps?.map((step, idx) => (
-                    <div key={`${step}-${idx}`} className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600">
-                        <span className="text-sm font-bold">{idx + 1}</span>
+                    <div key={`${step}-${idx}`} style={{display:'flex', alignItems:'center', gap:'0.75rem'}}>
+                      <div style={{display:'flex', height:'2rem', width:'2rem', alignItems:'center', justifyContent:'center', borderRadius:'0.5rem', background:'#ecfeff', color:'#0891b2'}}>
+                        <span style={{fontSize:'0.875rem', fontWeight:700}}>{idx + 1}</span>
                       </div>
-                      <span className="text-sm font-semibold uppercase tracking-wider text-slate-600">
+                      <span style={{fontSize:'0.875rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#475569'}}>
                         {step}
                       </span>
                     </div>
@@ -233,21 +230,21 @@ export default async function SolutionsPage() {
       </section>
 
       {/* Section Services */}
-      <section className="py-20 md:py-28 bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-light">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               {solutionsPage.servicesTitle ?? "Services proposes"}
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               {solutionsPage.servicesIntro}
             </p>
           </div>
-          <div className="flex flex-wrap gap-4">
+          <div style={{display:'flex', flexWrap:'wrap', gap:'1rem'}}>
             {solutionsPage.services?.map((service) => (
               <span
                 key={service}
-                className="group rounded-full border border-slate-300 bg-white px-6 py-3 text-base font-medium text-slate-700 shadow-sm transition-smooth hover:-translate-y-1 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700 hover:shadow-lg hover:shadow-cyan-500/10"
+                className="btn btn-cta-secondary" style={{borderRadius:'9999px'}}
               >
                 {service}
               </span>
@@ -257,24 +254,23 @@ export default async function SolutionsPage() {
       </section>
 
       {/* Section Secteurs */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+      <section className="section section-white">
+        <div className="container">
+          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+            <h2 className="section-title">
               {solutionsPage.sectorsTitle ?? "Secteurs d'application"}
             </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+            <p className="section-subtitle">
               {solutionsPage.sectorsIntro}
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="card-grid card-grid-4" style={{gap:'1rem'}}>
             {solutionsPage.sectors?.map((sector, idx) => (
               <div
                 key={sector._id}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 px-6 py-4 text-center text-base font-medium text-slate-700 shadow-sm transition-smooth hover:-translate-y-1 hover:shadow-lg hover:shadow-teal-500/10"
-                style={{ animationDelay: `${idx * 50}ms` }}
+                className="card card-hover gradient-card-bg" style={{padding:'1rem 1.5rem', textAlign:'center', fontSize:'1rem', fontWeight:500, color:'#334155', animationDelay: `${idx * 50}ms`}}
               >
-                <div className="absolute left-0 right-0 top-0 h-0.5 bg-linear-to-r from-teal-500 to-cyan-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                <div className="card-accent-top" style={{height:'2px', background:'linear-gradient(to right, #14b8a6, #06b6d4)', opacity:0, transition:'opacity 0.3s'}} />
                 {sector.name}
               </div>
             ))}
@@ -284,18 +280,18 @@ export default async function SolutionsPage() {
 
       {/* Section Projets */}
       {appliedProjects.length > 0 && (
-        <section id="projets" className="py-20 md:py-28 bg-slate-50">
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="max-w-3xl mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+        <section id="projets" className="section section-light">
+          <div className="container">
+            <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
+              <h2 className="section-title">
                 {solutionsPage.projectsTitle ?? "Projets en cours"}
               </h2>
-              <p className="mt-4 text-base text-slate-600 leading-relaxed">
+              <p className="section-subtitle">
                 {solutionsPage.projectsIntro}
               </p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="card-grid card-grid-2">
               {appliedProjects.map((project) => (
                 <ProjectCard key={project._id} project={project} />
               ))}

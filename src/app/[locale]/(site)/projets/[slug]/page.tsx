@@ -70,41 +70,41 @@ export default async function Page({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-5xl px-4 py-12">
-      <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+    <article className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      <div className="simple-card-meta">
         {project.projectType ? (
-          <span className="rounded-full bg-neutral-900 px-3 py-1 text-[11px] font-semibold text-white">
+          <span className="badge badge-primary">
             {project.projectType}
           </span>
         ) : null}
         {project.startDate ? <span>Start {project.startDate}</span> : null}
       </div>
 
-      <h1 className="mt-4 text-3xl font-semibold text-neutral-900">{project.title}</h1>
-      {project.summary ? <p className="mt-3 text-lg text-neutral-700">{project.summary}</p> : null}
+      <h1 className="section-title" style={{marginTop:'1rem'}}>{project.title}</h1>
+      {project.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{project.summary}</p> : null}
 
       {(project.objectives || project.methods || project.results) && (
-        <div className="mt-8 space-y-8 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+        <div className="simple-card" style={{marginTop:'2rem', gap:'2rem'}}>
           {project.objectives ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Objectifs</h2>
-              <div className="mt-3">
+              <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Objectifs</h2>
+              <div style={{marginTop:'0.75rem'}}>
                 <PortableTextRenderer value={project.objectives} />
               </div>
             </div>
           ) : null}
           {project.methods ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Méthodes</h2>
-              <div className="mt-3">
+              <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Méthodes</h2>
+              <div style={{marginTop:'0.75rem'}}>
                 <PortableTextRenderer value={project.methods} />
               </div>
             </div>
           ) : null}
           {project.results ? (
             <div>
-              <h2 className="text-lg font-semibold text-neutral-900">Résultats</h2>
-              <div className="mt-3">
+              <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Résultats</h2>
+              <div style={{marginTop:'0.75rem'}}>
                 <PortableTextRenderer value={project.results} />
               </div>
             </div>
@@ -112,18 +112,18 @@ export default async function Page({ params }: PageProps) {
         </div>
       )}
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Partners</h2>
+      <div className="card-grid card-grid-2" style={{marginTop:'2.5rem'}}>
+        <div className="simple-card">
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Partners</h2>
           {!project.partners?.length ? (
-            <p className="mt-2 text-sm text-neutral-600">Contenu en cours de publication.</p>
+            <p className="simple-card-text" style={{marginTop:'0.5rem'}}>Contenu en cours de publication.</p>
           ) : (
-            <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+            <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
               {project.partners.map((partner) => (
-                <li key={partner._id} className="flex items-center justify-between gap-3">
-                  <span className="font-medium">{partner.name}</span>
+                <li key={partner._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
+                  <span style={{fontWeight:500}}>{partner.name}</span>
                   {partner.partnerType ? (
-                    <span className="text-xs uppercase text-neutral-500">{partner.partnerType}</span>
+                    <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{partner.partnerType}</span>
                   ) : null}
                 </li>
               ))}
@@ -131,26 +131,26 @@ export default async function Page({ params }: PageProps) {
           )}
         </div>
 
-        <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Équipe impliquée</h2>
+        <div className="simple-card">
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Équipe impliquée</h2>
           {!project.members?.length ? (
-            <p className="mt-2 text-sm text-neutral-600">Contenu en cours de publication.</p>
+            <p className="simple-card-text" style={{marginTop:'0.5rem'}}>Contenu en cours de publication.</p>
           ) : (
-            <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+            <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
               {project.members.map((member) => (
-                <li key={member._id} className="flex items-center justify-between gap-3">
+                <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
                   {member.slug?.current ? (
                     <Link
                       href={`/equipe/${member.slug.current}`}
-                      className="font-medium text-neutral-900 underline-offset-4 hover:underline"
+                      className="btn-link"
                     >
                       {member.fullName}
                     </Link>
                   ) : (
-                    <span className="font-medium">{member.fullName}</span>
+                    <span style={{fontWeight:500}}>{member.fullName}</span>
                   )}
                   {member.role ? (
-                    <span className="text-xs uppercase text-neutral-500">{member.role}</span>
+                    <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{member.role}</span>
                   ) : null}
                 </li>
               ))}
@@ -160,20 +160,20 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       {project.publications?.length ? (
-        <div className="mt-10">
-          <h2 className="text-lg font-semibold text-neutral-900">Publications liées</h2>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
+        <div style={{marginTop:'2.5rem'}}>
+          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Publications liées</h2>
+          <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {project.publications.map((publication) => (
               <li key={publication._id}>
                 {publication.slug?.current ? (
                   <Link
                     href={`/publications/${publication.slug.current}`}
-                    className="font-medium text-neutral-900 underline underline-offset-4"
+                    className="btn-link"
                   >
                     {publication.title}
                   </Link>
                 ) : (
-                  <span className="font-medium">{publication.title}</span>
+                  <span style={{fontWeight:500}}>{publication.title}</span>
                 )}
               </li>
             ))}

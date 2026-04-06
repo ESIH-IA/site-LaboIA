@@ -14,56 +14,56 @@ const statusLabels = {
 
 export default function Kpis({ title, intro, items, meta }: KpisProps) {
   return (
-    <section className="relative bg-slate-50 py-20">
+    <section className="kpis">
       {/* Dot pattern subtil */}
-      <div className="absolute inset-0 dot-pattern opacity-30" />
+      <div className="section-pattern dot-pattern pattern-30" />
 
-      <div className="relative mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+      <div className="section-inner" style={{ position: "relative" }}>
+        <div className="section-header-centered" style={{ marginBottom: "3rem" }}>
+          <h2 className="section-title">
             {title ?? "Indicateurs clés"}
           </h2>
-          <p className="mt-3 text-base text-slate-600">
+          <p className="section-subtitle">
             {intro ??
               "Données quantitatives sur nos activités de recherche et d'innovation"}
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="card-grid card-grid-sm-2 card-grid-4">
           {items.map((item, idx) => (
             <div
               key={item._id}
-              className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
+              className="kpi-card card-hover"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               {/* Gradient top accent */}
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500 opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="kpi-accent" />
 
-              <div className="text-4xl font-bold gradient-text-cyan">
+              <div className="kpi-value">
                 {item.value}
               </div>
-              <div className="mt-3 text-sm font-medium text-slate-700">{item.label}</div>
+              <div className="kpi-label">{item.label}</div>
 
               {/* Status badge */}
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm">
+              <div className="kpi-status">
                 <span
-                  className={`inline-block h-2 w-2 rounded-full ${
-                    item.status === "confirmed" ? "bg-emerald-500 animate-glow" : "bg-amber-400"
+                  className={`kpi-status-dot ${
+                    item.status === "confirmed" ? "kpi-status-dot--confirmed" : "kpi-status-dot--draft"
                   }`}
                   aria-hidden
                 />
-                <span className="text-slate-600">{statusLabels[item.status]}</span>
+                <span>{statusLabels[item.status]}</span>
               </div>
 
               {item.note ? (
-                <p className="mt-4 text-xs leading-relaxed text-slate-500">{item.note}</p>
+                <p className="kpi-note">{item.note}</p>
               ) : null}
             </div>
           ))}
         </div>
 
         {meta?.lastUpdated || meta?.disclaimer ? (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500">
+          <div className="kpi-meta">
             {meta?.lastUpdated ? (
               <>
                 <span className="font-semibold text-slate-700">Dernière mise à jour :</span>
