@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 type HighlightItem = {
   title: string;
   description: string;
@@ -9,25 +11,24 @@ type HighlightsProps = {
   items?: HighlightItem[];
 };
 
-const fallbackItems: HighlightItem[] = [
-  {
-    title: "Agriculture intelligente",
-    description:
-      "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée.",
-  },
-  {
-    title: "Services publics & gouvernance",
-    description:
-      "Optimisation des services essentiels, observatoires de données et aide à la décision.",
-  },
-  {
-    title: "Santé & environnement",
-    description:
-      "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios.",
-  },
-];
+export default async function Highlights({ title, intro, items }: HighlightsProps) {
+  const t = await getTranslations("home");
 
-export default function Highlights({ title, intro, items }: HighlightsProps) {
+  const fallbackItems: HighlightItem[] = [
+    {
+      title: t("highlightsItems.agriculture.title"),
+      description: t("highlightsItems.agriculture.description"),
+    },
+    {
+      title: t("highlightsItems.govern.title"),
+      description: t("highlightsItems.govern.description"),
+    },
+    {
+      title: t("highlightsItems.health.title"),
+      description: t("highlightsItems.health.description"),
+    },
+  ];
+
   const list = items?.length ? items : fallbackItems;
 
   return (
@@ -38,11 +39,10 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
       <div className="section-inner" style={{ position: "relative", paddingTop: "5rem", paddingBottom: "5rem" }}>
         <div className="section-header">
           <h2 className="section-title">
-            {title ?? "Ce que nous faisons"}
+            {title ?? t("highlightsTitle")}
           </h2>
           <p className="section-subtitle" style={{ marginTop: "1rem" }}>
-            {intro ??
-              "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux."}
+            {intro ?? t("highlightsIntro")}
           </p>
         </div>
         <div className="card-grid card-grid-3" style={{ marginTop: "3rem" }}>

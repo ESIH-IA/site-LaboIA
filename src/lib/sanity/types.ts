@@ -159,8 +159,11 @@ export type InstitutionalPage = {
   title: string;
   slug: SanitySlug;
   slugIntl?: LocalizedSlug;
+  heroBadge?: string;
   summary?: string;
   content?: PortableTextBlock[];
+  ctaLabel?: string;
+  ctaHref?: string;
 };
 
 export type Person = {

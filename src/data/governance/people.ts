@@ -114,6 +114,30 @@ export const benediquePaul: Person = {
   order: 4,
 };
 
+export const evensEmmanuel: Person = {
+  id: "evens-emmanuel",
+  name: "Evens EMMANUEL",
+  initials: "EE",
+  slug: "evens-emmanuel",
+  roleTitle: "Chercheur associé",
+  roleCategory: "conseil",
+  shortBio:
+    "Chercheur associé de l'équipe scientifique. Contribue aux échanges méthodologiques, au renforcement du réseau scientifique et aux collaborations appliquées du laboratoire.",
+  affiliation: "LaCDIA",
+  longBio: `Evens EMMANUEL participe à l'écosystème scientifique de LaCDIA comme chercheur associé. Son apport porte sur la collaboration scientifique, le dialogue méthodologique et l'identification de pistes de recherche appliquée en lien avec les priorités du laboratoire. Son profil vient renforcer la profondeur de l'équipe scientifique et l'ouverture du laboratoire vers de nouvelles collaborations.`,
+  expertise: [
+    "Recherche appliquée",
+    "Collaboration scientifique",
+    "Méthodologie",
+    "Innovation",
+  ],
+  links: {
+    linkedin: "https://www.linkedin.com/in/evens-emmanuel-74895823/",
+  },
+  status: "actif",
+  order: 5,
+};
+
 export const sergeMranda: Person = {
   id: "serge-mranda",
   name: "Serge MRANDA",
@@ -127,7 +151,7 @@ export const sergeMranda: Person = {
   longBio: `Serge MRANDA rejoindra prochainement le laboratoire LaCDIA en tant que Conseiller scientifique international au sein du conseil scientifique. Cette fonction stratégique permettra d'enrichir les orientations de recherche du laboratoire grâce à une expertise de renommée internationale. Le conseiller scientifique participera à l'évaluation des projets de recherche, à l'établissement de partenariats académiques internationaux et à la définition des axes stratégiques du laboratoire. Son rôle comprendra également le rayonnement international du laboratoire, la mise en relation avec des institutions de recherche de premier plan et le développement de collaborations scientifiques stratégiques.`,
   expertise: ["À venir"],
   status: "futur",
-  order: 5,
+  order: 6,
 };
 
 /**
@@ -138,6 +162,7 @@ export const allPeople: Person[] = [
   aishaelPicard,
   livensonNicolas,
   benediquePaul,
+  evensEmmanuel,
   sergeMranda,
 ];
 

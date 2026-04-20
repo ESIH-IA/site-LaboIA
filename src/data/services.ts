@@ -257,7 +257,7 @@ export const services: Service[] = [
   },
   {
     id: 'conseil-strategie',
-    title: 'Accompagnement Stratégique Data & IA',
+    title: 'Accompagnement Stratégique Data et IA',
     summary: 'Conseil stratégique de haut niveau pour bâtir votre roadmap IA et data, aligner votre organisation et vos processus avec vos ambitions numériques.',
     description: 'Nous vous accompagnons dans la définition d\'une stratégie IA et data cohérente avec votre vision d\'entreprise et vos objectifs métier. Au-delà de la technologie, nous vous aidons à transformer votre organisation : structure des équipes, compétences requises, culture data-driven, partenariats stratégiques. Nous facilitons les ateliers de co-construction avec votre leadership, analysons votre écosystème concurrentiel et technologique, et définissons des étapes claires et réalistes de transformation. Notre accompagnement s\'étend sur 6 à 18 mois avec des points de contrôle réguliers et des ajustements de trajectoire.',
     pole: 'conseil',

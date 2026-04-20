@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { Banner } from "@/components/media/banner";
 import type { SiteAsset } from "@/lib/sanity/types";
@@ -16,7 +17,8 @@ type HeroProps = {
   banner?: SiteAsset | null;
 };
 
-export default function Hero({ badge, actions, banner }: HeroProps) {
+export default async function Hero({ badge, actions, banner }: HeroProps) {
+  const t = await getTranslations("home");
   const primary = actions?.find((action) => action.variant === "primary") ?? actions?.[0];
   const secondary = actions?.find((action) => action.variant === "secondary") ?? actions?.[1];
 
@@ -43,7 +45,7 @@ export default function Hero({ badge, actions, banner }: HeroProps) {
         <div className="hero-badge-wrapper">
           <div className="hero-badge">
             <span className="hero-badge-text">
-              {badge ?? "Intelligence Artificielle - Recherche - Innovation"}
+              {badge ?? t("heroBadge")}
             </span>
           </div>
         </div>
@@ -60,13 +62,13 @@ export default function Hero({ badge, actions, banner }: HeroProps) {
             className="btn btn-primary"
           >
             <span className="btn-primary-overlay" />
-            <span style={{ position: "relative", zIndex: 10 }}>{primary?.label ?? "Découvrir nos solutions"}</span>
+            <span style={{ position: "relative", zIndex: 10 }}>{primary?.label ?? t("discoverLab")}</span>
           </Link>
           <Link
             href={secondary?.href ?? "/equipe"}
             className="btn btn-secondary"
           >
-            {secondary?.label ?? "Rencontrer l'équipe"}
+            {secondary?.label ?? t("heroSecondaryCta")}
           </Link>
         </div>
       </div>

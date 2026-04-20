@@ -6,9 +6,9 @@ import type { SiteAsset } from "@/lib/sanity/types";
 type LogoSize = "header" | "footer" | "hero";
 
 const sizeMap: Record<LogoSize, { width: number; height: number }> = {
-  header: { width: 160, height: 58 },
-  footer: { width: 200, height: 72 },
-  hero: { width: 260, height: 94 },
+  header: { width: 56, height: 56 },
+  footer: { width: 64, height: 64 },
+  hero: { width: 120, height: 120 },
 };
 
 export function Logo({

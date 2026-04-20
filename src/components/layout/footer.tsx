@@ -1,15 +1,19 @@
-﻿import Link from "next/link";
+﻿import { getTranslations } from "next-intl/server";
 
+import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/media/logo";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
 
-export default function Footer({
+export default async function Footer({
   nav,
   site,
 }: {
   nav: Navigation;
   site: SiteSettings;
 }) {
+  const t = await getTranslations();
+  const defaultContactLabel = await getTranslations("common");
+
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -31,22 +35,22 @@ export default function Footer({
 
         <div className="footer-nav-col">
           <div className="footer-nav-heading">
-            Le Laboratoire
+            {t("footer.laboratory")}
           </div>
           <div className="footer-nav-list">
-            <Link href="/a-propos" className="footer-nav-link">À propos</Link>
-            <Link href="/recherche/departement-scientifique" className="footer-nav-link">Département Scientifique</Link>
-            <Link href="/lacdia-tech" className="footer-nav-link">LaCDIA Tech</Link>
-            <Link href="/equipe" className="footer-nav-link">Équipe</Link>
-            <Link href="/partenariats" className="footer-nav-link">Partenariats</Link>
-            <Link href="/publications" className="footer-nav-link">Publications</Link>
-            <Link href="/actualites" className="footer-nav-link">Actualités</Link>
+            <Link href="/a-propos" className="footer-nav-link">{t("nav.about")}</Link>
+            <Link href="/recherche/departement-scientifique" className="footer-nav-link">{t("research.badge")}</Link>
+            <Link href="/lacdia-tech" className="footer-nav-link">{t("nav.lacdiaTech")}</Link>
+            <Link href="/equipe" className="footer-nav-link">{t("nav.team")}</Link>
+            <Link href="/partenariats" className="footer-nav-link">{t("nav.partnerships")}</Link>
+            <Link href="/publications" className="footer-nav-link">{t("nav.publications")}</Link>
+            <Link href="/actualites" className="footer-nav-link">{t("nav.news")}</Link>
           </div>
         </div>
 
         <div className="footer-contact-col">
           <div className="footer-nav-heading">
-            {site.footerContactTitle ?? "Contact"}
+            {site.footerContactTitle ?? t("footer.contact")}
           </div>
           <div className="footer-contact-body">
             {site.footerContactText ? <div>{site.footerContactText}</div> : null}
@@ -54,7 +58,7 @@ export default function Footer({
               href={site.footerContactCtaHref ?? "/contact"}
               className="footer-contact-link"
             >
-              {site.footerContactCtaLabel ?? "Écrire au laboratoire"}
+              {site.footerContactCtaLabel ?? defaultContactLabel("contactUs")}
             </Link>
           </div>
         </div>
@@ -62,7 +66,7 @@ export default function Footer({
         <div className="footer-bottom">
           <div className="footer-bottom-inner">
             <div>
-              Copyright {new Date().getFullYear()} {site.shortName}. Tous droits réservés.
+              Copyright {new Date().getFullYear()} {site.shortName}. {t("footer.copyright")}
             </div>
             <div className="footer-legal-links">
               {nav.footerNav.map((item) => (

@@ -14,6 +14,13 @@
     "resources": "Ressources",
     "solutions": "Solutions IA"
   },
+  "header": {
+    "tagline": "Laboratoire de recherche en IA et science des données",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "menu": "Menu",
+    "navigation": "Navigation"
+  },
   "footer": {
     "legalNotice": "Mentions légales",
     "privacy": "Politique de confidentialité",
@@ -42,12 +49,58 @@
     "requestQuote": "Demander un devis",
     "becomePartner": "Devenir partenaire"
   },
+  "cookies": {
+    "title": "Cookies",
+    "message": "Ce site utilise des cookies de mesure d'audience et de fonctionnement. Vous pouvez accepter ou refuser ces cookies. Consultez la",
+    "policyLink": "politique cookies",
+    "accept": "Accepter",
+    "reject": "Refuser"
+  },
   "home": {
-    "heroBadge": "Laboratoire de recherche en IA",
+    "heroBadge": "Intelligence Artificielle - Recherche - Innovation",
     "heroDescription": "Premier laboratoire de recherche en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
-    "discoverLab": "Découvrir le laboratoire",
+    "discoverLab": "Découvrir nos solutions",
+    "heroSecondaryCta": "Rencontrer l'équipe",
     "researchAxes": "Nos axes de recherche",
-    "techServices": "LaCDIA Tech — Services"
+    "techServices": "LaCDIA Tech — Services",
+    "introEyebrow": "Notre mission",
+    "introTitle": "Un laboratoire pour la donnée caribéenne",
+    "introBody": "Le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
+    "kpisTitle": "Indicateurs clés",
+    "kpisIntro": "Données quantitatives sur nos activités de recherche et d'innovation",
+    "highlightsTitle": "Ce que nous faisons",
+    "highlightsIntro": "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
+    "highlightsItems": {
+      "agriculture": {
+        "title": "Agriculture intelligente",
+        "description": "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée."
+      },
+      "govern": {
+        "title": "Services publics et gouvernance",
+        "description": "Optimisation des services essentiels, observatoires de données et aide à la décision."
+      },
+      "health": {
+        "title": "Santé et environnement",
+        "description": "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios."
+      }
+    },
+    "publicationsTitle": "Publications récentes",
+    "publicationsIntro": "Articles, rapports et communications qui documentent nos avancées scientifiques.",
+    "partnersTitle": "Partenaires et collaborations",
+    "partnersIntro": "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche.",
+    "partnersBadge": "Besoin de collaborer ? Contactez-nous.",
+    "collaborateTitle": "Collaborer avec le laboratoire",
+    "collaborateBody": "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact.",
+    "eventLabel": "Événement",
+    "eventLabelUpcoming": "Événement à venir",
+    "projectLabel": "Projet",
+    "viewWebsite": "Voir le site",
+    "partnerTypes": {
+      "partner": "Partenaire",
+      "client": "Client",
+      "media": "Média",
+      "academic": "Académique"
+    }
   },
   "about": {
     "title": "À propos du LaCDIA",
@@ -109,5 +162,19 @@
   "locale": {
     "switchLanguage": "Changer de langue",
     "currentLanguage": "Langue actuelle"
+  },
+  "pages": {
+    "solutions": {
+      "fallbackSummary": "Découvrez nos services et solutions d'intelligence artificielle concrètes, testées et éprouvées."
+    },
+    "departementScientifique": {
+      "fallbackSummary": "Produire des connaissances scientifiques originales et adaptées aux contextes caribéens."
+    },
+    "tech": {
+      "fallbackSummary": "Transformer la recherche en solutions concrètes pour les institutions et les entreprises."
+    },
+    "collaborer": {
+      "formTitle": "Démarrez une collaboration"
+    }
   }
 }

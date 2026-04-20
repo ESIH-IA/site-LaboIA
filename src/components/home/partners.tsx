@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 type PartnerPreview = {
   _id: string;
   name: string;
@@ -14,29 +16,29 @@ type PartnersProps = {
   items: PartnerPreview[];
 };
 
-const typeLabels: Record<string, string> = {
-  partner: "Partenaire",
-  client: "Client",
-  media: "Média",
-  academic: "Académique",
-};
+export default async function Partners({ title, intro, badge, items }: PartnersProps) {
+  const t = await getTranslations("home");
+  const typeLabels: Record<string, string> = {
+    partner: t("partnerTypes.partner"),
+    client: t("partnerTypes.client"),
+    media: t("partnerTypes.media"),
+    academic: t("partnerTypes.academic"),
+  };
 
-export default function Partners({ title, intro, badge, items }: PartnersProps) {
   return (
     <section className="section section-white">
       <div className="section-inner" style={{ padding: "5rem 0" }}>
         <div className="section-header-row">
           <div>
             <h2 className="section-title">
-              {title ?? "Partenaires & collaborations"}
+              {title ?? t("partnersTitle")}
             </h2>
             <p className="section-subtitle">
-              {intro ??
-                "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche."}
+              {intro ?? t("partnersIntro")}
             </p>
           </div>
           <div className="badge-teal-box">
-            {badge ?? "Besoin de collaborer ? Contactez-nous."}
+            {badge ?? t("partnersBadge")}
           </div>
         </div>
 
@@ -78,7 +80,7 @@ export default function Partners({ title, intro, badge, items }: PartnersProps) 
                   rel="noreferrer"
                   target="_blank"
                 >
-                  Voir le site
+                  {t("viewWebsite")}
                   <span aria-hidden>{">"}</span>
                 </a>
               ) : null}

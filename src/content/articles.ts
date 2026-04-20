@@ -208,7 +208,7 @@ export const articles = [
       {
         type: "paragraph",
         text:
-          "La soutenance s'est déroulée le 23 décembre 2025, sous la forme d'une session organisée à distance, dans le cadre du diplôme Master of Science – Big Data & Intelligence Artificielle (eBIHAR), porté par Datum Academy en partenariat avec ESTIA TECH (France). Le projet de référence des travaux présentés est le projet Deep Farm, relevant des domaines de l'intelligence artificielle, de la science des données, des systèmes intelligents et de l'agriculture numérique.",
+          "La soutenance s'est déroulée le 23 décembre 2025, sous la forme d'une session organisée à distance, dans le cadre du diplôme Master of Science – Big Data et Intelligence Artificielle (eBIHAR), porté par Datum Academy en partenariat avec ESTIA TECH (France). Le projet de référence des travaux présentés est le projet Deep Farm, relevant des domaines de l'intelligence artificielle, de la science des données, des systèmes intelligents et de l'agriculture numérique.",
       },
       {
         type: "paragraph",

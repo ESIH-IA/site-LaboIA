@@ -29,7 +29,7 @@ export interface Sector {
 export const aiSolutions: AISolution[] = [
   {
     id: "analyse-prediction",
-    title: "Analyse & Prédiction",
+    title: "Analyse et Prédiction",
     shortDescription:
       "Analyse les données passées pour détecter des tendances, prévoir des situations futures et identifier des anomalies.",
     benefits: [

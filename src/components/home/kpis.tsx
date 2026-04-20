@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import type { KpiItem, KpiSettings } from "@/lib/sanity/types";
 
 type KpisProps = {
@@ -12,7 +14,8 @@ const statusLabels = {
   confirmed: "Données validées",
 } as const;
 
-export default function Kpis({ title, intro, items, meta }: KpisProps) {
+export default async function Kpis({ title, intro, items, meta }: KpisProps) {
+  const t = await getTranslations("home");
   return (
     <section className="kpis">
       {/* Dot pattern subtil */}
@@ -21,11 +24,10 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
       <div className="section-inner" style={{ position: "relative" }}>
         <div className="section-header-centered" style={{ marginBottom: "3rem" }}>
           <h2 className="section-title">
-            {title ?? "Indicateurs clés"}
+            {title ?? t("kpisTitle")}
           </h2>
           <p className="section-subtitle">
-            {intro ??
-              "Données quantitatives sur nos activités de recherche et d'innovation"}
+            {intro ?? t("kpisIntro")}
           </p>
         </div>
 

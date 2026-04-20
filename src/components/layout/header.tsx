@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { locales, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/media/logo";
@@ -92,6 +93,7 @@ export default function Header({
   const currentLocale = useMemo(() => getCurrentLocale(pathname), [pathname]);
   const basePath = useMemo(() => stripLocale(pathname) || "/", [pathname]);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const t = useTranslations("header");
 
   const navItems = useMemo(() => {
     return nav.mainNav.map((item) => {
@@ -115,7 +117,7 @@ export default function Header({
               {site.shortName}
             </div>
             <div className="header-logo-tagline">
-              {site.tagline ?? "Laboratoire de recherche en IA & science des données"}
+              {site.tagline ?? t("tagline")}
             </div>
           </div>
         </Link>
@@ -135,11 +137,11 @@ export default function Header({
           <button
             type="button"
             className="mobile-menu-btn"
-            aria-label="Ouvrir le menu"
+            aria-label={t("openMenu")}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
           >
-            <span className="sr-only">Menu</span>
+            <span className="sr-only">{t("menu")}</span>
             <svg
               width="18"
               height="18"
@@ -166,7 +168,7 @@ export default function Header({
           className="mobile-overlay"
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation"
+          aria-label={t("navigation")}
           onClick={() => setMobileOpen(false)}
         >
           <div
@@ -174,11 +176,11 @@ export default function Header({
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mobile-panel-header">
-              <div className="mobile-panel-title">Menu</div>
+              <div className="mobile-panel-title">{t("menu")}</div>
               <button
                 type="button"
                 className="mobile-close-btn"
-                aria-label="Fermer le menu"
+                aria-label={t("closeMenu")}
                 onClick={() => setMobileOpen(false)}
               >
                 <svg

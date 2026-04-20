@@ -11,10 +11,10 @@ export const site = {
       alt: "Bannière du laboratoire",
     },
     logo: {
-      src: "/logo/logo-site.svg",
-      width: 689,
-      height: 249,
-      alt: "Logo du laboratoire",
+      src: "/logo/logo%20LaDIA.png",
+      width: 1024,
+      height: 1024,
+      alt: "Logo LaDIA",
     },
   },
 } as const;

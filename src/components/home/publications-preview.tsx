@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 type PublicationPreview = {
   _id: string;
   title: string;
@@ -14,7 +16,8 @@ type PublicationsPreviewProps = {
   items: PublicationPreview[];
 };
 
-export default function PublicationsPreview({ title, intro, items }: PublicationsPreviewProps) {
+export default async function PublicationsPreview({ title, intro, items }: PublicationsPreviewProps) {
+  const t = await getTranslations("home");
   return (
     <section className="pub-preview section">
       {/* Grid pattern background */}
@@ -23,10 +26,9 @@ export default function PublicationsPreview({ title, intro, items }: Publication
       <div className="section-inner" style={{ position: "relative", padding: "5rem 0" }}>
         <div className="section-header-row">
           <div>
-            <h2 className="section-title section-title-white">{title ?? "Publications récentes"}</h2>
+            <h2 className="section-title section-title-white">{title ?? t("publicationsTitle")}</h2>
             <p className="section-subtitle section-subtitle-light">
-              {intro ??
-                "Articles, rapports et communications qui documentent nos avancées scientifiques."}
+              {intro ?? t("publicationsIntro")}
             </p>
           </div>
         </div>

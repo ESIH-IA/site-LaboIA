@@ -253,8 +253,11 @@ export const institutionalPageBySlugQuery = groq`
     "title": coalesce(titleIntl[$locale], title),
     "slug": coalesce(slugIntl[$locale], slug),
     slugIntl,
+    "heroBadge": coalesce(heroBadgeIntl[$locale], heroBadge),
     "summary": coalesce(summaryIntl[$locale], summary),
-    "content": coalesce(contentIntl[$locale], content)
+    "content": coalesce(contentIntl[$locale], content),
+    "ctaLabel": coalesce(ctaLabelIntl[$locale], ctaLabel),
+    ctaHref
   }
 `;
 

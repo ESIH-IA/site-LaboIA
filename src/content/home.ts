@@ -24,7 +24,7 @@ export const hero = {
 
 export const event = {
   label: "Événement à venir",
-  title: "Séminaire IA & données pour les services publics",
+  title: "Séminaire IA et données pour les services publics",
   date: "Jeudi 25 avril à 10h00",
   location: "Campus ESIH, Port-au-Prince",
   ctaLabel: "Voir le programme",

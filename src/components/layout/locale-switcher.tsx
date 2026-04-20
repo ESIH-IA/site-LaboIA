@@ -1,23 +1,17 @@
 "use client";
 
-import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect, useTransition } from "react";
-import { locales, localeNames, localeFlags, type Locale } from "@/lib/i18n";
+import { useLocale, useTranslations } from "next-intl";
 
-function stripLocale(pathname: string) {
-  const segments = pathname.split("/").filter(Boolean);
-  const first = segments[0];
-  if (first && locales.includes(first as Locale)) {
-    return "/" + segments.slice(1).join("/");
-  }
-  return pathname;
-}
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { localeNames, localeFlags, type Locale } from "@/lib/i18n";
+import { routing } from "@/i18n/routing";
 
 export default function LocaleSwitcher() {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("locale");
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -35,18 +29,7 @@ export default function LocaleSwitcher() {
   function switchLocale(newLocale: Locale) {
     setOpen(false);
     startTransition(() => {
-      let basePath = pathname;
-      for (const loc of locales) {
-        if (pathname.startsWith(`/${loc}/`)) {
-          basePath = pathname.slice(loc.length + 1);
-          break;
-        } else if (pathname === `/${loc}`) {
-          basePath = "/";
-          break;
-        }
-      }
-      const newPath = newLocale === "fr" ? (basePath || "/") : `/${newLocale}${basePath === "/" ? "" : basePath}`;
-      router.push(newPath);
+      router.replace(pathname, { locale: newLocale });
     });
   }
 
@@ -56,7 +39,7 @@ export default function LocaleSwitcher() {
         onClick={() => setOpen(!open)}
         disabled={isPending}
         className="locale-btn"
-        aria-label="Changer de langue"
+        aria-label={t("switchLanguage")}
         aria-expanded={open}
       >
         <span>{localeFlags[locale]}</span>
@@ -75,7 +58,7 @@ export default function LocaleSwitcher() {
 
       {open && (
         <div className="locale-dropdown">
-          {locales.map((loc) => {
+          {routing.locales.map((loc) => {
             const isActive = loc === locale;
             return (
               <button

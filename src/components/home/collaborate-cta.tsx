@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 type CollaborateAction = {
   label: string;
   href: string;
@@ -10,7 +12,8 @@ type CollaborateCtaProps = {
   actions?: CollaborateAction[];
 };
 
-export default function CollaborateCta({ title, body, actions }: CollaborateCtaProps) {
+export default async function CollaborateCta({ title, body, actions }: CollaborateCtaProps) {
+  const t = await getTranslations("home");
   const primary = actions?.find((action) => action.variant === "primary") ?? actions?.[0];
   const secondary = actions?.find((action) => action.variant === "secondary") ?? actions?.[1];
 
@@ -27,11 +30,10 @@ export default function CollaborateCta({ title, body, actions }: CollaborateCtaP
           <div className="collab-cta-content">
             <div className="collab-cta-text">
               <h2 className="collab-cta-title">
-                {title ?? "Collaborer avec le laboratoire"}
+                {title ?? t("collaborateTitle")}
               </h2>
               <p className="collab-cta-body">
-                {body ??
-                  "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact."}
+                {body ?? t("collaborateBody")}
               </p>
             </div>
             <div className="collab-cta-buttons">

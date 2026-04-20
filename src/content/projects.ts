@@ -43,7 +43,7 @@ export const projects: readonly Project[] = [
     yearStart: 2023,
     tags: ["Agriculture numérique", "IA", "Big Data", "Erasmus+", "CBHE"],
     shortDescription:
-      "Projet international visant à renforcer les compétences en agriculture numérique (IA & Big Data) via une approche \"learning by doing\" et des cas d'usage terrain, dont la mangue en Haïti.",
+      "Projet international visant à renforcer les compétences en agriculture numérique (IA et Big Data) via une approche \"learning by doing\" et des cas d'usage terrain, dont la mangue en Haïti.",
     portals: [
       { label: "Portail DeepFarm", url: "https://deepfarm.eu" },
       {

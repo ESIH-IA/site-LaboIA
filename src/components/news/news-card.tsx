@@ -66,7 +66,7 @@ export default function NewsCard({ item }: Props) {
             <CardHeader className={hasImage ? "card-header--flush" : ""}>
               <div className="news-card-meta">
                 {item.category && (
-                  <span className="badge badge-cyan-outline">
+                  <span className="badge badge-news">
                     {item.category}
                   </span>
                 )}
@@ -139,7 +139,7 @@ export default function NewsCard({ item }: Props) {
             <h2 className="modal-news-title">{item.title}</h2>
             <div className="modal-news-meta">
               {item.category && (
-                <span className="badge badge-cyan-outline">
+                <span className="badge badge-news">
                   {item.category}
                 </span>
               )}

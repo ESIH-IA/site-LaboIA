@@ -1,7 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+
+import { Link } from "@/i18n/navigation";
 
 const consentCookie = "lacdia_cookie_consent";
 
@@ -19,6 +21,7 @@ function setCookie(name: string, value: string, days = 180) {
 }
 
 export default function CookieBanner() {
+  const t = useTranslations("cookies");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -40,13 +43,10 @@ export default function CookieBanner() {
 
   return (
     <div className="cookie-banner">
-      <h2 className="cookie-title">Cookies</h2>
+      <h2 className="cookie-title">{t("title")}</h2>
       <p className="cookie-text">
-        Ce site utilise des cookies de mesure d&apos;audience et de fonctionnement. Vous pouvez
-        accepter ou refuser ces cookies. Consultez la{" "}
-        <Link href="/cookies">
-          politique cookies
-        </Link>
+        {t("message")}{" "}
+        <Link href="/cookies">{t("policyLink")}</Link>
         .
       </p>
       <div className="cookie-actions">
@@ -55,14 +55,14 @@ export default function CookieBanner() {
           className="btn btn-small btn-small-primary"
           onClick={() => handleChoice("accepted")}
         >
-          Accepter
+          {t("accept")}
         </button>
         <button
           type="button"
           className="btn btn-small btn-small-outline"
           onClick={() => handleChoice("rejected")}
         >
-          Refuser
+          {t("reject")}
         </button>
       </div>
     </div>

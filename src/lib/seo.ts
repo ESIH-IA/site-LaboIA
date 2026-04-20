@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { getSiteSettings } from "@/lib/cms";
-import type { Locale } from "@/lib/i18n";
+import { locales, type Locale, localizedPath, stripLocaleFromPath } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const siteUrl = getSiteUrl();
@@ -11,10 +11,7 @@ type MetadataInput = {
   description?: string;
   path?: string;
   locale: Locale;
-  alternates?: {
-    fr?: string;
-    en?: string;
-  };
+  alternates?: Partial<Record<Locale, string>>;
 };
 
 export async function buildMetadata({
@@ -58,11 +55,22 @@ export async function buildMetadata({
     },
   };
 
-  if (alternates?.fr || alternates?.en) {
+  const fallbackAlternates = path
+    ? Object.fromEntries(
+        locales.map((candidateLocale) => [candidateLocale, localizedPath(stripLocaleFromPath(path), candidateLocale)]),
+      )
+    : undefined;
+
+  const resolvedAlternates = {
+    ...(fallbackAlternates ?? {}),
+    ...(alternates ?? {}),
+  } as Partial<Record<Locale, string>>;
+
+  if (Object.values(resolvedAlternates).some(Boolean)) {
     metadata.alternates = {
       languages: {
-        ...(alternates.fr ? { fr: alternates.fr } : {}),
-        ...(alternates.en ? { en: alternates.en } : {}),
+        ...(resolvedAlternates.fr ? { fr: resolvedAlternates.fr } : {}),
+        ...(resolvedAlternates.en ? { en: resolvedAlternates.en } : {}),
       },
     };
   }

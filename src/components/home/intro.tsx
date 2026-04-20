@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 const actionStyles = {
   primary: "btn btn-cta-primary",
@@ -19,7 +20,8 @@ type IntroProps = {
   actions?: Action[];
 };
 
-export default function Intro({ eyebrow, title, body, actions }: IntroProps) {
+export default async function Intro({ eyebrow, title, body, actions }: IntroProps) {
+  const t = await getTranslations("home");
   return (
     <section className="intro">
       {/* Transition douce depuis le Hero sombre */}
@@ -32,17 +34,16 @@ export default function Intro({ eyebrow, title, body, actions }: IntroProps) {
         <div className="intro-eyebrow">
           <div className="intro-eyebrow-dot" />
           <p className="intro-eyebrow-text">
-            {eyebrow ?? "LaCDIA"}
+            {eyebrow ?? t("introEyebrow")}
           </p>
         </div>
 
         <h2 className="intro-title">
-          {title ?? "Laboratoire de recherche et d'innovation en IA et science des données."}
+          {title ?? t("introTitle")}
         </h2>
 
         <p className="intro-body">
-          {body ??
-            "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons également des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents."}
+          {body ?? t("introBody")}
         </p>
 
         {actions?.length ? (

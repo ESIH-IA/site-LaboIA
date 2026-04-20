@@ -9,6 +9,6 @@ export const partners = [
       "Plateforme médiatique indépendante engagée pour un journalisme rigoureux et la valorisation des savoirs.",
     website: "https://infosnation.com",
     featured: true,
-    tags: ["Médiation scientifique", "Partenariat éditorial", "Sciences & Société"],
+    tags: ["Médiation scientifique", "Partenariat éditorial", "Sciences et Société"],
   },
 ] as const;

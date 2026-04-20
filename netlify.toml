@@ -9,8 +9,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  NEXT_PUBLIC_SANITY_PROJECT_ID = ""
+  NEXT_PUBLIC_SANITY_PROJECT_ID = "fghn7rpw"
   NEXT_PUBLIC_SANITY_DATASET = "production"
+  NEXT_PUBLIC_SANITY_API_VERSION = "2024-01-01"
 
 # Plugin Next.js pour Netlify
 [[plugins]]

@@ -117,7 +117,7 @@ export default async function Page() {
               <div className="gradient-text-cyan" style={{fontSize:'clamp(2.25rem,4vw,3rem)', fontWeight:700, marginBottom:'0.5rem'}}>
                 {news.length}+
               </div>
-              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Articles & Actualités</p>
+              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Articles et Actualités</p>
             </div>
             <div className="glass-card animate-fade-in-up" style={{borderRadius:'1rem', padding:'2rem', textAlign:'center', animationDelay: "400ms"}}>
               <div className="gradient-text-accent" style={{fontSize:'clamp(2.25rem,4vw,3rem)', fontWeight:700, marginBottom:'0.5rem'}}>
@@ -129,7 +129,7 @@ export default async function Page() {
               <div className="gradient-text-cyan" style={{fontSize:'clamp(2.25rem,4vw,3rem)', fontWeight:700, marginBottom:'0.5rem'}}>
                 100%
               </div>
-              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Innovation & Excellence</p>
+              <p style={{color:'#cbd5e1', fontSize:'0.875rem'}}>Innovation et Excellence</p>
             </div>
           </div>
         </div>
