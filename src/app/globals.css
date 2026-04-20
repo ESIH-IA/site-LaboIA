@@ -2239,95 +2239,47 @@ input, textarea, select { font: inherit; }
 /* ================================================================
    20. LOCALE SWITCHER
    ================================================================ */
-.locale-switcher { position: relative; }
-
-.locale-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.375rem 0.75rem;
+.locale-toggle {
+  display: inline-flex;
+  align-items: stretch;
+  padding: 0.1875rem;
   border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   background: var(--bg-elevated);
+  gap: 0.125rem;
+}
+
+.locale-toggle-option {
+  min-width: 2.5rem;
+  padding: 0.3125rem 0.75rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--text-secondary);
-  transition: all var(--transition-base);
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.locale-btn:hover {
-  border-color: var(--border-plum);
-  background: rgba(124, 60, 176, 0.08);
+.locale-toggle-option:hover:not(.locale-toggle-option--active):not(:disabled) {
   color: var(--accent-plum);
+  background: rgba(124, 60, 176, 0.08);
 }
 
-.locale-btn:focus {
+.locale-toggle-option:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(124, 60, 176, 0.4);
 }
 
-.locale-btn:disabled { opacity: 0.5; }
-
-.locale-btn-label { display: none; }
-@media (min-width: 640px) { .locale-btn-label { display: inline; } }
-
-.locale-btn-short { }
-@media (min-width: 640px) { .locale-btn-short { display: none; } }
-
-.locale-chevron {
-  width: 0.875rem;
-  height: 0.875rem;
-  transition: transform var(--transition-base);
+.locale-toggle-option--active {
+  background: var(--accent-plum);
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(86, 39, 121, 0.25);
 }
 
-.locale-chevron--open { transform: rotate(180deg); }
-
-.locale-dropdown {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  z-index: 50;
-  margin-top: 0.5rem;
-  min-width: 10rem;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: rgba(13, 7, 24, 0.60);
-  box-shadow: var(--shadow-lg);
-}
-
-.locale-option {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.625rem 1rem;
-  border: none;
-  background: transparent;
-  font-size: 0.875rem;
-  color: #4c4660;
-  transition: background var(--transition-base), color var(--transition-base);
-}
-
-.locale-option:hover {
-  background: rgba(13, 7, 24, 0.55);
-  color: #1a0f2b;
-}
-
-.locale-option--active {
-  background: rgba(124, 60, 176, 0.10);
-  font-weight: 600;
-  color: #8cabdb;
-}
-
-.locale-option-flag { font-size: 1rem; }
-
-.locale-option-check {
-  margin-left: auto;
-  width: 1rem;
-  height: 1rem;
-  color: #5284c9;
-}
+.locale-toggle-option:disabled { cursor: not-allowed; opacity: 0.7; }
 
 /* ================================================================
    21. NEWS CARD
