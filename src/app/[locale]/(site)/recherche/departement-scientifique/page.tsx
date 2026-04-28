@@ -672,7 +672,7 @@ export default async function DepartementScientifiquePage() {
                 </svg>
               </Link>
               <Link
-                href="/publications"
+                href="/recherche/explorer"
                 className="btn btn-secondary"
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.08)',

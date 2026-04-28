@@ -8,9 +8,4 @@ export const mainNav = [
   { label: "Collaborer", href: "/collaborer" },
 ] as const;
 
-export const footerNav = [
-  { label: "Mentions légales", href: "/mentions-legales" },
-  { label: "Politique de confidentialité", href: "/confidentialite" },
-  { label: "Politique cookies", href: "/cookies" },
-  { label: "Newsletter", href: "/newsletter" },
-] as const;
+export const footerNav = [] as const;

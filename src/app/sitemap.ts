@@ -12,18 +12,12 @@ const staticPaths = [
   "/recherche/departement-scientifique",
   "/lacdia-tech",
   "/solutions",
-  "/partenariats",
-  "/publications",
   "/ressources",
   "/equipe",
   "/actualites",
   "/formation",
   "/collaborer",
   "/contact",
-  "/mentions-legales",
-  "/confidentialite",
-  "/cookies",
-  "/newsletter",
 ];
 
 function buildUrl(path: string, locale: (typeof locales)[number]) {

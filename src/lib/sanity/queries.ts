@@ -3,6 +3,34 @@ import type { Locale } from "@/lib/i18n";
 import { sanityFetch } from "@/lib/sanity/client";
 import type { GovernancePage, GovernanceChartStrict, Person, TeamPage } from "@/lib/sanity/types";
 
+export const genericPageBySlugQuery = groq`
+  *[_type == "genericPage" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "slug": coalesce(slugIntl[$locale], slug),
+    slugIntl,
+    blocks[]{
+      ...,
+      _type == "textImageBlock" => {
+        ...,
+        "imageUrl": image.asset->url,
+        "imageAlt": image.alt
+      },
+      _type == "kpisBlock" => {
+        ...,
+        "kpisList": kpis[]->{
+          key,
+          label,
+          labelIntl,
+          value,
+          note,
+          noteIntl
+        }
+      }
+    }
+  }
+`;
+
 export const projectListQuery = groq`
   *[_type == "project" && status == "published"] | order(startDate desc){
     _id,

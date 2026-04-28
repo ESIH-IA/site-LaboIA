@@ -170,7 +170,7 @@ export default async function Page() {
             </svg>
           </Link>
           <Link
-            href="/partenariats"
+            href="/collaborer"
             className="btn btn-cta-secondary"
           >
             Nos collaborations

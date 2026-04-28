@@ -331,22 +331,13 @@ function fallbackNavigation(locale: Locale): Navigation {
     "/equipe": copy.team,
     "/collaborer": copy.collaborate,
   };
-  const footerLabels: Record<string, string> = {
-    "/mentions-legales": copy.legalNotice,
-    "/confidentialite": copy.privacy,
-    "/cookies": copy.cookies,
-    "/newsletter": copy.newsletter,
-  };
   return {
     _id: "local-nav",
     mainNav: localMainNav.map((item) => ({
       label: mainLabels[item.href] ?? String(item.label),
       href: item.href,
     })),
-    footerNav: localFooterNav.map((item) => ({
-      label: footerLabels[item.href] ?? String(item.label),
-      href: item.href,
-    })),
+    footerNav: [],
   };
 }
 

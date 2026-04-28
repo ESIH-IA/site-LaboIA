@@ -15,7 +15,7 @@
     "solutions": "Solutions IA"
   },
   "header": {
-    "tagline": "Laboratoire de recherche en IA et science des données",
+    "tagline": "Laboratoire d'innovation et de recherche appliquée en IA et science des données",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "menu": "Menu",
@@ -57,8 +57,8 @@
     "reject": "Refuser"
   },
   "home": {
-    "heroBadge": "Intelligence Artificielle - Recherche - Innovation",
-    "heroDescription": "Premier laboratoire de recherche en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
+    "heroBadge": "Intelligence Artificielle - Innovation - Recherche Appliquée",
+    "heroDescription": "Premier laboratoire d'innovation et de recherche appliquée en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
     "discoverLab": "Découvrir nos solutions",
     "heroSecondaryCta": "Rencontrer l'équipe",
     "researchAxes": "Nos axes de recherche",
@@ -104,7 +104,7 @@
   },
   "about": {
     "title": "À propos du LaCDIA",
-    "badge": "Laboratoire de recherche",
+    "badge": "Laboratoire d'innovation et de recherche appliquée",
     "fullName": "Laboratoire Caribéen des Sciences de Données et de l'Intelligence Artificielle",
     "vision": "Vision",
     "visionQuote": "Devenir le pôle de référence en intelligence artificielle et science des données dans la Caraïbe, en produisant une recherche d'excellence au service du développement durable de la région.",
@@ -116,7 +116,7 @@
   },
   "research": {
     "badge": "Département Scientifique",
-    "title": "Recherche en Intelligence Artificielle et Science des Données",
+    "title": "Innovation et Recherche Appliquée en Intelligence Artificielle et Science des Données",
     "axes": "Axes de recherche",
     "methodologies": "Approches méthodologiques",
     "expertise": "Domaines d'expertise",

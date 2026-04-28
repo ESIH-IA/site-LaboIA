@@ -119,32 +119,7 @@ async function seed() {
       { _type: "navItem", label: "Collaborer", labelIntl: localeString("Collaborer"), href: "/collaborer" },
       { _type: "navItem", label: "Contact", labelIntl: localeString("Contact"), href: "/contact" },
     ]),
-    footerNav: withKeys([
-      {
-        _type: "navItem",
-        label: "Mentions l\u00e9gales",
-        labelIntl: localeString("Mentions l\u00e9gales"),
-        href: "/mentions-legales",
-      },
-      {
-        _type: "navItem",
-        label: "Politique de confidentialit\u00e9",
-        labelIntl: localeString("Politique de confidentialit\u00e9"),
-        href: "/confidentialite",
-      },
-      {
-        _type: "navItem",
-        label: "Politique cookies",
-        labelIntl: localeString("Politique cookies"),
-        href: "/cookies",
-      },
-      {
-        _type: "navItem",
-        label: "Newsletter",
-        labelIntl: localeString("Newsletter"),
-        href: "/newsletter",
-      },
-    ]),
+    footerNav: [],
   };
 
   const homePage = {

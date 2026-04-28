@@ -2,13 +2,11 @@
 
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/media/logo";
-import type { Navigation, SiteSettings } from "@/lib/sanity/types";
+import type { SiteSettings } from "@/lib/sanity/types";
 
 export default async function Footer({
-  nav,
   site,
 }: {
-  nav: Navigation;
   site: SiteSettings;
 }) {
   const t = await getTranslations();
@@ -42,8 +40,6 @@ export default async function Footer({
             <Link href="/recherche/departement-scientifique" className="footer-nav-link">{t("research.badge")}</Link>
             <Link href="/lacdia-tech" className="footer-nav-link">{t("nav.lacdiaTech")}</Link>
             <Link href="/equipe" className="footer-nav-link">{t("nav.team")}</Link>
-            <Link href="/partenariats" className="footer-nav-link">{t("nav.partnerships")}</Link>
-            <Link href="/publications" className="footer-nav-link">{t("nav.publications")}</Link>
             <Link href="/actualites" className="footer-nav-link">{t("nav.news")}</Link>
           </div>
         </div>
@@ -67,17 +63,6 @@ export default async function Footer({
           <div className="footer-bottom-inner">
             <div>
               Copyright {new Date().getFullYear()} {site.shortName}. {t("footer.copyright")}
-            </div>
-            <div className="footer-legal-links">
-              {nav.footerNav.map((item) => (
-                <Link
-                  key={`legal-${item.href}`}
-                  href={item.href}
-                  className="footer-legal-link"
-                >
-                  {item.label}
-                </Link>
-              ))}
             </div>
           </div>
         </div>

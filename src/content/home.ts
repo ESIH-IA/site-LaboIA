@@ -2,7 +2,7 @@ export const hero = {
   bannerSrc: "/banners/banner-neutral.svg",
   bannerAlt: "Bannière principale du LaCDIA",
   description:
-    "Premier laboratoire de recherche en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
+    "Premier laboratoire d'innovation et de recherche appliquée en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
   actions: [
     {
       label: "Découvrir le laboratoire",

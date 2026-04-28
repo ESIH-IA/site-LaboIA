@@ -15,7 +15,7 @@
     "solutions": "AI Solutions"
   },
   "header": {
-    "tagline": "Research laboratory in AI and data science",
+    "tagline": "Innovation and applied research laboratory in AI and data science",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "menu": "Menu",
@@ -57,8 +57,8 @@
     "reject": "Reject"
   },
   "home": {
-    "heroBadge": "Artificial Intelligence - Research - Innovation",
-    "heroDescription": "The first AI and data science research laboratory in the Caribbean, LaCDIA produces original scientific knowledge and develops technological solutions adapted to Caribbean realities.",
+    "heroBadge": "Artificial Intelligence - Innovation - Applied Research",
+    "heroDescription": "The first AI and data science innovation and applied research laboratory in the Caribbean, LaCDIA produces original scientific knowledge and develops technological solutions adapted to Caribbean realities.",
     "discoverLab": "Discover our solutions",
     "heroSecondaryCta": "Meet the team",
     "researchAxes": "Our research axes",
@@ -104,7 +104,7 @@
   },
   "about": {
     "title": "About LaCDIA",
-    "badge": "Research laboratory",
+    "badge": "Innovation and applied research laboratory",
     "fullName": "Caribbean Laboratory of Data Science and Artificial Intelligence",
     "vision": "Vision",
     "visionQuote": "To become the reference hub for artificial intelligence and data science in the Caribbean, producing research excellence in service of the region's sustainable development.",
@@ -116,7 +116,7 @@
   },
   "research": {
     "badge": "Scientific Department",
-    "title": "Research in Artificial Intelligence and Data Science",
+    "title": "Innovation and Applied Research in Artificial Intelligence and Data Science",
     "axes": "Research Axes",
     "methodologies": "Methodological Approaches",
     "expertise": "Areas of Expertise",

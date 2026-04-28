@@ -908,6 +908,119 @@ const solutionsPage = defineType({
   ],
 });
 
+const heroBlock = defineType({
+  name: "heroBlock",
+  title: "Hero Block",
+  type: "object",
+  fields: [
+    defineField({ name: "badge", type: "localeString", title: "Badge (Eyebrow)" }),
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "description", type: "localeText", title: "Description" }),
+    defineField({ name: "actions", type: "array", of: [{ type: "linkAction" }], title: "Actions" }),
+  ],
+});
+
+const textImageBlock = defineType({
+  name: "textImageBlock",
+  title: "Text & Image Block",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "content", type: "localeBlockContent", title: "Content" }),
+    defineField({
+      name: "image",
+      type: "image",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", type: "string" })],
+      title: "Image",
+    }),
+    defineField({
+      name: "imagePosition",
+      type: "string",
+      title: "Image Position",
+      options: { list: ["left", "right"] },
+      initialValue: "right",
+    }),
+  ],
+});
+
+const featuresBlock = defineType({
+  name: "featuresBlock",
+  title: "Features / Highlights Block",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "intro", type: "localeText", title: "Introduction" }),
+    defineField({ name: "features", type: "array", of: [{ type: "highlightItem" }], title: "Features" }),
+  ],
+});
+
+const kpisBlock = defineType({
+  name: "kpisBlock",
+  title: "KPIs Block",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "intro", type: "localeText", title: "Introduction" }),
+    defineField({ name: "kpis", type: "array", of: [{ type: "reference", to: [{ type: "kpi" }] }], title: "KPIs to display" }),
+  ],
+});
+
+const ctaBlock = defineType({
+  name: "ctaBlock",
+  title: "Call to Action Block",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "body", type: "localeText", title: "Body" }),
+    defineField({ name: "actions", type: "array", of: [{ type: "linkAction" }], title: "Actions" }),
+  ],
+});
+
+const latestNewsBlock = defineType({
+  name: "latestNewsBlock",
+  title: "Latest News Block",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "intro", type: "localeText", title: "Introduction" }),
+    defineField({ name: "limit", type: "number", title: "Number of articles to show", initialValue: 3 }),
+  ],
+});
+
+const genericPage = defineType({
+  name: "genericPage",
+  title: "Page (Constructeur de blocs)",
+  type: "document",
+  fields: [
+    defineField({ name: "title", type: "string", title: "Internal Title (For Admin)" }),
+    defineField({ name: "titleIntl", type: "localeString", title: "Public Title" }),
+    defineField({ name: "slug", type: "slug", title: "Slug", options: { source: "title" } }),
+    defineField({
+      name: "slugIntl",
+      title: "Localized Slugs",
+      type: "object",
+      fields: [
+        defineField({ name: "fr", type: "slug", options: { source: "title" } }),
+        defineField({ name: "en", type: "slug", options: { source: "title" } }),
+      ],
+    }),
+    defineField({
+      name: "blocks",
+      title: "Page Blocks",
+      type: "array",
+      of: [
+        { type: "heroBlock" },
+        { type: "textImageBlock" },
+        { type: "featuresBlock" },
+        { type: "kpisBlock" },
+        { type: "ctaBlock" },
+        { type: "latestNewsBlock" },
+      ],
+    }),
+  ],
+});
+
 export const schemaTypes = [
   blockContent,
   localeString,
@@ -916,6 +1029,13 @@ export const schemaTypes = [
   navItem,
   linkAction,
   highlightItem,
+  heroBlock,
+  textImageBlock,
+  featuresBlock,
+  kpisBlock,
+  ctaBlock,
+  latestNewsBlock,
+  genericPage,
   siteSettings,
   navigation,
   homePage,
