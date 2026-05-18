@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return await buildMetadata({
     locale,
-    title: page?.title ?? "Publications par axe",
+    title: page?.title,
     description: page?.summary,
     path: localizedPath("/publications/axes", locale),
     alternates: {
@@ -59,19 +59,14 @@ export default async function Page() {
 
       <div className="card-grid card-grid-2" style={{marginTop:'2rem'}}>
         {axes.map((axis) => (
-          <article
+          <Link
             key={axis._id}
+            href={`/publications/axes/${axis.slug.current}`}
             className="simple-card"
           >
             <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>{axis.title}</h2>
             {axis.summary ? <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>{axis.summary}</p> : null}
-            <Link
-              href={`/publications/axes/${axis.slug.current}`}
-              className="btn-link" style={{marginTop:'0.75rem'}}
-            >
-              Voir les publications
-            </Link>
-          </article>
+          </Link>
         ))}
       </div>
     </section>

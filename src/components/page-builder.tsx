@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { PortableText } from '@portabletext/react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Simple helper pour extraire le texte depuis l'objet {fr, en} de Sanity
 function getLocalValue(field: any, locale: string) {
@@ -11,11 +13,7 @@ function getLocalValue(field: any, locale: string) {
 
 export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string }) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
-    return (
-      <div className="text-center py-24 opacity-60">
-        <p>Cette page ne contient aucun bloc de contenu.</p>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -79,15 +77,17 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
                   </div>
                   <div className="flex-1 w-full relative">
                     {block.imageUrl ? (
-                      <img 
-                        src={block.imageUrl} 
-                        alt={block.imageAlt || "Illustration"} 
-                        className="rounded-2xl shadow-xl w-full object-cover aspect-video bg-muted" 
-                      />
-                    ) : (
-                      <div className="rounded-2xl bg-muted aspect-video w-full flex items-center justify-center text-muted-foreground">
-                        [Image placeholder]
+                      <div className="relative rounded-2xl shadow-xl w-full aspect-video bg-muted overflow-hidden">
+                        <Image
+                          src={block.imageUrl}
+                          alt={block.imageAlt || ""}
+                          fill
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                          className="object-cover"
+                        />
                       </div>
+                    ) : (
+                      <div className="rounded-2xl bg-muted aspect-video w-full" />
                     )}
                   </div>
                 </div>
@@ -194,27 +194,13 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
               <section key={key} className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-border pb-4">
                   {title ? <h2 className="text-3xl font-bold">{title}</h2> : <div />}
-                  <Link href="/actualites" className="text-primary font-semibold hover:underline mt-4 md:mt-0">
-                    Voir toutes les actualités →
-                  </Link>
-                </div>
-                <div className="grid md:grid-cols-3 gap-6 opacity-60">
-                   <div className="bg-muted aspect-video rounded-xl flex items-center justify-center">Article 1 (Auto)</div>
-                   <div className="bg-muted aspect-video rounded-xl flex items-center justify-center">Article 2 (Auto)</div>
-                   <div className="bg-muted aspect-video rounded-xl flex items-center justify-center">Article 3 (Auto)</div>
                 </div>
               </section>
             );
           }
 
           default:
-            return (
-              <div key={key} className="container mx-auto px-4">
-                <div className="p-4 bg-amber-50 text-amber-800 rounded-lg border border-amber-200">
-                  <p className="font-mono text-sm">⚠️ Bloc non implémenté : {block._type}</p>
-                </div>
-              </div>
-            );
+            return null;
         }
       })}
     </div>

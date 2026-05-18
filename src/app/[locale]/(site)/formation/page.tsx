@@ -28,6 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     locale,
     title: page?.title,
     description: page?.summary,
+    seo: page?.seo,
     path: localizedPath("/formation", locale),
     alternates: {
       fr: localizedPath("/formation", "fr"),
@@ -64,7 +65,6 @@ export default async function Page() {
 
       {hasOffers ? (
         <div style={{marginTop:'3rem'}}>
-          <h2 className="section-title" style={{fontSize:'1.5rem'}}>Offres et opportunites</h2>
           <div className="card-grid card-grid-2" style={{marginTop:'1.5rem', gap:'1rem'}}>
             {offers.map((offer) => (
               <article
@@ -91,7 +91,6 @@ export default async function Page() {
 
       {hasPrograms ? (
         <div style={{marginTop:'3rem'}}>
-          <h2 className="section-title" style={{fontSize:'1.5rem'}}>Programmes et ateliers</h2>
           <div className="card-grid card-grid-2" style={{marginTop:'1.5rem', gap:'1rem'}}>
             {programs.map((program) => (
               <article
@@ -114,7 +113,7 @@ export default async function Page() {
                   href={`/formation/programmes/${program.slug.current}`}
                   className="btn-link" style={{marginTop:'0.75rem'}}
                 >
-                  Voir le programme
+                  {program.title}
                 </Link>
               </article>
             ))}

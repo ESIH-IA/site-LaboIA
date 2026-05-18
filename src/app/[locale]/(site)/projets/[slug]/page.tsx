@@ -7,8 +7,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { projectBySlugQuery, projectListQuery } from "@/lib/sanity/queries";
-import type { ProjectListItem } from "@/lib/sanity/types";
+import { projectBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -77,7 +76,7 @@ export default async function Page({ params }: PageProps) {
             {project.projectType}
           </span>
         ) : null}
-        {project.startDate ? <span>Start {project.startDate}</span> : null}
+        {project.startDate ? <span>{project.startDate}</span> : null}
       </div>
 
       <h1 className="section-title" style={{marginTop:'1rem'}}>{project.title}</h1>
@@ -87,7 +86,6 @@ export default async function Page({ params }: PageProps) {
         <div className="simple-card" style={{marginTop:'2rem', gap:'2rem'}}>
           {project.objectives ? (
             <div>
-              <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Objectifs</h2>
               <div style={{marginTop:'0.75rem'}}>
                 <PortableTextRenderer value={project.objectives} />
               </div>
@@ -95,7 +93,6 @@ export default async function Page({ params }: PageProps) {
           ) : null}
           {project.methods ? (
             <div>
-              <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Méthodes</h2>
               <div style={{marginTop:'0.75rem'}}>
                 <PortableTextRenderer value={project.methods} />
               </div>
@@ -103,7 +100,6 @@ export default async function Page({ params }: PageProps) {
           ) : null}
           {project.results ? (
             <div>
-              <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Résultats</h2>
               <div style={{marginTop:'0.75rem'}}>
                 <PortableTextRenderer value={project.results} />
               </div>
@@ -114,10 +110,7 @@ export default async function Page({ params }: PageProps) {
 
       <div className="card-grid card-grid-2" style={{marginTop:'2.5rem'}}>
         <div className="simple-card">
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Partners</h2>
-          {!project.partners?.length ? (
-            <p className="simple-card-text" style={{marginTop:'0.5rem'}}>Contenu en cours de publication.</p>
-          ) : (
+          {project.partners?.length ? (
             <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
               {project.partners.map((partner) => (
                 <li key={partner._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
@@ -128,14 +121,11 @@ export default async function Page({ params }: PageProps) {
                 </li>
               ))}
             </ul>
-          )}
+          ) : null}
         </div>
 
         <div className="simple-card">
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Équipe impliquée</h2>
-          {!project.members?.length ? (
-            <p className="simple-card-text" style={{marginTop:'0.5rem'}}>Contenu en cours de publication.</p>
-          ) : (
+          {project.members?.length ? (
             <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
               {project.members.map((member) => (
                 <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
@@ -155,13 +145,12 @@ export default async function Page({ params }: PageProps) {
                 </li>
               ))}
             </ul>
-          )}
+          ) : null}
         </div>
       </div>
 
       {project.publications?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Publications liées</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {project.publications.map((publication) => (
               <li key={publication._id}>
@@ -183,4 +172,3 @@ export default async function Page({ params }: PageProps) {
     </article>
   );
 }
-

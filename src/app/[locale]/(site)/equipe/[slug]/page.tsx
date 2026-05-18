@@ -5,8 +5,7 @@ import { notFound } from "next/navigation";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { memberBySlugQuery, memberListQuery } from "@/lib/sanity/queries";
-import type { MemberListItem } from "@/lib/sanity/types";
+import { memberBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -75,7 +74,6 @@ export default async function Page({ params }: PageProps) {
 
       {member.expertise?.length ? (
         <div style={{marginTop:'2rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Domaines</h2>
           <div style={{marginTop:'0.75rem', display:'flex', flexWrap:'wrap', gap:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>
             {member.expertise.map((item) => (
               <span key={item} className="tag-expertise">
@@ -88,7 +86,6 @@ export default async function Page({ params }: PageProps) {
 
       {member.links?.length ? (
         <div style={{marginTop:'2rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Liens</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem'}}>
             {member.links.map((link, index) => (
               <li key={`${link.url ?? "link"}-${index}`}>
@@ -112,7 +109,6 @@ export default async function Page({ params }: PageProps) {
 
       {member.projects?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Projets lies</h2>
           <div className="card-grid card-grid-2" style={{marginTop:'1rem'}}>
             {member.projects.map((project) => (
               <Link
@@ -132,7 +128,6 @@ export default async function Page({ params }: PageProps) {
 
       {member.publications?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Publications liées</h2>
           <div className="card-grid" style={{marginTop:'1rem'}}>
             {member.publications.map((publication) => (
               <Link
@@ -152,4 +147,3 @@ export default async function Page({ params }: PageProps) {
     </section>
   );
 }
-

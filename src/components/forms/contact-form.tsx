@@ -4,21 +4,19 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
+import type { FormCopy } from "@/lib/sanity/types";
 
-export default function ContactForm() {
+export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+  const privacyHref = copy?.privacyHref ?? "/confidentialite";
 
   return (
     <div className="glass-form">
       <div style={{ marginBottom: "2rem" }}>
-        <h2 className="glass-form-title">
-          Formulaire de contact
-        </h2>
-        <p className="glass-form-subtitle">
-          Envoyez-nous votre message, nous vous répondrons rapidement.
-        </p>
+        {copy?.title ? <h2 className="glass-form-title">{copy.title}</h2> : null}
+        {copy?.subtitle ? <p className="glass-form-subtitle">{copy.subtitle}</p> : null}
       </div>
 
       <form
@@ -49,11 +47,11 @@ export default function ContactForm() {
               throw new Error("Erreur");
             }
             trackEvent({ category: "form", action: "submit", name: "contact" });
-            setMessage("Merci. Votre message a été enregistré.");
+            setMessage(copy?.successMessage ?? "");
             setMessageType("success");
             form.reset();
           } catch {
-            setMessage("Impossible d'envoyer la demande. Veuillez réessayer.");
+            setMessage(copy?.errorMessage ?? "");
             setMessageType("error");
           } finally {
             setLoading(false);
@@ -63,26 +61,26 @@ export default function ContactForm() {
         <div className="form-grid form-grid-2">
           <label className="form-group">
             <span className="form-label">
-              Nom complet <span className="form-label-required">*</span>
+              {copy?.fullNameLabel} <span className="form-label-required">*</span>
             </span>
             <input
               type="text"
               name="fullName"
               className="form-input"
-              placeholder="Votre nom complet"
+              placeholder={copy?.fullNamePlaceholder}
               required
             />
           </label>
 
           <label className="form-group">
             <span className="form-label">
-              Email <span className="form-label-required">*</span>
+              {copy?.emailLabel} <span className="form-label-required">*</span>
             </span>
             <input
               type="email"
               name="email"
               className="form-input"
-              placeholder="votre.email@example.com"
+              placeholder={copy?.emailPlaceholder}
               required
             />
           </label>
@@ -90,26 +88,26 @@ export default function ContactForm() {
 
         <label className="form-group">
           <span className="form-label">
-            Objet
+            {copy?.subjectLabel}
           </span>
           <input
             type="text"
             name="subject"
             className="form-input"
-            placeholder="Objet de votre message"
+            placeholder={copy?.subjectPlaceholder}
           />
         </label>
 
         <label className="form-group">
           <span className="form-label">
-            Message <span className="form-label-required">*</span>
+            {copy?.messageLabel} <span className="form-label-required">*</span>
           </span>
           <textarea
             name="message"
             rows={6}
             className="form-input"
             style={{ resize: "none" }}
-            placeholder="Décrivez votre demande en détail..."
+            placeholder={copy?.messagePlaceholder}
             required
           />
         </label>
@@ -121,11 +119,10 @@ export default function ContactForm() {
             className="form-checkbox"
           />
           <span>
-            J&apos;accepte que mes informations soient traitées conformément à la{" "}
-            <Link href="/confidentialite" className="form-checkbox-link">
-              politique de confidentialité
+            {copy?.consentText}{" "}
+            <Link href={privacyHref} className="form-checkbox-link">
+              {copy?.privacyLabel}
             </Link>
-            .
           </span>
         </label>
 
@@ -135,7 +132,7 @@ export default function ContactForm() {
             className="btn btn-gradient"
             disabled={loading}
           >
-            {loading ? "Envoi en cours..." : "Envoyer mon message"}
+            {loading ? copy?.loadingLabel : copy?.submitLabel}
           </button>
         </div>
 

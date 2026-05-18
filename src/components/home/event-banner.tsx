@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
 
 type EventBannerProps = {
   enabled?: boolean;
@@ -21,7 +20,7 @@ export default async function EventBanner({
   ctaHref,
 }: EventBannerProps) {
   if (!enabled) return null;
-  const t = await getTranslations("home");
+  if (!label && !title && !date && !location && !ctaLabel) return null;
 
   return (
     <section className="event-banner">
@@ -33,9 +32,7 @@ export default async function EventBanner({
                 {label}
               </p>
             ) : null}
-            <h2 className="event-banner-title">
-              {title ?? t("eventLabel")}
-            </h2>
+            {title ? <h2 className="event-banner-title">{title}</h2> : null}
             {(date || location) && (
               <p className="event-banner-meta">
                 {date ?? ""}{date && location ? " - " : ""}{location ?? ""}

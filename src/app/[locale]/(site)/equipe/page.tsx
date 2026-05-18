@@ -4,8 +4,6 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { TeamPageView } from "@/components/governance/TeamPageView";
 import type { GovernanceProfile, GovernanceProfileCategory } from "@/components/governance/types";
 import PortableTextRenderer from "@/components/content/portable-text";
-import { evensEmmanuel } from "@/data/governance/people";
-import type { Person as LocalPerson } from "@/data/governance/types";
 import { getGovernancePageData } from "@/lib/cms";
 import { getServerLocale } from "@/lib/i18n-server";
 import { buildMetadata } from "@/lib/seo";
@@ -52,25 +50,6 @@ function toProfileFromSanity(person: SanityPerson): GovernanceProfile {
   };
 }
 
-function toProfileFromLocal(person: LocalPerson): GovernanceProfile {
-  return {
-    id: person.id,
-    slug: person.slug,
-    name: person.name,
-    photoUrl: person.photo,
-    roleTitle: person.roleTitle,
-    category: person.roleCategory,
-    shortBio: person.shortBio,
-    longBio: person.longBio,
-    affiliation: person.affiliation,
-    expertise: person.expertise,
-    links: person.links,
-    contribution: person.contribution,
-    order: person.order,
-    status: person.status,
-  };
-}
-
 function toPlainText(blocks?: PortableTextBlock[]) {
   if (!blocks?.length) return undefined;
   return blocks
@@ -82,25 +61,14 @@ function toPlainText(blocks?: PortableTextBlock[]) {
     .join("\n");
 }
 
-function mergeProfiles(base: GovernanceProfile[], supplemental: GovernanceProfile[]) {
-  const profiles = new Map<string, GovernanceProfile>();
-
-  for (const person of base) profiles.set(person.id, person);
-  for (const person of supplemental) {
-    if (!profiles.has(person.id)) profiles.set(person.id, person);
-  }
-
-  return [...profiles.values()];
-}
-
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
+  const governance = await getGovernancePageData(locale);
+  const page = governance.page;
 
   return await buildMetadata({
     locale,
-    title: "Équipe et Gouvernance",
-    description:
-      "Découvrez la structure hiérarchique du laboratoire LaCDIA, ses membres clés et leur expertise en intelligence artificielle, data science et agronomie appliquées au développement d'Haïti.",
+    title: page?.title,
     path: "/equipe",
   });
 }
@@ -108,49 +76,24 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function EquipePage() {
   const locale = await getServerLocale();
   const governance = await getGovernancePageData(locale);
-
-  if (governance.mode === "local") {
-    const data = governance.data;
-
-    return (
-      <TeamPageView
-        locale={locale}
-        title={data.title}
-        intro={data.intro ? <p>{data.intro}</p> : undefined}
-        leadershipTitle={data.orgChart.sectionTitle}
-        leadershipIntro={data.orgChart.sectionIntro ? <p>{data.orgChart.sectionIntro}</p> : undefined}
-        directoryTitle={data.members.sectionTitle}
-        directoryIntro={data.members.sectionIntro}
-        topPerson={toProfileFromLocal(data.orgChart.topPerson)}
-        scientificDirectors={data.orgChart.scientificDirectors.map(toProfileFromLocal)}
-        associateResearchers={data.orgChart.associateResearchers.map(toProfileFromLocal)}
-        members={data.members.people.map(toProfileFromLocal)}
-      />
-    );
-  }
-
   const page = governance.page;
+  if (!page) return null;
+
   const chart = governance.chart;
   const members = governance.members;
   const membersIntro = toPlainText(page.membersSectionIntro);
-  const evensProfile = toProfileFromLocal(evensEmmanuel);
-  const scientificMembers = mergeProfiles(
-    page.showMembers ? members.map(toProfileFromSanity) : [],
-    [evensProfile],
-  );
-  const associateResearchers = mergeProfiles(
-    page.showOrgChart && chart?.associateResearchers ? chart.associateResearchers.map(toProfileFromSanity) : [],
-    [evensProfile],
-  );
+  const scientificMembers = page.showMembers ? members.map(toProfileFromSanity) : [];
+  const associateResearchers =
+    page.showOrgChart && chart?.associateResearchers ? chart.associateResearchers.map(toProfileFromSanity) : [];
 
   return (
     <TeamPageView
       locale={locale}
       title={page.title}
       intro={page.intro ? <PortableTextRenderer value={page.intro} /> : undefined}
-      leadershipTitle={page.orgChartSectionTitle ?? chart?.orgSectionTitle ?? (locale === "en" ? "Leadership" : "Pilotage")}
+      leadershipTitle={page.orgChartSectionTitle ?? chart?.orgSectionTitle ?? ""}
       leadershipIntro={page.orgChartSectionIntro ? <PortableTextRenderer value={page.orgChartSectionIntro} /> : undefined}
-      directoryTitle={page.membersSectionTitle ?? (locale === "en" ? "Profiles" : "Profils")}
+      directoryTitle={page.membersSectionTitle ?? ""}
       directoryIntro={membersIntro}
       topPerson={page.showOrgChart && chart?.topPerson ? toProfileFromSanity(chart.topPerson) : null}
       scientificDirectors={

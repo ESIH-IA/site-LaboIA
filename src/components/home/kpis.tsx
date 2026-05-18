@@ -1,5 +1,3 @@
-import { getTranslations } from "next-intl/server";
-
 import type { KpiItem, KpiSettings } from "@/lib/sanity/types";
 
 type KpisProps = {
@@ -9,13 +7,9 @@ type KpisProps = {
   meta?: KpiSettings;
 };
 
-const statusLabels = {
-  draft: "Données provisoires",
-  confirmed: "Données validées",
-} as const;
-
 export default async function Kpis({ title, intro, items, meta }: KpisProps) {
-  const t = await getTranslations("home");
+  if (!title && !intro && items.length === 0) return null;
+
   return (
     <section className="kpis">
       {/* Dot pattern subtil */}
@@ -23,12 +17,8 @@ export default async function Kpis({ title, intro, items, meta }: KpisProps) {
 
       <div className="section-inner" style={{ position: "relative" }}>
         <div className="section-header-centered" style={{ marginBottom: "3rem" }}>
-          <h2 className="section-title">
-            {title ?? t("kpisTitle")}
-          </h2>
-          <p className="section-subtitle">
-            {intro ?? t("kpisIntro")}
-          </p>
+          {title ? <h2 className="section-title">{title}</h2> : null}
+          {intro ? <p className="section-subtitle">{intro}</p> : null}
         </div>
 
         <div className="card-grid card-grid-sm-2 card-grid-4">
@@ -46,16 +36,12 @@ export default async function Kpis({ title, intro, items, meta }: KpisProps) {
               </div>
               <div className="kpi-label">{item.label}</div>
 
-              {/* Status badge */}
-              <div className="kpi-status">
-                <span
-                  className={`kpi-status-dot ${
-                    item.status === "confirmed" ? "kpi-status-dot--confirmed" : "kpi-status-dot--draft"
-                  }`}
-                  aria-hidden
-                />
-                <span>{statusLabels[item.status]}</span>
-              </div>
+              <span
+                className={`kpi-status-dot ${
+                  item.status === "confirmed" ? "kpi-status-dot--confirmed" : "kpi-status-dot--draft"
+                }`}
+                aria-hidden
+              />
 
               {item.note ? (
                 <p className="kpi-note">{item.note}</p>
@@ -67,10 +53,7 @@ export default async function Kpis({ title, intro, items, meta }: KpisProps) {
         {meta?.lastUpdated || meta?.disclaimer ? (
           <div className="kpi-meta">
             {meta?.lastUpdated ? (
-              <>
-                <span className="font-semibold text-slate-700">Dernière mise à jour :</span>
-                <span>{meta.lastUpdated}</span>
-              </>
+              <span>{meta.lastUpdated}</span>
             ) : null}
             {meta?.disclaimer ? (
               <>

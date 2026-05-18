@@ -15,12 +15,13 @@ type Action = {
 
 type IntroProps = {
   eyebrow?: string;
+  badge?: string;
   title?: string;
   body?: string;
   actions?: Action[];
 };
 
-export default async function Intro({ eyebrow, title, body, actions }: IntroProps) {
+export default async function Intro({ eyebrow, badge, title, body, actions }: IntroProps) {
   const t = await getTranslations("home");
   return (
     <section className="intro">
@@ -31,11 +32,19 @@ export default async function Intro({ eyebrow, title, body, actions }: IntroProp
       <div className="intro-pattern" />
 
       <div className="intro-inner">
-        <div className="intro-eyebrow">
-          <div className="intro-eyebrow-dot" />
-          <p className="intro-eyebrow-text">
-            {eyebrow ?? t("introEyebrow")}
-          </p>
+        <div className="intro-eyebrows">
+          <div className="intro-eyebrow">
+            <div className="intro-eyebrow-dot" />
+            <p className="intro-eyebrow-text">
+              {eyebrow ?? t("introEyebrow")}
+            </p>
+          </div>
+
+          {badge ? (
+            <div className="intro-eyebrow intro-eyebrow--badge">
+              <p className="intro-eyebrow-text">{badge}</p>
+            </div>
+          ) : null}
         </div>
 
         <h2 className="intro-title">

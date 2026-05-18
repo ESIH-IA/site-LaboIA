@@ -22,11 +22,7 @@ export function SolutionCard({ solution }: SolutionCardProps) {
 
       {/* Contenu principal */}
       <div className="solution-card-body">
-        {/* Bénéfices */}
         <div className="solution-benefits" style={{ marginBottom: "1rem" }}>
-          <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Ce que ça apporte
-          </h4>
           <ul className="space-y-2">
             {solution.benefits.map((benefit, idx) => (
               <li key={idx} className="solution-benefit-item">
@@ -49,20 +45,14 @@ export function SolutionCard({ solution }: SolutionCardProps) {
           </ul>
         </div>
 
-        {/* Badge applicable à tous */}
-        <div className="solution-applicable">
-          ✓ Applicable à tous les secteurs
-        </div>
-
-        {/* Bouton voir exemples */}
         {solution.examples.length > 0 && (
           <>
             <button
               type="button"
               onClick={() => setShowDetails(!showDetails)}
               className="solution-toggle"
+              aria-label={solution.title}
             >
-              {showDetails ? "Masquer les exemples" : "Voir les exemples d&apos;usage"}
               <svg
                 className={`solution-toggle-chevron ${showDetails ? "solution-toggle-chevron--open" : ""}`}
                 fill="none"
@@ -73,16 +63,12 @@ export function SolutionCard({ solution }: SolutionCardProps) {
               </svg>
             </button>
 
-            {/* Exemples d'usage (collapsible) */}
             {showDetails && (
               <div className="solution-examples-box">
-                <h5 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Exemples d&apos;usage
-                </h5>
                 <ul className="space-y-2">
                   {solution.examples.map((example, idx) => (
                     <li key={idx} className="solution-example-item">
-                      • {example}
+                      {example}
                     </li>
                   ))}
                 </ul>

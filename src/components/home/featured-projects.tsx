@@ -22,21 +22,11 @@ export default function FeaturedProjects({
       <div className="section-inner">
         <div className="section-header-row">
           <div>
-            <h2 className="section-title">
-              {title ?? "Projets à la une"}
-            </h2>
-            <p className="section-subtitle" style={{ maxWidth: "42rem", lineHeight: 1.7 }}>
-              {intro ??
-                "Des initiatives concrètes qui démontrent la puissance de l'IA et de la science des données au service des communautés."}
-            </p>
+            {title ? <h2 className="section-title">{title}</h2> : null}
+            {intro ? <p className="section-subtitle" style={{ maxWidth: "42rem", lineHeight: 1.7 }}>{intro}</p> : null}
           </div>
 
-          <Link
-            href={ctaHref ?? "/projets"}
-            className="btn btn-outline-cyan"
-          >
-            {ctaLabel ?? "Découvrir tous les projets"}
-          </Link>
+          {ctaHref && ctaLabel ? <Link href={ctaHref} className="btn btn-outline-cyan">{ctaLabel}</Link> : null}
         </div>
 
         {projects.length > 0 ? (
@@ -53,7 +43,7 @@ export default function FeaturedProjects({
                 {/* Badge status */}
                 {(project.projectType || project.statusLabel) && (
                   <div className="badge badge-cyan">
-                    {project.projectType ?? "Projet"}
+                    {project.projectType}
                     {project.statusLabel ? ` - ${project.statusLabel}` : ""}
                   </div>
                 )}
@@ -84,21 +74,10 @@ export default function FeaturedProjects({
                   </div>
                 ) : null}
 
-                {/* Hover arrow indicator */}
-                <div className="project-card-cta">
-                  En savoir plus
-                  <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
               </article>
             ))}
           </div>
-        ) : (
-          <div className="empty-state">
-            Contenu en cours de publication.
-          </div>
-        )}
+        ) : null}
       </div>
     </section>
   );

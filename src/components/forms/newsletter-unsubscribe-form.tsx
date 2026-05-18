@@ -3,10 +3,11 @@
 import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
+import type { FormCopy } from "@/lib/sanity/types";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export default function NewsletterUnsubscribeForm() {
+export default function NewsletterUnsubscribeForm({ copy }: { copy?: FormCopy | null }) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>("");
 
@@ -20,7 +21,7 @@ export default function NewsletterUnsubscribeForm() {
 
     if (!email) {
       setStatus("error");
-      setMessage("Email requis.");
+      setMessage(copy?.errorMessage ?? "");
       return;
     }
 
@@ -34,25 +35,26 @@ export default function NewsletterUnsubscribeForm() {
       });
       const payload = await response.json();
       if (!response.ok) {
-        throw new Error(payload?.message || "Erreur.");
+        throw new Error(payload?.message || "Request failed");
       }
       setStatus("success");
-      setMessage("Votre demande a été prise en compte.");
+      setMessage(copy?.successMessage ?? "");
     } catch {
       setStatus("error");
-      setMessage("Impossible de traiter la demande.");
+      setMessage(copy?.errorMessage ?? "");
     }
   }
 
   return (
     <form className="form-section" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
       <label className="form-label-light">
-        Email
+        {copy?.emailLabel}
         <input
           type="email"
           name="email"
           className="form-input-light"
           style={{ marginTop: "0.5rem" }}
+          placeholder={copy?.emailPlaceholder}
           required
         />
       </label>
@@ -61,7 +63,7 @@ export default function NewsletterUnsubscribeForm() {
         className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
-        Se desinscrire
+        {status === "loading" ? copy?.loadingLabel : copy?.submitLabel}
       </button>
       {message ? <p className="form-status-text">{message}</p> : null}
     </form>

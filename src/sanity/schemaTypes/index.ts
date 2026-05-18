@@ -113,6 +113,182 @@ const highlightItem = defineType({
   ],
 });
 
+const seo = defineType({
+  name: "seo",
+  title: "SEO",
+  type: "object",
+  fields: [
+    defineField({
+      name: "title",
+      title: "Meta title",
+      type: "localeString",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "description",
+      title: "Meta description",
+      type: "localeText",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({ name: "keywords", title: "Keywords", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "canonicalUrl", title: "Canonical URL", type: "url" }),
+    defineField({
+      name: "openGraphTitle",
+      title: "Open Graph title",
+      type: "localeString",
+    }),
+    defineField({
+      name: "openGraphDescription",
+      title: "Open Graph description",
+      type: "localeText",
+    }),
+    defineField({
+      name: "openGraphImage",
+      title: "Open Graph image",
+      type: "image",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", type: "string", title: "Alt text" })],
+    }),
+    defineField({ name: "noIndex", title: "No index", type: "boolean", initialValue: false }),
+    defineField({ name: "noFollow", title: "No follow", type: "boolean", initialValue: false }),
+  ],
+});
+
+const pageCard = defineType({
+  name: "pageCard",
+  title: "Page Card",
+  type: "object",
+  fields: [
+    defineField({ name: "icon", title: "Icon or short marker", type: "string" }),
+    defineField({ name: "title", type: "string", title: "Title" }),
+    defineField({ name: "titleIntl", type: "localeString", title: "Title (i18n)" }),
+    defineField({ name: "description", type: "text", title: "Description" }),
+    defineField({ name: "descriptionIntl", type: "localeText", title: "Description (i18n)" }),
+    defineField({ name: "label", type: "string", title: "Small label" }),
+    defineField({ name: "labelIntl", type: "localeString", title: "Small label (i18n)" }),
+    defineField({ name: "href", type: "string", title: "Link" }),
+    defineField({ name: "items", type: "array", title: "List items", of: [{ type: "string" }] }),
+  ],
+  preview: {
+    select: { title: "title", subtitle: "description", media: "icon" },
+    prepare({ title, subtitle, media }) {
+      return { title: title || "Card", subtitle, media };
+    },
+  },
+});
+
+const tableRow = defineType({
+  name: "tableRow",
+  title: "Table row",
+  type: "object",
+  fields: [
+    defineField({ name: "cells", type: "array", title: "Cells", of: [{ type: "string" }] }),
+  ],
+});
+
+const pageSection = defineType({
+  name: "pageSection",
+  title: "Editable Page Section",
+  type: "object",
+  fields: [
+    defineField({
+      name: "variant",
+      title: "Visual variant",
+      type: "string",
+      initialValue: "white",
+      options: {
+        list: [
+          { title: "Hero dark", value: "heroDark" },
+          { title: "White", value: "white" },
+          { title: "Light", value: "light" },
+          { title: "CTA dark", value: "ctaDark" },
+        ],
+      },
+    }),
+    defineField({
+      name: "layout",
+      title: "Layout",
+      type: "string",
+      initialValue: "content",
+      options: {
+        list: [
+          { title: "Content", value: "content" },
+          { title: "Card grid", value: "cards" },
+          { title: "Compact pills", value: "pills" },
+          { title: "Table", value: "table" },
+          { title: "Form", value: "form" },
+        ],
+      },
+    }),
+    defineField({ name: "anchor", type: "string", title: "Anchor ID" }),
+    defineField({ name: "eyebrow", type: "localeString", title: "Eyebrow / badge" }),
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "intro", type: "localeText", title: "Intro" }),
+    defineField({ name: "body", type: "blockContent", title: "Body" }),
+    defineField({ name: "bodyIntl", type: "localeBlockContent", title: "Body (i18n)" }),
+    defineField({ name: "cards", type: "array", title: "Cards", of: [{ type: "pageCard" }] }),
+    defineField({ name: "actions", type: "array", title: "Buttons", of: [{ type: "linkAction" }] }),
+    defineField({ name: "tableHeaders", type: "array", title: "Table headers", of: [{ type: "string" }] }),
+    defineField({ name: "tableRows", type: "array", title: "Table rows", of: [{ type: "tableRow" }] }),
+    defineField({
+      name: "formType",
+      title: "Form to render",
+      type: "string",
+      options: {
+        list: [
+          { title: "Contact", value: "contact" },
+          { title: "Collaboration", value: "collaborate" },
+          { title: "Newsletter", value: "newsletter" },
+        ],
+      },
+    }),
+  ],
+  preview: {
+    select: { title: "title.fr", subtitle: "layout" },
+    prepare({ title, subtitle }) {
+      return { title: title || "Editable section", subtitle };
+    },
+  },
+});
+
+const formCopy = defineType({
+  name: "formCopy",
+  title: "Form copy",
+  type: "object",
+  fields: [
+    defineField({ name: "title", type: "localeString", title: "Form title" }),
+    defineField({ name: "subtitle", type: "localeText", title: "Form subtitle" }),
+    defineField({ name: "fullNameLabel", type: "localeString", title: "Full name label" }),
+    defineField({ name: "fullNamePlaceholder", type: "localeString", title: "Full name placeholder" }),
+    defineField({ name: "emailLabel", type: "localeString", title: "Email label" }),
+    defineField({ name: "emailPlaceholder", type: "localeString", title: "Email placeholder" }),
+    defineField({ name: "organizationLabel", type: "localeString", title: "Organization label" }),
+    defineField({ name: "organizationPlaceholder", type: "localeString", title: "Organization placeholder" }),
+    defineField({ name: "subjectLabel", type: "localeString", title: "Subject label" }),
+    defineField({ name: "subjectPlaceholder", type: "localeString", title: "Subject placeholder" }),
+    defineField({ name: "messageLabel", type: "localeString", title: "Message label" }),
+    defineField({ name: "messagePlaceholder", type: "localeString", title: "Message placeholder" }),
+    defineField({ name: "consentText", type: "localeText", title: "Consent text before privacy link" }),
+    defineField({ name: "privacyLabel", type: "localeString", title: "Privacy link label" }),
+    defineField({ name: "privacyHref", type: "string", title: "Privacy link" }),
+    defineField({ name: "submitLabel", type: "localeString", title: "Submit button" }),
+    defineField({ name: "loadingLabel", type: "localeString", title: "Loading button" }),
+    defineField({ name: "successMessage", type: "localeText", title: "Success message" }),
+    defineField({ name: "errorMessage", type: "localeText", title: "Error message" }),
+  ],
+});
+
+const formSettings = defineType({
+  name: "formSettings",
+  title: "Form Settings",
+  type: "document",
+  fields: [
+    defineField({ name: "contact", type: "formCopy", title: "Contact form" }),
+    defineField({ name: "collaborate", type: "formCopy", title: "Collaboration form" }),
+    defineField({ name: "newsletter", type: "formCopy", title: "Newsletter form" }),
+  ],
+});
+
 const siteSettings = defineType({
   name: "siteSettings",
   title: "Site Settings",
@@ -150,6 +326,21 @@ const siteSettings = defineType({
     defineField({ name: "footerContactCtaHref", type: "string", title: "Footer contact CTA href" }),
     defineField({ name: "footerLanguageNote", type: "string", title: "Footer language note" }),
     defineField({ name: "footerLanguageNoteIntl", type: "localeString", title: "Footer language note (i18n)" }),
+    defineField({ name: "footerNavTitle", type: "string", title: "Footer navigation title" }),
+    defineField({ name: "footerNavTitleIntl", type: "localeString", title: "Footer navigation title (i18n)" }),
+    defineField({ name: "footerCopyrightText", type: "string", title: "Footer copyright text" }),
+    defineField({ name: "footerCopyrightTextIntl", type: "localeString", title: "Footer copyright text (i18n)" }),
+    defineField({ name: "cookieTitle", type: "string", title: "Cookie banner title" }),
+    defineField({ name: "cookieTitleIntl", type: "localeString", title: "Cookie banner title (i18n)" }),
+    defineField({ name: "cookieMessage", type: "text", title: "Cookie banner message" }),
+    defineField({ name: "cookieMessageIntl", type: "localeText", title: "Cookie banner message (i18n)" }),
+    defineField({ name: "cookiePolicyLabel", type: "string", title: "Cookie policy link label" }),
+    defineField({ name: "cookiePolicyLabelIntl", type: "localeString", title: "Cookie policy link label (i18n)" }),
+    defineField({ name: "cookiePolicyHref", type: "string", title: "Cookie policy link" }),
+    defineField({ name: "cookieAcceptLabel", type: "string", title: "Cookie accept button" }),
+    defineField({ name: "cookieAcceptLabelIntl", type: "localeString", title: "Cookie accept button (i18n)" }),
+    defineField({ name: "cookieRejectLabel", type: "string", title: "Cookie reject button" }),
+    defineField({ name: "cookieRejectLabelIntl", type: "localeString", title: "Cookie reject button (i18n)" }),
   ],
 });
 
@@ -208,6 +399,7 @@ const homePage = defineType({
         defineField({ name: "ctaHref", type: "string", title: "CTA href" }),
       ],
     }),
+    defineField({ name: "seo", type: "seo", title: "SEO" }),
   ],
 });
 
@@ -543,6 +735,7 @@ const institutionalPage = defineType({
     defineField({ name: "summaryIntl", type: "localeText" }),
     defineField({ name: "content", type: "blockContent" }),
     defineField({ name: "contentIntl", type: "localeBlockContent" }),
+    defineField({ name: "sections", type: "array", title: "Editable sections", of: [{ type: "pageSection" }] }),
     defineField({
       name: "ctaLabel",
       title: "CTA label (bas de page)",
@@ -550,6 +743,7 @@ const institutionalPage = defineType({
     }),
     defineField({ name: "ctaLabelIntl", type: "localeString" }),
     defineField({ name: "ctaHref", title: "CTA URL", type: "string" }),
+    defineField({ name: "seo", type: "seo", title: "SEO" }),
   ],
 });
 
@@ -905,6 +1099,7 @@ const solutionsPage = defineType({
     defineField({ name: "sectors", type: "array", of: [{ type: "reference", to: [{ type: "sector" }] }] }),
     defineField({ name: "projectsTitle", type: "localeString" }),
     defineField({ name: "projectsIntro", type: "localeText" }),
+    defineField({ name: "seo", type: "seo", title: "SEO" }),
   ],
 });
 
@@ -1018,6 +1213,7 @@ const genericPage = defineType({
         { type: "latestNewsBlock" },
       ],
     }),
+    defineField({ name: "seo", type: "seo", title: "SEO" }),
   ],
 });
 
@@ -1029,6 +1225,11 @@ export const schemaTypes = [
   navItem,
   linkAction,
   highlightItem,
+  seo,
+  pageCard,
+  tableRow,
+  pageSection,
+  formCopy,
   heroBlock,
   textImageBlock,
   featuresBlock,
@@ -1059,6 +1260,7 @@ export const schemaTypes = [
   resourcePage,
   labReport,
   formSubmission,
+  formSettings,
   aiSolution,
   useCase,
   sector,

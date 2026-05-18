@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { getSiteSettings } from "@/lib/cms";
 import { locales, type Locale, localizedPath, stripLocaleFromPath } from "@/lib/i18n";
+import type { SeoData } from "@/lib/sanity/types";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const siteUrl = getSiteUrl();
@@ -12,6 +13,7 @@ type MetadataInput = {
   path?: string;
   locale: Locale;
   alternates?: Partial<Record<Locale, string>>;
+  seo?: SeoData;
 };
 
 export async function buildMetadata({
@@ -20,38 +22,56 @@ export async function buildMetadata({
   path,
   alternates,
   locale,
+  seo,
 }: MetadataInput): Promise<Metadata> {
   const site = await getSiteSettings(locale);
-  const fullTitle = title ? `${title} | ${site.shortName}` : site.name;
-  const resolvedDescription = description || site.description;
-  const url = path ? new URL(path, siteUrl).toString() : siteUrl;
+  const resolvedTitle = seo?.title ?? title;
+  const resolvedDescription = seo?.description ?? description ?? site.description;
+  const fullTitle = resolvedTitle ? `${resolvedTitle} | ${site.shortName}` : site.name;
+  const url = seo?.canonicalUrl ?? (path ? new URL(path, siteUrl).toString() : siteUrl);
   const banner = site.banner;
+  const ogTitle = seo?.openGraphTitle ? `${seo.openGraphTitle} | ${site.shortName}` : fullTitle;
+  const ogDescription = seo?.openGraphDescription ?? resolvedDescription;
+  const ogImage = seo?.openGraphImageUrl
+    ? {
+        url: seo.openGraphImageUrl,
+        width: seo.openGraphImageWidth,
+        height: seo.openGraphImageHeight,
+        alt: seo.openGraphImageAlt ?? resolvedTitle ?? site.name,
+      }
+    : banner?.url
+      ? {
+          url: banner.url,
+          width: banner.width,
+          height: banner.height,
+          alt: banner.alt ?? site.name,
+        }
+      : null;
 
   const metadata: Metadata = {
     title: fullTitle,
     description: resolvedDescription,
+    keywords: seo?.keywords,
+    robots:
+      seo?.noIndex || seo?.noFollow
+        ? {
+            index: !seo?.noIndex,
+            follow: !seo?.noFollow,
+          }
+        : undefined,
     openGraph: {
       type: "website",
-      title: fullTitle,
-      description: resolvedDescription,
+      title: ogTitle,
+      description: ogDescription,
       siteName: site.shortName,
       url,
-      images: banner?.url
-        ? [
-            {
-              url: banner.url,
-              width: banner.width,
-              height: banner.height,
-              alt: banner.alt ?? site.name,
-            },
-          ]
-        : undefined,
+      images: ogImage ? [ogImage] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title: fullTitle,
-      description: resolvedDescription,
-      images: banner?.url ? [banner.url] : undefined,
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImage?.url ? [ogImage.url] : undefined,
     },
   };
 

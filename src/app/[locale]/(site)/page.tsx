@@ -70,9 +70,10 @@ export default async function Home() {
 
   return (
     <>
-      <Hero badge={home.heroBadge} actions={normalizeActions(home.heroActions)} banner={site.banner} />
+      <Hero banner={site.banner} />
       <Intro
         eyebrow={home.introEyebrow ?? site.shortName}
+        badge={home.heroBadge}
         title={home.introTitle ?? site.description}
         body={home.introBody}
         actions={normalizeActions(home.introActions)}

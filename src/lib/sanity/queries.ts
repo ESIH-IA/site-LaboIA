@@ -3,12 +3,59 @@ import type { Locale } from "@/lib/i18n";
 import { sanityFetch } from "@/lib/sanity/client";
 import type { GovernancePage, GovernanceChartStrict, Person, TeamPage } from "@/lib/sanity/types";
 
+const seoProjection = `
+  "seo": {
+    "title": coalesce(seo.title[$locale], seo.title.fr, seo.title.en),
+    "description": coalesce(seo.description[$locale], seo.description.fr, seo.description.en),
+    "openGraphTitle": coalesce(seo.openGraphTitle[$locale], seo.openGraphTitle.fr, seo.openGraphTitle.en),
+    "openGraphDescription": coalesce(seo.openGraphDescription[$locale], seo.openGraphDescription.fr, seo.openGraphDescription.en),
+    "openGraphImageUrl": seo.openGraphImage.asset->url,
+    "openGraphImageAlt": seo.openGraphImage.alt,
+    "openGraphImageWidth": seo.openGraphImage.asset->metadata.dimensions.width,
+    "openGraphImageHeight": seo.openGraphImage.asset->metadata.dimensions.height,
+    "keywords": seo.keywords,
+    "canonicalUrl": seo.canonicalUrl,
+    "noIndex": seo.noIndex,
+    "noFollow": seo.noFollow
+  }
+`;
+
+const pageSectionProjection = `
+  _key,
+  _type,
+  variant,
+  layout,
+  anchor,
+  formType,
+  "eyebrow": coalesce(eyebrow[$locale], eyebrow.fr, eyebrow.en),
+  "title": coalesce(title[$locale], title.fr, title.en),
+  "intro": coalesce(intro[$locale], intro.fr, intro.en),
+  "body": coalesce(bodyIntl[$locale], body),
+  "actions": actions[]{
+    "label": coalesce(labelIntl[$locale], label),
+    href,
+    variant
+  },
+  "cards": cards[]{
+    _key,
+    icon,
+    "title": coalesce(titleIntl[$locale], title),
+    "description": coalesce(descriptionIntl[$locale], description),
+    "label": coalesce(labelIntl[$locale], label),
+    href,
+    items
+  },
+  tableHeaders,
+  "tableRows": tableRows[]{ cells }
+`;
+
 export const genericPageBySlugQuery = groq`
   *[_type == "genericPage" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
     _id,
     "title": coalesce(titleIntl[$locale], title),
     "slug": coalesce(slugIntl[$locale], slug),
     slugIntl,
+    ${seoProjection},
     blocks[]{
       ...,
       _type == "textImageBlock" => {
@@ -284,8 +331,10 @@ export const institutionalPageBySlugQuery = groq`
     "heroBadge": coalesce(heroBadgeIntl[$locale], heroBadge),
     "summary": coalesce(summaryIntl[$locale], summary),
     "content": coalesce(contentIntl[$locale], content),
+    "sections": sections[]{ ${pageSectionProjection} },
     "ctaLabel": coalesce(ctaLabelIntl[$locale], ctaLabel),
-    ctaHref
+    ctaHref,
+    ${seoProjection}
   }
 `;
 
@@ -341,6 +390,14 @@ export const siteSettingsQuery = groq`
     "footerContactCtaLabel": coalesce(footerContactCtaLabelIntl[$locale], footerContactCtaLabel),
     footerContactCtaHref,
     "footerLanguageNote": coalesce(footerLanguageNoteIntl[$locale], footerLanguageNote),
+    "footerNavTitle": coalesce(footerNavTitleIntl[$locale], footerNavTitle),
+    "footerCopyrightText": coalesce(footerCopyrightTextIntl[$locale], footerCopyrightText),
+    "cookieTitle": coalesce(cookieTitleIntl[$locale], cookieTitle),
+    "cookieMessage": coalesce(cookieMessageIntl[$locale], cookieMessage),
+    "cookiePolicyLabel": coalesce(cookiePolicyLabelIntl[$locale], cookiePolicyLabel),
+    cookiePolicyHref,
+    "cookieAcceptLabel": coalesce(cookieAcceptLabelIntl[$locale], cookieAcceptLabel),
+    "cookieRejectLabel": coalesce(cookieRejectLabelIntl[$locale], cookieRejectLabel),
     "logo": {
       "url": logo.image.asset->url,
       "alt": logo.alt,
@@ -373,6 +430,7 @@ export const navigationQuery = groq`
 export const homePageQuery = groq`
   *[_type == "homePage"][0]{
     _id,
+    ${seoProjection},
     "heroBadge": coalesce(heroBadge[$locale], heroBadge.fr, heroBadge.en),
     "heroTitle": coalesce(heroTitle[$locale], heroTitle.fr, heroTitle.en),
     "heroSubtitle": coalesce(heroSubtitle[$locale], heroSubtitle.fr, heroSubtitle.en),
@@ -469,6 +527,7 @@ export const sectorListQuery = groq`
 export const solutionsPageQuery = groq`
   *[_type == "solutionsPage"][0]{
     _id,
+    ${seoProjection},
     "heroBadge": coalesce(heroBadge[$locale], heroBadge.fr, heroBadge.en),
     "heroTitle": coalesce(heroTitle[$locale], heroTitle.fr, heroTitle.en),
     "heroSubtitle": coalesce(heroSubtitle[$locale], heroSubtitle.fr, heroSubtitle.en),
@@ -526,6 +585,67 @@ export const solutionsPageQuery = groq`
     },
     "projectsTitle": coalesce(projectsTitle[$locale], projectsTitle.fr, projectsTitle.en),
     "projectsIntro": coalesce(projectsIntro[$locale], projectsIntro.fr, projectsIntro.en)
+  }
+`;
+
+export const formSettingsQuery = groq`
+  *[_type == "formSettings"][0]{
+    _id,
+    "contact": {
+      "title": coalesce(contact.title[$locale], contact.title.fr, contact.title.en),
+      "subtitle": coalesce(contact.subtitle[$locale], contact.subtitle.fr, contact.subtitle.en),
+      "fullNameLabel": coalesce(contact.fullNameLabel[$locale], contact.fullNameLabel.fr, contact.fullNameLabel.en),
+      "fullNamePlaceholder": coalesce(contact.fullNamePlaceholder[$locale], contact.fullNamePlaceholder.fr, contact.fullNamePlaceholder.en),
+      "emailLabel": coalesce(contact.emailLabel[$locale], contact.emailLabel.fr, contact.emailLabel.en),
+      "emailPlaceholder": coalesce(contact.emailPlaceholder[$locale], contact.emailPlaceholder.fr, contact.emailPlaceholder.en),
+      "organizationLabel": coalesce(contact.organizationLabel[$locale], contact.organizationLabel.fr, contact.organizationLabel.en),
+      "organizationPlaceholder": coalesce(contact.organizationPlaceholder[$locale], contact.organizationPlaceholder.fr, contact.organizationPlaceholder.en),
+      "subjectLabel": coalesce(contact.subjectLabel[$locale], contact.subjectLabel.fr, contact.subjectLabel.en),
+      "subjectPlaceholder": coalesce(contact.subjectPlaceholder[$locale], contact.subjectPlaceholder.fr, contact.subjectPlaceholder.en),
+      "messageLabel": coalesce(contact.messageLabel[$locale], contact.messageLabel.fr, contact.messageLabel.en),
+      "messagePlaceholder": coalesce(contact.messagePlaceholder[$locale], contact.messagePlaceholder.fr, contact.messagePlaceholder.en),
+      "consentText": coalesce(contact.consentText[$locale], contact.consentText.fr, contact.consentText.en),
+      "privacyLabel": coalesce(contact.privacyLabel[$locale], contact.privacyLabel.fr, contact.privacyLabel.en),
+      "privacyHref": contact.privacyHref,
+      "submitLabel": coalesce(contact.submitLabel[$locale], contact.submitLabel.fr, contact.submitLabel.en),
+      "loadingLabel": coalesce(contact.loadingLabel[$locale], contact.loadingLabel.fr, contact.loadingLabel.en),
+      "successMessage": coalesce(contact.successMessage[$locale], contact.successMessage.fr, contact.successMessage.en),
+      "errorMessage": coalesce(contact.errorMessage[$locale], contact.errorMessage.fr, contact.errorMessage.en)
+    },
+    "collaborate": {
+      "title": coalesce(collaborate.title[$locale], collaborate.title.fr, collaborate.title.en),
+      "subtitle": coalesce(collaborate.subtitle[$locale], collaborate.subtitle.fr, collaborate.subtitle.en),
+      "fullNameLabel": coalesce(collaborate.fullNameLabel[$locale], collaborate.fullNameLabel.fr, collaborate.fullNameLabel.en),
+      "fullNamePlaceholder": coalesce(collaborate.fullNamePlaceholder[$locale], collaborate.fullNamePlaceholder.fr, collaborate.fullNamePlaceholder.en),
+      "emailLabel": coalesce(collaborate.emailLabel[$locale], collaborate.emailLabel.fr, collaborate.emailLabel.en),
+      "emailPlaceholder": coalesce(collaborate.emailPlaceholder[$locale], collaborate.emailPlaceholder.fr, collaborate.emailPlaceholder.en),
+      "organizationLabel": coalesce(collaborate.organizationLabel[$locale], collaborate.organizationLabel.fr, collaborate.organizationLabel.en),
+      "organizationPlaceholder": coalesce(collaborate.organizationPlaceholder[$locale], collaborate.organizationPlaceholder.fr, collaborate.organizationPlaceholder.en),
+      "subjectLabel": coalesce(collaborate.subjectLabel[$locale], collaborate.subjectLabel.fr, collaborate.subjectLabel.en),
+      "subjectPlaceholder": coalesce(collaborate.subjectPlaceholder[$locale], collaborate.subjectPlaceholder.fr, collaborate.subjectPlaceholder.en),
+      "messageLabel": coalesce(collaborate.messageLabel[$locale], collaborate.messageLabel.fr, collaborate.messageLabel.en),
+      "messagePlaceholder": coalesce(collaborate.messagePlaceholder[$locale], collaborate.messagePlaceholder.fr, collaborate.messagePlaceholder.en),
+      "consentText": coalesce(collaborate.consentText[$locale], collaborate.consentText.fr, collaborate.consentText.en),
+      "privacyLabel": coalesce(collaborate.privacyLabel[$locale], collaborate.privacyLabel.fr, collaborate.privacyLabel.en),
+      "privacyHref": collaborate.privacyHref,
+      "submitLabel": coalesce(collaborate.submitLabel[$locale], collaborate.submitLabel.fr, collaborate.submitLabel.en),
+      "loadingLabel": coalesce(collaborate.loadingLabel[$locale], collaborate.loadingLabel.fr, collaborate.loadingLabel.en),
+      "successMessage": coalesce(collaborate.successMessage[$locale], collaborate.successMessage.fr, collaborate.successMessage.en),
+      "errorMessage": coalesce(collaborate.errorMessage[$locale], collaborate.errorMessage.fr, collaborate.errorMessage.en)
+    },
+    "newsletter": {
+      "title": coalesce(newsletter.title[$locale], newsletter.title.fr, newsletter.title.en),
+      "subtitle": coalesce(newsletter.subtitle[$locale], newsletter.subtitle.fr, newsletter.subtitle.en),
+      "emailLabel": coalesce(newsletter.emailLabel[$locale], newsletter.emailLabel.fr, newsletter.emailLabel.en),
+      "emailPlaceholder": coalesce(newsletter.emailPlaceholder[$locale], newsletter.emailPlaceholder.fr, newsletter.emailPlaceholder.en),
+      "consentText": coalesce(newsletter.consentText[$locale], newsletter.consentText.fr, newsletter.consentText.en),
+      "privacyLabel": coalesce(newsletter.privacyLabel[$locale], newsletter.privacyLabel.fr, newsletter.privacyLabel.en),
+      "privacyHref": newsletter.privacyHref,
+      "submitLabel": coalesce(newsletter.submitLabel[$locale], newsletter.submitLabel.fr, newsletter.submitLabel.en),
+      "loadingLabel": coalesce(newsletter.loadingLabel[$locale], newsletter.loadingLabel.fr, newsletter.loadingLabel.en),
+      "successMessage": coalesce(newsletter.successMessage[$locale], newsletter.successMessage.fr, newsletter.successMessage.en),
+      "errorMessage": coalesce(newsletter.errorMessage[$locale], newsletter.errorMessage.fr, newsletter.errorMessage.en)
+    }
   }
 `;
 

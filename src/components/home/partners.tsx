@@ -1,5 +1,3 @@
-import { getTranslations } from "next-intl/server";
-
 type PartnerPreview = {
   _id: string;
   name: string;
@@ -17,29 +15,17 @@ type PartnersProps = {
 };
 
 export default async function Partners({ title, intro, badge, items }: PartnersProps) {
-  const t = await getTranslations("home");
-  const typeLabels: Record<string, string> = {
-    partner: t("partnerTypes.partner"),
-    client: t("partnerTypes.client"),
-    media: t("partnerTypes.media"),
-    academic: t("partnerTypes.academic"),
-  };
+  if (!title && !intro && !badge && items.length === 0) return null;
 
   return (
     <section className="section section-white">
       <div className="section-inner" style={{ padding: "5rem 0" }}>
         <div className="section-header-row">
           <div>
-            <h2 className="section-title">
-              {title ?? t("partnersTitle")}
-            </h2>
-            <p className="section-subtitle">
-              {intro ?? t("partnersIntro")}
-            </p>
+            {title ? <h2 className="section-title">{title}</h2> : null}
+            {intro ? <p className="section-subtitle">{intro}</p> : null}
           </div>
-          <div className="badge-teal-box">
-            {badge ?? t("partnersBadge")}
-          </div>
+          {badge ? <div className="badge-teal-box">{badge}</div> : null}
         </div>
 
         <div className="card-grid card-grid-3 card-grid-sm-2" style={{ marginTop: "3rem" }}>
@@ -57,7 +43,7 @@ export default async function Partners({ title, intro, badge, items }: PartnersP
                 </div>
                 {partner.type ? (
                   <span className="badge badge-teal">
-                    {typeLabels[partner.type] ?? partner.type}
+                    {partner.type}
                   </span>
                 ) : null}
               </div>
@@ -79,8 +65,8 @@ export default async function Partners({ title, intro, badge, items }: PartnersP
                   className="partner-card-link"
                   rel="noreferrer"
                   target="_blank"
+                  aria-label={partner.name}
                 >
-                  {t("viewWebsite")}
                   <span aria-hidden>{">"}</span>
                 </a>
               ) : null}

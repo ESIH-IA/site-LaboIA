@@ -1,5 +1,3 @@
-import { getTranslations } from "next-intl/server";
-
 type HighlightItem = {
   title: string;
   description: string;
@@ -12,24 +10,9 @@ type HighlightsProps = {
 };
 
 export default async function Highlights({ title, intro, items }: HighlightsProps) {
-  const t = await getTranslations("home");
+  const list = items ?? [];
 
-  const fallbackItems: HighlightItem[] = [
-    {
-      title: t("highlightsItems.agriculture.title"),
-      description: t("highlightsItems.agriculture.description"),
-    },
-    {
-      title: t("highlightsItems.govern.title"),
-      description: t("highlightsItems.govern.description"),
-    },
-    {
-      title: t("highlightsItems.health.title"),
-      description: t("highlightsItems.health.description"),
-    },
-  ];
-
-  const list = items?.length ? items : fallbackItems;
+  if (!title && !intro && list.length === 0) return null;
 
   return (
     <section className="highlights section">
@@ -38,12 +21,8 @@ export default async function Highlights({ title, intro, items }: HighlightsProp
 
       <div className="section-inner" style={{ position: "relative", paddingTop: "5rem", paddingBottom: "5rem" }}>
         <div className="section-header">
-          <h2 className="section-title">
-            {title ?? t("highlightsTitle")}
-          </h2>
-          <p className="section-subtitle" style={{ marginTop: "1rem" }}>
-            {intro ?? t("highlightsIntro")}
-          </p>
+          {title ? <h2 className="section-title">{title}</h2> : null}
+          {intro ? <p className="section-subtitle" style={{ marginTop: "1rem" }}>{intro}</p> : null}
         </div>
         <div className="card-grid card-grid-3" style={{ marginTop: "3rem" }}>
           {list.map((item, index) => (

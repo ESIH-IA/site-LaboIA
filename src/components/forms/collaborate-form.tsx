@@ -4,21 +4,19 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
+import type { FormCopy } from "@/lib/sanity/types";
 
-export default function CollaborateForm() {
+export default function CollaborateForm({ copy }: { copy?: FormCopy | null }) {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+  const privacyHref = copy?.privacyHref ?? "/confidentialite";
 
   return (
     <div className="glass-form">
       <div style={{ marginBottom: "2rem" }}>
-        <h2 className="glass-form-title">
-          Formulaire de collaboration
-        </h2>
-        <p className="glass-form-subtitle">
-          Remplissez ce formulaire et notre équipe vous recontactera rapidement.
-        </p>
+        {copy?.title ? <h2 className="glass-form-title">{copy.title}</h2> : null}
+        {copy?.subtitle ? <p className="glass-form-subtitle">{copy.subtitle}</p> : null}
       </div>
 
       <form
@@ -49,11 +47,11 @@ export default function CollaborateForm() {
               throw new Error("Erreur");
             }
             trackEvent({ category: "form", action: "submit", name: "collaborer" });
-            setMessage("Merci. Votre demande a été enregistrée. Nous vous recontacterons très bientôt.");
+            setMessage(copy?.successMessage ?? "");
             setMessageType("success");
             form.reset();
           } catch {
-            setMessage("Impossible d'envoyer la demande. Veuillez réessayer.");
+            setMessage(copy?.errorMessage ?? "");
             setMessageType("error");
           } finally {
             setLoading(false);
@@ -63,26 +61,26 @@ export default function CollaborateForm() {
         <div className="form-grid form-grid-2">
           <label className="form-group">
             <span className="form-label">
-              Nom complet <span className="form-label-required">*</span>
+              {copy?.fullNameLabel} <span className="form-label-required">*</span>
             </span>
             <input
               type="text"
               name="fullName"
               className="form-input"
-              placeholder="Votre nom complet"
+              placeholder={copy?.fullNamePlaceholder}
               required
             />
           </label>
 
           <label className="form-group">
             <span className="form-label">
-              Email <span className="form-label-required">*</span>
+              {copy?.emailLabel} <span className="form-label-required">*</span>
             </span>
             <input
               type="email"
               name="email"
               className="form-input"
-              placeholder="votre.email@example.com"
+              placeholder={copy?.emailPlaceholder}
               required
             />
           </label>
@@ -90,26 +88,26 @@ export default function CollaborateForm() {
 
         <label className="form-group">
           <span className="form-label">
-            Organisation
+            {copy?.organizationLabel}
           </span>
           <input
             type="text"
             name="organization"
             className="form-input"
-            placeholder="Nom de votre organisation"
+            placeholder={copy?.organizationPlaceholder}
           />
         </label>
 
         <label className="form-group">
           <span className="form-label">
-            Message <span className="form-label-required">*</span>
+            {copy?.messageLabel} <span className="form-label-required">*</span>
           </span>
           <textarea
             name="message"
             rows={6}
             className="form-input"
             style={{ resize: "none" }}
-            placeholder="Décrivez votre projet de collaboration..."
+            placeholder={copy?.messagePlaceholder}
             required
           />
         </label>
@@ -121,11 +119,10 @@ export default function CollaborateForm() {
             className="form-checkbox"
           />
           <span>
-            J&apos;accepte que mes informations soient traitées conformément à la{" "}
-            <Link href="/confidentialite" className="form-checkbox-link">
-              politique de confidentialité
+            {copy?.consentText}{" "}
+            <Link href={privacyHref} className="form-checkbox-link">
+              {copy?.privacyLabel}
             </Link>
-            .
           </span>
         </label>
 
@@ -135,7 +132,7 @@ export default function CollaborateForm() {
             className="btn btn-gradient"
             disabled={loading}
           >
-            {loading ? "Envoi en cours..." : "Envoyer ma demande"}
+            {loading ? copy?.loadingLabel : copy?.submitLabel}
           </button>
         </div>
 

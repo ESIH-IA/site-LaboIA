@@ -15,12 +15,13 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
+  const page = await getSolutionsPageData(locale);
 
   return await buildMetadata({
     locale,
-    title: "Services et Solutions IA",
-    description:
-      "Découvrez nos services et solutions d'intelligence artificielle concrètes. Des solutions testées et éprouvées, avec des projets déjà réalisés.",
+    title: page.heroTitle,
+    description: page.heroDescription,
+    seo: page.seo,
     path: localizedPath("/solutions", locale),
     alternates: {
       fr: localizedPath("/solutions", "fr"),
@@ -59,7 +60,7 @@ export default async function SolutionsPage() {
           <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'1.5rem'}}>
             <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
             <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
-              {solutionsPage.heroBadge ?? "Services & Solutions IA"}
+              {solutionsPage.heroBadge}
             </span>
           </div>
 
@@ -113,7 +114,7 @@ export default async function SolutionsPage() {
         <div className="container">
           <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
             <h2 className="section-title">
-              {solutionsPage.approachTitle ?? "Notre approche"}
+              {solutionsPage.approachTitle}
             </h2>
             <p className="section-subtitle">
               {solutionsPage.approachIntro}
@@ -143,7 +144,7 @@ export default async function SolutionsPage() {
         <div className="container" style={{position:'relative'}}>
           <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
             <h2 className="section-title">
-              {solutionsPage.solutionsTitle ?? "Solutions IA"}
+              {solutionsPage.solutionsTitle}
             </h2>
             <p className="section-subtitle">
               {solutionsPage.solutionsIntro}
@@ -156,9 +157,11 @@ export default async function SolutionsPage() {
                 className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
                 <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
-                <span className="badge badge-cyan" style={{marginBottom:'1rem', textTransform:'uppercase', letterSpacing:'0.05em'}}>
-                  Solution
-                </span>
+                {solution.icon ? (
+                  <span className="badge badge-cyan" style={{marginBottom:'1rem', textTransform:'uppercase', letterSpacing:'0.05em'}}>
+                    {solution.icon}
+                  </span>
+                ) : null}
                 <h3 style={{fontSize:'1.25rem', fontWeight:700, color:'#0f172a', marginBottom:'0.75rem'}}>
                   {solution.title}
                 </h3>
@@ -177,7 +180,7 @@ export default async function SolutionsPage() {
           <div style={{display:'grid', gap:'3rem', gridTemplateColumns:'1fr', alignItems:'center'}} className="card-grid">
             <div>
               <span className="badge badge-teal" style={{marginBottom:'1.5rem', textTransform:'uppercase', letterSpacing:'0.05em'}}>
-                {solutionsPage.useCasesTitle ?? "Cas d'usage"}
+                {solutionsPage.useCasesTitle}
               </span>
               <h2 className="section-title" style={{marginBottom:'1.5rem'}}>
                 {featuredUseCase?.title}
@@ -206,7 +209,7 @@ export default async function SolutionsPage() {
               <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
               <div style={{position:'relative'}}>
                 <p style={{fontSize:'1rem', fontWeight:700, color:'#0f172a', marginBottom:'1rem'}}>
-                  {solutionsPage.flowTitle ?? "Flux IA applique"}
+                  {solutionsPage.flowTitle}
                 </p>
                 <p style={{fontSize:'0.875rem', color:'#475569', lineHeight:1.7, marginBottom:'2rem'}}>
                   {solutionsPage.flowDescription}
@@ -234,7 +237,7 @@ export default async function SolutionsPage() {
         <div className="container">
           <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
             <h2 className="section-title">
-              {solutionsPage.servicesTitle ?? "Services proposes"}
+              {solutionsPage.servicesTitle}
             </h2>
             <p className="section-subtitle">
               {solutionsPage.servicesIntro}
@@ -258,7 +261,7 @@ export default async function SolutionsPage() {
         <div className="container">
           <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
             <h2 className="section-title">
-              {solutionsPage.sectorsTitle ?? "Secteurs d'application"}
+              {solutionsPage.sectorsTitle}
             </h2>
             <p className="section-subtitle">
               {solutionsPage.sectorsIntro}
@@ -284,7 +287,7 @@ export default async function SolutionsPage() {
           <div className="container">
             <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
               <h2 className="section-title">
-                {solutionsPage.projectsTitle ?? "Projets en cours"}
+                {solutionsPage.projectsTitle}
               </h2>
               <p className="section-subtitle">
                 {solutionsPage.projectsIntro}

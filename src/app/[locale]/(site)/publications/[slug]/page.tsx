@@ -5,8 +5,7 @@ import { notFound } from "next/navigation";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { publicationBySlugQuery, publicationListQuery } from "@/lib/sanity/queries";
-import type { PublicationListItem } from "@/lib/sanity/types";
+import { publicationBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -86,7 +85,6 @@ export default async function Page({ params }: PageProps) {
 
       {publication.authors?.length || publication.externalAuthors ? (
         <div style={{marginTop:'2rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Auteurs</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.authors?.map((author) => (
               <li key={author._id}>
@@ -109,7 +107,7 @@ export default async function Page({ params }: PageProps) {
 
       {publication.doi || publication.url || publication.pdfUrl ? (
         <div style={{marginTop:'2rem', fontSize:'0.875rem', color:'#1e293b'}}>
-          {publication.doi ? <div>DOI: {publication.doi}</div> : null}
+          {publication.doi ? <div>{publication.doi}</div> : null}
           {publication.url ? (
             <Link
               href={publication.url}
@@ -117,7 +115,7 @@ export default async function Page({ params }: PageProps) {
               target="_blank"
               rel="noreferrer"
             >
-              Consulter la publication
+              {publication.url}
             </Link>
           ) : null}
           {publication.pdfUrl ? (
@@ -128,7 +126,7 @@ export default async function Page({ params }: PageProps) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Télécharger le PDF
+                {publication.pdfUrl}
               </Link>
             </div>
           ) : null}
@@ -137,7 +135,6 @@ export default async function Page({ params }: PageProps) {
 
       {publication.projects?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Projets liés</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.projects.map((project) => (
               <li key={project._id}>
@@ -159,7 +156,6 @@ export default async function Page({ params }: PageProps) {
 
       {publication.axes?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Axes de recherche</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.axes.map((axis) => (
               <li key={axis._id}>
@@ -181,7 +177,6 @@ export default async function Page({ params }: PageProps) {
 
       {publication.resources?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Ressources associées</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {publication.resources.map((resource) => (
               <li key={resource._id} style={{display:'flex', flexWrap:'wrap', alignItems:'center', gap:'0.75rem'}}>
@@ -198,7 +193,7 @@ export default async function Page({ params }: PageProps) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Télécharger
+                    {resource.fileUrl}
                   </Link>
                 ) : null}
                 {resource.url ? (
@@ -208,7 +203,7 @@ export default async function Page({ params }: PageProps) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Lien externe
+                    {resource.url}
                   </Link>
                 ) : null}
               </li>
@@ -219,7 +214,6 @@ export default async function Page({ params }: PageProps) {
 
       {publication.bibtex ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>BibTeX</h2>
           <pre style={{marginTop:'0.75rem', overflow:'auto', borderRadius:'0.75rem', border:'1px solid var(--border)', background:'var(--surface-muted)', padding:'1rem', fontSize:'0.75rem', color:'#1e293b'}}>
             {publication.bibtex}
           </pre>
@@ -228,4 +222,3 @@ export default async function Page({ params }: PageProps) {
     </article>
   );
 }
-

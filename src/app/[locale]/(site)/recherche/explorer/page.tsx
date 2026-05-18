@@ -1,6 +1,11 @@
 import { sanityFetch } from "@/lib/sanity/client";
-import { searchQuery } from "@/lib/sanity/queries";
+import { institutionalPageBySlugQuery, searchQuery } from "@/lib/sanity/queries";
 import { getServerLocale } from "@/lib/i18n-server";
+import { buildMetadata } from "@/lib/seo";
+import { localizedPath } from "@/lib/i18n";
+import type { InstitutionalPage } from "@/lib/sanity/types";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -12,10 +17,41 @@ interface SearchResult {
   summary?: string;
 }
 
-export const metadata = {
-  title: "Recherche scientifique — Explorer",
-  description: "Interrogez les publications, projets et membres du LaCDIA.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale();
+  const page = await sanityFetch<InstitutionalPage | null>(
+    institutionalPageBySlugQuery,
+    { slug: "recherche-explorer", locale },
+    null,
+  );
+
+  return await buildMetadata({
+    locale,
+    title: page?.title,
+    description: page?.summary,
+    seo: page?.seo,
+    path: localizedPath("/recherche/explorer", locale),
+    alternates: {
+      fr: localizedPath("/recherche/explorer", "fr"),
+      en: localizedPath("/recherche/explorer", "en"),
+    },
+  });
+}
+
+function getSearchCopy(page: InstitutionalPage | null) {
+  const formSection = page?.sections?.find((section) => section.layout === "form");
+  const filterCards = formSection?.cards ?? [];
+  const filters = filterCards
+    .filter((card) => card.title && card.href !== undefined)
+    .map((card) => ({ label: card.title as string, value: card.href ?? "" }));
+
+  return {
+    placeholder: filterCards.find((card) => card.label)?.label,
+    emptyText: filterCards.find((card) => card.description)?.description,
+    submitLabel: formSection?.actions?.[0]?.label,
+    filters,
+  };
+}
 
 export default async function ExplorerPage({
   searchParams,
@@ -24,9 +60,20 @@ export default async function ExplorerPage({
 }) {
   const locale = await getServerLocale();
   const resolvedSearchParams = await searchParams;
+  const page = await sanityFetch<InstitutionalPage | null>(
+    institutionalPageBySlugQuery,
+    { slug: "recherche-explorer", locale },
+    null,
+  );
+  const copy = getSearchCopy(page);
   const query = resolvedSearchParams?.q?.toString().trim() || "";
   const type = resolvedSearchParams?.type?.toString().trim() || null;
   const term = query ? `${query}*` : null;
+  const isReady = Boolean(page?.title && copy.placeholder && copy.submitLabel && copy.filters.length);
+
+  if (!isReady) {
+    notFound();
+  }
 
   const results = term
     ? await sanityFetch<SearchResult[]>(searchQuery, { term, type, locale }, [])
@@ -35,17 +82,15 @@ export default async function ExplorerPage({
   return (
     <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
       <div style={{maxWidth:'48rem'}}>
-        <h1 className="section-title">Recherche scientifique</h1>
-        <p className="section-subtitle">
-          Interrogez les publications, projets et membres du laboratoire.
-        </p>
+        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+        {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
       </div>
 
       <form style={{marginTop:'1.5rem', display:'flex', flexWrap:'wrap', gap:'0.75rem'}} method="get">
         <input
           type="search"
           name="q"
-          placeholder="Mot-clé, auteur, projet..."
+          placeholder={copy.placeholder}
           defaultValue={query}
           className="form-input-light" style={{width:'100%', maxWidth:'20rem'}}
         />
@@ -54,22 +99,23 @@ export default async function ExplorerPage({
           defaultValue={type ?? ""}
           className="form-select"
         >
-          <option value="">Tous les contenus</option>
-          <option value="publication">Publications</option>
-          <option value="project">Projets</option>
-          <option value="member">Membres</option>
+          {copy.filters.map((filter) => (
+            <option key={filter.value || "all"} value={filter.value}>
+              {filter.label}
+            </option>
+          ))}
         </select>
         <button
           type="submit"
           className="btn btn-small btn-small-primary"
         >
-          Rechercher
+          {copy.submitLabel}
         </button>
       </form>
 
       {query && results.length === 0 ? (
         <div className="empty-state" style={{marginTop:'2rem'}}>
-          Aucun résultat pour votre recherche.
+          {copy.emptyText}
         </div>
       ) : null}
 

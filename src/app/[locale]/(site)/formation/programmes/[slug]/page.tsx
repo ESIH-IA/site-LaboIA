@@ -7,8 +7,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { programBySlugQuery, programListQuery } from "@/lib/sanity/queries";
-import type { ProgramListItem } from "@/lib/sanity/types";
+import { programBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -69,8 +68,9 @@ export default async function Page({ params }: PageProps) {
       <Link
         href="/formation"
         className="btn-link"
+        aria-label="formation"
       >
-        Retour a la formation
+        {"<"}
       </Link>
       <h1 className="section-title" style={{marginTop:'1rem'}}>{program.title}</h1>
       {program.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{program.summary}</p> : null}
@@ -80,7 +80,6 @@ export default async function Page({ params }: PageProps) {
 
       {program.members?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Encadrement</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {program.members.map((member) => (
               <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>

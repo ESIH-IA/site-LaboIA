@@ -20,8 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return await buildMetadata({
     locale,
-    title: page?.title ?? "Ressources scientifiques",
+    title: page?.title,
     description: page?.summary,
+    seo: page?.seo,
     path: localizedPath("/ressources", locale),
     alternates: {
       fr: localizedPath("/ressources", "fr"),
@@ -47,11 +48,7 @@ export default async function Page() {
       </div>
 
       <div className="card-grid" style={{marginTop:'2rem'}}>
-        {resources.length === 0 ? (
-          <div className="empty-state">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+        {resources.length > 0 ? (
           resources.map((resource) => (
             <article
               key={resource._id}
@@ -76,8 +73,8 @@ export default async function Page() {
                     className="btn-link"
                     target="_blank"
                     rel="noreferrer"
-                  >
-                    Télécharger
+                >
+                    {resource.fileUrl}
                   </Link>
                 ) : null}
                 {resource.url ? (
@@ -86,14 +83,14 @@ export default async function Page() {
                     className="btn-link"
                     target="_blank"
                     rel="noreferrer"
-                  >
-                    Lien externe
+                >
+                    {resource.url}
                   </Link>
                 ) : null}
               </div>
             </article>
           ))
-        )}
+        ) : null}
       </div>
     </section>
   );

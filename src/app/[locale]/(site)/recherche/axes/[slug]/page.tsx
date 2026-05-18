@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import PortableTextRenderer from "@/components/content/portable-text";
@@ -8,8 +7,7 @@ import { ProjectCard, PublicationCard } from "@/components/cards/cards";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { researchAxisBySlugQuery, researchAxisListQuery } from "@/lib/sanity/queries";
-import type { ResearchAxisListItem } from "@/lib/sanity/types";
+import { researchAxisBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -77,12 +75,6 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <article className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
-      <Link
-        href="/recherche/axes"
-        className="btn-link"
-      >
-        Retour aux axes
-      </Link>
       <h1 className="section-title" style={{marginTop:'1rem'}}>{axis.title}</h1>
       {axis.summary ? <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{axis.summary}</p> : null}
 
@@ -91,35 +83,24 @@ export default async function Page({ params }: PageProps) {
       </div>
 
       <div style={{marginTop:'3rem'}}>
-        <h2 className="section-title" style={{fontSize:'1.5rem'}}>Projets associés</h2>
-        {!axis.projects?.length ? (
-          <div className="empty-state">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+        {axis.projects?.length ? (
           <div className="card-grid card-grid-2" style={{marginTop:'1.5rem'}}>
             {axis.projects.map((project) => (
               <ProjectCard key={project._id} project={project} />
             ))}
           </div>
-        )}
+        ) : null}
       </div>
 
       <div style={{marginTop:'3rem'}}>
-        <h2 className="section-title" style={{fontSize:'1.5rem'}}>Publications associées</h2>
-        {!axis.publications?.length ? (
-          <div className="empty-state">
-            Contenu en cours de publication.
-          </div>
-        ) : (
+        {axis.publications?.length ? (
           <div className="card-grid" style={{marginTop:'1.5rem'}}>
             {axis.publications.map((publication) => (
               <PublicationCard key={publication._id} publication={publication} />
             ))}
           </div>
-        )}
+        ) : null}
       </div>
     </article>
   );
 }
-

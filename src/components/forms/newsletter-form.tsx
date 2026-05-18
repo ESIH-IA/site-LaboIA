@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
+import type { FormCopy } from "@/lib/sanity/types";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export default function NewsletterForm() {
+export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>("");
 
@@ -21,7 +22,7 @@ export default function NewsletterForm() {
 
     if (!email) {
       setStatus("error");
-      setMessage("Email requis.");
+      setMessage(copy?.errorMessage ?? "");
       return;
     }
 
@@ -35,36 +36,36 @@ export default function NewsletterForm() {
       });
       const payload = await response.json();
       if (!response.ok) {
-        throw new Error(payload?.message || "Erreur.");
+        throw new Error(payload?.message || "Request failed");
       }
       setStatus("success");
-      setMessage("Inscription prise en compte.");
+      setMessage(copy?.successMessage ?? "");
     } catch {
       setStatus("error");
-      setMessage("Impossible d'enregistrer l'inscription.");
+      setMessage(copy?.errorMessage ?? "");
     }
   }
 
   return (
     <form className="form-section" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
       <label className="form-label-light">
-        Email
+        {copy?.emailLabel}
         <input
           type="email"
           name="email"
           className="form-input-light"
           style={{ marginTop: "0.5rem" }}
+          placeholder={copy?.emailPlaceholder}
           required
         />
       </label>
       <label className="form-checkbox-light-row">
         <input type="checkbox" required style={{ marginTop: "0.25rem" }} />
         <span>
-          J&apos;accepte de recevoir les communications du laboratoire. Voir la{" "}
-          <Link href="/confidentialite" style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>
-            politique de confidentialité
+          {copy?.consentText}{" "}
+          <Link href={copy?.privacyHref ?? "/confidentialite"} style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>
+            {copy?.privacyLabel}
           </Link>
-          .
         </span>
       </label>
       <button
@@ -72,7 +73,7 @@ export default function NewsletterForm() {
         className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
-        S{"'"}inscrire
+        {status === "loading" ? copy?.loadingLabel : copy?.submitLabel}
       </button>
       {message ? <p className="form-status-text">{message}</p> : null}
     </form>

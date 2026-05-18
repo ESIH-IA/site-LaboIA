@@ -7,8 +7,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { eventBySlugQuery, eventListQuery } from "@/lib/sanity/queries";
-import type { EventListItem } from "@/lib/sanity/types";
+import { eventBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -71,8 +70,9 @@ export default async function Page({ params }: PageProps) {
       <Link
         href="/actualites"
         className="btn-link"
+        aria-label="actualites"
       >
-        Retour aux actualités
+        {"<"}
       </Link>
 
       <div className="simple-card-meta" style={{marginTop:'1rem'}}>
@@ -94,7 +94,6 @@ export default async function Page({ params }: PageProps) {
 
       {event.speakers?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Intervenants</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {event.speakers.map((speaker) => (
               <li key={speaker._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
@@ -125,11 +124,10 @@ export default async function Page({ params }: PageProps) {
             target="_blank"
             rel="noreferrer"
           >
-            S{"'"}inscrire
+            {event.registrationUrl}
           </Link>
         </div>
       ) : null}
     </article>
   );
 }
-

@@ -3,15 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ContentBlocks } from "@/components/content/blocks";
 import PortableTextRenderer from "@/components/content/portable-text";
 import type { PortableTextBlock } from "@portabletext/types";
-import { getArticles } from "@/lib/content-loader";
-import { isSanityConfigured, sanityFetch } from "@/lib/sanity/client";
+import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
-import { newsBySlugQuery, newsListQuery } from "@/lib/sanity/queries";
-import type { NewsListItem } from "@/lib/sanity/types";
+import { newsBySlugQuery } from "@/lib/sanity/queries";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -45,15 +42,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     { slug, locale },
     null,
   );
-  const localArticle = getArticles().find((item) => item.slug === slug);
 
   const frSlug = article?.slugIntl?.fr?.current ?? slug;
   const enSlug = article?.slugIntl?.en?.current ?? slug;
 
   return await buildMetadata({
     locale,
-    title: article?.title ?? localArticle?.title,
-    description: article?.summary ?? localArticle?.summary,
+    title: article?.title,
+    description: article?.summary,
     path: localizedPath(`/actualites/${slug}`, locale),
     alternates: {
       fr: localizedPath(`/actualites/${frSlug}`, "fr"),
@@ -70,40 +66,36 @@ export default async function Page({ params }: PageProps) {
     { slug, locale },
     null,
   );
-  const localArticle = getArticles().find((item) => item.slug === slug);
 
-  if (!article && !localArticle) {
+  if (!article) {
     notFound();
   }
-
-  const mainImageUrl = article?.mainImageUrl ?? localArticle?.mainImage?.src;
-  const mainImageAlt = article?.mainImageAlt ?? localArticle?.mainImage?.alt ?? localArticle?.title;
 
   return (
     <article className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
       <div className="simple-card-meta">
-        {(article?.category ?? localArticle?.category) ? (
+        {article.category ? (
           <span className="badge badge-primary">
-            {article?.category ?? localArticle?.category}
+            {article.category}
           </span>
         ) : null}
-        {(article?.date ?? localArticle?.date) ? (
-          <span>{article?.date ?? localArticle?.date}</span>
+        {article.date ? (
+          <span>{article.date}</span>
         ) : null}
       </div>
 
       <h1 className="section-title" style={{marginTop:'1rem'}}>
-        {article?.title ?? localArticle?.title}
+        {article.title}
       </h1>
-      {(article?.summary ?? localArticle?.summary) ? (
-        <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{article?.summary ?? localArticle?.summary}</p>
+      {article.summary ? (
+        <p className="section-subtitle" style={{fontSize:'1.125rem'}}>{article.summary}</p>
       ) : null}
 
-      {mainImageUrl ? (
+      {article.mainImageUrl ? (
         <div style={{position:'relative', marginTop:'1.5rem', aspectRatio:'16/9', width:'100%', overflow:'hidden', borderRadius:'1rem'}}>
           <Image
-            src={mainImageUrl}
-            alt={mainImageAlt ?? "Illustration de l'article"}
+            src={article.mainImageUrl}
+            alt={article.mainImageAlt ?? ""}
             fill
             sizes="(min-width: 1024px) 768px, 100vw"
             style={{objectFit:'cover'}}
@@ -112,16 +104,13 @@ export default async function Page({ params }: PageProps) {
       ) : null}
 
       <div style={{marginTop:'2rem'}}>
-        {article?.content ? (
+        {article.content ? (
           <PortableTextRenderer value={article.content} />
-        ) : localArticle?.blocks ? (
-          <ContentBlocks blocks={localArticle.blocks} />
         ) : null}
       </div>
 
-      {article?.relatedProjects?.length ? (
+      {article.relatedProjects?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Projets associés</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {article.relatedProjects.map((project) => (
               <li key={project._id}>
@@ -141,9 +130,8 @@ export default async function Page({ params }: PageProps) {
         </div>
       ) : null}
 
-      {article?.relatedMembers?.length ? (
+      {article.relatedMembers?.length ? (
         <div style={{marginTop:'2.5rem'}}>
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Membres cités</h2>
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {article.relatedMembers.map((member) => (
               <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
@@ -164,20 +152,18 @@ export default async function Page({ params }: PageProps) {
         </div>
       ) : null}
 
-      {(article?.sourceUrl ?? localArticle?.sourceUrl) ? (
+      {article.sourceUrl ? (
         <div style={{marginTop:'2.5rem', display:'flex', flexWrap:'wrap', gap:'0.75rem', fontSize:'0.875rem', color:'#334155'}}>
-          <span style={{fontWeight:600, color:'#0f172a'}}>Source:</span>
           <Link
-            href={(article?.sourceUrl ?? localArticle?.sourceUrl) as string}
+            href={article.sourceUrl}
             className="btn-link"
             target="_blank"
             rel="noreferrer"
           >
-            Consulter la source
+            {article.sourceUrl}
           </Link>
         </div>
       ) : null}
     </article>
   );
 }
-

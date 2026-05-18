@@ -3,7 +3,15 @@ import { sanityFetch } from '@/lib/sanity/client';
 import { genericPageBySlugQuery } from '@/lib/sanity/queries';
 import { PageBuilder } from '@/components/page-builder';
 import { setRequestLocale } from 'next-intl/server';
-import { getTranslations } from 'next-intl/server';
+import type { SeoData } from '@/lib/sanity/types';
+import { buildMetadata } from '@/lib/seo';
+
+type GenericPageData = {
+  title?: string;
+  slug?: { current?: string };
+  seo?: SeoData;
+  blocks?: unknown[];
+};
 
 export async function generateMetadata({
   params,
@@ -14,7 +22,7 @@ export async function generateMetadata({
   const locale = resolvedParams.locale;
   const slugStr = resolvedParams.slug.join('/');
 
-  const page = await sanityFetch<any>(
+  const page = await sanityFetch<GenericPageData | null>(
     genericPageBySlugQuery,
     { slug: slugStr, locale },
     null
@@ -22,10 +30,11 @@ export async function generateMetadata({
 
   if (!page) return {};
 
-  return {
+  return buildMetadata({
+    locale: locale === "en" ? "en" : "fr",
     title: page.title,
-    description: page.slug,
-  };
+    seo: page.seo,
+  });
 }
 
 export default async function GenericPage({
@@ -44,7 +53,7 @@ export default async function GenericPage({
     notFound();
   }
 
-  const page = await sanityFetch<any>(
+  const page = await sanityFetch<GenericPageData | null>(
     genericPageBySlugQuery,
     { slug: slugStr, locale },
     null
@@ -60,7 +69,7 @@ export default async function GenericPage({
         The top-level container has no global padding so sections can break out if needed,
         but the PageBuilder enforces containment internally. 
       */}
-      <PageBuilder blocks={page.blocks} locale={locale} />
+      <PageBuilder blocks={page.blocks ?? []} locale={locale} />
     </main>
   );
 }

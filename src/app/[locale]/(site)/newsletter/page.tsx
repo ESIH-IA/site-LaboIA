@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 
-import PortableTextRenderer from "@/components/content/portable-text";
-import NewsletterForm from "@/components/forms/newsletter-form";
-import NewsletterUnsubscribeForm from "@/components/forms/newsletter-unsubscribe-form";
+import EditablePageView from "@/components/content/editable-page-view";
+import { getFormSettings } from "@/lib/cms";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
@@ -20,10 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
     null,
   );
 
-  return await buildMetadata({
+  return buildMetadata({
     locale,
     title: page?.title,
     description: page?.summary,
+    seo: page?.seo,
     path: localizedPath("/newsletter", locale),
     alternates: {
       fr: localizedPath("/newsletter", "fr"),
@@ -34,33 +34,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const locale = await getServerLocale();
-  const page = await sanityFetch<InstitutionalPage | null>(
-    institutionalPageBySlugQuery,
-    { slug: "newsletter", locale },
-    null,
-  );
+  const [page, forms] = await Promise.all([
+    sanityFetch<InstitutionalPage | null>(institutionalPageBySlugQuery, { slug: "newsletter", locale }, null),
+    getFormSettings(locale),
+  ]);
 
-  return (
-    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
-      <div style={{maxWidth:'48rem'}}>
-        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
-        {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
-      </div>
-
-      <div style={{marginTop:'1.5rem'}}>
-        <PortableTextRenderer value={page?.content} />
-      </div>
-
-      <div className="card-grid card-grid-2" style={{marginTop:'2.5rem'}}>
-        <div className="simple-card">
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Inscription</h2>
-          <NewsletterForm />
-        </div>
-        <div className="simple-card">
-          <h2 style={{fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>Gerer mon abonnement</h2>
-          <NewsletterUnsubscribeForm />
-        </div>
-      </div>
-    </section>
-  );
+  return <EditablePageView page={page} forms={forms} />;
 }

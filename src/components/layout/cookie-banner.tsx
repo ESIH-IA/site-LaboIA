@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
+import type { SiteSettings } from "@/lib/sanity/types";
 
 const consentCookie = "lacdia_cookie_consent";
 
@@ -20,9 +20,9 @@ function setCookie(name: string, value: string, days = 180) {
   document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
 }
 
-export default function CookieBanner() {
-  const t = useTranslations("cookies");
+export default function CookieBanner({ site }: { site: SiteSettings }) {
   const [visible, setVisible] = useState(false);
+  const hasCopy = Boolean(site.cookieMessage && site.cookieAcceptLabel && site.cookieRejectLabel);
 
   useEffect(() => {
     const consent = getCookie(consentCookie);
@@ -33,7 +33,7 @@ export default function CookieBanner() {
     return undefined;
   }, []);
 
-  if (!visible) return null;
+  if (!visible || !hasCopy) return null;
 
   const handleChoice = (value: "accepted" | "rejected") => {
     setCookie(consentCookie, value);
@@ -43,10 +43,12 @@ export default function CookieBanner() {
 
   return (
     <div className="cookie-banner">
-      <h2 className="cookie-title">{t("title")}</h2>
+      {site.cookieTitle ? <h2 className="cookie-title">{site.cookieTitle}</h2> : null}
       <p className="cookie-text">
-        {t("message")}{" "}
-        <Link href="/cookies">{t("policyLink")}</Link>
+        {site.cookieMessage}{" "}
+        {site.cookiePolicyHref && site.cookiePolicyLabel ? (
+          <Link href={site.cookiePolicyHref}>{site.cookiePolicyLabel}</Link>
+        ) : null}
         .
       </p>
       <div className="cookie-actions">
@@ -55,14 +57,14 @@ export default function CookieBanner() {
           className="btn btn-small btn-small-primary"
           onClick={() => handleChoice("accepted")}
         >
-          {t("accept")}
+          {site.cookieAcceptLabel}
         </button>
         <button
           type="button"
           className="btn btn-small btn-small-outline"
           onClick={() => handleChoice("rejected")}
         >
-          {t("reject")}
+          {site.cookieRejectLabel}
         </button>
       </div>
     </div>

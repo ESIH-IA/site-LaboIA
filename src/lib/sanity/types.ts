@@ -14,6 +14,48 @@ export type SanityImage = {
   asset?: { _ref: string; _type?: "reference" };
 } & Record<string, unknown>;
 
+export type SeoData = {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  canonicalUrl?: string;
+  openGraphTitle?: string;
+  openGraphDescription?: string;
+  openGraphImageUrl?: string;
+  openGraphImageAlt?: string;
+  openGraphImageWidth?: number;
+  openGraphImageHeight?: number;
+  noIndex?: boolean;
+  noFollow?: boolean;
+};
+
+export type PageCard = {
+  _key?: string;
+  icon?: string;
+  title?: string;
+  description?: string;
+  label?: string;
+  href?: string;
+  items?: string[];
+};
+
+export type PageSection = {
+  _key?: string;
+  _type: "pageSection";
+  variant?: "heroDark" | "white" | "light" | "ctaDark";
+  layout?: "content" | "cards" | "pills" | "table" | "form";
+  anchor?: string;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  body?: PortableTextBlock[];
+  actions?: Array<{ label?: string; href?: string; variant?: string }>;
+  cards?: PageCard[];
+  tableHeaders?: string[];
+  tableRows?: Array<{ cells?: string[] }>;
+  formType?: "contact" | "collaborate" | "newsletter";
+};
+
 export type ProjectListItem = {
   _id: string;
   title: string;
@@ -162,8 +204,10 @@ export type InstitutionalPage = {
   heroBadge?: string;
   summary?: string;
   content?: PortableTextBlock[];
+  sections?: PageSection[];
   ctaLabel?: string;
   ctaHref?: string;
+  seo?: SeoData;
 };
 
 export type Person = {
@@ -253,6 +297,14 @@ export type SiteSettings = {
   footerContactCtaLabel?: string;
   footerContactCtaHref?: string;
   footerLanguageNote?: string;
+  footerNavTitle?: string;
+  footerCopyrightText?: string;
+  cookieTitle?: string;
+  cookieMessage?: string;
+  cookiePolicyLabel?: string;
+  cookiePolicyHref?: string;
+  cookieAcceptLabel?: string;
+  cookieRejectLabel?: string;
   logo?: SiteAsset;
   banner?: SiteAsset;
 };
@@ -270,6 +322,7 @@ export type Navigation = {
 
 export type HomePageData = {
   _id: string;
+  seo?: SeoData;
   heroBadge?: string;
   heroTitle?: string;
   heroSubtitle?: string;
@@ -341,6 +394,7 @@ export type Sector = {
 
 export type SolutionsPage = {
   _id: string;
+  seo?: SeoData;
   heroBadge?: string;
   heroTitle?: string;
   heroSubtitle?: string;
@@ -367,4 +421,33 @@ export type SolutionsPage = {
   sectors?: Sector[];
   projectsTitle?: string;
   projectsIntro?: string;
+};
+
+export type FormCopy = {
+  title?: string;
+  subtitle?: string;
+  fullNameLabel?: string;
+  fullNamePlaceholder?: string;
+  emailLabel?: string;
+  emailPlaceholder?: string;
+  organizationLabel?: string;
+  organizationPlaceholder?: string;
+  subjectLabel?: string;
+  subjectPlaceholder?: string;
+  messageLabel?: string;
+  messagePlaceholder?: string;
+  consentText?: string;
+  privacyLabel?: string;
+  privacyHref?: string;
+  submitLabel?: string;
+  loadingLabel?: string;
+  successMessage?: string;
+  errorMessage?: string;
+};
+
+export type FormSettings = {
+  _id: string;
+  contact?: FormCopy;
+  collaborate?: FormCopy;
+  newsletter?: FormCopy;
 };
