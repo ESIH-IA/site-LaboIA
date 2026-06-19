@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type CollaborateAction = {
   label: string;
   href: string;
@@ -11,46 +13,58 @@ type CollaborateCtaProps = {
 };
 
 export default function CollaborateCta({ title, body, actions }: CollaborateCtaProps) {
-  const primary = actions?.find((action) => action.variant === "primary") ?? actions?.[0];
-  const secondary = actions?.find((action) => action.variant === "secondary") ?? actions?.[1];
+  const primary = actions?.find((a) => a.variant === "primary") ?? actions?.[0];
+  const secondary = actions?.find((a) => a.variant === "secondary") ?? actions?.[1];
 
   return (
-    <section className="bg-slate-50">
-      <div className="mx-auto max-w-6xl px-4 py-20">
-        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-linear-to-br from-white via-slate-50 to-teal-50/30 p-10 md:p-12 shadow-lg">
-          {/* Decorative gradient accent */}
-          <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 via-cyan-500 to-teal-500" />
+    <section className="section-labo-surface section-padding">
+      <div className="container-site">
+        {/* Split card: dark left / teal-lit right */}
+        <div className="relative overflow-hidden rounded-3xl">
+          {/* Background */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 80% at 100% 50%, rgba(0,212,170,0.12) 0%, transparent 60%), var(--labo-surface)",
+            }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 border border-white/8 rounded-3xl" aria-hidden="true" />
 
-          {/* Subtle pattern overlay */}
-          <div className="absolute inset-0 dot-pattern opacity-20" />
+          {/* Top accent line */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px"
+            style={{ background: "linear-gradient(90deg, transparent, #00d4aa, #6c63ff, transparent)" }}
+            aria-hidden="true"
+          />
 
-          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="flex-1">
-              <h2 className="text-3xl font-bold text-slate-900">
+          <div className="relative z-10 flex flex-col gap-8 p-10 md:p-14 md:flex-row md:items-center md:justify-between">
+            <div className="flex-1 max-w-xl">
+              <div className="badge-teal inline-flex mb-6">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
+                Collaborer avec le labo
+              </div>
+              <h2 className="text-display-lg text-[#f0f4ff]">
                 {title ?? "Collaborer avec le laboratoire"}
               </h2>
-              <p className="mt-4 max-w-2xl text-base text-slate-600 leading-relaxed">
+              <p className="mt-5 text-[#8892b0] text-lg leading-relaxed">
                 {body ??
-                  "Partenariats institutionnels, stages, financements ou projets appliqu\u00e9s : construisons ensemble des solutions d'impact."}
+                  "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact."}
               </p>
             </div>
-            <div className="flex flex-wrap gap-4">
-              {primary ? (
-                <a
-                  href={primary.href}
-                  className="group relative overflow-hidden rounded-2xl bg-linear-to-r from-cyan-500 to-teal-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-smooth hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/30"
-                >
-                  <span className="relative z-10">{primary.label}</span>
-                </a>
-              ) : null}
-              {secondary ? (
-                <a
-                  href={secondary.href}
-                  className="rounded-2xl border-2 border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-smooth hover:-translate-y-1 hover:border-teal-400 hover:bg-teal-50/50"
-                >
+
+            <div className="flex flex-col gap-4 shrink-0">
+              {primary && (
+                <Link href={primary.href} className="btn btn-primary-labo text-center justify-center">
+                  {primary.label}
+                </Link>
+              )}
+              {secondary && (
+                <Link href={secondary.href} className="btn btn-secondary-labo text-center justify-center">
                   {secondary.label}
-                </a>
-              ) : null}
+                </Link>
+              )}
             </div>
           </div>
         </div>

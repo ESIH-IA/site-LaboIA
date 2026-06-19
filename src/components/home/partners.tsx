@@ -17,76 +17,95 @@ type PartnersProps = {
 const typeLabels: Record<string, string> = {
   partner: "Partenaire",
   client: "Client",
-  media: "M\u00e9dia",
-  academic: "Acad\u00e9mique",
+  media: "Média",
+  academic: "Académique",
 };
 
 export default function Partners({ title, intro, badge, items }: PartnersProps) {
   return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-20">
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-3xl font-bold text-slate-900">
+    <section className="section-labo section-padding">
+      <div className="container-site">
+        {/* Header */}
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-14">
+          <div className="max-w-xl">
+            <div className="badge-teal inline-flex mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
+              Écosystème
+            </div>
+            <h2 className="text-display-lg text-[#f0f4ff]">
               {title ?? "Partenaires & collaborations"}
             </h2>
-            <p className="mt-3 text-base text-slate-600">
+            <p className="mt-4 text-[#8892b0] leading-relaxed">
               {intro ??
-                "Nous travaillons avec des institutions acad\u00e9miques, publiques et priv\u00e9es pour acc\u00e9l\u00e9rer l'impact de la recherche."}
+                "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche."}
             </p>
           </div>
-          <div className="rounded-2xl border border-teal-200 bg-linear-to-br from-teal-50 to-cyan-50 px-5 py-3 text-sm text-teal-700 md:whitespace-nowrap">
-            {badge ?? "Besoin de collaborer ? Contactez-nous."}
-          </div>
+
+          {badge && (
+            <div className="glass-labo rounded-xl px-5 py-3 text-sm text-[#00d4aa] border border-[#00d4aa]/20 shrink-0">
+              {badge}
+            </div>
+          )}
         </div>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {items.map((partner) => (
-            <div
-              key={partner._id}
-              className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-            >
-              {/* Top accent gradient */}
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-lg font-semibold text-slate-900">
-                    {partner.name}
+        {items.length > 0 ? (
+          <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
+            {items.map((partner) => (
+              <div
+                key={partner._id}
+                className="glass-labo-hover rounded-2xl p-6 flex flex-col gap-4 group"
+              >
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <h3
+                      className="text-lg font-semibold text-[#f0f4ff]"
+                      style={{ fontFamily: "var(--font-syne, sans-serif)" }}
+                    >
+                      {partner.name}
+                    </h3>
+                    {partner.type && (
+                      <span className="badge-teal text-[10px] py-0.5 px-2">
+                        {typeLabels[partner.type] ?? partner.type}
+                      </span>
+                    )}
                   </div>
-                  {partner.type ? (
-                    <span className="rounded-lg border border-teal-500/30 bg-teal-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-teal-600">
-                      {typeLabels[partner.type] ?? partner.type}
-                    </span>
+
+                  {partner.shortDescription && (
+                    <p className="text-sm text-[#8892b0] leading-relaxed">
+                      {partner.shortDescription}
+                    </p>
+                  )}
+
+                  {partner.tags?.length ? (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {partner.tags.map((tag) => (
+                        <span key={tag} className="tag">{tag}</span>
+                      ))}
+                    </div>
                   ) : null}
                 </div>
-                {partner.shortDescription ? (
-                  <p className="mt-3 text-base text-slate-600 leading-relaxed">{partner.shortDescription}</p>
-                ) : null}
-                {partner.tags?.length ? (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {partner.tags.map((tag) => (
-                      <span key={tag} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] uppercase tracking-wide text-slate-500">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
+
+                {partner.website && (
+                  <a
+                    href={partner.website}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-[#00d4aa] hover:text-[#00f0c0] transition-colors mt-auto"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Voir le site
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                )}
               </div>
-              {partner.website ? (
-                <a
-                  href={partner.website}
-                  className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-teal-600 transition-smooth hover:text-teal-500 hover:gap-3"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  Voir le site
-                  <span aria-hidden>{">"}</span>
-                </a>
-              ) : null}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-sm text-[#8892b0]">
+            Partenariats en cours de formalisation.
+          </div>
+        )}
       </div>
     </section>
   );

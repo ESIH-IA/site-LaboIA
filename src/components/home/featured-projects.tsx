@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import type { ProjectListItem } from "@/lib/sanity/types";
 
 type FeaturedProjectsProps = {
@@ -18,85 +17,97 @@ export default function FeaturedProjects({
   projects,
 }: FeaturedProjectsProps) {
   return (
-    <section className="bg-white py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-              {title ?? "Projets \u00e0 la une"}
+    <section className="section-labo-surface section-padding">
+      <div className="container-site">
+        {/* Header */}
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-14">
+          <div className="max-w-xl">
+            <div className="badge-violet inline-flex mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#6c63ff]" />
+              Projets à la une
+            </div>
+            <h2 className="text-display-lg text-[#f0f4ff]">
+              {title ?? "Projets à la une"}
             </h2>
-            <p className="mt-3 max-w-2xl text-base text-slate-600 leading-relaxed">
+            <p className="mt-4 text-[#8892b0] leading-relaxed">
               {intro ??
-                "Des initiatives concr\u00e8tes qui d\u00e9montrent la puissance de l'IA et de la science des donn\u00e9es au service des communaut\u00e9s."}
+                "Des initiatives concrètes qui démontrent la puissance de l'IA et de la science des données au service des communautés."}
             </p>
           </div>
 
-          <Link
-            href={ctaHref ?? "/projets"}
-            className="inline-flex items-center justify-center rounded-xl border-2 border-cyan-500 px-6 py-3 text-sm font-semibold text-cyan-600 transition-all hover:-translate-y-1 hover:bg-cyan-50"
-          >
-            {ctaLabel ?? "D\u00e9couvrir tous les projets"}
-          </Link>
+          {(ctaLabel || ctaHref) && (
+            <Link
+              href={ctaHref ?? "/collaborer"}
+              className="btn btn-secondary-labo shrink-0"
+            >
+              {ctaLabel ?? "Tous les projets"}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          )}
         </div>
 
         {projects.length > 0 ? (
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, idx) => (
               <article
                 key={project._id}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
+                className="glass-labo-hover rounded-2xl p-6 flex flex-col justify-between group transition-all duration-300"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
-                {/* Gradient accent top */}
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
+                {/* Top accent */}
+                <div
+                  className="h-px w-full mb-6 rounded-full"
+                  style={{ background: "linear-gradient(90deg, #00d4aa, #6c63ff, transparent)" }}
+                  aria-hidden="true"
+                />
 
-                {/* Badge status */}
-                {(project.projectType || project.statusLabel) && (
-                  <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-700">
-                    {project.projectType ?? "Projet"}
-                    {project.statusLabel ? ` - ${project.statusLabel}` : ""}
-                  </div>
-                )}
+                <div className="flex-1">
+                  {/* Badge */}
+                  {(project.projectType || project.statusLabel) && (
+                    <div className="badge-teal inline-flex mb-4">
+                      {project.projectType ?? "Projet"}
+                      {project.statusLabel ? ` · ${project.statusLabel}` : ""}
+                    </div>
+                  )}
 
-                <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-cyan-600 transition-colors">
-                  {project.title}
-                </h3>
+                  <h3
+                    className="text-xl font-bold text-[#f0f4ff] leading-snug group-hover:text-[#00d4aa] transition-colors"
+                    style={{ fontFamily: "var(--font-syne, sans-serif)" }}
+                  >
+                    {project.title}
+                  </h3>
 
-                <p className="mt-4 text-sm text-slate-600 leading-relaxed">
-                  {project.shortDescription ?? project.summary}
-                </p>
+                  <p className="mt-4 text-sm text-[#8892b0] leading-relaxed">
+                    {project.shortDescription ?? project.summary}
+                  </p>
 
-                {project.tags?.length ? (
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-lg border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 3 ? (
-                      <span className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-500">
-                        +{project.tags.length - 3}
-                      </span>
-                    ) : null}
-                  </div>
-                ) : null}
+                  {project.tags?.length ? (
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="tag">{tag}</span>
+                      ))}
+                      {project.tags.length > 3 && (
+                        <span className="tag">+{project.tags.length - 3}</span>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
 
-                {/* Hover arrow indicator */}
-                <div className="mt-4 flex items-center text-sm font-semibold text-cyan-600 opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="mt-6 flex items-center gap-2 text-sm font-medium text-[#00d4aa] opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="h-px w-4 bg-[#00d4aa]" />
                   En savoir plus
-                  <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   </svg>
                 </div>
               </article>
             ))}
           </div>
         ) : (
-          <div className="mt-12 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
-            Contenu en cours de publication.
+          <div className="rounded-2xl border border-dashed border-white/10 bg-white/2 p-12 text-center text-sm text-[#8892b0]">
+            Projets en cours de publication.
           </div>
         )}
       </div>

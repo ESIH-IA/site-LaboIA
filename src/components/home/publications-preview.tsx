@@ -16,66 +16,78 @@ type PublicationsPreviewProps = {
 
 export default function PublicationsPreview({ title, intro, items }: PublicationsPreviewProps) {
   return (
-    <section className="relative bg-slate-900 text-white overflow-hidden">
-      {/* Grid pattern background */}
-      <div className="absolute inset-0 grid-pattern opacity-10" />
-
-      <div className="relative mx-auto max-w-6xl px-4 py-20">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-3xl font-bold">{title ?? "Publications r\u00e9centes"}</h2>
-            <p className="mt-3 text-base text-slate-300">
+    <section className="section-labo-surface section-padding">
+      <div className="container-site">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-14">
+          <div className="max-w-xl">
+            <div className="badge-violet inline-flex mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#6c63ff]" />
+              Recherche
+            </div>
+            <h2 className="text-display-lg text-[#f0f4ff]">
+              {title ?? "Publications récentes"}
+            </h2>
+            <p className="mt-4 text-[#8892b0] leading-relaxed">
               {intro ??
-                "Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques."}
+                "Articles, rapports et communications qui documentent nos avancées scientifiques."}
             </p>
           </div>
         </div>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((publication) => (
-            <article
-              key={publication._id}
-              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/20"
-            >
-              {/* Top accent gradient */}
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
+        {items.length > 0 ? (
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {items.map((pub) => (
+              <article
+                key={pub._id}
+                className="glass-labo-hover rounded-2xl p-6 flex flex-col justify-between group"
+              >
+                <div>
+                  {/* Meta */}
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    {pub.category && (
+                      <span className="badge-violet text-[10px] py-0.5 px-2">{pub.category}</span>
+                    )}
+                    {pub.date && (
+                      <span className="label-mono text-[#8892b0]">{pub.date}</span>
+                    )}
+                  </div>
 
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-slate-400">
-                  {publication.category ? (
-                    <span className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-[11px] font-semibold text-cyan-400">
-                      {publication.category}
-                    </span>
-                  ) : null}
-                  {publication.date ? <span>{publication.date}</span> : null}
-                  {publication.authorName ? (
-                    <>
-                      <span aria-hidden="true">-</span>
-                      <span>{publication.authorName}</span>
-                    </>
-                  ) : null}
+                  <h3 className="text-base font-semibold text-[#f0f4ff] leading-snug group-hover:text-[#6c63ff] transition-colors">
+                    {pub.title}
+                  </h3>
+
+                  {pub.authorName && (
+                    <p className="mt-2 text-xs text-[#8892b0]">{pub.authorName}</p>
+                  )}
+
+                  {pub.summary && (
+                    <p className="mt-4 text-sm text-[#8892b0] leading-relaxed line-clamp-3">
+                      {pub.summary}
+                    </p>
+                  )}
                 </div>
 
-                <h3 className="text-lg font-semibold text-white leading-snug">{publication.title}</h3>
-                {publication.summary ? (
-                  <p className="text-base text-slate-300 leading-relaxed">{publication.summary}</p>
-                ) : null}
-              </div>
-
-              {publication.sourceUrl ? (
-                <a
-                  href={publication.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 transition-smooth hover:text-cyan-300 hover:gap-3"
-                >
-                  Lire la source
-                  <span aria-hidden>{">"}</span>
-                </a>
-              ) : null}
-            </article>
-          ))}
-        </div>
+                {pub.sourceUrl && (
+                  <a
+                    href={pub.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[#00d4aa] hover:text-[#00f0c0] transition-colors"
+                  >
+                    Lire la source
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                )}
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-sm text-[#8892b0]">
+            Publications en cours de référencement.
+          </div>
+        )}
       </div>
     </section>
   );

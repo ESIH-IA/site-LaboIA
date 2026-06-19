@@ -14,25 +14,18 @@ function stripLocale(pathname: string) {
   return pathname;
 }
 
+// EN version hidden until translations are ready — reactivate by restoring the full locales.map loop
 export default function LocaleSwitcher() {
   const pathname = usePathname() || "/";
   const basePath = stripLocale(pathname);
+  void basePath;
 
   return (
-    <div className="hidden items-center gap-2 text-xs text-neutral-500 lg:flex">
-      {locales.map((locale, index) => {
-        const href = `/${locale}${basePath}`;
-        const label = locale.toUpperCase();
-
-        return (
-          <div key={locale} className="flex items-center gap-2">
-            <Link href={href} className="font-medium text-neutral-900">
-              {label}
-            </Link>
-            {index < locales.length - 1 ? <span aria-hidden="true">|</span> : null}
-          </div>
-        );
-      })}
+    <div
+      className="hidden items-center gap-2 text-xs lg:flex"
+      style={{ color: "rgba(136,146,176,0.7)", fontFamily: "var(--font-mono, monospace)", fontSize: "0.65rem", letterSpacing: "0.12em" }}
+    >
+      <span style={{ fontWeight: 600, color: "rgba(0,212,170,0.8)" }}>FR</span>
     </div>
   );
 }

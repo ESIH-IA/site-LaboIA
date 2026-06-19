@@ -1,6 +1,6 @@
-﻿import Link from "next/link";
+import Link from "next/link";
+import Image from "next/image";
 
-import { Logo } from "@/components/media/logo";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
 
 export default function Footer({
@@ -10,73 +10,157 @@ export default function Footer({
   nav: Navigation;
   site: SiteSettings;
 }) {
+  const year = new Date().getFullYear();
+  const logoSrc = site.logo?.url ?? "/logo/logo-site.svg";
+  const logoAlt = site.logo?.alt ?? site.shortName ?? "LaCDIA";
+
   return (
-    <footer className="border-t border-border bg-gradient-to-b from-footer to-slate-950 text-footer-foreground">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <div className="flex items-center gap-3">
-            <Logo size="footer" className="h-9 w-auto opacity-95" logo={site.logo} />
-            <div>
-              <div className="text-sm font-semibold tracking-tight text-footer-foreground">
-                {site.shortName}
+    <footer
+      className="bg-[#0a0f1c] border-t border-white/8"
+      style={{ fontFamily: "var(--font-body, sans-serif)" }}
+    >
+      {/* — Main footer grid */}
+      <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12">
+
+          {/* — LABO column */}
+          <div className="lg:col-span-4">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="relative h-9 w-9 shrink-0">
+                <Image
+                  src={logoSrc}
+                  alt={logoAlt}
+                  width={36}
+                  height={36}
+                  className="object-contain"
+                />
               </div>
-              <div className="mt-1 text-xs text-slate-300">{site.name}</div>
+              <div>
+                <div
+                  className="text-sm font-bold text-[#f0f4ff] tracking-tight"
+                  style={{ fontFamily: "var(--font-syne, sans-serif)" }}
+                >
+                  {site.shortName ?? "LaCDIA"}
+                  <span
+                    className="ml-2 text-[10px] font-normal text-[#8892b0] tracking-widest uppercase"
+                    style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+                  >
+                    LABO
+                  </span>
+                </div>
+                <div className="text-xs text-[#8892b0] mt-0.5 leading-none">
+                  {site.name ?? "Laboratoire Caraïbéen des Sciences des Données et de l'IA"}
+                </div>
+              </div>
             </div>
-          </div>
-          <p className="mt-4 max-w-md text-sm text-slate-300">{site.description}</p>
-          {site.footerLanguageNote ? (
-            <p className="mt-4 text-xs text-slate-400">{site.footerLanguageNote}</p>
-          ) : null}
-        </div>
 
-        <div className="md:col-span-4">
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-            Navigation
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-            {nav.footerNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-slate-200 transition hover:text-white hover:underline hover:decoration-accent/40 hover:underline-offset-4"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
+            <p className="text-sm text-[#8892b0] leading-relaxed max-w-xs">
+              {site.description ??
+                "Recherche appliquée en intelligence artificielle et science des données au service des communautés caribéennes."}
+            </p>
 
-        <div className="md:col-span-3">
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-            {site.footerContactTitle ?? "Contact"}
+            {site.footerLanguageNote && (
+              <p className="mt-4 text-xs text-[#8892b0]/60">
+                {site.footerLanguageNote}
+              </p>
+            )}
           </div>
-          <div className="mt-4 space-y-3 text-sm text-slate-300">
-            {site.footerContactText ? <div>{site.footerContactText}</div> : null}
+
+          {/* — TECH column */}
+          <div className="lg:col-span-4 lg:border-l lg:border-white/6 lg:pl-12">
+            <div className="mb-5">
+              <div className="flex items-center gap-2">
+                <span
+                  className="text-sm font-bold text-[#f0f4ff] tracking-tight"
+                  style={{ fontFamily: "var(--font-syne, sans-serif)" }}
+                >
+                  LaCDIA
+                  <span
+                    className="ml-1.5 text-[10px] font-normal text-[#00d4aa] tracking-widest uppercase"
+                    style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+                  >
+                    TECH ●
+                  </span>
+                </span>
+              </div>
+              <p className="mt-2 text-xs text-[#8892b0] leading-relaxed max-w-xs">
+                Solutions IA déployables : consulting, développement sur mesure et accompagnement terrain.
+              </p>
+            </div>
+
             <Link
-              href={site.footerContactCtaHref ?? "/contact"}
-              className="inline-flex text-slate-200 underline underline-offset-4"
+              href="/solutions"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[#00d4aa] hover:text-[#00f0c0] transition-colors"
             >
-              {site.footerContactCtaLabel ?? "\u00c9crire au laboratoire"}
+              Découvrir nos services
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
           </div>
-        </div>
 
-        <div className="md:col-span-12">
-          <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-400 md:flex-row md:items-center md:justify-between">
+          {/* — Navigation + Contact */}
+          <div className="lg:col-span-4 grid grid-cols-2 gap-8">
             <div>
-              Copyright {new Date().getFullYear()} {site.shortName}. Tous droits r\u00e9serv\u00e9s.
+              <div
+                className="text-[10px] font-medium text-[#8892b0] tracking-widest uppercase mb-4"
+                style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+              >
+                Navigation
+              </div>
+              <nav className="flex flex-col gap-2.5">
+                {nav.footerNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-sm text-[#8892b0] hover:text-[#f0f4ff] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
             </div>
-            <div className="flex flex-wrap gap-4">
-              {nav.footerNav.map((item) => (
+
+            <div>
+              <div
+                className="text-[10px] font-medium text-[#8892b0] tracking-widest uppercase mb-4"
+                style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+              >
+                {site.footerContactTitle ?? "Contact"}
+              </div>
+              <div className="flex flex-col gap-2.5 text-sm text-[#8892b0]">
+                {site.footerContactText && (
+                  <p className="leading-relaxed">{site.footerContactText}</p>
+                )}
                 <Link
-                  key={`legal-${item.href}`}
-                  href={item.href}
-                  className="hover:text-slate-200 hover:underline hover:decoration-accent/40 hover:underline-offset-4"
+                  href={site.footerContactCtaHref ?? "/contact"}
+                  className="text-[#f0f4ff] hover:text-[#00d4aa] transition-colors underline underline-offset-4 decoration-white/20 hover:decoration-[#00d4aa]/40"
                 >
-                  {item.label}
+                  {site.footerContactCtaLabel ?? "Écrire au laboratoire"}
                 </Link>
-              ))}
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* — Bottom bar */}
+      <div className="border-t border-white/6">
+        <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <p
+            className="text-xs text-[#8892b0]/60"
+            style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+          >
+            © {year} {site.shortName ?? "LaCDIA"}. Tous droits réservés.
+          </p>
+          <div className="flex items-center gap-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa] animate-pulse" />
+            <span
+              className="text-xs text-[#8892b0]/60"
+              style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+            >
+              Haïti · Caraïbes · Recherche IA
+            </span>
           </div>
         </div>
       </div>

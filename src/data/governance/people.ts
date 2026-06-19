@@ -114,18 +114,18 @@ export const benediquePaul: Person = {
   order: 4,
 };
 
-export const sergeMranda: Person = {
-  id: "serge-mranda",
-  name: "Serge MRANDA",
+export const sergeMiranda: Person = {
+  id: "serge-miranda",
+  name: "Serge MIRANDA",
   initials: "SM",
-  slug: "serge-mranda",
+  slug: "serge-miranda",
   roleTitle: "Conseiller scientifique international",
   roleCategory: "conseil",
   shortBio:
     "Membre du conseil scientifique. Conseiller scientifique international de haut niveau. Apportera son expertise et ses perspectives stratégiques pour orienter les activités de recherche et d'innovation du laboratoire. Rayonnement international, mise en relation et développement de projets.",
   affiliation: "À déterminer",
-  longBio: `Serge MRANDA rejoindra prochainement le laboratoire LaCDIA en tant que Conseiller scientifique international au sein du conseil scientifique. Cette fonction stratégique permettra d'enrichir les orientations de recherche du laboratoire grâce à une expertise de renommée internationale. Le conseiller scientifique participera à l'évaluation des projets de recherche, à l'établissement de partenariats académiques internationaux et à la définition des axes stratégiques du laboratoire. Son rôle comprendra également le rayonnement international du laboratoire, la mise en relation avec des institutions de recherche de premier plan et le développement de collaborations scientifiques stratégiques.`,
-  expertise: ["À venir"],
+  longBio: `Serge MIRANDA rejoindra prochainement le laboratoire LaCDIA en tant que Conseiller scientifique international au sein du conseil scientifique. Cette fonction stratégique permettra d'enrichir les orientations de recherche du laboratoire grâce à une expertise de renommée internationale. Le conseiller scientifique participera à l'évaluation des projets de recherche, à l'établissement de partenariats académiques internationaux et à la définition des axes stratégiques du laboratoire. Son rôle comprendra également le rayonnement international du laboratoire, la mise en relation avec des institutions de recherche de premier plan et le développement de collaborations scientifiques stratégiques.`,
+  expertise: ["Conseil scientifique international"],
   status: "futur",
   order: 5,
 };
@@ -138,7 +138,7 @@ export const allPeople: Person[] = [
   aishaelPicard,
   livensonNicolas,
   benediquePaul,
-  sergeMranda,
+  sergeMiranda,
 ];
 
 /**

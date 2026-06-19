@@ -37,7 +37,7 @@ export default function NewsletterUnsubscribeForm() {
         throw new Error(payload?.message || "Erreur.");
       }
       setStatus("success");
-      setMessage("Votre demande a ete prise en compte.");
+      setMessage("Votre demande a été prise en compte.");
     } catch {
       setStatus("error");
       setMessage("Impossible de traiter la demande.");
@@ -60,7 +60,7 @@ export default function NewsletterUnsubscribeForm() {
         className="rounded-full border border-border bg-surface px-5 py-2 text-sm font-medium text-foreground transition hover:bg-surface-muted disabled:opacity-60"
         disabled={status === "loading"}
       >
-        Se desinscrire
+        Se désinscrire
       </button>
       {message ? <p className="text-sm text-neutral-600">{message}</p> : null}
     </form>

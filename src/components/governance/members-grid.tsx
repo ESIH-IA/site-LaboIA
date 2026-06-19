@@ -55,16 +55,26 @@ export function MembersGrid({
   return (
     <section className="mt-16 flex flex-col items-center">
       <div className="max-w-3xl text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{title}</h2>
+        <h2
+          className="text-3xl md:text-4xl font-bold mb-4"
+          style={{ color: "var(--labo-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+        >
+          {title}
+        </h2>
         {intro ? (
-          <div className="text-muted">
-            <p>{intro}</p>
-          </div>
+          <p style={{ color: "var(--labo-text-muted)" }}>{intro}</p>
         ) : null}
       </div>
 
       {members.length === 0 ? (
-        <div className="mt-8 rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
+        <div
+          className="mt-8 rounded-xl p-6 text-sm"
+          style={{
+            border: "1px dashed var(--labo-border)",
+            background: "var(--labo-surface)",
+            color: "var(--labo-text-muted)",
+          }}
+        >
           Aucun membre configure pour cette section.
         </div>
       ) : (
@@ -75,7 +85,14 @@ export function MembersGrid({
 
             return (
               <div key={category} className="flex flex-col items-center">
-                <h3 className="mb-8 text-xl font-semibold text-foreground uppercase tracking-wide">
+                <h3
+                  className="mb-8 text-sm font-semibold uppercase tracking-widest"
+                  style={{
+                    color: "rgba(136,146,176,0.55)",
+                    fontFamily: "var(--font-mono, monospace)",
+                    letterSpacing: "0.18em",
+                  }}
+                >
                   {categoryLabels[category]}
                 </h3>
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">

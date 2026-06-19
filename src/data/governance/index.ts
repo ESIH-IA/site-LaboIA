@@ -4,7 +4,7 @@ import {
   aishaelPicard,
   livensonNicolas,
   benediquePaul,
-  sergeMranda,
+  sergeMiranda,
 } from "./people";
 
 /**
@@ -27,14 +27,14 @@ export const governanceData: GovernanceData = {
       "Le laboratoire a été co-fondé par des acteurs académiques et scientifiques. Sa gouvernance institutionnelle est assurée par l'ESIH, tandis que la direction scientifique est portée par les fondateurs spécialistes en intelligence artificielle et en apprentissage automatique. Le laboratoire s'appuie également sur un conseil scientifique composé de chercheurs associés et de conseillers scientifiques internationaux.",
     topPerson: patrickAttie,
     coFounders: [livensonNicolas, aishaelPicard],
-    associateResearchers: [benediquePaul, sergeMranda],
+    associateResearchers: [benediquePaul, sergeMiranda],
   },
 
   members: {
     sectionTitle: "Membres & Profils détaillés",
     sectionIntro:
       "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie. Leur expertise complémentaire permet d'aborder les enjeux de recherche avec une approche multidisciplinaire et innovante.",
-    people: [patrickAttie, livensonNicolas, aishaelPicard, benediquePaul, sergeMranda],
+    people: [patrickAttie, livensonNicolas, aishaelPicard, benediquePaul, sergeMiranda],
   },
 };
 

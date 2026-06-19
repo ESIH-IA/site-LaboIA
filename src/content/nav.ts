@@ -2,7 +2,6 @@ export const mainNav = [
   { label: "Accueil", href: "/" },
   { label: "Services et Solutions IA", href: "/solutions" },
   { label: "Actualités", href: "/actualites" },
-  { label: "Équipe", href: "/equipe" },
   { label: "Collaborer", href: "/collaborer" },
   { label: "Contact", href: "/contact" },
 ] as const;

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import type { KpiItem, KpiSettings } from "@/lib/sanity/types";
 
 type KpisProps = {
@@ -8,76 +11,129 @@ type KpisProps = {
 };
 
 const statusLabels = {
-  draft: "Donn\u00e9es provisoires",
-  confirmed: "Donn\u00e9es valid\u00e9es",
+  draft: "Provisoire",
+  confirmed: "Validé",
 } as const;
+
+const KPI_COLORS = ["#00d4aa", "#6c63ff", "#00d4aa", "#6c63ff"];
+
+function KpiCard({ item, index }: { item: KpiItem; index: number }) {
+  const arcRef = useRef<SVGCircleElement>(null);
+  const valueRef = useRef<HTMLSpanElement>(null);
+  const hasObserved = useRef(false);
+  const color = KPI_COLORS[index % KPI_COLORS.length];
+
+  useEffect(() => {
+    const el = arcRef.current;
+    if (!el) return;
+
+    const circumference = 2 * Math.PI * 38;
+    el.style.strokeDasharray = `${circumference}`;
+    el.style.strokeDashoffset = `${circumference}`;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasObserved.current) {
+          hasObserved.current = true;
+          setTimeout(() => {
+            el.style.transition = "stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1)";
+            el.style.strokeDashoffset = `${circumference * 0.25}`;
+          }, index * 120);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [index]);
+
+  return (
+    <div className="glass-labo-hover rounded-2xl p-6 flex flex-col items-center text-center group">
+      {/* SVG Arc */}
+      <div className="relative mb-4">
+        <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
+          <circle
+            cx="50" cy="50" r="38"
+            fill="none"
+            stroke="rgba(255,255,255,0.05)"
+            strokeWidth="3"
+          />
+          <circle
+            ref={arcRef}
+            cx="50" cy="50" r="38"
+            fill="none"
+            stroke={color}
+            strokeWidth="3"
+            strokeLinecap="round"
+            transform="rotate(-90 50 50)"
+            style={{ opacity: 0.9 }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center flex-col">
+          <span
+            ref={valueRef}
+            className="text-2xl font-bold"
+            style={{ color, fontFamily: "var(--font-syne, sans-serif)" }}
+          >
+            {item.value}
+          </span>
+        </div>
+      </div>
+
+      <h3 className="text-sm font-semibold text-[#f0f4ff] mb-2">{item.label}</h3>
+
+      {item.status === "draft" && (
+        <div className="flex items-center gap-1.5 mt-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden />
+          <span className="label-eyebrow text-[#8892b0]">Provisoire</span>
+        </div>
+      )}
+
+      {item.note && (
+        <p className="mt-3 text-xs text-[#8892b0] leading-relaxed">{item.note}</p>
+      )}
+    </div>
+  );
+}
 
 export default function Kpis({ title, intro, items, meta }: KpisProps) {
   return (
-    <section className="relative bg-slate-50 py-20">
-      {/* Dot pattern subtil */}
-      <div className="absolute inset-0 dot-pattern opacity-30" />
-
-      <div className="relative mx-auto max-w-6xl px-4">
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-            {title ?? "Indicateurs cl\u00e9s"}
+    <section className="section-labo-surface section-padding">
+      <div className="container-site">
+        <div className="mb-12 text-center max-w-2xl mx-auto">
+          <div className="badge-teal inline-flex mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
+            Chiffres clés
+          </div>
+          <h2
+            className="text-display-md text-[#f0f4ff]"
+          >
+            {title ?? "Indicateurs clés"}
           </h2>
-          <p className="mt-3 text-base text-slate-600">
-            {intro ??
-              "Donn\u00e9es quantitatives sur nos activit\u00e9s de recherche et d'innovation"}
+          <p className="mt-4 text-[#8892b0] text-base leading-relaxed">
+            {intro ?? "Données quantitatives sur nos activités de recherche et d'innovation"}
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 grid-cols-2 lg:grid-cols-4">
           {items.map((item, idx) => (
-            <div
-              key={item._id}
-              className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-6 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-              style={{ animationDelay: `${idx * 100}ms` }}
-            >
-              {/* Gradient top accent */}
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500 opacity-0 transition-opacity group-hover:opacity-100" />
-
-              <div className="text-4xl font-bold gradient-text-cyan">
-                {item.value}
-              </div>
-              <div className="mt-3 text-sm font-medium text-slate-700">{item.label}</div>
-
-              {/* Status badge */}
-              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm">
-                <span
-                  className={`inline-block h-2 w-2 rounded-full ${
-                    item.status === "confirmed" ? "bg-emerald-500 animate-glow" : "bg-amber-400"
-                  }`}
-                  aria-hidden
-                />
-                <span className="text-slate-600">{statusLabels[item.status]}</span>
-              </div>
-
-              {item.note ? (
-                <p className="mt-4 text-xs leading-relaxed text-slate-500">{item.note}</p>
-              ) : null}
-            </div>
+            <KpiCard key={item._id} item={item} index={idx} />
           ))}
         </div>
 
-        {meta?.lastUpdated || meta?.disclaimer ? (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500">
-            {meta?.lastUpdated ? (
+        {(meta?.lastUpdated || meta?.disclaimer) && (
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            {meta.lastUpdated && (
               <>
-                <span className="font-semibold text-slate-700">Derni\u00e8re mise \u00e0 jour :</span>
-                <span>{meta.lastUpdated}</span>
+                <span className="label-eyebrow text-[#8892b0]">Mise à jour :</span>
+                <span className="text-xs text-[#8892b0]">{meta.lastUpdated}</span>
               </>
-            ) : null}
-            {meta?.disclaimer ? (
-              <>
-                <span aria-hidden="true">-</span>
-                <span>{meta.disclaimer}</span>
-              </>
-            ) : null}
+            )}
+            {meta.disclaimer && (
+              <span className="text-xs text-[#8892b0]/60">{meta.disclaimer}</span>
+            )}
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   );

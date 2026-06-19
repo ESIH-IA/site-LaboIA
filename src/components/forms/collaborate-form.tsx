@@ -9,11 +9,34 @@ export default function CollaborateForm() {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
+  const inputStyle = {
+    width: "100%",
+    borderRadius: "0.75rem",
+    padding: "0.65rem 1rem",
+    fontSize: "0.9rem",
+    outline: "none",
+    background: "rgba(10,15,28,0.04)",
+    border: "1px solid rgba(10,15,28,0.12)",
+    color: "var(--tech-text)",
+    transition: "border-color 0.2s",
+  };
+
   return (
-    <div className="mt-10 max-w-3xl rounded-2xl border border-border bg-surface p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-foreground">Demande de collaboration</h2>
+    <div
+      className="mt-10 max-w-3xl rounded-2xl p-8"
+      style={{
+        background: "rgba(10,15,28,0.04)",
+        border: "1px solid rgba(10,15,28,0.1)",
+      }}
+    >
+      <h2
+        className="text-xl font-bold mb-6"
+        style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+      >
+        Demande de collaboration
+      </h2>
       <form
-        className="mt-4 space-y-4"
+        className="space-y-5"
         onSubmit={async (event) => {
           event.preventDefault();
           setLoading(true);
@@ -35,9 +58,7 @@ export default function CollaborateForm() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),
             });
-            if (!response.ok) {
-              throw new Error("Erreur");
-            }
+            if (!response.ok) throw new Error("Erreur");
             trackEvent({ category: "form", action: "submit", name: "collaborer" });
             setMessage("Merci. Votre demande a ete enregistree.");
             form.reset();
@@ -48,59 +69,57 @@ export default function CollaborateForm() {
           }
         }}
       >
-        <label className="block text-sm text-neutral-700">
-          Nom complet
-          <input
-            type="text"
-            name="fullName"
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
-            required
-          />
+        <label className="block">
+          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
+            Nom complet
+          </span>
+          <input type="text" name="fullName" style={inputStyle} required />
         </label>
-        <label className="block text-sm text-neutral-700">
-          Email
-          <input
-            type="email"
-            name="email"
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
-            required
-          />
+        <label className="block">
+          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
+            Email
+          </span>
+          <input type="email" name="email" style={inputStyle} required />
         </label>
-        <label className="block text-sm text-neutral-700">
-          Organisation
-          <input
-            type="text"
-            name="organization"
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
-          />
+        <label className="block">
+          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
+            Organisation
+          </span>
+          <input type="text" name="organization" style={inputStyle} />
         </label>
-        <label className="block text-sm text-neutral-700">
-          Message
-          <textarea
-            name="message"
-            rows={5}
-            className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
-            required
-          />
+        <label className="block">
+          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
+            Message
+          </span>
+          <textarea name="message" rows={5} style={{ ...inputStyle, resize: "vertical" }} required />
         </label>
-        <label className="flex items-start gap-3 text-sm text-neutral-600">
-          <input type="checkbox" required className="mt-1" />
-          <span>
+        <label className="flex items-start gap-3">
+          <input type="checkbox" required className="mt-1 shrink-0" />
+          <span className="text-sm" style={{ color: "var(--tech-text-muted)" }}>
             J&apos;accepte que mes informations soient traitees conformement a la{" "}
-            <Link href="/confidentialite" className="underline underline-offset-4">
-              politique de confidentialit\u00e9
+            <Link
+              href="/confidentialite"
+              className="underline underline-offset-4"
+              style={{ color: "var(--tech-accent-teal)" }}
+            >
+              politique de confidentialite
             </Link>
             .
           </span>
         </label>
         <button
           type="submit"
-          className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-white shadow-sm shadow-black/10 transition hover:bg-primary/90 disabled:opacity-60"
+          className="btn-primary-tech"
           disabled={loading}
+          style={{ opacity: loading ? 0.6 : 1 }}
         >
-          Envoyer
+          {loading ? "Envoi en cours..." : "Envoyer la demande"}
         </button>
-        {message ? <p className="text-sm text-neutral-600">{message}</p> : null}
+        {message ? (
+          <p className="text-sm" style={{ color: "var(--tech-accent-teal)" }}>
+            {message}
+          </p>
+        ) : null}
       </form>
     </div>
   );

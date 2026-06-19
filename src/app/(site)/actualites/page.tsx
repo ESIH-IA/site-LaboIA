@@ -55,63 +55,92 @@ export default async function Page() {
   const news = [...sanityNews, ...localNews.filter((item) => !sanitySlugs.has(item.slug.current))].sort(
     (a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime(),
   );
+
+  const featured = news[0];
+  const rest = news.slice(1);
+
   return (
-    <main className="bg-white">
-      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
-
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
-              Actualit\u00e9s & Innovation
-            </span>
+    <main style={{ background: "var(--labo-bg)" }}>
+      {/* Hero editorial */}
+      <section className="relative overflow-hidden section-padding-sm">
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+          aria-hidden="true"
+        />
+        <div className="container-site relative z-10">
+          <div className="badge-teal inline-flex mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
+            Actualites &amp; Innovation
           </div>
-
-          {page?.title ? (
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
-              {page.title}
-            </h1>
-          ) : null}
-
-          {page?.summary ? (
-            <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed">
-              {page.summary}
-            </p>
-          ) : null}
+          <h1 className="text-display-xl text-[#f0f4ff] max-w-3xl">
+            {page?.title ?? "Actualites du laboratoire"}
+          </h1>
+          {page?.summary && (
+            <p className="mt-6 text-lg text-[#8892b0] max-w-2xl leading-relaxed">{page.summary}</p>
+          )}
         </div>
       </section>
 
       {page?.content && (
-        <section className="py-12 md:py-16 bg-slate-50">
-          <div className="mx-auto max-w-6xl px-4">
+        <section className="section-labo-surface section-padding-sm">
+          <div className="container-site">
             <PortableTextRenderer value={page.content} />
           </div>
         </section>
       )}
 
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              Dernières actualités
-            </h2>
-          </div>
-
-          {news.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
-              <div className="mx-auto max-w-md">
-                <p className="text-base text-slate-600">Contenu en cours de publication.</p>
+      {/* Article a la une */}
+      {featured && (
+        <section className="section-labo-surface section-padding-sm">
+          <div className="container-site">
+            <div className="label-eyebrow text-[#00d4aa] mb-6">A la une</div>
+            <div className="glass-labo-hover rounded-2xl p-8 md:p-10">
+              <div className="flex flex-wrap items-center gap-3 mb-5">
+                {featured.category && <span className="badge-teal">{featured.category}</span>}
+                {featured.date && <span className="label-mono text-[#8892b0]">{featured.date}</span>}
               </div>
+              <h2 className="text-display-md text-[#f0f4ff] max-w-2xl">{featured.title}</h2>
+              {featured.summary && (
+                <p className="mt-5 text-[#8892b0] text-lg leading-relaxed max-w-2xl">{featured.summary}</p>
+              )}
+              {featured.sourceUrl && (
+                <a
+                  href={featured.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#00d4aa] hover:text-[#00f0c0] transition-colors"
+                >
+                  Lire l&apos;article
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Liste des articles */}
+      <section className="section-labo section-padding">
+        <div className="container-site">
+          <div className="divider-labo mb-12" />
+          {news.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-sm text-[#8892b0]">
+              Contenu en cours de publication.
             </div>
           ) : (
-            <div className="grid gap-8">
-              {news.map((item, idx) => (
+            <div className="grid gap-6">
+              {rest.map((item, idx) => (
                 <div
                   key={item._id}
                   className="animate-fade-in-up"
-                  style={{ animationDelay: `${idx * 100}ms` }}
+                  style={{ animationDelay: `${idx * 80}ms` }}
                 >
                   <NewsCard item={item} />
                 </div>

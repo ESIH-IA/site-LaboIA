@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 
 import CollaborateCta from "@/components/home/collaborate-cta";
 import { ProjectCard } from "@/components/cards/cards";
+import { SolutionIcon, SectorIcon } from "@/components/icons/solution-icons";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
@@ -13,12 +14,11 @@ import { getHomeData, getSolutionsPageData } from "@/lib/cms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
-
   return await buildMetadata({
     locale,
     title: "Services et Solutions IA",
     description:
-      "D\u00e9couvrez nos services et solutions d'intelligence artificielle concr\u00e8tes. Des solutions test\u00e9es et \u00e9prouv\u00e9es, avec des projets d\u00e9j\u00e0 r\u00e9alis\u00e9s.",
+      "Découvrez nos services et solutions d'intelligence artificielle concrètes. Des solutions testées et éprouvées, avec des projets déjà réalisés.",
     path: localizedPath("/solutions", locale),
     alternates: {
       fr: localizedPath("/solutions", "fr"),
@@ -43,257 +43,342 @@ export default async function SolutionsPage() {
   const collaborate = homeData.home;
 
   return (
-    <main className="bg-white">
-      {/* Hero Section - Style Tech/IA avec gradient mesh */}
-      <section className="relative overflow-hidden gradient-mesh-bg py-20 md:py-28">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl animate-glow" />
-        <div
-          className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl animate-glow"
-          style={{ animationDelay: "1s" }}
-        />
+    <main style={{ background: "var(--tech-bg)", color: "var(--tech-text)" }}>
 
-        <div className="relative mx-auto max-w-6xl px-4">
-          {/* Badge Tech */}
-          <div className="inline-flex items-center gap-2 glass-card rounded-full px-6 py-2.5 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-100">
-              {solutionsPage.heroBadge ?? "Services & Solutions IA"}
-            </span>
+      {/* Hero creme - De la recherche au deploiement */}
+      <section className="relative overflow-hidden section-padding gradient-tech-hero">
+        <div className="container-site">
+          <div className="badge-dark inline-flex mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
+            {solutionsPage.heroBadge ?? "Services & Solutions IA"}
           </div>
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
-            {solutionsPage.heroTitle}
+          <h1
+            className="text-display-xl max-w-4xl"
+            style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+          >
+            {solutionsPage.heroTitle ?? "De la recherche au deploiement."}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg md:text-xl text-slate-200 leading-relaxed">
-            {solutionsPage.heroSubtitle}
-          </p>
-          <p className="mt-3 max-w-2xl text-base text-slate-300">
-            {solutionsPage.heroDescription}
-          </p>
-
-          {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-4">
-            {solutionsPage.heroPrimaryCta ? (
+          {solutionsPage.heroDescription && (
+            <p className="mt-6 text-lg max-w-2xl leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
+              {solutionsPage.heroDescription}
+            </p>
+          )}
+          <div className="mt-10 flex flex-wrap gap-4">
+            {solutionsPage.heroPrimaryCta && (
               <Link
                 href={solutionsPage.heroPrimaryCta.href}
-                className="group inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-cyan-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/40"
+                className="btn btn-primary-tech"
               >
                 {solutionsPage.heroPrimaryCta.label}
-                <svg
-                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
               </Link>
-            ) : null}
-            {solutionsPage.heroSecondaryCta ? (
-              <a
+            )}
+            {solutionsPage.heroSecondaryCta && (
+              <Link
                 href={solutionsPage.heroSecondaryCta.href}
-                className="rounded-xl glass-card px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20"
+                className="btn btn-secondary-tech"
               >
                 {solutionsPage.heroSecondaryCta.label}
-              </a>
-            ) : null}
+              </Link>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Section Approche */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              {solutionsPage.approachTitle ?? "Notre approche"}
-            </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
-              {solutionsPage.approachIntro}
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {solutionsPage.approachSteps?.map((step, idx) => (
-              <article
-                key={`${step.title}-${idx}`}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
+      {/* Notre approche - 3 etapes horizontales */}
+      {solutionsPage.approachSteps?.length ? (
+        <section className="section-tech-surface section-padding">
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-dark inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
+                Approche
+              </div>
+              <h2
+                className="text-display-md"
+                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
               >
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-cyan-500 to-teal-500" />
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
-                  <span className="text-2xl font-bold">{idx + 1}</span>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-                <p className="text-base text-slate-600 leading-relaxed">{step.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section Solutions IA */}
-      <section id="solutions" className="relative py-20 md:py-28 bg-slate-50 overflow-hidden">
-        <div className="absolute inset-0 dot-pattern opacity-20" />
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              {solutionsPage.solutionsTitle ?? "Solutions IA"}
-            </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
-              {solutionsPage.solutionsIntro}
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-2">
-            {solutionsPage.solutions?.map((solution, idx) => (
-              <article
-                key={solution._id}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 p-8 transition-smooth hover:-translate-y-2 hover:shadow-xl hover:shadow-teal-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-                <span className="inline-block rounded-full border border-cyan-200 bg-cyan-50/50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-700 mb-4">
-                  Solution
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:gradient-text-cyan transition-smooth">
-                  {solution.title}
-                </h3>
-                <p className="text-base text-slate-600 leading-relaxed">
-                  {solution.shortDescription}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section Cas d'usage */}
-      <section id="cas-usage" className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div>
-              <span className="inline-block rounded-full border border-teal-200 bg-teal-50/50 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-teal-700 mb-6">
-                {solutionsPage.useCasesTitle ?? "Cas d'usage"}
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-6">
-                {featuredUseCase?.title}
+                {solutionsPage.approachTitle ?? "Notre approche"}
               </h2>
-              <p className="text-base text-slate-600 leading-relaxed mb-4">
-                {featuredUseCase?.context}
-              </p>
-              <p className="text-base text-slate-600 leading-relaxed mb-6">
-                {featuredUseCase?.solution}
-              </p>
-              {featuredUseCase?.benefits?.length ? (
-                <ul className="space-y-3">
-                  {featuredUseCase.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-start gap-3">
-                      <div className="mt-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-teal-500/10">
-                        <span className="h-2 w-2 rounded-full bg-teal-500" aria-hidden />
+              {solutionsPage.approachIntro && (
+                <p className="mt-4 leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
+                  {solutionsPage.approachIntro}
+                </p>
+              )}
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {solutionsPage.approachSteps.map((step, idx) => (
+                <div key={step.title} className="card-tech rounded-2xl p-6 relative">
+                  <div
+                    className="absolute top-0 left-0 right-0 h-px rounded-t-2xl"
+                    style={{ background: "linear-gradient(90deg, #00b894, transparent)" }}
+                    aria-hidden="true"
+                  />
+                  <div className="label-eyebrow mb-3" style={{ color: "var(--tech-accent-teal)" }}>
+                    0{idx + 1}
+                  </div>
+                  <h3
+                    className="text-lg font-semibold mb-3"
+                    style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Solutions IA - feature grid */}
+      {solutionsPage.solutions?.length ? (
+        <section className="section-tech section-padding" id="solutions">
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-dark inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
+                Solutions
+              </div>
+              <h2
+                className="text-display-md"
+                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+              >
+                {solutionsPage.solutionsTitle ?? "Solutions IA"}
+              </h2>
+              {solutionsPage.solutionsIntro && (
+                <p className="mt-4 leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
+                  {solutionsPage.solutionsIntro}
+                </p>
+              )}
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              {solutionsPage.solutions.map((solution) => (
+                <div key={solution._id} className="card-tech-hover rounded-2xl p-6">
+                  <div className="flex items-start gap-4">
+                    {solution.icon && (
+                      <div
+                        className="shrink-0 h-10 w-10 rounded-lg flex items-center justify-center"
+                        style={{ background: "rgba(0,184,148,0.1)", border: "1px solid rgba(0,184,148,0.2)" }}
+                      >
+                        <SolutionIcon name={solution.icon} size={20} color="#00b894" strokeWidth={1.5} />
                       </div>
-                      <span className="text-base text-slate-700 leading-relaxed">{benefit}</span>
-                    </li>
+                    )}
+                    <div className="flex-1">
+                      <h3
+                        className="font-semibold text-lg mb-2"
+                        style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+                      >
+                        {solution.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--tech-text-muted)" }}>
+                        {solution.shortDescription}
+                      </p>
+                      {solution.benefits?.length ? (
+                        <ul className="flex flex-col gap-1">
+                          {solution.benefits.slice(0, 3).map((b) => (
+                            <li key={b} className="flex items-center gap-2 text-xs" style={{ color: "var(--tech-text-muted)" }}>
+                              <span className="h-1 w-1 rounded-full shrink-0" style={{ background: "var(--tech-accent-teal)" }} />
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Cas d usage */}
+      {featuredUseCase && (
+        <section className="section-tech-surface section-padding" id="cas-usage">
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-dark inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
+                Impact
+              </div>
+              <h2
+                className="text-display-md"
+                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+              >
+                {solutionsPage.useCasesTitle ?? "Cas d usage"}
+              </h2>
+            </div>
+
+            <div className="card-tech rounded-3xl p-8 md:p-12 relative overflow-hidden">
+              <div
+                className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: "linear-gradient(90deg, transparent, #00b894, transparent)" }}
+                aria-hidden="true"
+              />
+              <h3
+                className="text-display-md mb-6"
+                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+              >
+                {featuredUseCase.title}
+              </h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <div className="label-eyebrow mb-2" style={{ color: "var(--tech-text-muted)" }}>Contexte</div>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>{featuredUseCase.context}</p>
+                </div>
+                <div>
+                  <div className="label-eyebrow mb-2" style={{ color: "var(--tech-text-muted)" }}>Solution</div>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>{featuredUseCase.solution}</p>
+                </div>
+              </div>
+              {featuredUseCase.benefits?.length ? (
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {featuredUseCase.benefits.map((b) => (
+                    <span key={b} className="tag-tech">{b}</span>
                   ))}
-                </ul>
+                </div>
               ) : null}
             </div>
-            <div className="relative overflow-hidden rounded-3xl gradient-card-bg border border-slate-200 p-8 shadow-lg">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(6,182,212,0.08),transparent_55%)]" />
-              <div className="absolute left-0 right-0 top-0 h-1 bg-linear-to-r from-teal-500 to-cyan-500" />
-              <div className="relative">
-                <p className="text-base font-bold text-slate-900 mb-4">
-                  {solutionsPage.flowTitle ?? "Flux IA applique"}
-                </p>
-                <p className="text-sm text-slate-600 leading-relaxed mb-8">
-                  {solutionsPage.flowDescription}
-                </p>
-                <div className="space-y-4">
-                  {solutionsPage.flowSteps?.map((step, idx) => (
-                    <div key={`${step}-${idx}`} className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600">
-                        <span className="text-sm font-bold">{idx + 1}</span>
-                      </div>
-                      <span className="text-sm font-semibold uppercase tracking-wider text-slate-600">
-                        {step}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+          </div>
+        </section>
+      )}
+
+      {/* Flux IA - timeline horizontale */}
+      {solutionsPage.flowSteps?.length ? (
+        <section className="section-labo section-padding" style={{ background: "var(--labo-bg)" }}>
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-teal inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
+                Processus
               </div>
+              <h2 className="text-display-md text-[#f0f4ff]">
+                {solutionsPage.flowTitle ?? "Flux IA applique"}
+              </h2>
+              {solutionsPage.flowDescription && (
+                <p className="mt-4 text-[#8892b0] leading-relaxed">{solutionsPage.flowDescription}</p>
+              )}
+            </div>
+
+            <div className="timeline-track">
+              {(solutionsPage.flowSteps ?? []).map((step, idx) => (
+                <div key={step} className="flex items-center gap-4 shrink-0">
+                  <div className="glass-labo rounded-xl px-6 py-4 flex items-center gap-3">
+                    <span className="label-eyebrow text-[#00d4aa]">0{idx + 1}</span>
+                    <span className="text-[#f0f4ff] font-medium text-sm">{step}</span>
+                  </div>
+                  {idx < (solutionsPage.flowSteps ?? []).length - 1 && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#00d4aa]/40 shrink-0" aria-hidden="true">
+                      <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
-      {/* Section Services */}
-      <section className="py-20 md:py-28 bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              {solutionsPage.servicesTitle ?? "Services proposes"}
-            </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
-              {solutionsPage.servicesIntro}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            {solutionsPage.services?.map((service) => (
-              <span
-                key={service}
-                className="group rounded-full border border-slate-300 bg-white px-6 py-3 text-base font-medium text-slate-700 shadow-sm transition-smooth hover:-translate-y-1 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700 hover:shadow-lg hover:shadow-cyan-500/10"
-              >
-                {service}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section Secteurs */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-3xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-              {solutionsPage.sectorsTitle ?? "Secteurs d'application"}
-            </h2>
-            <p className="mt-4 text-base text-slate-600 leading-relaxed">
-              {solutionsPage.sectorsIntro}
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-4">
-            {solutionsPage.sectors?.map((sector, idx) => (
-              <div
-                key={sector._id}
-                className="group relative overflow-hidden rounded-2xl gradient-card-bg border border-slate-200 px-6 py-4 text-center text-base font-medium text-slate-700 shadow-sm transition-smooth hover:-translate-y-1 hover:shadow-lg hover:shadow-teal-500/10"
-                style={{ animationDelay: `${idx * 50}ms` }}
-              >
-                <div className="absolute left-0 right-0 top-0 h-0.5 bg-linear-to-r from-teal-500 to-cyan-500 opacity-0 transition-opacity group-hover:opacity-100" />
-                {sector.name}
+      {/* Services */}
+      {solutionsPage.services?.length ? (
+        <section className="section-tech section-padding">
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-dark inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
+                Offre
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <h2
+                className="text-display-md"
+                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+              >
+                {solutionsPage.servicesTitle ?? "Services proposes"}
+              </h2>
+              {solutionsPage.servicesIntro && (
+                <p className="mt-4 leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
+                  {solutionsPage.servicesIntro}
+                </p>
+              )}
+            </div>
 
-      {/* Section Projets */}
+            <div className="flex flex-wrap gap-3">
+              {solutionsPage.services.map((service) => (
+                <div
+                  key={service}
+                  className="card-tech rounded-xl px-5 py-3 text-sm font-medium"
+                  style={{ color: "var(--tech-text)" }}
+                >
+                  {service}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Secteurs - tags animes */}
+      {solutionsPage.sectors?.length ? (
+        <section className="section-tech-surface section-padding">
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-dark inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
+                Secteurs
+              </div>
+              <h2
+                className="text-display-md"
+                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+              >
+                {solutionsPage.sectorsTitle ?? "Secteurs d application"}
+              </h2>
+              {solutionsPage.sectorsIntro && (
+                <p className="mt-4 leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
+                  {solutionsPage.sectorsIntro}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {solutionsPage.sectors.map((sector) => (
+                <div
+                  key={sector._id}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all hover:-translate-y-0.5"
+                  style={{
+                    background: "rgba(0,184,148,0.08)",
+                    border: "1px solid rgba(0,184,148,0.15)",
+                    color: "var(--tech-text)",
+                  }}
+                >
+                  {sector.icon && <SectorIcon name={sector.icon} size={16} color="var(--tech-accent-teal)" strokeWidth={1.5} />}
+                  {sector.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Projets appliques */}
       {appliedProjects.length > 0 && (
-        <section id="projets" className="py-20 md:py-28 bg-slate-50">
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="max-w-3xl mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+        <section className="section-labo section-padding" style={{ background: "var(--labo-bg)" }}>
+          <div className="container-site">
+            <div className="max-w-xl mb-14">
+              <div className="badge-teal inline-flex mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
+                Projets
+              </div>
+              <h2 className="text-display-md text-[#f0f4ff]">
                 {solutionsPage.projectsTitle ?? "Projets en cours"}
               </h2>
-              <p className="mt-4 text-base text-slate-600 leading-relaxed">
-                {solutionsPage.projectsIntro}
-              </p>
+              {solutionsPage.projectsIntro && (
+                <p className="mt-4 text-[#8892b0] leading-relaxed">{solutionsPage.projectsIntro}</p>
+              )}
             </div>
-
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {appliedProjects.map((project) => (
                 <ProjectCard key={project._id} project={project} />
               ))}
@@ -302,10 +387,11 @@ export default async function SolutionsPage() {
         </section>
       )}
 
+      {/* CTA Collaborer */}
       <CollaborateCta
         title={collaborate.collaborateTitle}
         body={collaborate.collaborateBody}
-        actions={collaborate.collaborateActions ?? []}
+        actions={collaborate.collaborateActions}
       />
     </main>
   );

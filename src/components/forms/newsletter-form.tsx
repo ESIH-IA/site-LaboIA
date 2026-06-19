@@ -61,7 +61,7 @@ export default function NewsletterForm() {
         <span>
           J&apos;accepte de recevoir les communications du laboratoire. Voir la{" "}
           <Link href="/confidentialite" className="underline underline-offset-4">
-            politique de confidentialit\u00e9
+            politique de confidentialité
           </Link>
           .
         </span>

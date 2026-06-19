@@ -55,7 +55,7 @@ export default async function Page() {
           <NewsletterForm />
         </div>
         <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-neutral-900">Gerer mon abonnement</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">Gérer mon abonnement</h2>
           <NewsletterUnsubscribeForm />
         </div>
       </div>
