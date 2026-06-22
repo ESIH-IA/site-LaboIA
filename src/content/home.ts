@@ -2,29 +2,24 @@ export const hero = {
   bannerSrc: "/banners/banner-neutral.svg",
   bannerAlt: "Bannière principale du LaCDIA",
   description:
-    "Premier laboratoire d'innovation et de recherche appliquée en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
+    "Nous menons des recherches en intelligence artificielle et science des données pour l'agriculture, les services publics, la santé et l'innovation en Haïti et à l'international.",
   actions: [
     {
-      label: "Découvrir le laboratoire",
-      href: "/a-propos",
+      label: "Collaborer avec le laboratoire",
+      href: "/collaborer",
       variant: "primary",
     },
     {
-      label: "Nos axes de recherche",
-      href: "/recherche/departement-scientifique",
+      label: "Explorer nos projets",
+      href: "/projets",
       variant: "secondary",
-    },
-    {
-      label: "LaCDIA Tech — Services",
-      href: "/lacdia-tech",
-      variant: "tertiary",
     },
   ],
 } as const;
 
 export const event = {
   label: "Événement à venir",
-  title: "Séminaire IA et données pour les services publics",
+  title: "Séminaire IA & données pour les services publics",
   date: "Jeudi 25 avril à 10h00",
   location: "Campus ESIH, Port-au-Prince",
   ctaLabel: "Voir le programme",

@@ -12,6 +12,7 @@ import {
   newsListQuery,
   partnerListQuery,
   projectListQuery,
+  researchAxisListQuery,
   siteSettingsQuery,
   solutionsPageQuery,
 } from "@/lib/sanity/queries";
@@ -24,6 +25,7 @@ import type {
   NewsListItem,
   PartnerListItem,
   ProjectListItem,
+  ResearchAxisListItem,
   SiteSettings,
   SolutionsPage,
 } from "@/lib/sanity/types";
@@ -35,6 +37,7 @@ type HomeDataBundle = {
   featuredProjects: ProjectListItem[];
   featuredNews: NewsListItem[];
   featuredPartners: PartnerListItem[];
+  researchAxes: ResearchAxisListItem[];
 };
 
 const emptySiteSettings: SiteSettings = {
@@ -80,16 +83,18 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
       featuredProjects: [],
       featuredNews: [],
       featuredPartners: [],
+      researchAxes: [],
     };
   }
 
-  const [home, kpis, kpiSettings, projects, news, partners] = await Promise.all([
+  const [home, kpis, kpiSettings, projects, news, partners, axes] = await Promise.all([
     sanityFetch<HomePageData | null>(homePageQuery, { locale }, null),
     sanityFetch<KpiItem[]>(kpiListQuery, { locale }, []),
     sanityFetch<KpiSettings | null>(kpiSettingsQuery, { locale }, null),
     sanityFetch<ProjectListItem[]>(projectListQuery, { locale }, []),
     sanityFetch<NewsListItem[]>(newsListQuery, { locale }, []),
     sanityFetch<PartnerListItem[]>(partnerListQuery, { locale }, []),
+    sanityFetch<ResearchAxisListItem[]>(researchAxisListQuery, { locale }, []),
   ]);
 
   return {
@@ -99,6 +104,7 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
     featuredProjects: projects.filter((project) => project.featured),
     featuredNews: news.filter((item) => item.featured),
     featuredPartners: partners.filter((partner) => partner.featured),
+    researchAxes: axes,
   };
 }
 

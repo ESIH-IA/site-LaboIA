@@ -31,5 +31,8 @@ export async function POST(request: Request) {
   }
 
   console.info("[newsletter] desinscription sans provider configure", { email });
-  return NextResponse.json({ ok: true, message: "Desinscription enregistree." });
+  return NextResponse.json(
+    { ok: false, message: "Service newsletter non configuré. Veuillez réessayer plus tard." },
+    { status: 503 },
+  );
 }

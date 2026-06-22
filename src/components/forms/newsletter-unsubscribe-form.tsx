@@ -38,7 +38,7 @@ export default function NewsletterUnsubscribeForm({ copy }: { copy?: FormCopy | 
         throw new Error(payload?.message || "Request failed");
       }
       setStatus("success");
-      setMessage(copy?.successMessage ?? "");
+      setMessage(copy?.successMessage ?? "Votre demande a été prise en compte.");
     } catch {
       setStatus("error");
       setMessage(copy?.errorMessage ?? "");
@@ -63,7 +63,7 @@ export default function NewsletterUnsubscribeForm({ copy }: { copy?: FormCopy | 
         className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
-        {status === "loading" ? copy?.loadingLabel : copy?.submitLabel}
+        {status === "loading" ? (copy?.loadingLabel ?? "En cours...") : (copy?.submitLabel ?? "Se désinscrire")}
       </button>
       {message ? <p className="form-status-text">{message}</p> : null}
     </form>

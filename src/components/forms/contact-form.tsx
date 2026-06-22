@@ -43,15 +43,13 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),
             });
-            if (!response.ok) {
-              throw new Error("Erreur");
-            }
+            if (!response.ok) throw new Error("Erreur");
             trackEvent({ category: "form", action: "submit", name: "contact" });
-            setMessage(copy?.successMessage ?? "");
+            setMessage(copy?.successMessage ?? "Merci. Votre message a été enregistré. Nous vous répondrons dans les meilleurs délais.");
             setMessageType("success");
             form.reset();
           } catch {
-            setMessage(copy?.errorMessage ?? "");
+            setMessage(copy?.errorMessage ?? "Une erreur est survenue. Veuillez réessayer ou nous écrire directement.");
             setMessageType("error");
           } finally {
             setLoading(false);
@@ -61,7 +59,7 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
         <div className="form-grid form-grid-2">
           <label className="form-group">
             <span className="form-label">
-              {copy?.fullNameLabel} <span className="form-label-required">*</span>
+              {copy?.fullNameLabel ?? "Nom complet"} <span className="form-label-required">*</span>
             </span>
             <input
               type="text"
@@ -74,7 +72,7 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
 
           <label className="form-group">
             <span className="form-label">
-              {copy?.emailLabel} <span className="form-label-required">*</span>
+              {copy?.emailLabel ?? "Email"} <span className="form-label-required">*</span>
             </span>
             <input
               type="email"
@@ -88,7 +86,7 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
 
         <label className="form-group">
           <span className="form-label">
-            {copy?.subjectLabel}
+            {copy?.subjectLabel ?? "Objet"}
           </span>
           <input
             type="text"
@@ -100,7 +98,7 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
 
         <label className="form-group">
           <span className="form-label">
-            {copy?.messageLabel} <span className="form-label-required">*</span>
+            {copy?.messageLabel ?? "Message"} <span className="form-label-required">*</span>
           </span>
           <textarea
             name="message"
@@ -119,9 +117,9 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
             className="form-checkbox"
           />
           <span>
-            {copy?.consentText}{" "}
+            {copy?.consentText ?? "J'accepte que mes informations soient traitées conformément à la"}{" "}
             <Link href={privacyHref} className="form-checkbox-link">
-              {copy?.privacyLabel}
+              {copy?.privacyLabel ?? "politique de confidentialité"}
             </Link>
           </span>
         </label>
@@ -132,7 +130,7 @@ export default function ContactForm({ copy }: { copy?: FormCopy | null }) {
             className="btn btn-gradient"
             disabled={loading}
           >
-            {loading ? copy?.loadingLabel : copy?.submitLabel}
+            {loading ? (copy?.loadingLabel ?? "Envoi en cours...") : (copy?.submitLabel ?? "Envoyer le message")}
           </button>
         </div>
 

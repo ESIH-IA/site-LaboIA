@@ -62,9 +62,9 @@ export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
       <label className="form-checkbox-light-row">
         <input type="checkbox" required style={{ marginTop: "0.25rem" }} />
         <span>
-          {copy?.consentText}{" "}
+          {copy?.consentText ?? "J'accepte de recevoir les communications du laboratoire. Voir la"}{" "}
           <Link href={copy?.privacyHref ?? "/confidentialite"} style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>
-            {copy?.privacyLabel}
+            {copy?.privacyLabel ?? "politique de confidentialité"}
           </Link>
         </span>
       </label>
@@ -73,7 +73,7 @@ export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
         className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
-        {status === "loading" ? copy?.loadingLabel : copy?.submitLabel}
+        {status === "loading" ? (copy?.loadingLabel ?? "En cours...") : (copy?.submitLabel ?? "S'inscrire")}
       </button>
       {message ? <p className="form-status-text">{message}</p> : null}
     </form>
