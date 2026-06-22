@@ -1443,13 +1443,14 @@ body {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 800;
-  color: var(--labo-text);
+  color: inherit;
   margin: 0 0 1rem;
 }
 
 .section-subtitle {
   font-size: 1rem;
-  color: var(--labo-text-muted);
+  color: inherit;
+  opacity: 0.7;
   line-height: 1.7;
   margin: 0;
 }
@@ -1463,8 +1464,8 @@ body {
 }
 
 .section-white {
-  background: var(--tech-bg);
-  color: var(--tech-text);
+  background: #ffffff;
+  color: var(--color-text-dark);
 }
 
 .section-header-row {
@@ -1476,11 +1477,23 @@ body {
 }
 
 .section-title-white {
-  color: var(--labo-text);
+  color: var(--labo-text);  /* force blanc sur sections dark */
 }
 
 .section-subtitle-light {
-  color: var(--labo-text-muted);
+  color: var(--labo-text-muted);  /* force muted sur sections dark */
+}
+
+/* Titres sur sections claires */
+.section-white .section-title,
+.section-light .section-title {
+  color: var(--color-text-dark);
+}
+
+.section-white .section-subtitle,
+.section-light .section-subtitle {
+  color: var(--color-text-body);
+  opacity: 1;
 }
 
 /* ============================================================
@@ -1898,10 +1911,8 @@ body {
   padding: var(--section-py) 0;
 }
 
-/* .section-white déjà défini mais on s'assure qu'il a un padding */
+/* padding ajouté sur section-white via la règle originale */
 .section-white {
-  background: #FFFFFF;
-  color: var(--color-text-dark);
   padding: var(--section-py) 0;
 }
 
