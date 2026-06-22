@@ -1817,3 +1817,525 @@ body {
 }
 
 .pattern-10 { opacity: 0.10; }
+.pattern-20 { opacity: 0.20; }
+.pattern-40 { opacity: 0.40; }
+
+/* ============================================================
+   NEW DESIGN SYSTEM — TOKENS (2025 audit)
+   Alignés sur le document de design system fourni
+   ============================================================ */
+:root {
+  /* Couleurs primaires */
+  --color-bg-dark:        #0A0E1A;
+  --color-bg-mid:         #111827;
+  --color-bg-light:       #F5F4F0;
+  --color-bg-card-dark:   #161D2E;
+  --color-bg-card-light:  #FFFFFF;
+
+  /* Accent */
+  --color-teal:           #00E5C3;
+  --color-teal-dark:      #00B89A;
+  --color-teal-glow:      rgba(0, 229, 195, 0.15);
+  --color-blue-accent:    #3B82F6;
+
+  /* Texte */
+  --color-text-white:     #FFFFFF;
+  --color-text-light:     #E2E8F0;
+  --color-text-muted:     #94A3B8;
+  --color-text-dark:      #0F172A;
+  --color-text-body:      #334155;
+  --color-text-subtle:    #64748B;
+
+  /* Bordures */
+  --color-border-dark:    rgba(255,255,255,0.08);
+  --color-border-teal:    rgba(0,229,195,0.3);
+  --color-border-light:   rgba(0,0,0,0.08);
+
+  /* Ombres */
+  --shadow-card:       0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+  --shadow-card-hover: 0 8px 32px rgba(0,229,195,0.12), 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-glow-teal:  0 0 40px rgba(0,229,195,0.2);
+
+  /* Transitions */
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* Layout */
+  --container-max:      1200px;
+  --container-padding:  clamp(1rem, 4vw, 3rem);
+  --section-py:         clamp(4rem, 8vw, 7rem);
+}
+
+/* ============================================================
+   CONTAINER STANDARD (utilisé par pages solutions, contact, etc.)
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* ============================================================
+   SECTION BASE + VARIANTES (pages intérieures)
+   ============================================================ */
+.section-dark {
+  background: var(--color-bg-dark);
+  color: var(--color-text-light);
+  padding: var(--section-py) 0;
+}
+
+.section-mid {
+  background: var(--color-bg-mid);
+  color: var(--color-text-light);
+  padding: var(--section-py) 0;
+}
+
+.section-light {
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+  padding: var(--section-py) 0;
+}
+
+/* .section-white déjà défini mais on s'assure qu'il a un padding */
+.section-white {
+  background: #FFFFFF;
+  color: var(--color-text-dark);
+  padding: var(--section-py) 0;
+}
+
+/* ============================================================
+   PAGE HERO — Sections hero des pages intérieures
+   ============================================================ */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding: calc(64px + var(--section-py)) 0 var(--section-py);
+}
+
+.page-hero-dark {
+  background: var(--color-bg-dark);
+  color: var(--color-text-white);
+}
+
+.page-hero-light {
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+}
+
+/* ============================================================
+   CARD BASE (utilisé par solutions, actualités, etc.)
+   ============================================================ */
+.card {
+  background: var(--color-bg-card-light);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.card-dark-variant {
+  background: var(--color-bg-card-dark);
+  border-color: var(--color-border-dark);
+}
+
+/* ============================================================
+   STAT CARD (remplacement des cercles SVG KPI)
+   ============================================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: var(--color-border-dark);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+  background: var(--color-bg-card-dark);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  transition: background var(--transition-base);
+}
+
+.stat-card:hover {
+  background: rgba(0, 229, 195, 0.05);
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--color-teal);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-white);
+}
+
+.stat-desc {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ============================================================
+   NEWS CARD — Style dark pour la liste actualités
+   ============================================================ */
+.news-card-dark {
+  background: var(--color-bg-card-dark);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.news-card-dark:hover {
+  border-color: var(--color-border-teal);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* Bande couleur en haut */
+.news-card-dark::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--color-teal);
+  border-radius: 2px 2px 0 0;
+}
+
+.news-card-dark[data-type="partenariat"]::before { background: #7C3AED; }
+.news-card-dark[data-type="soutenance"]::before  { background: #F59E0B; }
+
+.news-card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.news-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.news-card-title-dark {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-white);
+  line-height: 1.4;
+  margin: 0;
+  flex: 1;
+}
+
+.news-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  flex: 1;
+  margin: 0;
+}
+
+.news-card-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-dark);
+  margin-top: auto;
+}
+
+.news-card-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.news-card-dark:hover .news-card-arrow {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+  background: rgba(0, 229, 195, 0.06);
+}
+
+/* ============================================================
+   BADGE VARIANTS (solutions, news)
+   ============================================================ */
+.badge-cyan {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(0, 229, 195, 0.1);
+  border: 1px solid rgba(0, 229, 195, 0.2);
+  color: var(--color-teal);
+}
+
+.badge-news {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #60A5FA;
+}
+
+/* ============================================================
+   HERO BADGE (editable-page-view hero eyebrow)
+   ============================================================ */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 229, 195, 0.1);
+  border: 1px solid rgba(0, 229, 195, 0.25);
+  margin-bottom: 1.5rem;
+}
+
+.hero-badge-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+}
+
+/* ============================================================
+   SECTION LABEL (eyebrow des sections)
+   ============================================================ */
+.section-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   BUTTON COMPLÉMENTS
+   ============================================================ */
+.btn-primary {
+  background: var(--color-teal);
+  color: var(--color-bg-dark);
+  box-shadow: 0 4px 20px rgba(0, 229, 195, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: var(--color-teal-dark);
+  box-shadow: 0 6px 28px rgba(0, 229, 195, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text-white);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+  background: rgba(0, 229, 195, 0.06);
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-teal);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: gap var(--transition-fast);
+}
+
+.btn-link:hover { gap: 10px; }
+
+/* ============================================================
+   AXE CARD — Section axes de recherche (fond clair)
+   ============================================================ */
+.axe-card-light {
+  background: var(--color-bg-card-light);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.axe-card-light:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-3px);
+  border-color: rgba(0, 229, 195, 0.3);
+}
+
+.axe-number-bg {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.04);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  user-select: none;
+  pointer-events: none;
+}
+
+.axe-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 229, 195, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--color-teal);
+}
+
+.axe-title-dark {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: 0.75rem;
+}
+
+.axe-desc-body {
+  font-size: 0.875rem;
+  color: var(--color-text-body);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Ligne transversale (pleine largeur sous la grille) */
+.axe-transversal {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(0, 229, 195, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.axe-transversal-bar {
+  width: 4px;
+  height: 40px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--color-teal), #7C3AED);
+  flex-shrink: 0;
+}
+
+.axe-transversal-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+  margin-bottom: 0.25rem;
+}
+
+.axe-transversal-text {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   CARD GRID 2 COLONNES
+   ============================================================ */
+.card-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 768px) {
+  .card-grid-2 { grid-template-columns: 1fr; }
+}

@@ -46,64 +46,98 @@ export default async function SolutionsPage() {
   const collaborate = homeData.home;
 
   return (
-    <main className="section-white">
-      {/* Hero Section - Style Tech/IA avec gradient mesh */}
+    <main>
+      {/* Hero Section */}
       <section className="page-hero page-hero-dark">
-        <div className="section-pattern grid-pattern pattern-40" />
-        <div className="animate-glow" style={{position:'absolute', right:0, top:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(6,182,212,0.1)', filter:'blur(48px)'}} />
+        {/* Grille de fond */}
         <div
-          className="animate-glow" style={{position:'absolute', left:0, bottom:0, height:'24rem', width:'24rem', borderRadius:'9999px', background:'rgba(139,92,246,0.1)', filter:'blur(48px)', animationDelay: "1s"}}
+          aria-hidden="true"
+          style={{
+            position: "absolute", inset: 0, pointerEvents: "none",
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)," +
+              "linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+            opacity: 0.5,
+          }}
+        />
+        {/* Halo teal */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute", top: "20%", right: "10%",
+            width: "28rem", height: "28rem", borderRadius: "50%",
+            background: "radial-gradient(ellipse, rgba(0,229,195,0.12) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
         />
 
-        <div className="container" style={{position:'relative'}}>
-          {/* Badge Tech */}
-          <div className="glass-card" style={{display:'inline-flex', alignItems:'center', gap:'0.5rem', borderRadius:'9999px', padding:'0.625rem 1.5rem', marginBottom:'1.5rem'}}>
-            <span className="animate-pulse" style={{height:'0.5rem', width:'0.5rem', borderRadius:'9999px', background:'#22d3ee'}} />
-            <span style={{fontSize:'0.75rem', fontWeight:600, textTransform:'uppercase', letterSpacing:'0.05em', color:'#cffafe'}}>
-              {solutionsPage.heroBadge}
-            </span>
-          </div>
+        <div className="container" style={{ position: "relative" }}>
+          {solutionsPage.heroBadge && (
+            <div className="hero-badge" style={{ display: "inline-flex", marginBottom: "2rem" }}>
+              <span
+                style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--color-teal)", flexShrink: 0 }}
+              />
+              <span className="hero-badge-text">{solutionsPage.heroBadge}</span>
+            </div>
+          )}
 
-          <h1 style={{fontSize:'clamp(2.25rem,5vw,3.75rem)', fontWeight:700, letterSpacing:'-0.01em', color:'#fff', marginBottom:'1.5rem'}}>
+          <h1
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2.5rem, 5vw, 4rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.05,
+              color: "var(--color-text-white)",
+              marginBottom: "1.5rem",
+              maxWidth: "18ch",
+            }}
+          >
             {solutionsPage.heroTitle}
           </h1>
-          <p style={{marginTop:'1rem', maxWidth:'48rem', fontSize:'clamp(1.125rem,2vw,1.25rem)', color:'#e2e8f0', lineHeight:1.7}}>
-            {solutionsPage.heroSubtitle}
-          </p>
-          <p style={{marginTop:'0.75rem', maxWidth:'42rem', fontSize:'1rem', color:'#cbd5e1'}}>
-            {solutionsPage.heroDescription}
-          </p>
 
-          {/* CTAs */}
-          <div style={{marginTop:'2rem', display:'flex', flexWrap:'wrap', gap:'1rem'}}>
+          {solutionsPage.heroSubtitle && (
+            <p
+              style={{
+                fontSize: "clamp(1rem, 1.6vw, 1.15rem)",
+                color: "var(--color-text-light)",
+                lineHeight: 1.75,
+                maxWidth: "52ch",
+                marginBottom: "0.75rem",
+              }}
+            >
+              {solutionsPage.heroSubtitle}
+            </p>
+          )}
+
+          {solutionsPage.heroDescription && (
+            <p
+              style={{
+                fontSize: "0.95rem",
+                color: "var(--color-text-muted)",
+                lineHeight: 1.7,
+                maxWidth: "48ch",
+                marginBottom: "2rem",
+              }}
+            >
+              {solutionsPage.heroDescription}
+            </p>
+          )}
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "2rem" }}>
             {solutionsPage.heroPrimaryCta ? (
-              <Link
-                href={solutionsPage.heroPrimaryCta.href}
-                className="btn btn-cta-primary" style={{padding:'0.875rem 2rem', fontSize:'1rem'}}
-              >
+              <Link href={solutionsPage.heroPrimaryCta.href} className="btn-cta-primary">
                 {solutionsPage.heroPrimaryCta.label}
-                <svg
-                  style={{height:'1.25rem', width:'1.25rem'}}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
             ) : null}
             {solutionsPage.heroSecondaryCta ? (
-              <a
-                href={solutionsPage.heroSecondaryCta.href}
-                className="btn btn-secondary"
-              >
+              <Link href={solutionsPage.heroSecondaryCta.href} className="btn-secondary">
                 {solutionsPage.heroSecondaryCta.label}
-              </a>
+              </Link>
             ) : null}
           </div>
         </div>
@@ -124,7 +158,7 @@ export default async function SolutionsPage() {
             {solutionsPage.approachSteps?.map((step, idx) => (
               <article
                 key={`${step.title}-${idx}`}
-                className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
+                className="card card-hover" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
                 <div className="card-accent-top" />
                 <div style={{marginBottom:'1rem', display:'flex', height:'3rem', width:'3rem', alignItems:'center', justifyContent:'center', borderRadius:'0.75rem', background:'#ecfeff', color:'#0891b2'}}>
@@ -154,7 +188,7 @@ export default async function SolutionsPage() {
             {solutionsPage.solutions?.map((solution, idx) => (
               <article
                 key={solution._id}
-                className="card card-hover gradient-card-bg" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
+                className="card card-hover" style={{padding:'2rem', animationDelay: `${idx * 100}ms`}}
               >
                 <div className="card-accent-top" style={{background:'linear-gradient(to right, #14b8a6, #06b6d4)'}} />
                 {solution.icon ? (

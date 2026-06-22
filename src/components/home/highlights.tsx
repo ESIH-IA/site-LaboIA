@@ -12,48 +12,12 @@ type HighlightsProps = {
 };
 
 const AXES = [
-  {
-    icon: <Brain size={22} color="#00d4aa" strokeWidth={1.6} aria-hidden />,
-    iconBg: "rgba(0,212,170,0.1)",
-    iconBorder: "rgba(0,212,170,0.2)",
-    numColor: "#00d4aa",
-    num: "01",
-  },
-  {
-    icon: <Eye size={22} color="#6c63ff" strokeWidth={1.6} aria-hidden />,
-    iconBg: "rgba(108,99,255,0.1)",
-    iconBorder: "rgba(108,99,255,0.2)",
-    numColor: "#6c63ff",
-    num: "02",
-  },
-  {
-    icon: <ShieldCheck size={22} color="#00d4aa" strokeWidth={1.6} aria-hidden />,
-    iconBg: "rgba(0,212,170,0.1)",
-    iconBorder: "rgba(0,212,170,0.2)",
-    numColor: "#00d4aa",
-    num: "03",
-  },
-  {
-    icon: <HeartPulse size={22} color="#6c63ff" strokeWidth={1.6} aria-hidden />,
-    iconBg: "rgba(108,99,255,0.1)",
-    iconBorder: "rgba(108,99,255,0.2)",
-    numColor: "#6c63ff",
-    num: "04",
-  },
-  {
-    icon: <Leaf size={22} color="#00d4aa" strokeWidth={1.6} aria-hidden />,
-    iconBg: "rgba(0,212,170,0.1)",
-    iconBorder: "rgba(0,212,170,0.2)",
-    numColor: "#00d4aa",
-    num: "05",
-  },
-  {
-    icon: <BarChart3 size={22} color="#6c63ff" strokeWidth={1.6} aria-hidden />,
-    iconBg: "rgba(108,99,255,0.1)",
-    iconBorder: "rgba(108,99,255,0.2)",
-    numColor: "#6c63ff",
-    num: "06",
-  },
+  { icon: <Brain size={22} strokeWidth={1.6} aria-hidden />,      num: "01", color: "var(--color-teal)" },
+  { icon: <Eye size={22} strokeWidth={1.6} aria-hidden />,        num: "02", color: "#7C3AED" },
+  { icon: <ShieldCheck size={22} strokeWidth={1.6} aria-hidden />, num: "03", color: "var(--color-teal)" },
+  { icon: <HeartPulse size={22} strokeWidth={1.6} aria-hidden />, num: "04", color: "#7C3AED" },
+  { icon: <Leaf size={22} strokeWidth={1.6} aria-hidden />,       num: "05", color: "var(--color-teal)" },
+  { icon: <BarChart3 size={22} strokeWidth={1.6} aria-hidden />,  num: "06", color: "#7C3AED" },
 ];
 
 const fallbackItems: HighlightItem[] = [
@@ -93,100 +57,106 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
   const list = items?.length ? items : fallbackItems;
 
   return (
-    <section className="section-labo-surface section-padding" id="axes-de-recherche">
-      <div className="container-site">
-
-        {/* En-tête */}
-        <div className="max-w-2xl mb-14">
-          <div className="badge-teal inline-flex mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
-            Axes de recherche
+    <section
+      id="axes-de-recherche"
+      style={{ background: "var(--color-bg-light)", padding: "clamp(4rem,8vw,7rem) 0" }}
+    >
+      <div className="container">
+        {/* En-tête 2 colonnes */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "3rem",
+            alignItems: "end",
+            marginBottom: "3.5rem",
+          }}
+        >
+          <div>
+            <div className="section-label">Axes de recherche</div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.75rem, 3vw, 2.5rem)",
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                color: "var(--color-text-dark)",
+                margin: 0,
+                lineHeight: 1.15,
+              }}
+            >
+              {title ?? "Six axes structurants"}
+            </h2>
           </div>
-          <h2 className="text-display-lg text-[#f0f4ff]">
-            {title ?? "Six axes structurants"}
-          </h2>
-          <p className="mt-4 text-[#8892b0] leading-relaxed">
+          <p
+            style={{
+              fontSize: "1rem",
+              color: "var(--color-text-body)",
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
             {intro ??
               "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe."}
           </p>
         </div>
 
-        {/* Grille 3×2 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Grille 3×2 égales */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "1.5rem",
+          }}
+        >
           {list.slice(0, 6).map((item, i) => {
             const ax = AXES[i];
             return (
-              <article
-                key={item.title}
-                className="glass-labo-hover rounded-2xl p-6 flex flex-col gap-4"
-              >
-                <div className="flex items-start justify-between">
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      background: ax.iconBg,
-                      border: `1px solid ${ax.iconBorder}`,
-                      borderRadius: 10,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {ax.icon}
-                  </div>
-                  <span
-                    className="label-eyebrow"
-                    style={{ color: ax.numColor }}
-                  >
-                    {ax.num}
-                  </span>
+              <article key={item.title} className="axe-card-light">
+                <span className="axe-number-bg">{ax.num}</span>
+
+                <div
+                  className="axe-icon-box"
+                  style={{
+                    background: `${ax.color}1A`,
+                    border: `1px solid ${ax.color}33`,
+                    color: ax.color,
+                  }}
+                >
+                  {ax.icon}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-[#f0f4ff] text-[1rem] leading-snug mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#8892b0] leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+
+                <h3 className="axe-title-dark">{item.title}</h3>
+                <p className="axe-desc-body">{item.description}</p>
               </article>
             );
           })}
         </div>
 
         {/* Thématique transversale */}
-        <div
-          className="mt-10 rounded-2xl px-6 py-5 flex items-center gap-4"
-          style={{
-            background: "rgba(0,212,170,0.05)",
-            border: "1px solid rgba(0,212,170,0.15)",
-          }}
-        >
-          <div
-            style={{
-              width: 6,
-              height: 40,
-              borderRadius: 3,
-              background: "linear-gradient(180deg,#00d4aa,#6c63ff)",
-              flexShrink: 0,
-            }}
-          />
+        <div className="axe-transversal">
+          <div className="axe-transversal-bar" />
           <div>
-            <p
-              className="text-[0.68rem] uppercase tracking-[0.14em] text-[#00d4aa] mb-1"
-              style={{ fontFamily: "var(--font-mono)" }}
-            >
-              Thématique transversale
-            </p>
-            <p className="text-[#f0f4ff] text-sm font-medium leading-snug">
+            <div className="axe-transversal-label">Thématique transversale</div>
+            <p className="axe-transversal-text">
               Intelligence artificielle et sciences de données pour le développement durable d'Haïti et de la Caraïbe
             </p>
           </div>
         </div>
-
       </div>
+
+      {/* Responsive */}
+      <style>{`
+        @media (max-width: 1024px) {
+          #axes-de-recherche [style*="repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
+          #axes-de-recherche [style*="repeat(3"] > article:last-child { grid-column: span 2; }
+        }
+        @media (max-width: 640px) {
+          #axes-de-recherche [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+          #axes-de-recherche [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          #axes-de-recherche [style*="repeat(3"] > article:last-child { grid-column: 1; }
+        }
+      `}</style>
     </section>
   );
 }
