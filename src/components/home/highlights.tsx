@@ -54,7 +54,7 @@ const FALLBACK_AXES: HighlightItem[] = [
 ];
 
 export default function Highlights({ title, intro, items }: HighlightsProps) {
-  const list = items?.length ? items : FALLBACK_AXES;
+  const list = items?.length === 6 ? items : FALLBACK_AXES;
 
   return (
     <section
