@@ -1453,3 +1453,367 @@ body {
   line-height: 1.7;
   margin: 0;
 }
+
+/* ============================================================
+   SECTION VARIANTS
+   ============================================================ */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-white {
+  background: var(--tech-bg);
+  color: var(--tech-text);
+}
+
+.section-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.section-title-white {
+  color: var(--labo-text);
+}
+
+.section-subtitle-light {
+  color: var(--labo-text-muted);
+}
+
+/* ============================================================
+   CARD GRIDS (compléments)
+   ============================================================ */
+.card-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .card-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .card-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* Top accent bar on cards */
+.card-accent-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--labo-accent-teal), var(--labo-accent-violet));
+}
+
+/* ============================================================
+   PUBLICATIONS PREVIEW CARDS
+   ============================================================ */
+.pub-preview {
+  background: var(--labo-bg);
+}
+
+.pub-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.pub-card:hover {
+  border-color: rgba(0, 212, 170, 0.25);
+  transform: translateY(-2px);
+}
+
+.pub-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.pub-card-category {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(0, 212, 170, 0.12);
+  color: var(--labo-accent-teal);
+  width: fit-content;
+}
+
+.pub-card-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--labo-text);
+  margin: 0.25rem 0 0;
+  line-height: 1.4;
+}
+
+.pub-card-summary {
+  font-size: 0.85rem;
+  color: var(--labo-text-muted);
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pub-card-link {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--labo-text-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pub-card-link:hover {
+  border-color: var(--labo-accent-teal);
+  color: var(--labo-accent-teal);
+  background: rgba(0, 212, 170, 0.08);
+}
+
+/* ============================================================
+   PARTNER CARDS
+   ============================================================ */
+.partner-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.partner-card:hover {
+  border-color: rgba(0, 212, 170, 0.25);
+  transform: translateY(-2px);
+}
+
+.partner-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.partner-card-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--labo-text);
+}
+
+.partner-card-text {
+  font-size: 0.85rem;
+  color: var(--labo-text-muted);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.partner-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-small {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 500;
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--labo-accent-violet);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+.partner-card-link {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--labo-text-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.partner-card-link:hover {
+  border-color: var(--labo-accent-teal);
+  color: var(--labo-accent-teal);
+  background: rgba(0, 212, 170, 0.08);
+}
+
+/* ============================================================
+   BADGE TEAL BOX
+   ============================================================ */
+.badge-teal-box {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(0, 212, 170, 0.1);
+  border: 1px solid rgba(0, 212, 170, 0.25);
+  color: var(--labo-accent-teal);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   COLLABORATE CTA
+   ============================================================ */
+.collab-cta {
+  background: var(--labo-bg);
+}
+
+.collab-cta-box {
+  position: relative;
+  background: rgba(108, 99, 255, 0.06);
+  border: 1px solid rgba(108, 99, 255, 0.18);
+  border-radius: var(--radius-xl);
+  padding: 4rem 3rem;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .collab-cta-box { padding: 2.5rem 1.75rem; }
+}
+
+.collab-cta-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--labo-accent-teal), var(--labo-accent-violet));
+}
+
+.collab-cta-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(108, 99, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.collab-cta-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.collab-cta-text {
+  max-width: 540px;
+}
+
+.collab-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800;
+  color: var(--labo-text);
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.collab-cta-body {
+  font-size: 1rem;
+  color: var(--labo-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.collab-cta-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.btn-cta-primary {
+  background: linear-gradient(135deg, var(--labo-accent-teal), #00b893);
+  color: #0a0f1c;
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-cta-primary:hover {
+  box-shadow: 0 0 32px rgba(0, 212, 170, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-cta-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--labo-text);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 13px 26px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.btn-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================================
+   PATTERN UTILITIES
+   ============================================================ */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.pattern-10 { opacity: 0.10; }

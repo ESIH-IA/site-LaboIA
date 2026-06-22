@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/navigation";
+
 type CollaborateAction = {
   label: string;
   href: string;
@@ -20,10 +22,7 @@ export default async function CollaborateCta({ title, body, actions }: Collabora
     <section className="collab-cta section">
       <div className="section-inner" style={{ padding: "5rem 0" }}>
         <div className="collab-cta-box">
-          {/* Decorative gradient accent */}
           <div className="collab-cta-accent" />
-
-          {/* Subtle pattern overlay */}
           <div className="collab-cta-pattern" />
 
           <div className="collab-cta-content">
@@ -33,20 +32,14 @@ export default async function CollaborateCta({ title, body, actions }: Collabora
             </div>
             <div className="collab-cta-buttons">
               {primary ? (
-                <a
-                  href={primary.href}
-                  className="btn btn-cta-primary"
-                >
-                  <span style={{ position: "relative", zIndex: 10 }}>{primary.label}</span>
-                </a>
+                <Link href={primary.href} className="btn btn-cta-primary">
+                  {primary.label}
+                </Link>
               ) : null}
               {secondary ? (
-                <a
-                  href={secondary.href}
-                  className="btn btn-cta-secondary"
-                >
+                <Link href={secondary.href} className="btn btn-cta-secondary">
                   {secondary.label}
-                </a>
+                </Link>
               ) : null}
             </div>
           </div>
