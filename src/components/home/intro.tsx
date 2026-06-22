@@ -8,12 +8,13 @@ type Action = {
 
 type IntroProps = {
   eyebrow?: string;
+  badge?: string;
   title?: string;
   body?: string;
   actions?: Action[];
 };
 
-export default function Intro({ eyebrow, title, body, actions }: IntroProps) {
+export default function Intro({ eyebrow, badge: _badge, title, body, actions }: IntroProps) {
   return (
     <section className="section-labo section-padding-sm">
       <div className="container-site">
