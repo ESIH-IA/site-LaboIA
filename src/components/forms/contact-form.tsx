@@ -60,10 +60,10 @@ export default function ContactForm() {
             });
             if (!response.ok) throw new Error("Erreur");
             trackEvent({ category: "form", action: "submit", name: "contact" });
-            setMessage("Merci. Votre message a ete enregistre.");
+            setMessage("Merci. Votre message a été enregistré. Nous vous répondrons dans les meilleurs délais.");
             form.reset();
           } catch {
-            setMessage("Impossible d'envoyer la demande.");
+            setMessage("Une erreur est survenue. Veuillez réessayer ou nous écrire directement.");
           } finally {
             setLoading(false);
           }
@@ -96,13 +96,13 @@ export default function ContactForm() {
         <label className="flex items-start gap-3">
           <input type="checkbox" required className="mt-1 shrink-0" />
           <span className="text-sm" style={{ color: "var(--labo-text-muted)" }}>
-            J&apos;accepte que mes informations soient traitees conformement a la{" "}
+            J&apos;accepte que mes informations soient traitées conformément à la{" "}
             <Link
               href="/confidentialite"
               className="underline underline-offset-4"
               style={{ color: "var(--labo-accent-teal)" }}
             >
-              politique de confidentialite
+              politique de confidentialité
             </Link>
             .
           </span>

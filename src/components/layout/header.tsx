@@ -140,20 +140,6 @@ export default function Header({
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            {/* LaCDIA Tech CTA */}
-            <Link
-              href={withLocale("/solutions", currentLocale)}
-              className={[
-                "hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold",
-                "border border-[#00d4aa]/40 text-[#00d4aa] transition-all duration-200",
-                "hover:bg-[#00d4aa]/10 hover:border-[#00d4aa]",
-              ].join(" ")}
-              style={{ fontFamily: "var(--font-body, sans-serif)" }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa] animate-pulse" />
-              LaCDIA Tech
-            </Link>
-
             <LocaleSwitcher />
 
             {/* Mobile burger */}
@@ -238,12 +224,11 @@ export default function Header({
             {/* Footer CTA */}
             <div className="mt-8 pt-6 border-t border-white/8">
               <Link
-                href={withLocale("/solutions", currentLocale)}
+                href={withLocale("/collaborer", currentLocale)}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold border border-[#00d4aa]/40 text-[#00d4aa] hover:bg-[#00d4aa]/10 transition"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold bg-[#00d4aa]/10 border border-[#00d4aa]/30 text-[#00d4aa] hover:bg-[#00d4aa]/20 transition"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
-                LaCDIA Tech
+                Collaborer avec nous
               </Link>
             </div>
           </div>

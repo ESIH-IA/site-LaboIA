@@ -14,11 +14,6 @@ export const hero = {
       href: "/projets",
       variant: "secondary",
     },
-    {
-      label: "Voir les actualités",
-      href: "/actualites",
-      variant: "tertiary",
-    },
   ],
 } as const;
 

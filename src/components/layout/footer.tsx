@@ -24,7 +24,7 @@ export default function Footer({
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12">
 
           {/* — LABO column */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-5">
             <div className="flex items-center gap-3 mb-5">
               <div className="relative h-9 w-9 shrink-0">
                 <Image
@@ -59,48 +59,36 @@ export default function Footer({
                 "Recherche appliquée en intelligence artificielle et science des données au service des communautés caribéennes."}
             </p>
 
-            {site.footerLanguageNote && (
-              <p className="mt-4 text-xs text-[#8892b0]/60">
-                {site.footerLanguageNote}
-              </p>
-            )}
-          </div>
-
-          {/* — TECH column */}
-          <div className="lg:col-span-4 lg:border-l lg:border-white/6 lg:pl-12">
-            <div className="mb-5">
-              <div className="flex items-center gap-2">
-                <span
-                  className="text-sm font-bold text-[#f0f4ff] tracking-tight"
-                  style={{ fontFamily: "var(--font-syne, sans-serif)" }}
-                >
-                  LaCDIA
-                  <span
-                    className="ml-1.5 text-[10px] font-normal text-[#00d4aa] tracking-widest uppercase"
-                    style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
-                  >
-                    TECH ●
-                  </span>
-                </span>
-              </div>
-              <p className="mt-2 text-xs text-[#8892b0] leading-relaxed max-w-xs">
-                Solutions IA déployables : consulting, développement sur mesure et accompagnement terrain.
-              </p>
+            {/* Réseaux sociaux */}
+            <div className="mt-6 flex items-center gap-3">
+              <a
+                href="https://www.linkedin.com/company/lacdia"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-[#8892b0] hover:border-[#00d4aa]/40 hover:text-[#00d4aa] transition-all"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.researchgate.net"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="ResearchGate"
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-[#8892b0] hover:border-[#00d4aa]/40 hover:text-[#00d4aa] transition-all"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M19.586 0H4.414A4.414 4.414 0 000 4.414v15.172A4.414 4.414 0 004.414 24h15.172A4.414 4.414 0 0024 19.586V4.414A4.414 4.414 0 0019.586 0zM11.67 17.35h-1.81v-5.04H8.23v5.04H6.42V6.65h1.81v4.01h1.63V6.65h1.81v10.7zm5.35 0c-1.76 0-3.12-1.12-3.12-3.08v-4.54c0-1.96 1.36-3.08 3.12-3.08 1.77 0 3.13 1.12 3.13 3.08v1.28h-1.72v-1.28c0-.84-.54-1.38-1.41-1.38-.87 0-1.41.54-1.41 1.38v4.54c0 .84.54 1.38 1.41 1.38.87 0 1.41-.54 1.41-1.38v-1.73h-1.41v-1.7h3.13v3.43c0 1.96-1.36 3.08-3.13 3.08z"/>
+                </svg>
+              </a>
             </div>
-
-            <Link
-              href="/solutions"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#00d4aa] hover:text-[#00f0c0] transition-colors"
-            >
-              Découvrir nos services
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
           </div>
 
           {/* — Navigation + Contact */}
-          <div className="lg:col-span-4 grid grid-cols-2 gap-8">
+          <div className="lg:col-span-7 grid grid-cols-3 gap-8">
             <div>
               <div
                 className="text-[10px] font-medium text-[#8892b0] tracking-widest uppercase mb-4"
@@ -110,6 +98,31 @@ export default function Footer({
               </div>
               <nav className="flex flex-col gap-2.5">
                 {nav.footerNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-sm text-[#8892b0] hover:text-[#f0f4ff] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            <div>
+              <div
+                className="text-[10px] font-medium text-[#8892b0] tracking-widest uppercase mb-4"
+                style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
+              >
+                Laboratoire
+              </div>
+              <nav className="flex flex-col gap-2.5">
+                {[
+                  { label: "Axes de recherche", href: "/recherche/axes" },
+                  { label: "Projets", href: "/projets" },
+                  { label: "Équipe", href: "/equipe" },
+                  { label: "Newsletter", href: "/newsletter" },
+                ].map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

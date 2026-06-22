@@ -1,4 +1,4 @@
-import { Building2 } from "lucide-react";
+import { Brain, Eye, ShieldCheck, HeartPulse, Leaf, BarChart3 } from "lucide-react";
 
 type HighlightItem = {
   title: string;
@@ -11,97 +11,181 @@ type HighlightsProps = {
   items?: HighlightItem[];
 };
 
-const fallbackItems: HighlightItem[] = [
+const AXES = [
   {
-    title: "Agriculture intelligente",
-    description:
-      "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée.",
+    icon: <Brain size={22} color="#00d4aa" strokeWidth={1.6} aria-hidden />,
+    iconBg: "rgba(0,212,170,0.1)",
+    iconBorder: "rgba(0,212,170,0.2)",
+    numColor: "#00d4aa",
+    num: "01",
   },
   {
-    title: "Services publics & gouvernance",
-    description:
-      "Optimisation des services essentiels, observatoires de données et aide à la décision.",
+    icon: <Eye size={22} color="#6c63ff" strokeWidth={1.6} aria-hidden />,
+    iconBg: "rgba(108,99,255,0.1)",
+    iconBorder: "rgba(108,99,255,0.2)",
+    numColor: "#6c63ff",
+    num: "02",
   },
   {
-    title: "Santé & environnement",
-    description:
-      "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios.",
+    icon: <ShieldCheck size={22} color="#00d4aa" strokeWidth={1.6} aria-hidden />,
+    iconBg: "rgba(0,212,170,0.1)",
+    iconBorder: "rgba(0,212,170,0.2)",
+    numColor: "#00d4aa",
+    num: "03",
+  },
+  {
+    icon: <HeartPulse size={22} color="#6c63ff" strokeWidth={1.6} aria-hidden />,
+    iconBg: "rgba(108,99,255,0.1)",
+    iconBorder: "rgba(108,99,255,0.2)",
+    numColor: "#6c63ff",
+    num: "04",
+  },
+  {
+    icon: <Leaf size={22} color="#00d4aa" strokeWidth={1.6} aria-hidden />,
+    iconBg: "rgba(0,212,170,0.1)",
+    iconBorder: "rgba(0,212,170,0.2)",
+    numColor: "#00d4aa",
+    num: "05",
+  },
+  {
+    icon: <BarChart3 size={22} color="#6c63ff" strokeWidth={1.6} aria-hidden />,
+    iconBg: "rgba(108,99,255,0.1)",
+    iconBorder: "rgba(108,99,255,0.2)",
+    numColor: "#6c63ff",
+    num: "06",
   },
 ];
 
-const ICONS = [
-  /* Agriculture */
-  <svg key="ag" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" stroke="#00d4aa" strokeWidth="1.5"/>
-    <path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="#00d4aa" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M12 8v8M9 11l3-3 3 3" stroke="#00d4aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>,
-  /* Gouvernance */
-  <Building2 key="gov" size={24} color="#6c63ff" strokeWidth={1.5} aria-hidden />,
-  /* Santé */
-  <svg key="health" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="#00d4aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>,
+const fallbackItems: HighlightItem[] = [
+  {
+    title: "Méthodes fondamentales en IA",
+    description:
+      "Apprentissage avec peu de données, transfert de connaissances, auto-supervision et modèles robustes adaptés aux environnements à ressources limitées.",
+  },
+  {
+    title: "Vision par ordinateur & données complexes",
+    description:
+      "Analyse d'images, de documents et de données multimodales — agriculture, santé, environnement, créole haïtien.",
+  },
+  {
+    title: "IA robuste, explicable & responsable",
+    description:
+      "Explicabilité des modèles, équité algorithmique, réduction des biais et audit des systèmes d'IA de confiance.",
+  },
+  {
+    title: "IA pour la santé",
+    description:
+      "Analyse d'images médicales, aide au dépistage, surveillance épidémiologique et outils d'information sanitaire en créole haïtien.",
+  },
+  {
+    title: "IA pour l'agriculture & l'environnement",
+    description:
+      "Détection des maladies des cultures, recommandation agronomique, images satellitaires et systèmes d'alerte précoce climatique.",
+  },
+  {
+    title: "IA pour les systèmes socio-économiques",
+    description:
+      "Aide à la décision, automatisation documentaire, transformation numérique des institutions et outils éducatifs en créole haïtien.",
+  },
 ];
 
 export default function Highlights({ title, intro, items }: HighlightsProps) {
   const list = items?.length ? items : fallbackItems;
 
   return (
-    <section className="section-labo section-padding">
+    <section className="section-labo-surface section-padding" id="axes-de-recherche">
       <div className="container-site">
-        {/* Section header — left aligned */}
-        <div className="max-w-2xl mb-16">
+
+        {/* En-tête */}
+        <div className="max-w-2xl mb-14">
           <div className="badge-teal inline-flex mb-4">
             <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
             Axes de recherche
           </div>
           <h2 className="text-display-lg text-[#f0f4ff]">
-            {title ?? "Ce que nous faisons"}
+            {title ?? "Six axes structurants"}
           </h2>
-          <p className="mt-5 text-[#8892b0] text-lg leading-relaxed">
+          <p className="mt-4 text-[#8892b0] leading-relaxed">
             {intro ??
-              "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux."}
+              "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe."}
           </p>
         </div>
 
-        {/* Bento grid — asymmetrique */}
-        <div className="bento-grid">
-          {/* Featured large cell */}
-          <article className="bento-cell-wide glass-labo-hover rounded-2xl p-8 flex flex-col justify-between min-h-70">
-            <div>
-              <div className="mb-5 h-12 w-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(0,212,170,0.1)", border: "1px solid rgba(0,212,170,0.2)" }}>
-                {ICONS[0]}
-              </div>
-              <div className="label-eyebrow text-[#00d4aa] mb-3">01</div>
-              <h3 className="text-display-md text-[#f0f4ff]">{list[0]?.title}</h3>
-              <p className="mt-4 text-[#8892b0] leading-relaxed">{list[0]?.description}</p>
-            </div>
-            <div className="mt-6 flex items-center gap-2 text-[#00d4aa] text-sm font-medium">
-              <span className="h-px w-6 bg-[#00d4aa]" />
-              En savoir plus
-            </div>
-          </article>
-
-          {/* Tall side cell */}
-          <div className="bento-cell-tall flex flex-col gap-4">
-            {list.slice(1).map((item, i) => (
+        {/* Grille 3×2 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {list.slice(0, 6).map((item, i) => {
+            const ax = AXES[i];
+            return (
               <article
                 key={item.title}
-                className="glass-labo-hover rounded-2xl p-6 flex-1 flex flex-col justify-between"
+                className="glass-labo-hover rounded-2xl p-6 flex flex-col gap-4"
               >
-                <div>
-                  <div className="mb-4 h-10 w-10 rounded-lg flex items-center justify-center" style={{ background: "rgba(108,99,255,0.1)", border: "1px solid rgba(108,99,255,0.2)" }}>
-                    {ICONS[i + 1]}
+                <div className="flex items-start justify-between">
+                  <div
+                    style={{
+                      width: 44,
+                      height: 44,
+                      background: ax.iconBg,
+                      border: `1px solid ${ax.iconBorder}`,
+                      borderRadius: 10,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {ax.icon}
                   </div>
-                  <div className="label-eyebrow text-[#6c63ff] mb-2">0{i + 2}</div>
-                  <h3 className="font-semibold text-[#f0f4ff] text-lg leading-tight">{item.title}</h3>
-                  <p className="mt-3 text-sm text-[#8892b0] leading-relaxed">{item.description}</p>
+                  <span
+                    className="label-eyebrow"
+                    style={{ color: ax.numColor }}
+                  >
+                    {ax.num}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[#f0f4ff] text-[1rem] leading-snug mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-[#8892b0] leading-relaxed">
+                    {item.description}
+                  </p>
                 </div>
               </article>
-            ))}
+            );
+          })}
+        </div>
+
+        {/* Thématique transversale */}
+        <div
+          className="mt-10 rounded-2xl px-6 py-5 flex items-center gap-4"
+          style={{
+            background: "rgba(0,212,170,0.05)",
+            border: "1px solid rgba(0,212,170,0.15)",
+          }}
+        >
+          <div
+            style={{
+              width: 6,
+              height: 40,
+              borderRadius: 3,
+              background: "linear-gradient(180deg,#00d4aa,#6c63ff)",
+              flexShrink: 0,
+            }}
+          />
+          <div>
+            <p
+              className="text-[0.68rem] uppercase tracking-[0.14em] text-[#00d4aa] mb-1"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              Thématique transversale
+            </p>
+            <p className="text-[#f0f4ff] text-sm font-medium leading-snug">
+              Intelligence artificielle et sciences de données pour le développement durable d'Haïti et de la Caraïbe
+            </p>
           </div>
         </div>
+
       </div>
     </section>
   );

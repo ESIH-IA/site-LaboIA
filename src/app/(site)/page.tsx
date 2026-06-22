@@ -4,6 +4,7 @@ import Kpis from "@/components/home/kpis";
 import Highlights from "@/components/home/highlights";
 import FeaturedProjects from "@/components/home/featured-projects";
 import PublicationsPreview from "@/components/home/publications-preview";
+import Community from "@/components/home/community";
 import Partners from "@/components/home/partners";
 import CollaborateCta from "@/components/home/collaborate-cta";
 import type { Metadata } from "next";
@@ -47,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const locale = await getServerLocale();
   const [site, homeData] = await Promise.all([getSiteSettings(locale), getHomeData(locale)]);
-  const { home, kpis, kpiSettings, featuredProjects, featuredNews, featuredPartners } = homeData;
+  const { home, kpis, kpiSettings, featuredProjects, featuredNews, featuredPartners, researchAxes } = homeData;
 
   const publications = featuredNews.map((item) => ({
     _id: item._id,
@@ -77,7 +78,13 @@ export default async function Home() {
         actions={normalizeActions(home.introActions)}
       />
       <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} />
-      <Highlights title={home.highlightsTitle} intro={home.highlightsIntro} items={home.highlights ?? []} />
+      <Highlights
+        title={home.highlightsTitle}
+        intro={home.highlightsIntro}
+        items={researchAxes.length > 0
+          ? researchAxes.map((a) => ({ title: a.title, description: a.summary ?? "" }))
+          : (home.highlights ?? [])}
+      />
       <FeaturedProjects
         title={home.featuredProjectsTitle}
         intro={home.featuredProjectsIntro}
@@ -90,6 +97,7 @@ export default async function Home() {
         intro={home.publicationsIntro}
         items={publications}
       />
+      <Community />
       <Partners
         title={home.partnersTitle}
         intro={home.partnersIntro}

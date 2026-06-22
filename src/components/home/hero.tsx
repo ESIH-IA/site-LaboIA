@@ -227,18 +227,62 @@ export default function Hero({ badge, actions }: HeroProps) {
           </p>
 
           {/* CTAs */}
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
+            {/* Bouton primaire — teal plein avec flèche */}
             <Link
-              href={primary?.href ?? "/solutions"}
-              className="btn-primary-labo"
+              href={primary?.href ?? "/collaborer"}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "14px 28px",
+                borderRadius: "9999px",
+                background: "linear-gradient(135deg, #00d4aa, #00b893)",
+                color: "#0a0f1c",
+                fontSize: "0.9rem",
+                fontWeight: 700,
+                letterSpacing: "0.01em",
+                textDecoration: "none",
+                boxShadow: "0 0 28px rgba(0,212,170,0.35)",
+                transition: "all 0.22s ease",
+                border: "none",
+                whiteSpace: "nowrap",
+              }}
             >
-              {primary?.label ?? "Découvrir nos solutions"}
+              {primary?.label ?? "Collaborer avec le laboratoire"}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </Link>
+
+            {/* Bouton secondaire — glass discret */}
             <Link
-              href={secondary?.href ?? "/collaborer"}
-              className="btn-secondary-labo"
+              href={secondary?.href ?? "/projets"}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "13px 26px",
+                borderRadius: "9999px",
+                background: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(8px)",
+                color: "#f0f4ff",
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                letterSpacing: "0.01em",
+                textDecoration: "none",
+                border: "1px solid rgba(255,255,255,0.14)",
+                transition: "all 0.22s ease",
+                whiteSpace: "nowrap",
+              }}
             >
-              {secondary?.label ?? "Collaborer avec nous"}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+                <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+                <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
+              </svg>
+              {secondary?.label ?? "Explorer nos projets"}
             </Link>
           </div>
         </div>

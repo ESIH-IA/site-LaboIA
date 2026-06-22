@@ -113,7 +113,7 @@ body {
 }
 
 .section-labo-surface {
-  background-color: var(--labo-surface);
+  background-color: var(--labo-bg);
   color: var(--labo-text);
 }
 
@@ -433,6 +433,47 @@ body {
   border-color: var(--tech-accent-teal);
   color: var(--tech-accent-teal);
   transform: translateY(-2px);
+}
+
+.btn-intro-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: 9999px;
+  background: var(--tech-text);
+  color: var(--tech-bg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: all 0.22s ease;
+  border: 2px solid var(--tech-text);
+  white-space: nowrap;
+}
+.btn-intro-primary:hover {
+  background: transparent;
+  color: var(--tech-text);
+}
+
+.btn-intro-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--tech-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: all 0.22s ease;
+  border: 2px solid rgba(10, 15, 28, 0.18);
+  white-space: nowrap;
+}
+.btn-intro-secondary:hover {
+  border-color: var(--tech-text);
 }
 
 /* Small size modifier */

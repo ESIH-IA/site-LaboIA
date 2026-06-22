@@ -47,19 +47,6 @@ export default function Intro({ eyebrow, title, body, actions }: IntroProps) {
                 {body ??
                   "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents."}
               </p>
-              {actions?.length ? (
-                <div className="mt-8 flex flex-wrap gap-4">
-                  {actions.map((action) => (
-                    <Link
-                      key={action.href}
-                      href={action.href}
-                      className={action.variant === "primary" ? "btn btn-primary-tech" : "btn btn-secondary-tech"}
-                    >
-                      {action.label}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
             </div>
           </div>
         </div>

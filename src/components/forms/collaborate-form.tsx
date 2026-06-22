@@ -60,10 +60,10 @@ export default function CollaborateForm() {
             });
             if (!response.ok) throw new Error("Erreur");
             trackEvent({ category: "form", action: "submit", name: "collaborer" });
-            setMessage("Merci. Votre demande a ete enregistree.");
+            setMessage("Merci. Votre demande a été enregistrée. Nous vous répondrons dans les meilleurs délais.");
             form.reset();
           } catch {
-            setMessage("Impossible d'envoyer la demande.");
+            setMessage("Une erreur est survenue. Veuillez réessayer ou nous écrire directement.");
           } finally {
             setLoading(false);
           }
@@ -96,13 +96,13 @@ export default function CollaborateForm() {
         <label className="flex items-start gap-3">
           <input type="checkbox" required className="mt-1 shrink-0" />
           <span className="text-sm" style={{ color: "var(--tech-text-muted)" }}>
-            J&apos;accepte que mes informations soient traitees conformement a la{" "}
+            J&apos;accepte que mes informations soient traitées conformément à la{" "}
             <Link
               href="/confidentialite"
               className="underline underline-offset-4"
               style={{ color: "var(--tech-accent-teal)" }}
             >
-              politique de confidentialite
+              politique de confidentialité
             </Link>
             .
           </span>

@@ -17,6 +17,7 @@ import {
   newsListQuery,
   partnerListQuery,
   projectListQuery,
+  researchAxisListQuery,
   siteSettingsQuery,
   solutionsPageQuery,
   getDefaultGovernanceChartStrict,
@@ -31,6 +32,7 @@ import type {
   NewsListItem,
   PartnerListItem,
   ProjectListItem,
+  ResearchAxisListItem,
   SiteSettings,
   SolutionsPage,
 } from "@/lib/sanity/types";
@@ -42,6 +44,7 @@ type HomeDataBundle = {
   featuredProjects: ProjectListItem[];
   featuredNews: NewsListItem[];
   featuredPartners: PartnerListItem[];
+  researchAxes: ResearchAxisListItem[];
 };
 
 function fallbackSolutionsPage(): SolutionsPage {
@@ -178,19 +181,34 @@ function fallbackHome(): HomePageData {
       "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
     highlights: [
       {
-        title: "Agriculture intelligente",
+        title: "Méthodes fondamentales en IA",
         description:
-          "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée.",
+          "Apprentissage avec peu de données, transfert de connaissances, auto-supervision et modèles robustes adaptés aux environnements à ressources limitées.",
       },
       {
-        title: "Services publics & gouvernance",
+        title: "Vision par ordinateur & données complexes",
         description:
-          "Optimisation des services essentiels, observatoires de données et aide à la décision.",
+          "Analyse d'images, de documents et de données multimodales — agriculture, santé, environnement, créole haïtien.",
       },
       {
-        title: "Santé & environnement",
+        title: "IA robuste, explicable & responsable",
         description:
-          "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios.",
+          "Explicabilité des modèles, équité algorithmique, réduction des biais et audit des systèmes d'IA de confiance.",
+      },
+      {
+        title: "IA pour la santé",
+        description:
+          "Analyse d'images médicales, aide au dépistage, surveillance épidémiologique et outils d'information sanitaire en créole haïtien.",
+      },
+      {
+        title: "IA pour l'agriculture & l'environnement",
+        description:
+          "Détection des maladies des cultures, recommandation agronomique, images satellitaires et systèmes d'alerte précoce climatique.",
+      },
+      {
+        title: "IA pour les systèmes socio-économiques",
+        description:
+          "Aide à la décision, automatisation documentaire, transformation numérique des institutions et outils éducatifs en créole haïtien.",
       },
     ],
     kpisTitle: "Indicateurs clés",
@@ -243,6 +261,7 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
   if (!isSanityConfigured) {
     return {
       home: fallbackHome(),
+      researchAxes: [],
       kpis: localKpis.map((item) => ({
         _id: item.key,
         key: item.key,
@@ -296,13 +315,14 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
     };
   }
 
-  const [home, kpis, kpiSettings, projects, news, partners] = await Promise.all([
+  const [home, kpis, kpiSettings, projects, news, partners, axes] = await Promise.all([
     sanityFetch<HomePageData | null>(homePageQuery, { locale }, null),
     sanityFetch<KpiItem[]>(kpiListQuery, { locale }, []),
     sanityFetch<KpiSettings | null>(kpiSettingsQuery, { locale }, null),
     sanityFetch<ProjectListItem[]>(projectListQuery, { locale }, []),
     sanityFetch<NewsListItem[]>(newsListQuery, { locale }, []),
     sanityFetch<PartnerListItem[]>(partnerListQuery, { locale }, []),
+    sanityFetch<ResearchAxisListItem[]>(researchAxisListQuery, { locale }, []),
   ]);
 
   return {
@@ -312,6 +332,7 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
     featuredProjects: projects.filter((project) => project.featured),
     featuredNews: news.filter((item) => item.featured),
     featuredPartners: partners.filter((partner) => partner.featured),
+    researchAxes: axes,
   };
 }
 

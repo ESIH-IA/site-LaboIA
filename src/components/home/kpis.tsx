@@ -15,7 +15,7 @@ const statusLabels = {
   confirmed: "Validé",
 } as const;
 
-const KPI_COLORS = ["#00d4aa", "#6c63ff", "#00d4aa", "#6c63ff"];
+const KPI_COLORS = ["#00d4aa", "#00d4aa", "#00d4aa", "#00d4aa"];
 
 function KpiCard({ item, index }: { item: KpiItem; index: number }) {
   const arcRef = useRef<SVGCircleElement>(null);
@@ -81,13 +81,6 @@ function KpiCard({ item, index }: { item: KpiItem; index: number }) {
       </div>
 
       <h3 className="text-sm font-semibold text-[#f0f4ff] mb-2">{item.label}</h3>
-
-      {item.status === "draft" && (
-        <div className="flex items-center gap-1.5 mt-1">
-          <span className="h-1.5 w-1.5 rounded-full bg-amber-400" aria-hidden />
-          <span className="label-eyebrow text-[#8892b0]">Provisoire</span>
-        </div>
-      )}
 
       {item.note && (
         <p className="mt-3 text-xs text-[#8892b0] leading-relaxed">{item.note}</p>
