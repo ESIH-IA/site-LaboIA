@@ -6,20 +6,20 @@
     "lacdiaTech": "LaCDIA Tech",
     "news": "News",
     "team": "Team",
-    "collaborate": "Collaborate",
+    "collaborate": "Partner with Us",
     "contact": "Contact",
     "partnerships": "Partnerships",
     "publications": "Publications",
     "training": "Training",
     "resources": "Resources",
-    "solutions": "AI Solutions"
+    "solutions": "AI & Data Solutions"
   },
   "header": {
-    "tagline": "Innovation and applied research laboratory in AI and data science",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
+    "tagline": "Caribbean AI & Data Science Research Laboratory",
+    "openMenu": "Open navigation",
+    "closeMenu": "Close navigation",
     "menu": "Menu",
-    "navigation": "Navigation"
+    "navigation": "Site navigation"
   },
   "footer": {
     "legalNotice": "Legal Notice",
@@ -33,108 +33,108 @@
   },
   "common": {
     "learnMore": "Learn more",
-    "seeAll": "See all",
+    "seeAll": "View all",
     "backHome": "Back to home",
     "download": "Download",
     "share": "Share",
     "search": "Search",
     "filter": "Filter",
-    "noResults": "No results",
-    "loading": "Loading...",
+    "noResults": "No results found",
+    "loading": "Loading…",
     "readMore": "Read more",
-    "contactUs": "Contact us",
-    "collaborate": "Collaborate with us",
-    "discoverServices": "Discover our services",
-    "discoverResearch": "Discover our research",
-    "requestQuote": "Request a quote",
+    "contactUs": "Get in touch",
+    "collaborate": "Partner with the laboratory",
+    "discoverServices": "Explore our AI solutions",
+    "discoverResearch": "Explore our research",
+    "requestQuote": "Request a consultation",
     "becomePartner": "Become a partner"
   },
   "cookies": {
-    "title": "Cookies",
-    "message": "This site uses audience measurement and functional cookies. You can accept or reject these cookies. See the",
+    "title": "Cookie Notice",
+    "message": "This site uses analytics and functional cookies. You may accept or decline these cookies. See our",
     "policyLink": "cookie policy",
     "accept": "Accept",
-    "reject": "Reject"
+    "reject": "Decline"
   },
   "home": {
-    "heroBadge": "Artificial Intelligence - Innovation - Applied Research",
-    "heroDescription": "The first AI and data science innovation and applied research laboratory in the Caribbean, LaCDIA produces original scientific knowledge and develops technological solutions adapted to Caribbean realities.",
-    "discoverLab": "Discover our solutions",
+    "heroBadge": "Artificial Intelligence · Research · Caribbean Innovation",
+    "heroDescription": "LaCDIA is the first AI and data science research laboratory in the Caribbean. We produce original scientific knowledge and build technology solutions grounded in Caribbean realities.",
+    "discoverLab": "Explore our work",
     "heroSecondaryCta": "Meet the team",
-    "researchAxes": "Our research axes",
-    "techServices": "LaCDIA Tech — Services",
+    "researchAxes": "Research axes",
+    "techServices": "AI & Data Solutions",
     "introEyebrow": "Our mission",
-    "introTitle": "A laboratory for Caribbean data",
-    "introBody": "LaCDIA produces original scientific knowledge and develops technological solutions adapted to Caribbean realities.",
-    "kpisTitle": "Key indicators",
-    "kpisIntro": "Quantitative data on our research and innovation activities",
+    "introTitle": "Science and technology at the service of the Caribbean",
+    "introBody": "LaCDIA conducts applied and fundamental research, and supports institutions in designing AI-driven solutions adapted to local contexts.",
+    "kpisTitle": "Key figures",
+    "kpisIntro": "Quantitative indicators of our research and innovation activities",
     "highlightsTitle": "What we do",
-    "highlightsIntro": "Applied and fundamental research axes that leverage AI to serve local needs and global challenges.",
+    "highlightsIntro": "Six applied and fundamental research axes combining scientific rigor with real-world Caribbean impact.",
     "highlightsItems": {
       "agriculture": {
-        "title": "Smart agriculture",
-        "description": "Yield prediction systems, crop monitoring and data-driven early warnings."
+        "title": "Smart Agriculture",
+        "description": "Yield forecasting, crop health monitoring and data-driven early-warning systems."
       },
       "govern": {
-        "title": "Public services and governance",
-        "description": "Optimizing essential services, data observatories and decision support."
+        "title": "Public Services & Governance",
+        "description": "AI for optimizing essential services, data observatories and evidence-based decision support."
       },
       "health": {
-        "title": "Health and environment",
-        "description": "Epidemiological data analysis, risk detection and scenario modeling."
+        "title": "Health & Environment",
+        "description": "Epidemiological data analysis, environmental risk detection and climate scenario modelling."
       }
     },
-    "publicationsTitle": "Recent publications",
-    "publicationsIntro": "Articles, reports and communications documenting our scientific advances.",
-    "partnersTitle": "Partners and collaborations",
-    "partnersIntro": "We work with academic, public and private institutions to accelerate the impact of research.",
-    "partnersBadge": "Need to collaborate? Contact us.",
-    "collaborateTitle": "Collaborate with the laboratory",
-    "collaborateBody": "Institutional partnerships, internships, funding or applied projects: let's build impactful solutions together.",
+    "publicationsTitle": "Latest publications",
+    "publicationsIntro": "Research articles, reports and communications from the laboratory.",
+    "partnersTitle": "Partners & collaborations",
+    "partnersIntro": "We work alongside academic, governmental and private institutions to maximize the impact of research.",
+    "partnersBadge": "Interested in collaborating? Reach out.",
+    "collaborateTitle": "Partner with LaCDIA",
+    "collaborateBody": "Institutional partnerships, research fellowships, funding opportunities or applied projects — let's build impactful solutions together.",
     "eventLabel": "Event",
     "eventLabelUpcoming": "Upcoming event",
     "projectLabel": "Project",
-    "viewWebsite": "View website",
+    "viewWebsite": "Visit website",
     "partnerTypes": {
       "partner": "Partner",
       "client": "Client",
       "media": "Media",
-      "academic": "Academic"
+      "academic": "Academic institution"
     }
   },
   "about": {
     "title": "About LaCDIA",
-    "badge": "Innovation and applied research laboratory",
+    "badge": "AI & Data Science Research Laboratory",
     "fullName": "Caribbean Laboratory of Data Science and Artificial Intelligence",
     "vision": "Vision",
-    "visionQuote": "To become the reference hub for artificial intelligence and data science in the Caribbean, producing research excellence in service of the region's sustainable development.",
+    "visionQuote": "To become the leading hub for artificial intelligence and data science in the Caribbean — producing world-class research in service of the region's sustainable development.",
     "mission": "Mission",
     "values": "Values",
     "positioning": "Strategic positioning",
-    "context": "Context and challenges",
-    "roadmap": "Development Plan 2025-2029"
+    "context": "Context & challenges",
+    "roadmap": "Development Roadmap 2025–2029"
   },
   "research": {
     "badge": "Scientific Department",
-    "title": "Innovation and Applied Research in Artificial Intelligence and Data Science",
+    "title": "Applied & Fundamental Research in Artificial Intelligence and Data Science",
     "axes": "Research Axes",
     "methodologies": "Methodological Approaches",
     "expertise": "Areas of Expertise",
     "publications": "Publication Policy",
     "doctoral": "Doctoral Supervision",
     "animation": "Scientific Activities",
-    "collaborations": "Collaborations and Partnerships"
+    "collaborations": "Collaborations & Partnerships"
   },
   "tech": {
     "badge": "LaCDIA Tech",
-    "title": "Technology and Innovation Department",
-    "tagline": "Transforming research into concrete solutions for institutions and businesses",
+    "title": "Technology & Innovation Division",
+    "tagline": "Turning research into deployable solutions for institutions and businesses",
     "mission": "Mission",
     "pipeline": "Research → Product Pipeline",
-    "poles": "Our Expertise Poles",
-    "services": "Service Catalog",
-    "useCases": "Concrete Use Cases",
-    "clients": "Target Clients and Partners",
+    "poles": "Expertise Poles",
+    "services": "Service Catalogue",
+    "useCases": "Use Cases",
+    "clients": "Target Clients & Partners",
     "models": "Collaboration Models"
   },
   "partnerships": {
@@ -143,21 +143,21 @@
     "national": "National Partners",
     "regional": "Caribbean Regional Partners",
     "international": "International Partners",
-    "industrial": "Industrial and Institutional Partners",
+    "industrial": "Industry & Institutional Partners",
     "modalities": "Collaboration Modalities",
-    "sdg": "Contribution to SDGs"
+    "sdg": "Contribution to the SDGs"
   },
   "values": {
     "excellence": "Scientific Excellence",
-    "excellenceDesc": "The highest standards of methodological rigor and scientific integrity.",
+    "excellenceDesc": "Uncompromising methodological rigor and scientific integrity in every research output.",
     "innovation": "Responsible Innovation",
-    "innovationDesc": "Technological innovation accompanied by deep ethical reflection.",
+    "innovationDesc": "Technological progress guided by ethical reflection and societal responsibility.",
     "inclusivity": "Inclusivity",
-    "inclusivityDesc": "Accessible technologies, considering linguistic and cultural diversity.",
+    "inclusivityDesc": "Accessible technologies that account for linguistic, cultural and social diversity.",
     "interdisciplinarity": "Interdisciplinarity",
-    "interdisciplinarityDesc": "Crossing disciplinary perspectives to address complex challenges.",
-    "openness": "Openness",
-    "opennessDesc": "Transparent, reproducible, and shared research."
+    "interdisciplinarityDesc": "Cross-disciplinary thinking to address complex, multi-layered challenges.",
+    "openness": "Open Science",
+    "opennessDesc": "Transparent, reproducible and openly shared research practices."
   },
   "locale": {
     "switchLanguage": "Switch language",
@@ -165,13 +165,13 @@
   },
   "pages": {
     "solutions": {
-      "fallbackSummary": "Discover our concrete AI services and solutions, tested and proven."
+      "fallbackSummary": "Discover our AI and data science services — tested, proven, and ready to deploy."
     },
     "departementScientifique": {
-      "fallbackSummary": "Producing original scientific knowledge adapted to Caribbean contexts."
+      "fallbackSummary": "Producing original scientific knowledge adapted to Caribbean and global contexts."
     },
     "tech": {
-      "fallbackSummary": "Transforming research into concrete solutions for institutions and businesses."
+      "fallbackSummary": "Turning research into concrete, deployable solutions for institutions and enterprises."
     },
     "collaborer": {
       "formTitle": "Start a collaboration"

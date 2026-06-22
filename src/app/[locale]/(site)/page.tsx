@@ -79,7 +79,11 @@ export default async function Home() {
         actions={normalizeActions(home.introActions)}
       />
       <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} />
-      <Highlights title={home.highlightsTitle} intro={home.highlightsIntro} items={home.highlights ?? []} />
+      <Highlights
+        title={home.highlightsTitle}
+        intro={home.highlightsIntro}
+        items={home.highlights?.length ? home.highlights : undefined}
+      />
       <PublicationsPreview
         title={home.publicationsTitle}
         intro={home.publicationsIntro}

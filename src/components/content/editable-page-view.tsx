@@ -14,7 +14,8 @@ type Props = {
 };
 
 function sectionClass(variant?: PageSection["variant"]) {
-  if (variant === "heroDark" || variant === "ctaDark") return "page-hero page-hero-dark";
+  if (variant === "heroDark") return "page-hero page-hero-dark";
+  if (variant === "ctaDark") return "section section-dark";
   if (variant === "light") return "section section-light";
   return "section section-white";
 }
@@ -61,7 +62,7 @@ function EditableSection({ section, forms }: { section: PageSection; forms?: For
         }}
       >
         {section.eyebrow ? (
-          <div className={isDark ? "glass-card" : "hero-badge"} style={{ display: "inline-flex", marginBottom: "1.5rem" }}>
+          <div className="hero-badge" style={{ display: "inline-flex", marginBottom: "1.5rem" }}>
             <span className="hero-badge-text">{section.eyebrow}</span>
           </div>
         ) : null}
@@ -70,18 +71,23 @@ function EditableSection({ section, forms }: { section: PageSection; forms?: For
           isHero ? (
             <h1
               style={{
-                fontSize: "clamp(2.25rem,5vw,3.75rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.01em",
-                color: "#fff",
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.05,
+                color: "var(--color-text-white)",
                 marginBottom: "1.5rem",
-                maxWidth: "18ch",
+                maxWidth: "20ch",
               }}
             >
               {section.title}
             </h1>
           ) : (
-            <h2 className={isDark ? "section-title section-title-white" : "section-title"} style={{ marginBottom: "1rem" }}>
+            <h2
+              className={isDark ? "section-title section-title-white" : "section-title"}
+              style={{ marginBottom: "1rem" }}
+            >
               {section.title}
             </h2>
           )
@@ -89,12 +95,12 @@ function EditableSection({ section, forms }: { section: PageSection; forms?: For
 
         {section.intro ? (
           <p
-            className={isDark ? undefined : "section-subtitle"}
             style={{
-              maxWidth: "48rem",
-              fontSize: isDark ? "clamp(1.05rem,1.6vw,1.2rem)" : undefined,
-              color: isDark ? "#e2e8f0" : undefined,
-              lineHeight: 1.7,
+              maxWidth: "52ch",
+              fontSize: "clamp(1rem, 1.6vw, 1.15rem)",
+              color: isDark ? "var(--color-text-light)" : "var(--color-text-body)",
+              lineHeight: 1.75,
+              margin: 0,
             }}
           >
             {section.intro}

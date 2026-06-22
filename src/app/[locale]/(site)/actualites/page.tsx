@@ -42,9 +42,15 @@ export default async function Page() {
   return (
     <EditablePageView page={page}>
       {news.length > 0 ? (
-        <section className="section section-white">
+        <section className="section section-mid">
           <div className="container">
-            <div className="card-grid">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                gap: "1.5rem",
+              }}
+            >
               {news.map((item) => (
                 <NewsCard key={item._id} item={item} />
               ))}

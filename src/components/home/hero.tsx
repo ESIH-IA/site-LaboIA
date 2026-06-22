@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useEffect, useRef } from "react";
 import type { SiteAsset } from "@/lib/sanity/types";
 
@@ -171,10 +171,10 @@ export default function Hero({ badge, actions }: HeroProps) {
 
       {/* Content — left aligned */}
       <div
-        className="container-site"
+        className="container"
         style={{ position: "relative", zIndex: 10, paddingTop: "8rem", paddingBottom: "10rem" }}
       >
-        <div style={{ maxWidth: "760px" }}>
+        <div style={{ maxWidth: "min(760px, 100%)" }}>
 
           {/* Eyebrow */}
           <div className="badge-teal" style={{ display: "inline-flex", marginBottom: "2rem" }}>
@@ -193,8 +193,15 @@ export default function Hero({ badge, actions }: HeroProps) {
 
           {/* Title */}
           <h1
-            className="text-display-hero"
-            style={{ color: "var(--labo-text)", marginBottom: "1.75rem" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
+              fontWeight: 800,
+              lineHeight: 1.0,
+              letterSpacing: "-0.03em",
+              color: "var(--labo-text)",
+              marginBottom: "1.75rem",
+            }}
           >
             Transformer
             <br />

@@ -1,12 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 type NewsCardItem = {
   _id: string;
@@ -27,47 +19,43 @@ type Props = {
 export default function NewsCard({ item }: Props) {
   const href = item.sourceUrl ?? `/actualites/${item.slug.current}`;
   const isExternal = Boolean(item.sourceUrl);
-  const hasImage = Boolean(item.mainImageUrl);
+  const typeAttr = item.category?.toLowerCase().includes("partenariat")
+    ? "partenariat"
+    : item.category?.toLowerCase().includes("soutenance")
+      ? "soutenance"
+      : undefined;
 
   return (
     <Link
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noreferrer" : undefined}
-      style={{ display: "block", color: "inherit", textDecoration: "none" }}
+      className="news-card-dark"
+      data-type={typeAttr}
+      style={{ display: "flex" }}
     >
-      <Card className="card-hover">
-        <div className={`news-card-layout ${hasImage ? "news-card-layout--with-image" : ""}`}>
-          {item.mainImageUrl ? (
-            <div className="news-card-image">
-              <Image
-                src={item.mainImageUrl}
-                alt={item.mainImageAlt ?? item.title}
-                fill
-                sizes="(min-width: 768px) 240px, 100vw"
-                style={{ objectFit: "cover", transition: "transform 500ms" }}
-              />
-              <div className="news-card-image-overlay" />
-            </div>
-          ) : null}
+      <div className="news-card-meta-row">
+        {item.category && (
+          <span className="badge-news">{item.category}</span>
+        )}
+        {item.date && (
+          <span className="news-card-date">{item.date}</span>
+        )}
+      </div>
 
-          <div className="news-card-body">
-            <CardHeader className={hasImage ? "card-header--flush" : ""}>
-              <div className="news-card-meta">
-                {item.category ? <span className="badge badge-news">{item.category}</span> : null}
-                {item.date ? <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--muted)" }}>{item.date}</span> : null}
-              </div>
-              <CardTitle>{item.title}</CardTitle>
-            </CardHeader>
+      <h3 className="news-card-title-dark">{item.title}</h3>
 
-            {item.summary ? (
-              <CardContent className={hasImage ? "card-content--flush" : ""}>
-                <CardDescription>{item.summary}</CardDescription>
-              </CardContent>
-            ) : null}
-          </div>
-        </div>
-      </Card>
+      {item.summary && (
+        <p className="news-card-excerpt">{item.summary}</p>
+      )}
+
+      <div className="news-card-footer-row">
+        <span className="news-card-arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </div>
     </Link>
   );
 }
