@@ -1,20 +1,28 @@
-import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
+'use client'
 
-import { schemaTypes } from "./sanity/schemaTypes";
+/**
+ * This configuration is used to for the Sanity Studio that’s mounted on the `\src\app\studio\[[...tool]]\page.tsx` route
+ */
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "3rg8hwul";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+import {visionTool} from '@sanity/vision'
+import {defineConfig} from 'sanity'
+import {structureTool} from 'sanity/structure'
+
+// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
+import {apiVersion, dataset, projectId} from './src/sanity/env'
+import {schema} from './src/sanity/schemaTypes'
+import {structure} from './src/sanity/structure'
 
 export default defineConfig({
-  name: "default",
-  title: "LaCDIA",
+  basePath: '/studio',
   projectId,
   dataset,
-  basePath: "/studio",
-  plugins: [structureTool(), visionTool()],
-  schema: {
-    types: schemaTypes,
-  },
-});
+  // Add and edit the content schema in the './sanity/schemaTypes' folder
+  schema,
+  plugins: [
+    structureTool({structure}),
+    // Vision is for querying with GROQ from inside the Studio
+    // https://www.sanity.io/docs/the-vision-plugin
+    visionTool({defaultApiVersion: apiVersion}),
+  ],
+})

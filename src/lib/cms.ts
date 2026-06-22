@@ -1,15 +1,10 @@
-import { hero as localHero, event as localEvent } from "@/content/home";
-import { kpis as localKpis, kpiMeta as localKpiMeta } from "@/content/kpis";
-import { mainNav as localMainNav, footerNav as localFooterNav } from "@/content/nav";
-import { partners as localPartners } from "@/content/partners";
-import { projects as localProjects } from "@/content/projects";
-import { articles as localArticles } from "@/content/articles";
-import { site as localSite } from "@/content/site";
-import { aiSolutions as localSolutions, useCases as localUseCases, sectors as localSectors, heroContent as localSolutionsHero } from "@/data/solutions";
-import { getGovernanceData as getLocalGovernanceData } from "@/data/governance";
 import type { Locale } from "@/lib/i18n";
 import { isSanityConfigured, sanityFetch } from "@/lib/sanity/client";
 import {
+  formSettingsQuery,
+  getDefaultGovernanceChartStrict,
+  getGovernanceMembers,
+  getGovernancePage,
   homePageQuery,
   kpiListQuery,
   kpiSettingsQuery,
@@ -20,11 +15,9 @@ import {
   researchAxisListQuery,
   siteSettingsQuery,
   solutionsPageQuery,
-  getDefaultGovernanceChartStrict,
-  getGovernanceMembers,
-  getGovernancePage,
 } from "@/lib/sanity/queries";
 import type {
+  FormSettings,
   HomePageData,
   KpiItem,
   KpiSettings,
@@ -47,271 +40,50 @@ type HomeDataBundle = {
   researchAxes: ResearchAxisListItem[];
 };
 
-function fallbackSolutionsPage(): SolutionsPage {
-  return {
-    _id: "local-solutions",
-    heroBadge: "Services & Solutions IA",
-    heroTitle: localSolutionsHero.title,
-    heroSubtitle: localSolutionsHero.subtitle,
-    heroDescription: localSolutionsHero.description,
-    heroPrimaryCta: { label: "Proposer un projet", href: "/contact", variant: "primary" },
-    heroSecondaryCta: { label: "Voir les cas d'usage", href: "#cas-usage", variant: "secondary" },
-    approachTitle: "Notre approche",
-    approachIntro: "Une démarche scientifique, rigoureuse et orientée impact.",
-    approachSteps: [
-      {
-        title: "Diagnostic",
-        description:
-          "Qualification des données, besoins métier et contraintes terrain.",
-      },
-      {
-        title: "Modélisation",
-        description: "Conception IA, prototypage rapide et validation scientifique.",
-      },
-      {
-        title: "Déploiement",
-        description: "Intégration, accompagnement et mesure d'impact.",
-      },
-    ],
-    solutionsTitle: "Solutions IA",
-    solutionsIntro:
-      "Des solutions concrètes pour analyser, automatiser, décider et rendre l'information accessible.",
-    solutions: localSolutions.map((solution, index) => ({
-      _id: solution.id,
-      title: solution.title,
-      shortDescription: solution.shortDescription,
-      benefits: [...solution.benefits],
-      examples: [...solution.examples],
-      icon: solution.icon,
-      order: index,
-    })),
-    useCasesTitle: "Cas d'usage",
-    useCasesIntro: "Projets concrets et parcours d'impact.",
-    featuredUseCase: localUseCases[0]
-      ? {
-          _id: localUseCases[0].id,
-          title: localUseCases[0].title,
-          context: localUseCases[0].context,
-          solution: localUseCases[0].solution,
-          benefits: [...localUseCases[0].benefits],
-        }
-      : null,
-    flowTitle: "Flux IA appliqué",
-    flowDescription:
-      "Données terrain → Connaissances → Modèles IA → Décision",
-    flowSteps: ["Collecte", "Analyse", "Recommandation", "Suivi terrain"],
-    servicesTitle: "Services proposés",
-    servicesIntro: "Un accompagnement complet, de l'idée au déploiement.",
-    services: [
-      "Conseil scientifique",
-      "Développement IA",
-      "Data engineering",
-      "Systèmes d'aide à la décision",
-      "MLOps et déploiement",
-    ],
-    sectorsTitle: "Secteurs d'application",
-    sectorsIntro:
-      "Des solutions adaptables à tous les secteurs disposant de données et de documents.",
-    sectors: localSectors.map((sector, index) => ({
-      _id: sector.id,
-      name: sector.name,
-      icon: sector.icon,
-      order: index,
-    })),
-    projectsTitle: "Projets en cours",
-    projectsIntro: "Nos projets de recherche appliquée et d'innovation.",
-  };
-}
+const emptySiteSettings: SiteSettings = {
+  _id: "siteSettings-empty",
+  name: "",
+  shortName: "",
+};
 
-function fallbackSiteSettings(): SiteSettings {
-  return {
-    _id: "local-site",
-    name: localSite.name,
-    shortName: localSite.shortName,
-    description: localSite.description,
-    tagline: "Laboratoire de recherche en IA & science des données",
-    footerContactTitle: "Contact",
-    footerContactText: "Collaboration, projets, encadrement.",
-    footerContactCtaLabel: "Écrire au laboratoire",
-    footerContactCtaHref: "/contact",
-    footerLanguageNote: "Langues : français (défaut), anglais.",
-    logo: {
-      url: localSite.assets.logo.src,
-      alt: localSite.assets.logo.alt,
-      width: localSite.assets.logo.width,
-      height: localSite.assets.logo.height,
-    },
-    banner: {
-      url: localSite.assets.banner.src,
-      alt: localSite.assets.banner.alt,
-      width: localSite.assets.banner.width,
-      height: localSite.assets.banner.height,
-    },
-  };
-}
+const emptyNavigation: Navigation = {
+  _id: "navigation-empty",
+  mainNav: [],
+  footerNav: [],
+};
 
-function fallbackNavigation(): Navigation {
-  return {
-    _id: "local-nav",
-    mainNav: localMainNav.map((item) => ({ label: item.label, href: item.href })),
-    footerNav: localFooterNav.map((item) => ({ label: item.label, href: item.href })),
-  };
-}
+const emptyHome: HomePageData = {
+  _id: "homePage-empty",
+};
 
-function fallbackHome(): HomePageData {
-  return {
-    _id: "local-home",
-    heroBadge: "Intelligence Artificielle - Recherche - Innovation",
-    heroActions: localHero.actions?.map((action) => ({
-      label: action.label,
-      href: action.href,
-      variant: action.variant,
-    })),
-    introEyebrow: localSite.shortName,
-    introTitle: localHero.description ?? localSite.description,
-    introBody:
-      "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons également des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents.",
-    introActions: localHero.actions?.map((action) => ({
-      label: action.label,
-      href: action.href,
-      variant: action.variant,
-    })),
-    highlightsTitle: "Ce que nous faisons",
-    highlightsIntro:
-      "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
-    highlights: [
-      {
-        title: "Méthodes fondamentales en IA",
-        description:
-          "Apprentissage avec peu de données, transfert de connaissances, auto-supervision et modèles robustes adaptés aux environnements à ressources limitées.",
-      },
-      {
-        title: "Vision par ordinateur & données complexes",
-        description:
-          "Analyse d'images, de documents et de données multimodales — agriculture, santé, environnement, créole haïtien.",
-      },
-      {
-        title: "IA robuste, explicable & responsable",
-        description:
-          "Explicabilité des modèles, équité algorithmique, réduction des biais et audit des systèmes d'IA de confiance.",
-      },
-      {
-        title: "IA pour la santé",
-        description:
-          "Analyse d'images médicales, aide au dépistage, surveillance épidémiologique et outils d'information sanitaire en créole haïtien.",
-      },
-      {
-        title: "IA pour l'agriculture & l'environnement",
-        description:
-          "Détection des maladies des cultures, recommandation agronomique, images satellitaires et systèmes d'alerte précoce climatique.",
-      },
-      {
-        title: "IA pour les systèmes socio-économiques",
-        description:
-          "Aide à la décision, automatisation documentaire, transformation numérique des institutions et outils éducatifs en créole haïtien.",
-      },
-    ],
-    kpisTitle: "Indicateurs clés",
-    kpisIntro:
-      "Données quantitatives sur nos activités de recherche et d'innovation",
-    featuredProjectsTitle: "Projets à la une",
-    featuredProjectsIntro:
-      "Des initiatives concrètes qui démontrent la puissance de l'IA et de la science des données au service des communautés.",
-    featuredProjectsCtaLabel: "Découvrir tous les projets",
-    featuredProjectsCtaHref: "/projets",
-    publicationsTitle: "Actualités récentes",
-    publicationsIntro:
-      "Articles, communications et nouvelles du laboratoire.",
-    partnersTitle: "Partenaires & collaborations",
-    partnersIntro:
-      "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche.",
-    partnersBadge: "Besoin de collaborer ? Contactez-nous.",
-    collaborateTitle: "Collaborer avec le laboratoire",
-    collaborateBody:
-      "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact.",
-    collaborateActions: [
-      { label: "Proposer un partenariat", href: "/collaborer", variant: "primary" },
-      { label: "Candidater à un stage", href: "/collaborer", variant: "secondary" },
-    ],
-    eventBanner: {
-      enabled: true,
-      label: localEvent.label,
-      title: localEvent.title,
-      date: localEvent.date,
-      location: localEvent.location,
-      ctaLabel: localEvent.ctaLabel,
-      ctaHref: localEvent.ctaHref,
-    },
-  };
-}
+const emptySolutionsPage: SolutionsPage = {
+  _id: "solutionsPage-empty",
+};
 
 export async function getSiteSettings(locale: Locale): Promise<SiteSettings> {
-  if (!isSanityConfigured) return fallbackSiteSettings();
-  const site = await sanityFetch<SiteSettings | null>(siteSettingsQuery, { locale }, null);
-  return site ?? fallbackSiteSettings();
+  if (!isSanityConfigured) return emptySiteSettings;
+  return sanityFetch<SiteSettings | null>(siteSettingsQuery, { locale }, null).then(
+    (site) => site ?? emptySiteSettings,
+  );
 }
 
 export async function getNavigation(locale: Locale): Promise<Navigation> {
-  if (!isSanityConfigured) return fallbackNavigation();
-  const nav = await sanityFetch<Navigation | null>(navigationQuery, { locale }, null);
-  return nav ?? fallbackNavigation();
+  if (!isSanityConfigured) return emptyNavigation;
+  return sanityFetch<Navigation | null>(navigationQuery, { locale }, null).then(
+    (nav) => nav ?? emptyNavigation,
+  );
 }
 
 export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
   if (!isSanityConfigured) {
     return {
-      home: fallbackHome(),
+      home: emptyHome,
+      kpis: [],
+      kpiSettings: { _id: "kpiSettings-empty" },
+      featuredProjects: [],
+      featuredNews: [],
+      featuredPartners: [],
       researchAxes: [],
-      kpis: localKpis.map((item) => ({
-        _id: item.key,
-        key: item.key,
-        label: item.label,
-        value: item.value,
-        note: item.note,
-        status: item.status,
-      })),
-      kpiSettings: {
-        _id: "local-kpi-settings",
-        lastUpdated: localKpiMeta.lastUpdated,
-        disclaimer: localKpiMeta.disclaimer,
-      },
-      featuredProjects: localProjects
-        .filter((project) => project.featured)
-        .map((project) => ({
-          _id: project.id,
-          title: project.title,
-          slug: { current: project.slug },
-          projectType: project.type,
-          summary: project.shortDescription,
-          shortDescription: project.shortDescription,
-          statusLabel: project.status,
-          tags: [...project.tags],
-          featured: Boolean(project.featured),
-        })),
-      featuredNews: localArticles
-        .filter((article) => article.featured)
-        .map((article) => ({
-          _id: article.id,
-          title: article.title,
-          slug: { current: article.id },
-          date: article.date,
-          category: article.category,
-          summary: article.summary,
-          sourceUrl: article.sourceUrl,
-          featured: article.featured,
-        })),
-      featuredPartners: localPartners
-        .filter((partner) => partner.featured)
-        .map((partner) => ({
-          _id: partner.id,
-          name: partner.name,
-          slug: { current: partner.id },
-          partnerType: partner.type,
-          shortDescription: partner.shortDescription,
-          website: partner.website,
-          tags: partner.tags ? [...partner.tags] : [],
-          featured: partner.featured,
-        })),
     };
   }
 
@@ -326,9 +98,9 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
   ]);
 
   return {
-    home: home ?? fallbackHome(),
+    home: home ?? emptyHome,
     kpis,
-    kpiSettings: kpiSettings ?? { _id: "kpi-settings" },
+    kpiSettings: kpiSettings ?? { _id: "kpiSettings-empty" },
     featuredProjects: projects.filter((project) => project.featured),
     featuredNews: news.filter((item) => item.featured),
     featuredPartners: partners.filter((partner) => partner.featured),
@@ -337,26 +109,37 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
 }
 
 export async function getSolutionsPageData(locale: Locale): Promise<SolutionsPage> {
-  if (!isSanityConfigured) {
-    return fallbackSolutionsPage();
-  }
-
+  if (!isSanityConfigured) return emptySolutionsPage;
   const page = await sanityFetch<SolutionsPage | null>(solutionsPageQuery, { locale }, null);
-  return page ?? fallbackSolutionsPage();
+  return page ?? emptySolutionsPage;
+}
+
+export async function getFormSettings(locale: Locale): Promise<FormSettings | null> {
+  if (!isSanityConfigured) return null;
+  return sanityFetch<FormSettings | null>(formSettingsQuery, { locale }, null);
 }
 
 export async function getGovernancePageData(locale: Locale) {
   if (!isSanityConfigured) {
-    return { mode: "local" as const, data: await getLocalGovernanceData() };
+    return {
+      mode: "sanity" as const,
+      page: null,
+      chart: null,
+      members: [],
+    };
   }
 
   const page = await getGovernancePage(locale);
   if (!page) {
-    return { mode: "local" as const, data: await getLocalGovernanceData() };
+    return {
+      mode: "sanity" as const,
+      page: null,
+      chart: null,
+      members: [],
+    };
   }
 
   const chart = page.showOrgChart ? await getDefaultGovernanceChartStrict(locale) : null;
-
   const members = page.membersGroupsToShow?.length
     ? await getGovernanceMembers(page.membersGroupsToShow, page.membersOrder ?? "orderAsc")
     : [];

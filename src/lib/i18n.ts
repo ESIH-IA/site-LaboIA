@@ -1,6 +1,24 @@
+/**
+ * Configuration i18n — Langues supportées par LaCDIA
+ *
+ * fr : Français (langue par défaut)
+ * en : English
+ */
 export const locales = ["fr", "en"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "fr";
+
+/** Noms lisibles des langues (dans leur propre langue) */
+export const localeNames: Record<Locale, string> = {
+  fr: "Français",
+  en: "English",
+};
+
+/** Drapeaux emoji pour affichage */
+export const localeFlags: Record<Locale, string> = {
+  fr: "🇫🇷",
+  en: "🇬🇧",
+};
 
 export function isLocale(value: string | undefined): value is Locale {
   return locales.includes(value as Locale);

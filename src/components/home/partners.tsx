@@ -14,98 +14,65 @@ type PartnersProps = {
   items: PartnerPreview[];
 };
 
-const typeLabels: Record<string, string> = {
-  partner: "Partenaire",
-  client: "Client",
-  media: "Média",
-  academic: "Académique",
-};
+export default async function Partners({ title, intro, badge, items }: PartnersProps) {
+  if (!title && !intro && !badge && items.length === 0) return null;
 
-export default function Partners({ title, intro, badge, items }: PartnersProps) {
   return (
-    <section className="section-labo section-padding">
-      <div className="container-site">
-        {/* Header */}
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-14">
-          <div className="max-w-xl">
-            <div className="badge-teal inline-flex mb-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa]" />
-              Écosystème
-            </div>
-            <h2 className="text-display-lg text-[#f0f4ff]">
-              {title ?? "Partenaires & collaborations"}
-            </h2>
-            <p className="mt-4 text-[#8892b0] leading-relaxed">
-              {intro ??
-                "Nous travaillons avec des institutions académiques, publiques et privées pour accélérer l'impact de la recherche."}
-            </p>
+    <section className="section section-white">
+      <div className="section-inner" style={{ padding: "5rem 0" }}>
+        <div className="section-header-row">
+          <div>
+            {title ? <h2 className="section-title">{title}</h2> : null}
+            {intro ? <p className="section-subtitle">{intro}</p> : null}
           </div>
-
-          {badge && (
-            <div className="glass-labo rounded-xl px-5 py-3 text-sm text-[#00d4aa] border border-[#00d4aa]/20 shrink-0">
-              {badge}
-            </div>
-          )}
+          {badge ? <div className="badge-teal-box">{badge}</div> : null}
         </div>
 
-        {items.length > 0 ? (
-          <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
-            {items.map((partner) => (
-              <div
-                key={partner._id}
-                className="glass-labo-hover rounded-2xl p-6 flex flex-col gap-4 group"
-              >
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <h3
-                      className="text-lg font-semibold text-[#f0f4ff]"
-                      style={{ fontFamily: "var(--font-syne, sans-serif)" }}
-                    >
-                      {partner.name}
-                    </h3>
-                    {partner.type && (
-                      <span className="badge-teal text-[10px] py-0.5 px-2">
-                        {typeLabels[partner.type] ?? partner.type}
-                      </span>
-                    )}
-                  </div>
+        <div className="card-grid card-grid-3 card-grid-sm-2" style={{ marginTop: "3rem" }}>
+          {items.map((partner) => (
+            <div
+              key={partner._id}
+              className="partner-card card-hover"
+            >
+              {/* Top accent gradient */}
+              <div className="card-accent-top" />
 
-                  {partner.shortDescription && (
-                    <p className="text-sm text-[#8892b0] leading-relaxed">
-                      {partner.shortDescription}
-                    </p>
-                  )}
-
-                  {partner.tags?.length ? (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {partner.tags.map((tag) => (
-                        <span key={tag} className="tag">{tag}</span>
-                      ))}
-                    </div>
-                  ) : null}
+              <div className="partner-card-header">
+                <div className="partner-card-name">
+                  {partner.name}
                 </div>
-
-                {partner.website && (
-                  <a
-                    href={partner.website}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-[#00d4aa] hover:text-[#00f0c0] transition-colors mt-auto"
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    Voir le site
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                )}
+                {partner.type ? (
+                  <span className="badge badge-teal">
+                    {partner.type}
+                  </span>
+                ) : null}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-sm text-[#8892b0]">
-            Partenariats en cours de formalisation.
-          </div>
-        )}
+              {partner.shortDescription ? (
+                <p className="partner-card-text">{partner.shortDescription}</p>
+              ) : null}
+              {partner.tags?.length ? (
+                <div className="partner-card-tags">
+                  {partner.tags.map((tag) => (
+                    <span key={tag} className="tag-small">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+              {partner.website ? (
+                <a
+                  href={partner.website}
+                  className="partner-card-link"
+                  rel="noreferrer"
+                  target="_blank"
+                  aria-label={partner.name}
+                >
+                  <span aria-hidden>{">"}</span>
+                </a>
+              ) : null}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

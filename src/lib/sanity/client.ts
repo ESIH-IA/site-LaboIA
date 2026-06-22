@@ -9,8 +9,7 @@ export const sanityConfig = {
   projectId: projectId || "",
   dataset,
   apiVersion: apiVersion || "2024-01-01",
-  useCdn: true,
-  timeout: 8000,
+  useCdn: false,
 };
 
 export function getSanityMissingEnv() {
@@ -36,19 +35,8 @@ export async function sanityFetch<T>(
   query: string,
   params: Record<string, unknown>,
   fallback: T,
-): Promise<T> {
+) {
   if (!isSanityConfigured) return fallback;
   if (!sanityClient) return fallback;
-  try {
-    const result = await Promise.race([
-      sanityClient.fetch<T>(query, params),
-      new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error("Sanity fetch timeout")), 8000)
-      ),
-    ]);
-    return result;
-  } catch (err) {
-    console.warn("[sanityFetch] Falling back to local data:", err instanceof Error ? err.message : err);
-    return fallback;
-  }
+  return sanityClient.fetch<T>(query, params);
 }

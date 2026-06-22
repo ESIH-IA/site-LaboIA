@@ -8,16 +8,16 @@ import { siteUrl } from "@/lib/seo";
 
 const staticPaths = [
   "/",
+  "/a-propos",
+  "/recherche/departement-scientifique",
+  "/lacdia-tech",
   "/solutions",
   "/ressources",
   "/equipe",
   "/actualites",
+  "/formation",
   "/collaborer",
   "/contact",
-  "/mentions-legales",
-  "/confidentialite",
-  "/cookies",
-  "/newsletter",
 ];
 
 function buildUrl(path: string, locale: (typeof locales)[number]) {

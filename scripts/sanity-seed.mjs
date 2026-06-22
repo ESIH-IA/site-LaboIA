@@ -52,6 +52,114 @@ function block(text, options = {}) {
   };
 }
 
+function seo(title, description) {
+  return {
+    title: localeString(title),
+    description: localeText(description),
+  };
+}
+
+function action(label, href, variant = "primary") {
+  return {
+    _type: "linkAction",
+    label,
+    labelIntl: localeString(label),
+    href,
+    variant,
+  };
+}
+
+function card({ icon, title, description, label, href, items = [] }) {
+  return {
+    _type: "pageCard",
+    icon,
+    title,
+    titleIntl: localeString(title),
+    description,
+    descriptionIntl: localeText(description),
+    label,
+    labelIntl: localeString(label),
+    href,
+    items,
+  };
+}
+
+function section({
+  variant = "white",
+  layout = "content",
+  anchor,
+  eyebrow,
+  title,
+  intro,
+  body = [],
+  cards = [],
+  actions = [],
+  tableHeaders = [],
+  tableRows = [],
+  formType,
+}) {
+  return withKey({
+    _type: "pageSection",
+    variant,
+    layout,
+    anchor,
+    eyebrow: localeString(eyebrow),
+    title: localeString(title),
+    intro: localeText(intro),
+    body,
+    bodyIntl: localeBlock(body),
+    cards: withKeys(cards),
+    actions: withKeys(actions),
+    tableHeaders,
+    tableRows: withKeys(tableRows.map((cells) => ({ _type: "tableRow", cells }))),
+    formType,
+  });
+}
+
+function formCopy({
+  title,
+  subtitle,
+  fullNameLabel,
+  fullNamePlaceholder,
+  emailLabel,
+  emailPlaceholder,
+  organizationLabel,
+  organizationPlaceholder,
+  subjectLabel,
+  subjectPlaceholder,
+  messageLabel,
+  messagePlaceholder,
+  consentText,
+  privacyLabel,
+  privacyHref,
+  submitLabel,
+  loadingLabel,
+  successMessage,
+  errorMessage,
+}) {
+  return {
+    title: localeString(title),
+    subtitle: localeText(subtitle),
+    fullNameLabel: localeString(fullNameLabel),
+    fullNamePlaceholder: localeString(fullNamePlaceholder),
+    emailLabel: localeString(emailLabel),
+    emailPlaceholder: localeString(emailPlaceholder),
+    organizationLabel: localeString(organizationLabel),
+    organizationPlaceholder: localeString(organizationPlaceholder),
+    subjectLabel: localeString(subjectLabel),
+    subjectPlaceholder: localeString(subjectPlaceholder),
+    messageLabel: localeString(messageLabel),
+    messagePlaceholder: localeString(messagePlaceholder),
+    consentText: localeText(consentText),
+    privacyLabel: localeString(privacyLabel),
+    privacyHref,
+    submitLabel: localeString(submitLabel),
+    loadingLabel: localeString(loadingLabel),
+    successMessage: localeText(successMessage),
+    errorMessage: localeText(errorMessage),
+  };
+}
+
 async function uploadImageFromPublic(src) {
   if (!src) return null;
   const clean = src.startsWith("/") ? src.slice(1) : src;
@@ -101,6 +209,24 @@ async function seed() {
     footerContactCtaHref: "/contact",
     footerLanguageNote: "Langues : fran\u00e7ais (d\u00e9faut), anglais.",
     footerLanguageNoteIntl: localeString("Langues : fran\u00e7ais (d\u00e9faut), anglais."),
+    footerNavTitle: "Laboratoire",
+    footerNavTitleIntl: localeString("Laboratoire"),
+    footerCopyrightText: "Copyright {year} {shortName}. Tous droits reserves.",
+    footerCopyrightTextIntl: localeString("Copyright {year} {shortName}. Tous droits reserves."),
+    cookieTitle: "Gestion des cookies",
+    cookieTitleIntl: localeString("Gestion des cookies"),
+    cookieMessage:
+      "Nous utilisons des cookies pour mesurer l'audience et ameliorer l'experience du site.",
+    cookieMessageIntl: localeText(
+      "Nous utilisons des cookies pour mesurer l'audience et ameliorer l'experience du site.",
+    ),
+    cookiePolicyLabel: "Politique cookies",
+    cookiePolicyLabelIntl: localeString("Politique cookies"),
+    cookiePolicyHref: "/cookies",
+    cookieAcceptLabel: "Accepter",
+    cookieAcceptLabelIntl: localeString("Accepter"),
+    cookieRejectLabel: "Refuser",
+    cookieRejectLabelIntl: localeString("Refuser"),
   };
 
   const navigation = {
@@ -120,31 +246,73 @@ async function seed() {
       { _type: "navItem", label: "Contact", labelIntl: localeString("Contact"), href: "/contact" },
     ]),
     footerNav: withKeys([
-      {
-        _type: "navItem",
-        label: "Mentions l\u00e9gales",
-        labelIntl: localeString("Mentions l\u00e9gales"),
-        href: "/mentions-legales",
-      },
-      {
-        _type: "navItem",
-        label: "Politique de confidentialit\u00e9",
-        labelIntl: localeString("Politique de confidentialit\u00e9"),
-        href: "/confidentialite",
-      },
-      {
-        _type: "navItem",
-        label: "Politique cookies",
-        labelIntl: localeString("Politique cookies"),
-        href: "/cookies",
-      },
-      {
-        _type: "navItem",
-        label: "Newsletter",
-        labelIntl: localeString("Newsletter"),
-        href: "/newsletter",
-      },
+      { _type: "navItem", label: "A propos", labelIntl: localeString("A propos"), href: "/a-propos" },
+      { _type: "navItem", label: "Recherche", labelIntl: localeString("Recherche"), href: "/recherche" },
+      { _type: "navItem", label: "Departement scientifique", labelIntl: localeString("Departement scientifique"), href: "/recherche/departement-scientifique" },
+      { _type: "navItem", label: "LaCDIA Tech", labelIntl: localeString("LaCDIA Tech"), href: "/lacdia-tech" },
+      { _type: "navItem", label: "Equipe", labelIntl: localeString("Equipe"), href: "/equipe" },
+      { _type: "navItem", label: "Mentions legales", labelIntl: localeString("Mentions legales"), href: "/mentions-legales" },
+      { _type: "navItem", label: "Confidentialite", labelIntl: localeString("Confidentialite"), href: "/confidentialite" },
+      { _type: "navItem", label: "Cookies", labelIntl: localeString("Cookies"), href: "/cookies" },
     ]),
+  };
+
+  const formSettings = {
+    _id: "formSettings",
+    _type: "formSettings",
+    contact: formCopy({
+      title: "Contacter le laboratoire",
+      subtitle: "Precisez votre demande afin que l'equipe puisse vous repondre efficacement.",
+      fullNameLabel: "Nom complet",
+      fullNamePlaceholder: "Votre nom",
+      emailLabel: "Email",
+      emailPlaceholder: "votre@email.com",
+      subjectLabel: "Sujet",
+      subjectPlaceholder: "Objet de votre message",
+      messageLabel: "Message",
+      messagePlaceholder: "Votre message",
+      consentText: "J'accepte que mes donnees soient utilisees pour repondre a ma demande.",
+      privacyLabel: "Politique de confidentialite",
+      privacyHref: "/confidentialite",
+      submitLabel: "Envoyer",
+      loadingLabel: "Envoi en cours",
+      successMessage: "Votre message a ete envoye.",
+      errorMessage: "Le message n'a pas pu etre envoye. Reessayez plus tard.",
+    }),
+    collaborate: formCopy({
+      title: "Proposer une collaboration",
+      subtitle: "Presentez votre organisation, votre besoin et le type de partenariat envisage.",
+      fullNameLabel: "Nom complet",
+      fullNamePlaceholder: "Votre nom",
+      emailLabel: "Email",
+      emailPlaceholder: "votre@email.com",
+      organizationLabel: "Organisation",
+      organizationPlaceholder: "Institution, entreprise ou equipe",
+      subjectLabel: "Type de collaboration",
+      subjectPlaceholder: "Projet, stage, recherche, financement",
+      messageLabel: "Description",
+      messagePlaceholder: "Contexte, objectifs, calendrier et attentes",
+      consentText: "J'accepte que mes donnees soient utilisees pour traiter cette proposition.",
+      privacyLabel: "Politique de confidentialite",
+      privacyHref: "/confidentialite",
+      submitLabel: "Soumettre",
+      loadingLabel: "Envoi en cours",
+      successMessage: "Votre proposition a ete transmise.",
+      errorMessage: "La proposition n'a pas pu etre envoyee. Reessayez plus tard.",
+    }),
+    newsletter: formCopy({
+      title: "Recevoir les nouvelles du laboratoire",
+      subtitle: "Inscrivez-vous pour suivre les annonces, publications, evenements et opportunites.",
+      emailLabel: "Email",
+      emailPlaceholder: "votre@email.com",
+      consentText: "J'accepte de recevoir les communications du laboratoire.",
+      privacyLabel: "Politique de confidentialite",
+      privacyHref: "/confidentialite",
+      submitLabel: "S'inscrire",
+      loadingLabel: "Inscription en cours",
+      successMessage: "Votre inscription a ete prise en compte.",
+      errorMessage: "L'inscription n'a pas pu etre finalisee. Reessayez plus tard.",
+    }),
   };
 
   const homePage = {
@@ -900,6 +1068,234 @@ async function seed() {
 
   const institutionalPages = [
     {
+      _id: "page-a-propos",
+      _type: "institutionalPage",
+      status: "published",
+      title: "A propos",
+      titleIntl: localeString("A propos"),
+      slug: { current: "a-propos" },
+      slugIntl: { fr: { current: "a-propos" }, en: { current: "about" } },
+      summary:
+        "Laboratoire caribeen dedie a la recherche, a l'innovation et au transfert en intelligence artificielle et science des donnees.",
+      summaryIntl: localeText(
+        "Laboratoire caribeen dedie a la recherche, a l'innovation et au transfert en intelligence artificielle et science des donnees.",
+      ),
+      seo: seo(
+        "A propos - LaCDIA",
+        "Decouvrez le Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle.",
+      ),
+      content: [block("Presentation institutionnelle du laboratoire.")],
+      contentIntl: localeBlock([block("Presentation institutionnelle du laboratoire.")]),
+      sections: [
+        section({
+          variant: "heroDark",
+          eyebrow: "Laboratoire de recherche",
+          title: "Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle",
+          intro:
+            "Un pole de reference pour la recherche, l'innovation et le transfert technologique en intelligence artificielle et science des donnees dans la Caraibe.",
+          actions: [
+            action("Explorer la recherche", "/recherche", "primary"),
+            action("Contacter le laboratoire", "/contact", "secondary"),
+          ],
+        }),
+        section({
+          layout: "cards",
+          title: "Identite institutionnelle",
+          intro: "Les informations structurantes du laboratoire sont editables depuis Sanity.",
+          cards: [
+            card({ title: "Nom complet", description: "Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle" }),
+            card({ title: "Acronyme", description: "LaCDIA" }),
+            card({ title: "Affiliation", description: "Ecosysteme academique et scientifique caribeen." }),
+            card({ title: "Localisation", description: "Port-au-Prince, Haiti, avec une vocation regionale caribeenne." }),
+          ],
+        }),
+        section({
+          title: "Vision",
+          body: [
+            block(
+              "Devenir un pole de reference regional pour la recherche, l'innovation et l'application responsable de l'intelligence artificielle et de la science des donnees.",
+            ),
+          ],
+        }),
+        section({
+          layout: "cards",
+          variant: "light",
+          title: "Mission",
+          intro:
+            "Produire des connaissances, former des talents, developper des solutions utiles et accompagner les institutions dans l'usage responsable des donnees.",
+          cards: [
+            card({ title: "Recherche", description: "Conduire des travaux scientifiques appliques et fondamentaux." }),
+            card({ title: "Innovation", description: "Transformer les resultats scientifiques en prototypes, outils et services." }),
+            card({ title: "Formation", description: "Renforcer les competences en IA, data science et ingenierie numerique." }),
+            card({ title: "Transfert", description: "Connecter le laboratoire aux besoins des organisations publiques, privees et communautaires." }),
+          ],
+        }),
+        section({
+          layout: "pills",
+          title: "Valeurs",
+          cards: [
+            card({ title: "Rigueur scientifique" }),
+            card({ title: "Ethique et responsabilite" }),
+            card({ title: "Impact local" }),
+            card({ title: "Collaboration" }),
+            card({ title: "Ouverture caribeenne" }),
+            card({ title: "Excellence operationnelle" }),
+          ],
+        }),
+        section({
+          layout: "cards",
+          title: "Piliers strategiques",
+          cards: [
+            card({ title: "Recherche scientifique", description: "Axes de recherche, publications, protocoles et encadrement." }),
+            card({ title: "LaCDIA Tech", description: "Developpement de solutions IA, plateformes data et services numeriques." }),
+            card({ title: "Formation et talents", description: "Ateliers, programmes, mentorat et accompagnement des jeunes chercheurs." }),
+            card({ title: "Partenariats", description: "Cooperation avec universites, institutions, entreprises et bailleurs." }),
+          ],
+        }),
+      ],
+    },
+    {
+      _id: "page-lacdia-tech",
+      _type: "institutionalPage",
+      status: "published",
+      title: "LaCDIA Tech",
+      titleIntl: localeString("LaCDIA Tech"),
+      slug: { current: "lacdia-tech" },
+      slugIntl: { fr: { current: "lacdia-tech" }, en: { current: "lacdia-tech" } },
+      summary:
+        "Departement technologique charge de transformer la recherche en solutions IA, produits data et services numeriques.",
+      summaryIntl: localeText(
+        "Departement technologique charge de transformer la recherche en solutions IA, produits data et services numeriques.",
+      ),
+      seo: seo(
+        "LaCDIA Tech - Departement Technologique et Innovation",
+        "Solutions IA, data science, automatisation, plateformes intelligentes et innovation appliquee par LaCDIA Tech.",
+      ),
+      content: [block("Departement technologique et innovation du laboratoire.")],
+      contentIntl: localeBlock([block("Departement technologique et innovation du laboratoire.")]),
+      sections: [
+        section({
+          variant: "heroDark",
+          eyebrow: "LaCDIA Tech",
+          title: "Departement Technologique et Innovation",
+          intro:
+            "Nous concevons des solutions IA, plateformes de donnees, outils d'automatisation et prototypes issus des travaux scientifiques du laboratoire.",
+          actions: [action("Demander une solution", "/contact", "primary"), action("Voir les cas d'usage", "#cas-usage", "secondary")],
+        }),
+        section({
+          title: "Mission",
+          body: [
+            block(
+              "LaCDIA Tech assure le passage de la recherche vers l'usage : cadrage du besoin, architecture technique, developpement, experimentation, deploiement et transfert.",
+            ),
+          ],
+        }),
+        section({
+          layout: "cards",
+          variant: "light",
+          title: "Services",
+          cards: [
+            card({ title: "Solutions IA sur mesure", description: "Modeles predictifs, classification, recommandation et detection d'anomalies." }),
+            card({ title: "Data platforms", description: "Collecte, structuration, visualisation et gouvernance des donnees." }),
+            card({ title: "Automatisation", description: "Processus intelligents, assistants metier et workflows connectes." }),
+            card({ title: "Conseil technique", description: "Audit, faisabilite, architecture et accompagnement de projets IA." }),
+          ],
+        }),
+        section({
+          layout: "cards",
+          title: "Pipeline d'innovation",
+          cards: [
+            card({ title: "Cadrer", description: "Clarifier le probleme, les donnees disponibles et les criteres d'impact." }),
+            card({ title: "Prototyper", description: "Construire un MVP testable avec des indicateurs mesurables." }),
+            card({ title: "Valider", description: "Evaluer les performances, les risques et l'utilisabilite." }),
+            card({ title: "Deployer", description: "Industrialiser progressivement avec documentation et transfert." }),
+          ],
+        }),
+        section({
+          anchor: "cas-usage",
+          layout: "cards",
+          variant: "light",
+          title: "Cas d'usage",
+          cards: [
+            card({ title: "Agriculture intelligente", description: "Prediction, suivi de cultures, alertes et tableaux de bord." }),
+            card({ title: "Sante et services publics", description: "Analyse de donnees, priorisation, observatoires et aide a la decision." }),
+            card({ title: "Education et formation", description: "Plateformes, assistants pedagogiques et analyse des parcours." }),
+            card({ title: "Entreprises et institutions", description: "Optimisation operationnelle, automatisation documentaire et reporting." }),
+          ],
+        }),
+      ],
+    },
+    {
+      _id: "page-departement-scientifique",
+      _type: "institutionalPage",
+      status: "published",
+      title: "Departement scientifique",
+      titleIntl: localeString("Departement scientifique"),
+      slug: { current: "departement-scientifique" },
+      slugIntl: { fr: { current: "departement-scientifique" }, en: { current: "scientific-department" } },
+      summary:
+        "Structure scientifique chargee des axes de recherche, methodes, publications, encadrement et collaborations academiques.",
+      summaryIntl: localeText(
+        "Structure scientifique chargee des axes de recherche, methodes, publications, encadrement et collaborations academiques.",
+      ),
+      seo: seo(
+        "Departement Scientifique - LaCDIA",
+        "Axes de recherche, methodes scientifiques, publications, encadrement et collaborations du departement scientifique de LaCDIA.",
+      ),
+      content: [block("Presentation du departement scientifique.")],
+      contentIntl: localeBlock([block("Presentation du departement scientifique.")]),
+      sections: [
+        section({
+          variant: "heroDark",
+          eyebrow: "Departement scientifique",
+          title: "Recherche, methodes et production scientifique",
+          intro:
+            "Le departement scientifique structure les axes de recherche, garantit la qualite methodologique et accompagne les publications, projets et collaborations academiques.",
+          actions: [action("Explorer les axes", "/recherche/axes", "primary"), action("Voir les publications", "/publications", "secondary")],
+        }),
+        section({
+          title: "Role",
+          body: [
+            block(
+              "Le departement scientifique definit les priorites de recherche, encadre les protocoles, anime les groupes de travail et veille a la coherence scientifique des projets du laboratoire.",
+            ),
+          ],
+        }),
+        section({
+          layout: "cards",
+          variant: "light",
+          title: "Objectifs",
+          cards: [
+            card({ title: "Structurer les axes", description: "Organiser les travaux autour de problemes scientifiques et territoriaux prioritaires." }),
+            card({ title: "Garantir la methode", description: "Assurer la rigueur des donnees, protocoles, experimentations et evaluations." }),
+            card({ title: "Produire et publier", description: "Valoriser les resultats sous forme d'articles, rapports, jeux de donnees et communications." }),
+            card({ title: "Encadrer", description: "Accompagner et former les etudiants, chercheurs et collaborateurs associes." }),
+          ],
+        }),
+        section({
+          layout: "cards",
+          title: "Methodologies",
+          cards: [
+            card({ title: "Apprentissage automatique", description: "Modelisation predictive, classification, optimisation et evaluation." }),
+            card({ title: "Science des donnees", description: "Collecte, nettoyage, analyse, visualisation et interpretation des donnees." }),
+            card({ title: "IA responsable", description: "Ethique, explicabilite, robustesse, biais et gouvernance." }),
+            card({ title: "Recherche appliquee", description: "Protocoles terrain, experimentation, mesure d'impact et transfert." }),
+          ],
+        }),
+        section({
+          layout: "cards",
+          variant: "light",
+          title: "Collaborations",
+          cards: [
+            card({ title: "Universites", description: "Programmes de recherche, encadrement, mobilite et co-publications." }),
+            card({ title: "Institutions publiques", description: "Observatoires, donnees d'interet general et aide a la decision." }),
+            card({ title: "Entreprises", description: "Recherche appliquee, prototypes et experimentation." }),
+            card({ title: "Organisations internationales", description: "Programmes regionaux, financement et transfert de connaissances." }),
+          ],
+        }),
+      ],
+    },
+    {
       _id: "page-actualites",
       _type: "institutionalPage",
       status: "published",
@@ -922,8 +1318,34 @@ async function seed() {
       slugIntl: { fr: { current: "collaborer" }, en: { current: "collaborer" } },
       summary: "Partenariats institutionnels, projets, stages et collaborations.",
       summaryIntl: localeText("Partenariats institutionnels, projets, stages et collaborations."),
+      seo: seo("Collaborer - LaCDIA", "Proposer un partenariat, un projet, un stage ou une collaboration avec LaCDIA."),
       content: [block("Expliquez votre projet et contactez le laboratoire pour initier une collaboration.")],
       contentIntl: localeBlock([block("Expliquez votre projet et contactez le laboratoire pour initier une collaboration.")]),
+      sections: [
+        section({
+          variant: "heroDark",
+          title: "Collaborer avec le laboratoire",
+          intro:
+            "Partenariats institutionnels, stages, financement, recherche appliquee ou developpement de solutions : presentez votre besoin a l'equipe.",
+        }),
+        section({
+          layout: "cards",
+          title: "Types de collaboration",
+          cards: [
+            card({ title: "Partenariat scientifique", description: "Projets de recherche, publications, experimentation et encadrement." }),
+            card({ title: "Projet applique", description: "Cadrage et developpement de solutions IA ou data adaptees a un besoin terrain." }),
+            card({ title: "Formation et stage", description: "Accueil, mentorat, ateliers et parcours de renforcement de competences." }),
+            card({ title: "Financement et soutien", description: "Programmes, appels a projets, ressources et cooperation institutionnelle." }),
+          ],
+        }),
+        section({
+          layout: "form",
+          variant: "light",
+          title: "Formulaire de collaboration",
+          intro: "Tous les libelles et messages du formulaire sont modifiables dans les reglages Sanity.",
+          formType: "collaborate",
+        }),
+      ],
     },
     {
       _id: "page-contact",
@@ -935,8 +1357,33 @@ async function seed() {
       slugIntl: { fr: { current: "contact" }, en: { current: "contact" } },
       summary: "Ecrivez au laboratoire pour toute demande.",
       summaryIntl: localeText("Ecrivez au laboratoire pour toute demande."),
+      seo: seo("Contact - LaCDIA", "Contacter le Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle."),
       content: [block("Utilisez le formulaire pour contacter l'equipe du laboratoire.")],
       contentIntl: localeBlock([block("Utilisez le formulaire pour contacter l'equipe du laboratoire.")]),
+      sections: [
+        section({
+          variant: "heroDark",
+          title: "Contact",
+          intro:
+            "Ecrivez au laboratoire pour une demande institutionnelle, scientifique, technique, media ou partenariale.",
+        }),
+        section({
+          layout: "cards",
+          title: "Coordonnees",
+          cards: [
+            card({ title: "Email", description: "contact@lacdia.org", href: "mailto:contact@lacdia.org" }),
+            card({ title: "Localisation", description: "Port-au-Prince, Haiti" }),
+            card({ title: "Demandes", description: "Recherche, partenariats, projets IA, formation et communication." }),
+          ],
+        }),
+        section({
+          layout: "form",
+          variant: "light",
+          title: "Formulaire de contact",
+          intro: "Tous les champs visibles sont pilotables depuis Sanity.",
+          formType: "contact",
+        }),
+      ],
     },
     {
       _id: "page-mentions-legales",
@@ -961,8 +1408,23 @@ async function seed() {
       slugIntl: { fr: { current: "newsletter" }, en: { current: "newsletter" } },
       summary: "Inscrivez-vous pour recevoir les actualites.",
       summaryIntl: localeText("Inscrivez-vous pour recevoir les actualites."),
+      seo: seo("Newsletter - LaCDIA", "Recevoir les actualites, publications, evenements et opportunites de LaCDIA."),
       content: [block("Inscrivez-vous pour recevoir les actualites du laboratoire.")],
       contentIntl: localeBlock([block("Inscrivez-vous pour recevoir les actualites du laboratoire.")]),
+      sections: [
+        section({
+          variant: "heroDark",
+          title: "Newsletter",
+          intro:
+            "Recevez les annonces, publications, evenements, appels a collaboration et nouvelles du laboratoire.",
+        }),
+        section({
+          layout: "form",
+          variant: "light",
+          title: "Inscription",
+          formType: "newsletter",
+        }),
+      ],
     },
     {
       _id: "page-ressources",
@@ -989,6 +1451,36 @@ async function seed() {
       summaryIntl: localeText("Axes de recherche, projets et publications scientifiques."),
       content: [block("Decouvrez les axes de recherche et les projets scientifiques du laboratoire.")],
       contentIntl: localeBlock([block("Decouvrez les axes de recherche et les projets scientifiques du laboratoire.")]),
+    },
+    {
+      _id: "page-recherche-explorer",
+      _type: "institutionalPage",
+      status: "published",
+      title: "Recherche scientifique",
+      titleIntl: localeString("Recherche scientifique"),
+      slug: { current: "recherche-explorer" },
+      slugIntl: { fr: { current: "recherche-explorer" }, en: { current: "research-explorer" } },
+      summary: "Interrogez les publications, projets et membres du laboratoire.",
+      summaryIntl: localeText("Interrogez les publications, projets et membres du laboratoire."),
+      seo: seo(
+        "Recherche scientifique - Explorer",
+        "Moteur de recherche des publications, projets et membres du LaCDIA.",
+      ),
+      content: [block("Recherche transversale dans les contenus scientifiques du laboratoire.")],
+      contentIntl: localeBlock([block("Recherche transversale dans les contenus scientifiques du laboratoire.")]),
+      sections: [
+        section({
+          layout: "form",
+          title: "Formulaire de recherche",
+          actions: [action("Rechercher", "/recherche/explorer", "primary")],
+          cards: [
+            card({ title: "Tous les contenus", href: "", label: "Mot-cle, auteur, projet..." }),
+            card({ title: "Publications", href: "publication", description: "Aucun resultat pour votre recherche." }),
+            card({ title: "Projets", href: "project" }),
+            card({ title: "Membres", href: "member" }),
+          ],
+        }),
+      ],
     },
     {
       _id: "page-formation",
@@ -1111,6 +1603,7 @@ async function seed() {
   const documents = [
     siteSettings,
     navigation,
+    formSettings,
     homePage,
     kpiSettings,
     ...kpis,

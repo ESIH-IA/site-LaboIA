@@ -1,7 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+
+import { Link } from "@/i18n/navigation";
+import type { SiteSettings } from "@/lib/sanity/types";
 
 const consentCookie = "lacdia_cookie_consent";
 
@@ -18,8 +20,9 @@ function setCookie(name: string, value: string, days = 180) {
   document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
 }
 
-export default function CookieBanner() {
+export default function CookieBanner({ site }: { site: SiteSettings }) {
   const [visible, setVisible] = useState(false);
+  const hasCopy = Boolean(site.cookieMessage && site.cookieAcceptLabel && site.cookieRejectLabel);
 
   useEffect(() => {
     const consent = getCookie(consentCookie);
@@ -30,7 +33,7 @@ export default function CookieBanner() {
     return undefined;
   }, []);
 
-  if (!visible) return null;
+  if (!visible || !hasCopy) return null;
 
   const handleChoice = (value: "accepted" | "rejected") => {
     setCookie(consentCookie, value);
@@ -39,30 +42,29 @@ export default function CookieBanner() {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 rounded-2xl border border-border bg-surface p-5 shadow-lg md:left-auto md:right-6 md:max-w-lg">
-      <h2 className="text-sm font-semibold text-foreground">Cookies</h2>
-      <p className="mt-2 text-sm text-muted">
-        Ce site utilise des cookies de mesure d&apos;audience et de fonctionnement. Vous pouvez
-        accepter ou refuser ces cookies. Consultez la{" "}
-        <Link href="/cookies" className="underline underline-offset-4">
-          politique cookies
-        </Link>
+    <div className="cookie-banner">
+      {site.cookieTitle ? <h2 className="cookie-title">{site.cookieTitle}</h2> : null}
+      <p className="cookie-text">
+        {site.cookieMessage}{" "}
+        {site.cookiePolicyHref && site.cookiePolicyLabel ? (
+          <Link href={site.cookiePolicyHref}>{site.cookiePolicyLabel}</Link>
+        ) : null}
         .
       </p>
-      <div className="mt-4 flex flex-wrap gap-3">
+      <div className="cookie-actions">
         <button
           type="button"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm shadow-black/10 transition hover:bg-primary/90"
+          className="btn btn-small btn-small-primary"
           onClick={() => handleChoice("accepted")}
         >
-          Accepter
+          {site.cookieAcceptLabel}
         </button>
         <button
           type="button"
-          className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition hover:bg-surface-muted"
+          className="btn btn-small btn-small-outline"
           onClick={() => handleChoice("rejected")}
         >
-          Refuser
+          {site.cookieRejectLabel}
         </button>
       </div>
     </div>

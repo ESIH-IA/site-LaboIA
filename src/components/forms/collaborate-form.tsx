@@ -4,43 +4,28 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
+import type { FormCopy } from "@/lib/sanity/types";
 
-export default function CollaborateForm() {
+export default function CollaborateForm({ copy }: { copy?: FormCopy | null }) {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
-
-  const inputStyle = {
-    width: "100%",
-    borderRadius: "0.75rem",
-    padding: "0.65rem 1rem",
-    fontSize: "0.9rem",
-    outline: "none",
-    background: "rgba(10,15,28,0.04)",
-    border: "1px solid rgba(10,15,28,0.12)",
-    color: "var(--tech-text)",
-    transition: "border-color 0.2s",
-  };
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+  const privacyHref = copy?.privacyHref ?? "/confidentialite";
 
   return (
-    <div
-      className="mt-10 max-w-3xl rounded-2xl p-8"
-      style={{
-        background: "rgba(10,15,28,0.04)",
-        border: "1px solid rgba(10,15,28,0.1)",
-      }}
-    >
-      <h2
-        className="text-xl font-bold mb-6"
-        style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
-      >
-        Demande de collaboration
-      </h2>
+    <div className="glass-form">
+      <div style={{ marginBottom: "2rem" }}>
+        {copy?.title ? <h2 className="glass-form-title">{copy.title}</h2> : null}
+        {copy?.subtitle ? <p className="glass-form-subtitle">{copy.subtitle}</p> : null}
+      </div>
+
       <form
-        className="space-y-5"
+        className="form-section"
         onSubmit={async (event) => {
           event.preventDefault();
           setLoading(true);
           setMessage("");
+          setMessageType(null);
           const form = event.currentTarget;
           const formData = new FormData(form);
           const payload = {
@@ -60,65 +45,105 @@ export default function CollaborateForm() {
             });
             if (!response.ok) throw new Error("Erreur");
             trackEvent({ category: "form", action: "submit", name: "collaborer" });
-            setMessage("Merci. Votre demande a été enregistrée. Nous vous répondrons dans les meilleurs délais.");
+            setMessage(copy?.successMessage ?? "Merci. Votre demande a été enregistrée. Nous vous répondrons dans les meilleurs délais.");
+            setMessageType("success");
             form.reset();
           } catch {
-            setMessage("Une erreur est survenue. Veuillez réessayer ou nous écrire directement.");
+            setMessage(copy?.errorMessage ?? "Une erreur est survenue. Veuillez réessayer ou nous écrire directement.");
+            setMessageType("error");
           } finally {
             setLoading(false);
           }
         }}
       >
-        <label className="block">
-          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
-            Nom complet
+        <div className="form-grid form-grid-2">
+          <label className="form-group">
+            <span className="form-label">
+              {copy?.fullNameLabel ?? "Nom complet"} <span className="form-label-required">*</span>
+            </span>
+            <input
+              type="text"
+              name="fullName"
+              className="form-input"
+              placeholder={copy?.fullNamePlaceholder}
+              required
+            />
+          </label>
+
+          <label className="form-group">
+            <span className="form-label">
+              {copy?.emailLabel ?? "Email"} <span className="form-label-required">*</span>
+            </span>
+            <input
+              type="email"
+              name="email"
+              className="form-input"
+              placeholder={copy?.emailPlaceholder}
+              required
+            />
+          </label>
+        </div>
+
+        <label className="form-group">
+          <span className="form-label">
+            {copy?.organizationLabel ?? "Organisation"}
           </span>
-          <input type="text" name="fullName" style={inputStyle} required />
+          <input
+            type="text"
+            name="organization"
+            className="form-input"
+            placeholder={copy?.organizationPlaceholder}
+          />
         </label>
-        <label className="block">
-          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
-            Email
+
+        <label className="form-group">
+          <span className="form-label">
+            {copy?.messageLabel ?? "Message"} <span className="form-label-required">*</span>
           </span>
-          <input type="email" name="email" style={inputStyle} required />
+          <textarea
+            name="message"
+            rows={6}
+            className="form-input"
+            style={{ resize: "none" }}
+            placeholder={copy?.messagePlaceholder}
+            required
+          />
         </label>
-        <label className="block">
-          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
-            Organisation
-          </span>
-          <input type="text" name="organization" style={inputStyle} />
-        </label>
-        <label className="block">
-          <span className="label-eyebrow mb-2 block" style={{ color: "var(--tech-text-muted)" }}>
-            Message
-          </span>
-          <textarea name="message" rows={5} style={{ ...inputStyle, resize: "vertical" }} required />
-        </label>
-        <label className="flex items-start gap-3">
-          <input type="checkbox" required className="mt-1 shrink-0" />
-          <span className="text-sm" style={{ color: "var(--tech-text-muted)" }}>
-            J&apos;accepte que mes informations soient traitées conformément à la{" "}
-            <Link
-              href="/confidentialite"
-              className="underline underline-offset-4"
-              style={{ color: "var(--tech-accent-teal)" }}
-            >
-              politique de confidentialité
+
+        <label className="form-checkbox-row">
+          <input
+            type="checkbox"
+            required
+            className="form-checkbox"
+          />
+          <span>
+            {copy?.consentText ?? "J'accepte que mes informations soient traitées conformément à la"}{" "}
+            <Link href={privacyHref} className="form-checkbox-link">
+              {copy?.privacyLabel ?? "politique de confidentialité"}
             </Link>
-            .
           </span>
         </label>
-        <button
-          type="submit"
-          className="btn-primary-tech"
-          disabled={loading}
-          style={{ opacity: loading ? 0.6 : 1 }}
-        >
-          {loading ? "Envoi en cours..." : "Envoyer la demande"}
-        </button>
+
+        <div className="form-submit-area">
+          <button
+            type="submit"
+            className="btn btn-gradient"
+            disabled={loading}
+          >
+            {loading ? (copy?.loadingLabel ?? "Envoi en cours...") : (copy?.submitLabel ?? "Envoyer la demande")}
+          </button>
+        </div>
+
         {message ? (
-          <p className="text-sm" style={{ color: "var(--tech-accent-teal)" }}>
+          <div
+            className={`form-message ${
+              messageType === "success"
+                ? "form-message--success"
+                : "form-message--error"
+            }`}
+          >
             {message}
-          </p>
+          </div>
         ) : null}
       </form>
     </div>

@@ -2,7 +2,7 @@ export const site = {
   name: "Laboratoire Caraïbéen des Sciences des Données et de l'Intelligence Artificielle",
   shortName: "LaCDIA",
   description:
-    "Laboratoire de recherche et d'innovation en IA et science des données : projets, publications, partenariats, transfert et formation.",
+    "Laboratoire d'innovation et de recherche appliquée en IA et science des données : projets, publications, partenariats, transfert et formation.",
   assets: {
     banner: {
       src: "/banner/banner-website.png",
@@ -11,10 +11,10 @@ export const site = {
       alt: "Bannière du laboratoire",
     },
     logo: {
-      src: "/logo/logo-site.svg",
-      width: 689,
-      height: 249,
-      alt: "Logo du laboratoire",
+      src: "/logo/logo%20LaDIA.png",
+      width: 1024,
+      height: 1024,
+      alt: "Logo LaDIA",
     },
   },
 } as const;

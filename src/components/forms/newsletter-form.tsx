@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
+import type { FormCopy } from "@/lib/sanity/types";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export default function NewsletterForm() {
+export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>("");
 
@@ -21,7 +22,7 @@ export default function NewsletterForm() {
 
     if (!email) {
       setStatus("error");
-      setMessage("Email requis.");
+      setMessage(copy?.errorMessage ?? "");
       return;
     }
 
@@ -35,45 +36,46 @@ export default function NewsletterForm() {
       });
       const payload = await response.json();
       if (!response.ok) {
-        throw new Error(payload?.message || "Erreur.");
+        throw new Error(payload?.message || "Request failed");
       }
       setStatus("success");
-      setMessage("Inscription prise en compte.");
+      setMessage(copy?.successMessage ?? "");
     } catch {
       setStatus("error");
-      setMessage("Impossible d'enregistrer l'inscription.");
+      setMessage(copy?.errorMessage ?? "");
     }
   }
 
   return (
-    <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-      <label className="block text-sm text-neutral-700">
-        Email
+    <form className="form-section" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
+      <label className="form-label-light">
+        {copy?.emailLabel}
         <input
           type="email"
           name="email"
-          className="mt-2 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+          className="form-input-light"
+          style={{ marginTop: "0.5rem" }}
+          placeholder={copy?.emailPlaceholder}
           required
         />
       </label>
-      <label className="flex items-start gap-3 text-sm text-neutral-600">
-        <input type="checkbox" required className="mt-1" />
+      <label className="form-checkbox-light-row">
+        <input type="checkbox" required style={{ marginTop: "0.25rem" }} />
         <span>
-          J&apos;accepte de recevoir les communications du laboratoire. Voir la{" "}
-          <Link href="/confidentialite" className="underline underline-offset-4">
-            politique de confidentialité
+          {copy?.consentText ?? "J'accepte de recevoir les communications du laboratoire. Voir la"}{" "}
+          <Link href={copy?.privacyHref ?? "/confidentialite"} style={{ textDecoration: "underline", textUnderlineOffset: "4px" }}>
+            {copy?.privacyLabel ?? "politique de confidentialité"}
           </Link>
-          .
         </span>
       </label>
       <button
         type="submit"
-        className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-white shadow-sm shadow-black/10 transition hover:bg-primary/90 disabled:opacity-60"
+        className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
-        S{"'"}inscrire
+        {status === "loading" ? (copy?.loadingLabel ?? "En cours...") : (copy?.submitLabel ?? "S'inscrire")}
       </button>
-      {message ? <p className="text-sm text-neutral-600">{message}</p> : null}
+      {message ? <p className="form-status-text">{message}</p> : null}
     </form>
   );
 }

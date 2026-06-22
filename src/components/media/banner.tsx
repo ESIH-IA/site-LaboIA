@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { site } from "@/content/site";
 import type { SiteAsset } from "@/lib/sanity/types";
 
 export function Banner({
@@ -12,28 +11,25 @@ export function Banner({
   cover?: boolean;
   banner?: SiteAsset | null;
 }) {
-  const fallback = site.assets.banner;
-  const bannerData = banner?.url
-    ? { src: banner.url, alt: banner.alt ?? fallback.alt }
-    : { src: fallback.src, alt: fallback.alt };
+  if (!banner?.url) return null;
 
   if (cover) {
     return (
       <Image
-        src={bannerData.src}
-        alt={bannerData.alt}
+        src={banner.url}
+        alt={banner.alt ?? ""}
         fill
         sizes="100vw"
-        className={`object-cover ${className}`}
+        className={className}
         priority
       />
     );
   }
 
   return (
-    <div className={`relative w-full overflow-hidden ${className}`}>
-      <div className="relative aspect-[894/160] w-full">
-        <Image src={bannerData.src} alt={bannerData.alt} fill sizes="100vw" className="object-cover" priority />
+    <div className={`banner-image ${className}`}>
+      <div className="banner-aspect">
+        <Image src={banner.url} alt={banner.alt ?? ""} fill sizes="100vw" priority />
       </div>
     </div>
   );

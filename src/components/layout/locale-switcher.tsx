@@ -1,31 +1,47 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTransition } from "react";
+import { useLocale, useTranslations } from "next-intl";
 
-import { locales, type Locale } from "@/lib/i18n";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { type Locale } from "@/lib/i18n";
+import { routing } from "@/i18n/routing";
 
-function stripLocale(pathname: string) {
-  const segments = pathname.split("/").filter(Boolean);
-  const first = segments[0];
-  if (first && locales.includes(first as Locale)) {
-    return "/" + segments.slice(1).join("/");
-  }
-  return pathname;
-}
-
-// EN version hidden until translations are ready — reactivate by restoring the full locales.map loop
 export default function LocaleSwitcher() {
-  const pathname = usePathname() || "/";
-  const basePath = stripLocale(pathname);
-  void basePath;
+  const locale = useLocale() as Locale;
+  const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations("locale");
+  const [isPending, startTransition] = useTransition();
+
+  function switchLocale(newLocale: Locale) {
+    if (newLocale === locale) return;
+    startTransition(() => {
+      router.replace(pathname, { locale: newLocale });
+    });
+  }
 
   return (
     <div
-      className="hidden items-center gap-2 text-xs lg:flex"
-      style={{ color: "rgba(136,146,176,0.7)", fontFamily: "var(--font-mono, monospace)", fontSize: "0.65rem", letterSpacing: "0.12em" }}
+      className="locale-toggle"
+      role="group"
+      aria-label={t("switchLanguage")}
     >
-      <span style={{ fontWeight: 600, color: "rgba(0,212,170,0.8)" }}>FR</span>
+      {routing.locales.map((loc) => {
+        const isActive = loc === locale;
+        return (
+          <button
+            key={loc}
+            type="button"
+            onClick={() => switchLocale(loc)}
+            disabled={isPending}
+            aria-pressed={isActive}
+            className={`locale-toggle-option ${isActive ? "locale-toggle-option--active" : ""}`}
+          >
+            {loc.toUpperCase()}
+          </button>
+        );
+      })}
     </div>
   );
 }
