@@ -1,4 +1,5 @@
 import { Brain, Eye, ShieldCheck, HeartPulse, Leaf, BarChart3 } from "lucide-react";
+import type { Locale } from "@/lib/i18n";
 
 type HighlightItem = {
   title: string;
@@ -9,6 +10,7 @@ type HighlightsProps = {
   title?: string;
   intro?: string;
   items?: HighlightItem[];
+  locale?: Locale;
 };
 
 const AXES_META = [
@@ -20,41 +22,78 @@ const AXES_META = [
   { icon: BarChart3,   num: "06", color: "#6c63ff", bg: "rgba(108,99,255,0.1)",  border: "rgba(108,99,255,0.2)" },
 ];
 
-const FALLBACK_AXES: HighlightItem[] = [
-  {
-    title: "Méthodes fondamentales en IA et apprentissage automatique",
-    description:
-      "Développement de méthodes adaptées aux données rares, bruitées ou hétérogènes, apprentissage auto-supervisé, transfert d'apprentissage, robustesse et IA frugale.",
+const FALLBACK: Record<Locale, { sectionLabel: string; sectionTitle: string; sectionIntro: string; transversalLabel: string; transversalText: string; axes: HighlightItem[] }> = {
+  fr: {
+    sectionLabel: "Axes de recherche",
+    sectionTitle: "Six axes structurants",
+    sectionIntro: "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe.",
+    transversalLabel: "Thématique transversale",
+    transversalText: "Intelligence artificielle et sciences des données pour le développement durable d'Haïti et de la Caraïbe",
+    axes: [
+      {
+        title: "Méthodes fondamentales en IA et apprentissage automatique",
+        description: "Développement de méthodes adaptées aux données rares, bruitées ou hétérogènes, apprentissage auto-supervisé, transfert d'apprentissage, robustesse et IA frugale.",
+      },
+      {
+        title: "Vision par ordinateur et analyse de données complexes",
+        description: "Analyse d'images, de documents et de données multimodales, notamment pour l'agriculture, la santé, l'environnement et le traitement de documents en créole et en français.",
+      },
+      {
+        title: "IA robuste, explicable et responsable",
+        description: "Explicabilité des modèles, équité algorithmique, détection et réduction des biais, robustesse, audit des systèmes d'IA et évaluation de leurs limites.",
+      },
+      {
+        title: "IA pour la santé",
+        description: "Analyse d'images médicales, aide au dépistage et à la décision clinique, surveillance épidémiologique, assistants documentaires et interfaces sanitaires en créole haïtien.",
+      },
+      {
+        title: "IA pour l'agriculture numérique et la résilience environnementale",
+        description: "Détection des maladies des cultures, recommandations agronomiques, analyse d'images satellitaires, systèmes d'alerte précoce et adaptation au changement climatique.",
+      },
+      {
+        title: "IA pour les systèmes socio-économiques, éducatifs et institutionnels",
+        description: "Aide à la décision, transformation numérique, automatisation documentaire, traitement du créole haïtien et développement d'outils pour l'éducation, l'administration publique et l'économie.",
+      },
+    ],
   },
-  {
-    title: "Vision par ordinateur et analyse de données complexes",
-    description:
-      "Analyse d'images, de documents et de données multimodales, notamment pour l'agriculture, la santé, l'environnement et le traitement de documents en créole et en français.",
+  en: {
+    sectionLabel: "Research Axes",
+    sectionTitle: "Six structuring axes",
+    sectionIntro: "Applied and fundamental research axes organized around a transversal theme: AI and data science for the sustainable development of Haiti and the Caribbean.",
+    transversalLabel: "Transversal theme",
+    transversalText: "Artificial intelligence and data science for the sustainable development of Haiti and the Caribbean",
+    axes: [
+      {
+        title: "Fundamental AI Methods and Machine Learning",
+        description: "Developing methods suited to scarce, noisy or heterogeneous data, self-supervised learning, transfer learning, robustness and frugal AI.",
+      },
+      {
+        title: "Computer Vision and Complex Data Analysis",
+        description: "Image, document and multimodal data analysis, particularly for agriculture, health, environment and document processing in Haitian Creole and French.",
+      },
+      {
+        title: "Robust, Explainable and Responsible AI",
+        description: "Model explainability, algorithmic fairness, bias detection and mitigation, robustness, AI system auditing and evaluation of limitations.",
+      },
+      {
+        title: "AI for Healthcare",
+        description: "Medical image analysis, screening and clinical decision support, epidemiological surveillance, documentary assistants and health interfaces in Haitian Creole.",
+      },
+      {
+        title: "AI for Digital Agriculture and Environmental Resilience",
+        description: "Crop disease detection, agronomic recommendations, satellite image analysis, early warning systems and climate change adaptation.",
+      },
+      {
+        title: "AI for Socioeconomic, Educational and Institutional Systems",
+        description: "Decision support, digital transformation, document automation, Haitian Creole processing and tool development for education, public administration and the economy.",
+      },
+    ],
   },
-  {
-    title: "IA robuste, explicable et responsable",
-    description:
-      "Explicabilité des modèles, équité algorithmique, détection et réduction des biais, robustesse, audit des systèmes d'IA et évaluation de leurs limites.",
-  },
-  {
-    title: "IA pour la santé",
-    description:
-      "Analyse d'images médicales, aide au dépistage et à la décision clinique, surveillance épidémiologique, assistants documentaires et interfaces sanitaires en créole haïtien.",
-  },
-  {
-    title: "IA pour l'agriculture numérique et la résilience environnementale",
-    description:
-      "Détection des maladies des cultures, recommandations agronomiques, analyse d'images satellitaires, systèmes d'alerte précoce et adaptation au changement climatique.",
-  },
-  {
-    title: "IA pour les systèmes socio-économiques, éducatifs et institutionnels",
-    description:
-      "Aide à la décision, transformation numérique, automatisation documentaire, traitement du créole haïtien et développement d'outils pour l'éducation, l'administration publique et l'économie.",
-  },
-];
+};
 
-export default function Highlights({ title, intro, items }: HighlightsProps) {
-  const list = items?.length === 6 ? items : FALLBACK_AXES;
+export default function Highlights({ title, intro, items, locale = "fr" }: HighlightsProps) {
+  const fb = FALLBACK[locale] ?? FALLBACK.fr;
+  const list = items?.length === 6 ? items : fb.axes;
 
   return (
     <section
@@ -66,7 +105,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
         {/* En-tête */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-end mb-14">
           <div>
-            <p className="section-label">Axes de recherche</p>
+            <p className="section-label">{fb.sectionLabel}</p>
             <h2
               style={{
                 fontFamily: "var(--font-display)",
@@ -78,7 +117,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
                 margin: 0,
               }}
             >
-              {title ?? "Six axes structurants"}
+              {title ?? fb.sectionTitle}
             </h2>
           </div>
           <p
@@ -89,8 +128,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
               margin: 0,
             }}
           >
-            {intro ??
-              "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe."}
+            {intro ?? fb.sectionIntro}
           </p>
         </div>
 
@@ -105,17 +143,13 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
                 className="axe-card-light"
                 style={{ position: "relative" }}
               >
-                {/* Numéro fantôme */}
                 <span className="axe-number-bg">{ax.num}</span>
-
-                {/* Icône */}
                 <div
                   className="axe-icon-box"
                   style={{ background: ax.bg, border: `1px solid ${ax.border}`, color: ax.color }}
                 >
                   <Icon size={22} strokeWidth={1.6} aria-hidden />
                 </div>
-
                 <h3
                   style={{
                     fontFamily: "var(--font-display)",
@@ -147,10 +181,8 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
         <div className="axe-transversal mt-8">
           <div className="axe-transversal-bar" />
           <div>
-            <p className="axe-transversal-label">Thématique transversale</p>
-            <p className="axe-transversal-text">
-              Intelligence artificielle et sciences des données pour le développement durable d'Haïti et de la Caraïbe
-            </p>
+            <p className="axe-transversal-label">{fb.transversalLabel}</p>
+            <p className="axe-transversal-text">{fb.transversalText}</p>
           </div>
         </div>
 

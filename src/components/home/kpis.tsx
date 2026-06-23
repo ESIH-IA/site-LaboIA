@@ -1,19 +1,37 @@
 import type { KpiItem, KpiSettings } from "@/lib/sanity/types";
+import type { Locale } from "@/lib/i18n";
 
 type KpisProps = {
   title?: string;
   intro?: string;
   items: KpiItem[];
   meta?: KpiSettings;
+  locale?: Locale;
 };
 
-export default function Kpis({ title, intro, items, meta }: KpisProps) {
-  const list = items.length ? items : [
-    { _id: "1", key: "chercheurs",   value: "5+",  label: "Chercheurs actifs",    note: "Chercheurs, doctorants et collaborateurs actifs", status: "confirmed" as const },
-    { _id: "2", key: "projets",      value: "0",   label: "Projets en cours",     note: "Projets de recherche en cours de lancement",      status: "confirmed" as const },
-    { _id: "3", key: "partenariats", value: "1",   label: "Partenariats actifs",  note: "Partenariat actif en recherche et médiation",     status: "confirmed" as const },
-    { _id: "4", key: "axes",         value: "6",   label: "Axes de recherche",    note: "Thématiques structurant nos travaux",             status: "confirmed" as const },
-  ];
+const FALLBACK_ITEMS: Record<Locale, KpiItem[]> = {
+  fr: [
+    { _id: "1", key: "chercheurs",   value: "5+", label: "Chercheurs actifs",   note: "Chercheurs, doctorants et collaborateurs actifs", status: "confirmed" },
+    { _id: "2", key: "projets",      value: "0",  label: "Projets en cours",    note: "Projets de recherche en cours de lancement",      status: "confirmed" },
+    { _id: "3", key: "partenariats", value: "1",  label: "Partenariats actifs", note: "Partenariat actif en recherche et médiation",     status: "confirmed" },
+    { _id: "4", key: "axes",         value: "6",  label: "Axes de recherche",   note: "Thématiques structurant nos travaux",             status: "confirmed" },
+  ],
+  en: [
+    { _id: "1", key: "chercheurs",   value: "5+", label: "Active Researchers",  note: "Researchers, PhD students and active collaborators", status: "confirmed" },
+    { _id: "2", key: "projets",      value: "0",  label: "Ongoing Projects",    note: "Research projects currently being launched",         status: "confirmed" },
+    { _id: "3", key: "partenariats", value: "1",  label: "Active Partnerships", note: "Active partnership in research and mediation",        status: "confirmed" },
+    { _id: "4", key: "axes",         value: "6",  label: "Research Axes",       note: "Themes structuring our work",                        status: "confirmed" },
+  ],
+};
+
+const SECTION_LABELS: Record<Locale, string> = {
+  fr: "Chiffres clés",
+  en: "Key figures",
+};
+
+export default function Kpis({ title, intro, items, meta, locale = "fr" }: KpisProps) {
+  const list = items.length ? items : (FALLBACK_ITEMS[locale] ?? FALLBACK_ITEMS.fr);
+  const sectionLabel = SECTION_LABELS[locale] ?? SECTION_LABELS.fr;
 
   return (
     <section
@@ -27,7 +45,7 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
               <span
                 style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--color-teal)", flexShrink: 0 }}
               />
-              Chiffres clés
+              {sectionLabel}
             </div>
             {title && (
               <h2
@@ -75,7 +93,7 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
               color: "var(--color-text-muted)",
             }}
           >
-            {meta.lastUpdated && <span>Mise à jour : {meta.lastUpdated}</span>}
+            {meta.lastUpdated && <span>{locale === "en" ? "Updated:" : "Mise à jour :"} {meta.lastUpdated}</span>}
             {meta.disclaimer && <span style={{ opacity: 0.6 }}>{meta.disclaimer}</span>}
           </div>
         )}

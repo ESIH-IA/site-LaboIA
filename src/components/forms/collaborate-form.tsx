@@ -5,17 +5,83 @@ import { useState } from "react";
 
 import { trackEvent } from "@/lib/analytics";
 import type { FormCopy } from "@/lib/sanity/types";
+import type { Locale } from "@/lib/i18n";
 
-export default function CollaborateForm({ copy }: { copy?: FormCopy | null }) {
+const labels = {
+  fr: {
+    formTitle: "Proposer une collaboration",
+    fullName: "Nom complet",
+    fullNamePlaceholder: "Prénom Nom",
+    email: "Adresse e-mail",
+    emailPlaceholder: "votre@email.com",
+    organisation: "Organisation / Institution",
+    organisationPlaceholder: "Université, entreprise, ONG…",
+    collabType: "Type de collaboration",
+    collabTypes: [
+      { value: "", label: "Sélectionnez un type…" },
+      { value: "recherche", label: "Recherche commune" },
+      { value: "financement", label: "Financement / subvention" },
+      { value: "terrain", label: "Accès terrain / données" },
+      { value: "formation", label: "Formation et transfert de compétences" },
+      { value: "technique", label: "Partenariat technique" },
+      { value: "autre", label: "Autre" },
+    ],
+    message: "Description du projet / proposition",
+    messagePlaceholder: "Décrivez votre proposition de collaboration…",
+    consent: "J'accepte que mes informations soient traitées conformément à la",
+    privacy: "politique de confidentialité",
+    submit: "Envoyer la proposition",
+    loading: "Envoi en cours…",
+    success: "Merci. Votre proposition a bien été enregistrée. Nous vous répondrons dans les meilleurs délais.",
+    error: "Une erreur est survenue. Veuillez réessayer ou nous écrire directement.",
+  },
+  en: {
+    formTitle: "Propose a collaboration",
+    fullName: "Full name",
+    fullNamePlaceholder: "First Last",
+    email: "Email address",
+    emailPlaceholder: "your@email.com",
+    organisation: "Organisation / Institution",
+    organisationPlaceholder: "University, company, NGO…",
+    collabType: "Type of collaboration",
+    collabTypes: [
+      { value: "", label: "Select a type…" },
+      { value: "recherche", label: "Joint research" },
+      { value: "financement", label: "Funding / grant" },
+      { value: "terrain", label: "Field access / data" },
+      { value: "formation", label: "Training and skills transfer" },
+      { value: "technique", label: "Technical partnership" },
+      { value: "autre", label: "Other" },
+    ],
+    message: "Project / proposal description",
+    messagePlaceholder: "Describe your collaboration proposal…",
+    consent: "I agree that my information will be processed in accordance with the",
+    privacy: "privacy policy",
+    submit: "Submit proposal",
+    loading: "Sending…",
+    success: "Thank you. Your proposal has been received. We will get back to you as soon as possible.",
+    error: "An error occurred. Please try again or contact us directly.",
+  },
+};
+
+export default function CollaborateForm({
+  copy,
+  locale = "fr",
+}: {
+  copy?: FormCopy | null;
+  locale?: Locale;
+}) {
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+
+  const tx = labels[locale] ?? labels.fr;
   const privacyHref = copy?.privacyHref ?? "/confidentialite";
 
   return (
     <div className="glass-form">
       <div style={{ marginBottom: "2rem" }}>
-        {copy?.title ? <h2 className="glass-form-title">{copy.title}</h2> : null}
+        <h2 className="glass-form-title">{copy?.title ?? tx.formTitle}</h2>
         {copy?.subtitle ? <p className="glass-form-subtitle">{copy.subtitle}</p> : null}
       </div>
 
@@ -32,9 +98,11 @@ export default function CollaborateForm({ copy }: { copy?: FormCopy | null }) {
             formType: "collaborer",
             fullName: formData.get("fullName")?.toString(),
             email: formData.get("email")?.toString(),
-            organization: formData.get("organization")?.toString(),
+            organisation: formData.get("organisation")?.toString() || undefined,
+            collabType: formData.get("collabType")?.toString() || undefined,
             message: formData.get("message")?.toString(),
             consent: true,
+            locale,
           };
 
           try {
@@ -43,103 +111,111 @@ export default function CollaborateForm({ copy }: { copy?: FormCopy | null }) {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),
             });
-            if (!response.ok) throw new Error("Erreur");
+            if (!response.ok) throw new Error("error");
             trackEvent({ category: "form", action: "submit", name: "collaborer" });
-            setMessage(copy?.successMessage ?? "Merci. Votre demande a été enregistrée. Nous vous répondrons dans les meilleurs délais.");
+            setMessage(copy?.successMessage ?? tx.success);
             setMessageType("success");
             form.reset();
           } catch {
-            setMessage(copy?.errorMessage ?? "Une erreur est survenue. Veuillez réessayer ou nous écrire directement.");
+            setMessage(copy?.errorMessage ?? tx.error);
             setMessageType("error");
           } finally {
             setLoading(false);
           }
         }}
       >
+        {/* Nom + Email */}
         <div className="form-grid form-grid-2">
           <label className="form-group">
             <span className="form-label">
-              {copy?.fullNameLabel ?? "Nom complet"} <span className="form-label-required">*</span>
+              {copy?.fullNameLabel ?? tx.fullName} <span className="form-label-required">*</span>
             </span>
             <input
               type="text"
               name="fullName"
               className="form-input"
-              placeholder={copy?.fullNamePlaceholder}
+              placeholder={copy?.fullNamePlaceholder ?? tx.fullNamePlaceholder}
+              autoComplete="name"
               required
             />
           </label>
 
           <label className="form-group">
             <span className="form-label">
-              {copy?.emailLabel ?? "Email"} <span className="form-label-required">*</span>
+              {copy?.emailLabel ?? tx.email} <span className="form-label-required">*</span>
             </span>
             <input
               type="email"
               name="email"
               className="form-input"
-              placeholder={copy?.emailPlaceholder}
+              placeholder={copy?.emailPlaceholder ?? tx.emailPlaceholder}
+              autoComplete="email"
               required
             />
           </label>
         </div>
 
+        {/* Organisation */}
         <label className="form-group">
-          <span className="form-label">
-            {copy?.organizationLabel ?? "Organisation"}
-          </span>
+          <span className="form-label">{copy?.organizationLabel ?? tx.organisation}</span>
           <input
             type="text"
-            name="organization"
+            name="organisation"
             className="form-input"
-            placeholder={copy?.organizationPlaceholder}
+            placeholder={tx.organisationPlaceholder}
+            autoComplete="organization"
           />
         </label>
 
+        {/* Type de collaboration */}
+        <label className="form-group">
+          <span className="form-label">{tx.collabType}</span>
+          <select name="collabType" className="form-input form-input-select">
+            {tx.collabTypes.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {/* Message */}
         <label className="form-group">
           <span className="form-label">
-            {copy?.messageLabel ?? "Message"} <span className="form-label-required">*</span>
+            {copy?.messageLabel ?? tx.message} <span className="form-label-required">*</span>
           </span>
           <textarea
             name="message"
             rows={6}
             className="form-input"
-            style={{ resize: "none" }}
-            placeholder={copy?.messagePlaceholder}
+            style={{ resize: "vertical", minHeight: "7rem" }}
+            placeholder={copy?.messagePlaceholder ?? tx.messagePlaceholder}
             required
           />
         </label>
 
+        {/* Consentement */}
         <label className="form-checkbox-row">
-          <input
-            type="checkbox"
-            required
-            className="form-checkbox"
-          />
+          <input type="checkbox" required className="form-checkbox" />
           <span>
-            {copy?.consentText ?? "J'accepte que mes informations soient traitées conformément à la"}{" "}
+            {copy?.consentText ?? tx.consent}{" "}
             <Link href={privacyHref} className="form-checkbox-link">
-              {copy?.privacyLabel ?? "politique de confidentialité"}
+              {copy?.privacyLabel ?? tx.privacy}
             </Link>
           </span>
         </label>
 
+        {/* Bouton */}
         <div className="form-submit-area">
-          <button
-            type="submit"
-            className="btn btn-gradient"
-            disabled={loading}
-          >
-            {loading ? (copy?.loadingLabel ?? "Envoi en cours...") : (copy?.submitLabel ?? "Envoyer la demande")}
+          <button type="submit" className="btn btn-gradient" disabled={loading}>
+            {loading ? (copy?.loadingLabel ?? tx.loading) : (copy?.submitLabel ?? tx.submit)}
           </button>
         </div>
 
         {message ? (
           <div
             className={`form-message ${
-              messageType === "success"
-                ? "form-message--success"
-                : "form-message--error"
+              messageType === "success" ? "form-message--success" : "form-message--error"
             }`}
           >
             {message}
