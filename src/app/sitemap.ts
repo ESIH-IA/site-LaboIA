@@ -13,7 +13,6 @@ const staticPaths = [
   "/lacdia-tech",
   "/solutions",
   "/ressources",
-  "/equipe",
   "/actualites",
   "/formation",
   "/collaborer",
@@ -46,13 +45,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const enSlug = project.slugIntl?.en?.current ?? project.slug.current;
     entries.push({ url: buildUrl(`/projets/${frSlug}`, "fr") });
     entries.push({ url: buildUrl(`/projets/${enSlug}`, "en") });
-  });
-
-  members.forEach((member) => {
-    const frSlug = member.slugIntl?.fr?.current ?? member.slug.current;
-    const enSlug = member.slugIntl?.en?.current ?? member.slug.current;
-    entries.push({ url: buildUrl(`/equipe/${frSlug}`, "fr") });
-    entries.push({ url: buildUrl(`/equipe/${enSlug}`, "en") });
   });
 
   news.forEach((article) => {

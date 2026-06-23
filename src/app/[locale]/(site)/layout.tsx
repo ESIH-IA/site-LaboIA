@@ -26,7 +26,7 @@ export default async function SiteLayout({
     <div className="site-layout">
       <Header nav={nav} site={site} />
       <main className="site-main">{children}</main>
-      <Footer site={site} nav={nav} />
+      <Footer site={site} nav={nav} locale={locale} />
       <CookieBanner site={site} />
       <AnalyticsScripts />
       <WebVitalsReporter />
