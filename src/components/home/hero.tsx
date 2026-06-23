@@ -3,6 +3,7 @@
 import { Link } from "@/i18n/navigation";
 import { useEffect, useRef } from "react";
 import type { SiteAsset } from "@/lib/sanity/types";
+import type { Locale } from "@/lib/i18n";
 
 type HeroAction = {
   label: string;
@@ -14,6 +15,28 @@ type HeroProps = {
   badge?: string;
   actions?: HeroAction[];
   banner?: SiteAsset | null;
+  locale?: Locale;
+};
+
+const heroFallback = {
+  fr: {
+    badge: "Intelligence Artificielle · Recherche · Innovation",
+    titleLine1: "Transformer",
+    titleLine2: "la donnée caraïbéenne",
+    titleLine3: "en intelligence.",
+    subtitle: "LaCDIA est un laboratoire de recherche appliquée en IA et science des données, au service des communautés caribéennes.",
+    primaryLabel: "Collaborer avec le laboratoire",
+    secondaryLabel: "Explorer nos projets",
+  },
+  en: {
+    badge: "Artificial Intelligence · Research · Innovation",
+    titleLine1: "Transforming",
+    titleLine2: "Caribbean data",
+    titleLine3: "into intelligence.",
+    subtitle: "LaCDIA is an applied research laboratory in AI and data science, serving Caribbean communities.",
+    primaryLabel: "Collaborate with the lab",
+    secondaryLabel: "Explore our projects",
+  },
 };
 
 function ParticleCanvas() {
@@ -123,7 +146,8 @@ function ParticleCanvas() {
   );
 }
 
-export default function Hero({ badge, actions }: HeroProps) {
+export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
+  const fb = heroFallback[locale] ?? heroFallback.fr;
   const primary   = actions?.find((a) => a.variant === "primary")   ?? actions?.[0];
   const secondary = actions?.find((a) => a.variant === "secondary") ?? actions?.[1];
 
@@ -188,7 +212,7 @@ export default function Hero({ badge, actions }: HeroProps) {
                 flexShrink: 0,
               }}
             />
-            {badge ?? "Intelligence Artificielle · Recherche · Innovation"}
+            {badge ?? fb.badge}
           </div>
 
           {/* Title */}
@@ -203,7 +227,7 @@ export default function Hero({ badge, actions }: HeroProps) {
               marginBottom: "1.75rem",
             }}
           >
-            Transformer
+            {fb.titleLine1}
             <br />
             <span
               style={{
@@ -213,10 +237,10 @@ export default function Hero({ badge, actions }: HeroProps) {
                 backgroundClip: "text",
               }}
             >
-              la donnée caraïbéenne
+              {fb.titleLine2}
             </span>
             <br />
-            en intelligence.
+            {fb.titleLine3}
           </h1>
 
           {/* Subtitle */}
@@ -229,15 +253,13 @@ export default function Hero({ badge, actions }: HeroProps) {
               marginBottom: "2.5rem",
             }}
           >
-            LaCDIA est un laboratoire de recherche appliquée en IA et science des données,
-            au service des communautés caribéennes.
+            {fb.subtitle}
           </p>
 
           {/* CTAs */}
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
-            {/* Bouton primaire — teal plein avec flèche */}
             <Link
-              href={primary?.href ?? "/collaborer"}
+              href={primary?.href ?? "/contact"}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -256,13 +278,12 @@ export default function Hero({ badge, actions }: HeroProps) {
                 whiteSpace: "nowrap",
               }}
             >
-              {primary?.label ?? "Collaborer avec le laboratoire"}
+              {primary?.label ?? fb.primaryLabel}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
 
-            {/* Bouton secondaire — glass discret */}
             <Link
               href={secondary?.href ?? "/projets"}
               style={{
@@ -289,7 +310,7 @@ export default function Hero({ badge, actions }: HeroProps) {
                 <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
                 <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8"/>
               </svg>
-              {secondary?.label ?? "Explorer nos projets"}
+              {secondary?.label ?? fb.secondaryLabel}
             </Link>
           </div>
         </div>
