@@ -9,9 +9,9 @@ type KpisProps = {
 
 export default function Kpis({ title, intro, items, meta }: KpisProps) {
   const list = items.length ? items : [
-    { _id: "1", key: "chercheurs",   value: "12+", label: "Chercheurs actifs",    note: "Doctorants, postdocs et enseignants-chercheurs", status: "confirmed" as const },
-    { _id: "2", key: "projets",      value: "8",   label: "Projets en cours",     note: "Projets de recherche appliquée et fondamentale",  status: "confirmed" as const },
-    { _id: "3", key: "partenariats", value: "3",   label: "Partenariats actifs",  note: "Institutions académiques et organisations",       status: "draft" as const },
+    { _id: "1", key: "chercheurs",   value: "5+",  label: "Chercheurs actifs",    note: "Chercheurs, doctorants et collaborateurs actifs", status: "confirmed" as const },
+    { _id: "2", key: "projets",      value: "0",   label: "Projets en cours",     note: "Projets de recherche en cours de lancement",      status: "confirmed" as const },
+    { _id: "3", key: "partenariats", value: "1",   label: "Partenariats actifs",  note: "Partenariat actif en recherche et médiation",     status: "confirmed" as const },
     { _id: "4", key: "axes",         value: "6",   label: "Axes de recherche",    note: "Thématiques structurant nos travaux",             status: "confirmed" as const },
   ];
 

@@ -5,8 +5,6 @@ import { buildMetadata } from "@/lib/seo";
 import { localizedPath } from "@/lib/i18n";
 import type { InstitutionalPage } from "@/lib/sanity/types";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-
 export const dynamic = "force-dynamic";
 
 interface SearchResult {
@@ -69,53 +67,56 @@ export default async function ExplorerPage({
   const query = resolvedSearchParams?.q?.toString().trim() || "";
   const type = resolvedSearchParams?.type?.toString().trim() || null;
   const term = query ? `${query}*` : null;
-  const isReady = Boolean(page?.title && copy.placeholder && copy.submitLabel && copy.filters.length);
 
-  if (!isReady) {
-    notFound();
-  }
+  const effectiveCopy = {
+    placeholder: copy.placeholder ?? "Rechercher…",
+    emptyText: copy.emptyText ?? "Aucun résultat pour cette recherche.",
+    submitLabel: copy.submitLabel ?? "Rechercher",
+    filters: copy.filters.length > 0
+      ? copy.filters
+      : [
+          { label: "Tous les types", value: "" },
+          { label: "Publications", value: "publication" },
+          { label: "Projets", value: "project" },
+          { label: "Membres", value: "member" },
+        ],
+  };
 
   const results = term
     ? await sanityFetch<SearchResult[]>(searchQuery, { term, type, locale }, [])
     : [];
 
   return (
-    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
-      <div style={{maxWidth:'48rem'}}>
-        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+    <section className="container" style={{ maxWidth: "64rem", paddingTop: "3rem", paddingBottom: "3rem" }}>
+      <div style={{ maxWidth: "48rem" }}>
+        <h1 className="section-title">{page?.title ?? "Explorer le laboratoire"}</h1>
         {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
       </div>
 
-      <form style={{marginTop:'1.5rem', display:'flex', flexWrap:'wrap', gap:'0.75rem'}} method="get">
+      <form style={{ marginTop: "1.5rem", display: "flex", flexWrap: "wrap", gap: "0.75rem" }} method="get">
         <input
           type="search"
           name="q"
-          placeholder={copy.placeholder}
+          placeholder={effectiveCopy.placeholder}
           defaultValue={query}
-          className="form-input-light" style={{width:'100%', maxWidth:'20rem'}}
+          className="form-input-light"
+          style={{ width: "100%", maxWidth: "20rem" }}
         />
-        <select
-          name="type"
-          defaultValue={type ?? ""}
-          className="form-select"
-        >
-          {copy.filters.map((filter) => (
+        <select name="type" defaultValue={type ?? ""} className="form-select">
+          {effectiveCopy.filters.map((filter) => (
             <option key={filter.value || "all"} value={filter.value}>
               {filter.label}
             </option>
           ))}
         </select>
-        <button
-          type="submit"
-          className="btn btn-small btn-small-primary"
-        >
-          {copy.submitLabel}
+        <button type="submit" className="btn btn-small btn-small-primary">
+          {effectiveCopy.submitLabel}
         </button>
       </form>
 
       {query && results.length === 0 ? (
-        <div className="empty-state" style={{marginTop:'2rem'}}>
-          {copy.emptyText}
+        <div className="empty-state" style={{ marginTop: "2rem" }}>
+          {effectiveCopy.emptyText}
         </div>
       ) : null}
 

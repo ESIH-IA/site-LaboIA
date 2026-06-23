@@ -2,32 +2,32 @@ export type KpiStatus = "draft" | "confirmed";
 
 export const kpis = [
   {
-    key: "students",
-    label: "Étudiants impliqués",
-    value: "30+",
+    key: "chercheurs",
+    label: "Chercheurs actifs",
+    value: "5+",
     status: "confirmed" as KpiStatus,
-    note: "Étudiants encadrés sur nos projets de recherche",
+    note: "Chercheurs, doctorants et collaborateurs actifs",
   },
   {
-    key: "partners",
-    label: "Partenaires",
-    value: "2+",
+    key: "projets",
+    label: "Projets en cours",
+    value: "0",
     status: "confirmed" as KpiStatus,
-    note: "Partenariats actifs en recherche et médiation",
+    note: "Projets de recherche en cours de lancement",
   },
   {
-    key: "projects",
-    label: "Projets actifs",
+    key: "partenariats",
+    label: "Partenariats actifs",
     value: "1",
     status: "confirmed" as KpiStatus,
-    note: "DEEP FARM — agriculture intelligente en Haïti",
+    note: "Partenariat actif en recherche et médiation",
   },
   {
-    key: "years",
-    label: "Années de recherche",
-    value: "3+",
+    key: "axes",
+    label: "Axes de recherche",
+    value: "6",
     status: "confirmed" as KpiStatus,
-    note: "Depuis la fondation du laboratoire",
+    note: "Thématiques structurant nos travaux",
   },
 ] as const;
 

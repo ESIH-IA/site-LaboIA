@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
 import PortableTextRenderer from "@/components/content/portable-text";
 import { sanityFetch } from "@/lib/sanity/client";
@@ -46,22 +45,18 @@ export default async function Page() {
   );
   const offers = await sanityFetch<OfferListItem[]>(offerListQuery, { locale }, []);
   const programs = await sanityFetch<ProgramListItem[]>(programListQuery, { locale }, []);
-  const hasPageContent = Boolean(page?.title || page?.summary || page?.content?.length);
   const hasOffers = offers.length > 0;
   const hasPrograms = programs.length > 0;
-  const isReady = hasPageContent && (hasOffers || hasPrograms);
-
-  if (!isReady) {
-    notFound();
-  }
 
   return (
-    <section className="container" style={{paddingTop:'3rem', paddingBottom:'3rem'}}>
-      {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
+    <section className="container" style={{ paddingTop: "3rem", paddingBottom: "3rem" }}>
+      <h1 className="section-title">{page?.title ?? "Formation & opportunités"}</h1>
       {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
-      <div style={{marginTop:'1.5rem'}}>
-        <PortableTextRenderer value={page?.content} />
-      </div>
+      {page?.content && (
+        <div style={{ marginTop: "1.5rem" }}>
+          <PortableTextRenderer value={page.content} />
+        </div>
+      )}
 
       {hasOffers ? (
         <div style={{marginTop:'3rem'}}>
@@ -90,29 +85,19 @@ export default async function Page() {
       ) : null}
 
       {hasPrograms ? (
-        <div style={{marginTop:'3rem'}}>
-          <div className="card-grid card-grid-2" style={{marginTop:'1.5rem', gap:'1rem'}}>
+        <div style={{ marginTop: "3rem" }}>
+          <div className="card-grid card-grid-2" style={{ marginTop: "1.5rem", gap: "1rem" }}>
             {programs.map((program) => (
-              <article
-                key={program._id}
-                className="simple-card"
-              >
+              <article key={program._id} className="simple-card">
                 <div className="simple-card-meta">
-                  {program.programType ? (
-                    <span className="tag-small">
-                      {program.programType}
-                    </span>
-                  ) : null}
+                  {program.programType ? <span className="tag-small">{program.programType}</span> : null}
                   {program.startDate ? <span>{program.startDate}</span> : null}
                 </div>
-                <h3 style={{marginTop:'0.75rem', fontSize:'1.125rem', fontWeight:600, color:'#0f172a'}}>{program.title}</h3>
+                <h3 style={{ marginTop: "0.75rem", fontSize: "1.125rem", fontWeight: 600, color: "#0f172a" }}>{program.title}</h3>
                 {program.summary ? (
-                  <p style={{marginTop:'0.5rem', fontSize:'0.875rem', color:'#334155'}}>{program.summary}</p>
+                  <p style={{ marginTop: "0.5rem", fontSize: "0.875rem", color: "#334155" }}>{program.summary}</p>
                 ) : null}
-                <Link
-                  href={`/formation/programmes/${program.slug.current}`}
-                  className="btn-link" style={{marginTop:'0.75rem'}}
-                >
+                <Link href={`/formation/programmes/${program.slug.current}`} className="btn-link" style={{ marginTop: "0.75rem" }}>
                   {program.title}
                 </Link>
               </article>
@@ -120,6 +105,12 @@ export default async function Page() {
           </div>
         </div>
       ) : null}
+
+      {!hasOffers && !hasPrograms && (
+        <div className="rounded-2xl border border-dashed border-white/10 p-12 text-center text-sm text-[#8892b0]" style={{ marginTop: "3rem" }}>
+          Aucune offre ou programme disponible pour le moment. Revenez bientôt.
+        </div>
+      )}
     </section>
   );
 }

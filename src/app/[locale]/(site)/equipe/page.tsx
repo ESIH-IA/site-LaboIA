@@ -9,6 +9,8 @@ import { getServerLocale } from "@/lib/i18n-server";
 import { buildMetadata } from "@/lib/seo";
 import { urlForImage } from "@/lib/sanity/image";
 import type { Person as SanityPerson } from "@/lib/sanity/types";
+import { getGovernanceData } from "@/data/governance";
+import type { Person as LocalPerson } from "@/data/governance/types";
 
 export const dynamic = "force-dynamic";
 
@@ -73,11 +75,48 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+function toProfileFromLocal(person: LocalPerson): GovernanceProfile {
+  return {
+    id: person.id,
+    slug: person.slug,
+    name: person.name,
+    photoUrl: person.photo ?? undefined,
+    roleTitle: person.roleTitle,
+    category: person.roleCategory as GovernanceProfileCategory,
+    shortBio: person.shortBio ?? undefined,
+    longBio: person.longBio ?? undefined,
+    affiliation: person.affiliation ?? undefined,
+    expertise: person.expertise ?? [],
+    links: person.links ?? {},
+    contribution: person.contribution ?? undefined,
+    order: person.order,
+    status: person.status,
+  };
+}
+
 export default async function EquipePage() {
   const locale = await getServerLocale();
   const governance = await getGovernancePageData(locale);
   const page = governance.page;
-  if (!page) return null;
+
+  if (!page) {
+    const staticData = await getGovernanceData(locale);
+    return (
+      <TeamPageView
+        locale={locale}
+        title={staticData.title}
+        intro={<p>{staticData.intro}</p>}
+        leadershipTitle={staticData.orgChart.sectionTitle}
+        leadershipIntro={staticData.orgChart.sectionIntro ? <p>{staticData.orgChart.sectionIntro}</p> : undefined}
+        directoryTitle={staticData.members.sectionTitle}
+        directoryIntro={staticData.members.sectionIntro}
+        topPerson={toProfileFromLocal(staticData.orgChart.topPerson)}
+        scientificDirectors={staticData.orgChart.scientificDirectors.map(toProfileFromLocal)}
+        associateResearchers={staticData.orgChart.associateResearchers.map(toProfileFromLocal)}
+        members={staticData.members.people.map(toProfileFromLocal)}
+      />
+    );
+  }
 
   const chart = governance.chart;
   const members = governance.members;
