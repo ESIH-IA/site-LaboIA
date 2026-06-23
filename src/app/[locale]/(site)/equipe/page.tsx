@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import type { PortableTextBlock } from "@portabletext/types";
 
 import { TeamPageView } from "@/components/governance/TeamPageView";
@@ -94,52 +95,6 @@ function toProfileFromLocal(person: LocalPerson): GovernanceProfile {
   };
 }
 
-export default async function EquipePage() {
-  const locale = await getServerLocale();
-  const governance = await getGovernancePageData(locale);
-  const page = governance.page;
-
-  if (!page) {
-    const staticData = await getGovernanceData(locale);
-    return (
-      <TeamPageView
-        locale={locale}
-        title={staticData.title}
-        intro={<p>{staticData.intro}</p>}
-        leadershipTitle={staticData.orgChart.sectionTitle}
-        leadershipIntro={staticData.orgChart.sectionIntro ? <p>{staticData.orgChart.sectionIntro}</p> : undefined}
-        directoryTitle={staticData.members.sectionTitle}
-        directoryIntro={staticData.members.sectionIntro}
-        topPerson={toProfileFromLocal(staticData.orgChart.topPerson)}
-        scientificDirectors={staticData.orgChart.scientificDirectors.map(toProfileFromLocal)}
-        associateResearchers={staticData.orgChart.associateResearchers.map(toProfileFromLocal)}
-        members={staticData.members.people.map(toProfileFromLocal)}
-      />
-    );
-  }
-
-  const chart = governance.chart;
-  const members = governance.members;
-  const membersIntro = toPlainText(page.membersSectionIntro);
-  const scientificMembers = page.showMembers ? members.map(toProfileFromSanity) : [];
-  const associateResearchers =
-    page.showOrgChart && chart?.associateResearchers ? chart.associateResearchers.map(toProfileFromSanity) : [];
-
-  return (
-    <TeamPageView
-      locale={locale}
-      title={page.title}
-      intro={page.intro ? <PortableTextRenderer value={page.intro} /> : undefined}
-      leadershipTitle={page.orgChartSectionTitle ?? chart?.orgSectionTitle ?? ""}
-      leadershipIntro={page.orgChartSectionIntro ? <PortableTextRenderer value={page.orgChartSectionIntro} /> : undefined}
-      directoryTitle={page.membersSectionTitle ?? ""}
-      directoryIntro={membersIntro}
-      topPerson={page.showOrgChart && chart?.topPerson ? toProfileFromSanity(chart.topPerson) : null}
-      scientificDirectors={
-        page.showOrgChart && chart?.scientificDirectors ? chart.scientificDirectors.map(toProfileFromSanity) : []
-      }
-      associateResearchers={associateResearchers}
-      members={scientificMembers}
-    />
-  );
+export default function EquipePage() {
+  return notFound();
 }

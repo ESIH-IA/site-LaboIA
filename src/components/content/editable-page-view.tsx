@@ -5,12 +5,14 @@ import ContactForm from "@/components/forms/contact-form";
 import CollaborateForm from "@/components/forms/collaborate-form";
 import NewsletterForm from "@/components/forms/newsletter-form";
 import PortableTextRenderer from "@/components/content/portable-text";
+import type { Locale } from "@/lib/i18n";
 import type { FormSettings, InstitutionalPage, PageSection } from "@/lib/sanity/types";
 
 type Props = {
   page: InstitutionalPage | null;
   forms?: FormSettings | null;
   children?: ReactNode;
+  locale?: Locale;
 };
 
 function sectionClass(variant?: PageSection["variant"]) {
@@ -38,14 +40,14 @@ function renderActions(actions?: PageSection["actions"], dark = false) {
   );
 }
 
-function EditableForm({ type, forms }: { type?: PageSection["formType"]; forms?: FormSettings | null }) {
-  if (type === "contact") return <ContactForm copy={forms?.contact} />;
+function EditableForm({ type, forms, locale }: { type?: PageSection["formType"]; forms?: FormSettings | null; locale?: Locale }) {
+  if (type === "contact") return <ContactForm copy={forms?.contact} locale={locale} />;
   if (type === "collaborate") return <CollaborateForm copy={forms?.collaborate} />;
   if (type === "newsletter") return <NewsletterForm copy={forms?.newsletter} />;
   return null;
 }
 
-function EditableSection({ section, forms }: { section: PageSection; forms?: FormSettings | null }) {
+function EditableSection({ section, forms, locale }: { section: PageSection; forms?: FormSettings | null; locale?: Locale }) {
   const isDark = section.variant === "heroDark" || section.variant === "ctaDark";
   const isHero = section.variant === "heroDark";
   const layout = section.layout ?? "content";
@@ -164,14 +166,14 @@ function EditableSection({ section, forms }: { section: PageSection; forms?: For
           </div>
         ) : null}
 
-        {layout === "form" ? <div style={{ marginTop: "2rem" }}><EditableForm type={section.formType} forms={forms} /></div> : null}
+        {layout === "form" ? <div style={{ marginTop: "2rem" }}><EditableForm type={section.formType} forms={forms} locale={locale} /></div> : null}
         {renderActions(section.actions, isDark)}
       </div>
     </section>
   );
 }
 
-export default function EditablePageView({ page, forms, children }: Props) {
+export default function EditablePageView({ page, forms, children, locale }: Props) {
   if (!page) return null;
 
   const hasSections = Boolean(page.sections?.length);
@@ -180,7 +182,7 @@ export default function EditablePageView({ page, forms, children }: Props) {
     <main>
       {hasSections ? (
         page.sections?.map((section, index) => (
-          <EditableSection key={section._key ?? `${section.title}-${index}`} section={section} forms={forms} />
+          <EditableSection key={section._key ?? `${section.title}-${index}`} section={section} forms={forms} locale={locale} />
         ))
       ) : (
         <>

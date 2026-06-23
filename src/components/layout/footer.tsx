@@ -1,15 +1,38 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 
+import type { Locale } from "@/lib/i18n";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
+
+const t = {
+  fr: {
+    labSection: "Laboratoire",
+    axes: "Axes de recherche",
+    projects: "Projets",
+    newsletter: "Newsletter",
+    rights: "Tous droits réservés",
+    tagline: "Haïti · Caraïbes · Recherche IA",
+  },
+  en: {
+    labSection: "Laboratory",
+    axes: "Research Axes",
+    projects: "Projects",
+    newsletter: "Newsletter",
+    rights: "All rights reserved",
+    tagline: "Haiti · Caribbean · AI Research",
+  },
+};
 
 export default function Footer({
   nav,
   site,
+  locale = "fr",
 }: {
   nav: Navigation;
   site: SiteSettings;
+  locale?: Locale;
 }) {
+  const tx = t[locale] ?? t.fr;
   const year = new Date().getFullYear();
   const logoSrc = site.logo?.url ?? "/logo/logo-site.svg";
   const logoAlt = site.logo?.alt ?? site.shortName ?? "LaCDIA";
@@ -114,14 +137,13 @@ export default function Footer({
                 className="text-[10px] font-medium text-[#8892b0] tracking-widest uppercase mb-4"
                 style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
               >
-                Laboratoire
+                {tx.labSection}
               </div>
               <nav className="flex flex-col gap-2.5">
                 {[
-                  { label: "Axes de recherche", href: "/recherche/axes" },
-                  { label: "Projets", href: "/projets" },
-                  { label: "Équipe", href: "/equipe" },
-                  { label: "Newsletter", href: "/newsletter" },
+                  { label: tx.axes, href: "/recherche/axes" },
+                  { label: tx.projects, href: "/projets" },
+                  { label: tx.newsletter, href: "/newsletter" },
                 ].map((item) => (
                   <Link
                     key={item.href}
@@ -164,7 +186,7 @@ export default function Footer({
             className="text-xs text-[#8892b0]/60"
             style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
           >
-            © {year} {site.shortName ?? "LaCDIA"}. Tous droits réservés.
+            © {year} {site.shortName ?? "LaCDIA"}. {tx.rights}.
           </p>
           <div className="flex items-center gap-1">
             <span className="h-1.5 w-1.5 rounded-full bg-[#00d4aa] animate-pulse" />
@@ -172,7 +194,7 @@ export default function Footer({
               className="text-xs text-[#8892b0]/60"
               style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
             >
-              Haïti · Caraïbes · Recherche IA
+              {tx.tagline}
             </span>
           </div>
         </div>
