@@ -2350,3 +2350,82 @@ body {
 @media (max-width: 768px) {
   .card-grid-2 { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   SIMPLE CARD — cartes des pages intérieures (fond clair)
+   ============================================================ */
+.simple-card {
+  background: #ffffff;
+  border: 1px solid rgba(10, 15, 28, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.simple-card:hover {
+  border-color: var(--color-teal-dark, #00b89a);
+  box-shadow: 0 4px 20px rgba(0, 184, 154, 0.1);
+  transform: translateY(-2px);
+}
+
+.simple-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.simple-card-title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-dark, #0f172a);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.simple-card-text {
+  font-size: 0.875rem;
+  color: var(--color-text-body, #334155);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--color-text-muted, #94a3b8);
+  font-size: 0.9rem;
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-lg);
+}
+
+/* ============================================================
+   FORM SELECT
+   ============================================================ */
+.form-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  color: var(--color-text-dark, #0f172a);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  outline: none;
+}
+
+.form-select:focus {
+  border-color: var(--color-teal, #00e5c3);
+}
