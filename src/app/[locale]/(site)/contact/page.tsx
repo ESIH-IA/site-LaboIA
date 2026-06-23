@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import EditablePageView from "@/components/content/editable-page-view";
-import ContactForm from "@/components/forms/contact-form";
+import ContactCollaborateTabs from "@/components/forms/contact-collaborate-tabs";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
@@ -11,6 +10,17 @@ import { getFormSettings } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
+const pageMeta: Record<string, { title: string; description: string }> = {
+  fr: {
+    title: "Contact & Collaboration",
+    description: "Écrivez-nous ou proposez une collaboration avec le LaCDIA.",
+  },
+  en: {
+    title: "Contact & Collaboration",
+    description: "Write to us or propose a collaboration with LaCDIA.",
+  },
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
   const page = await sanityFetch<InstitutionalPage | null>(
@@ -18,11 +28,12 @@ export async function generateMetadata(): Promise<Metadata> {
     { slug: "contact", locale },
     null,
   );
+  const fallback = pageMeta[locale] ?? pageMeta.fr;
 
   return await buildMetadata({
     locale,
-    title: page?.title ?? (locale === "en" ? "Contact" : "Contact"),
-    description: page?.summary,
+    title: page?.title ?? fallback.title,
+    description: page?.summary ?? fallback.description,
     seo: page?.seo,
     path: localizedPath("/contact", locale),
     alternates: {
@@ -32,63 +43,67 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+const heroContent: Record<string, { badge: string; title: string; intro: string }> = {
+  fr: {
+    badge: "Travaillons ensemble",
+    title: "Contactez le LaCDIA",
+    intro: "Vous souhaitez nous écrire, poser une question ou proposer une collaboration de recherche ? Utilisez le formulaire ci-dessous.",
+  },
+  en: {
+    badge: "Let's work together",
+    title: "Contact LaCDIA",
+    intro: "Want to write to us, ask a question or propose a research collaboration? Use the form below.",
+  },
+};
+
 export default async function Page() {
   const locale = await getServerLocale();
-  const page = await sanityFetch<InstitutionalPage | null>(
-    institutionalPageBySlugQuery,
-    { slug: "contact", locale },
-    null,
-  );
   const forms = await getFormSettings(locale);
+  const hero = heroContent[locale] ?? heroContent.fr;
 
-  if (!page) {
-    const isEn = locale === "en";
-    return (
-      <main>
-        <section className="page-hero page-hero-dark">
-          <div className="section-pattern grid-pattern pattern-40" />
-          <div className="container" style={{ position: "relative", maxWidth: "48rem" }}>
-            <div className="hero-badge" style={{ display: "inline-flex", marginBottom: "1.5rem" }}>
-              <span className="hero-badge-text">{isEn ? "Get in touch" : "Nous contacter"}</span>
-            </div>
-            <h1
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2.25rem, 4vw, 3.5rem)",
-                fontWeight: 800,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.1,
-                color: "var(--color-text-white)",
-                marginBottom: "1.25rem",
-                maxWidth: "22ch",
-              }}
-            >
-              {isEn ? "Write to us" : "Écrivez-nous"}
-            </h1>
-            <p
-              style={{
-                fontSize: "clamp(1rem, 1.4vw, 1.1rem)",
-                color: "var(--color-text-light)",
-                lineHeight: 1.75,
-                maxWidth: "48ch",
-                margin: 0,
-              }}
-            >
-              {isEn
-                ? "Our team will get back to you as soon as possible. Whether you have a question, a collaboration proposal, or simply want to learn more about LaCDIA."
-                : "Notre équipe vous répondra dans les meilleurs délais. Que vous ayez une question, une proposition de collaboration ou simplement envie d'en savoir plus sur LaCDIA."}
-            </p>
+  return (
+    <main>
+      {/* Hero */}
+      <section className="page-hero page-hero-dark">
+        <div className="section-pattern grid-pattern pattern-40" />
+        <div className="container" style={{ position: "relative", maxWidth: "52rem" }}>
+          <div className="hero-badge" style={{ display: "inline-flex", marginBottom: "1.5rem" }}>
+            <span className="hero-badge-text">{hero.badge}</span>
           </div>
-        </section>
+          <h1
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(2.25rem, 4vw, 3.5rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1,
+              color: "var(--color-text-white)",
+              marginBottom: "1.25rem",
+              maxWidth: "22ch",
+            }}
+          >
+            {hero.title}
+          </h1>
+          <p
+            style={{
+              fontSize: "clamp(1rem, 1.4vw, 1.1rem)",
+              color: "var(--color-text-light)",
+              lineHeight: 1.75,
+              maxWidth: "52ch",
+              margin: 0,
+            }}
+          >
+            {hero.intro}
+          </p>
+        </div>
+      </section>
 
-        <section className="section section-white">
-          <div className="container" style={{ maxWidth: "48rem" }}>
-            <ContactForm copy={forms?.contact} locale={locale} />
-          </div>
-        </section>
-      </main>
-    );
-  }
-
-  return <EditablePageView page={page} forms={forms} locale={locale} />;
+      {/* Formulaires avec onglets */}
+      <section className="section section-white">
+        <div className="container" style={{ maxWidth: "52rem" }}>
+          <ContactCollaborateTabs forms={forms} locale={locale} />
+        </div>
+      </section>
+    </main>
+  );
 }

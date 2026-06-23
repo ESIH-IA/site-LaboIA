@@ -78,11 +78,12 @@ export default async function Home() {
         body={home.introBody}
         actions={normalizeActions(home.introActions)}
       />
-      <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} />
+      <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} locale={locale} />
       <Highlights
         title={home.highlightsTitle}
         intro={home.highlightsIntro}
         items={home.highlights?.length ? home.highlights : undefined}
+        locale={locale}
       />
       <PublicationsPreview
         title={home.publicationsTitle}
