@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Locale } from "@/lib/i18n";
 
 type Action = {
   label: string;
@@ -12,24 +13,35 @@ type IntroProps = {
   title?: string;
   body?: string;
   actions?: Action[];
+  locale?: Locale;
 };
 
-export default function Intro({ eyebrow, badge: _badge, title, body, actions }: IntroProps) {
+const introFallback: Record<Locale, { title: string; body: string }> = {
+  fr: {
+    title: "Laboratoire de recherche et d'innovation en IA et science des données.",
+    body: "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents.",
+  },
+  en: {
+    title: "Research and innovation laboratory in AI and data science.",
+    body: "We conduct applied and fundamental research, and support partners and institutions in designing solutions based on artificial intelligence, data science and intelligent systems.",
+  },
+};
+
+export default function Intro({ eyebrow, badge: _badge, title, body, actions, locale = "fr" }: IntroProps) {
+  const fb = introFallback[locale] ?? introFallback.fr;
+
   return (
     <section className="section-labo section-padding-sm">
       <div className="container-site">
-        {/* Split layout: crème card on dark */}
         <div
           className="rounded-3xl p-10 md:p-14 relative overflow-hidden"
           style={{ background: "var(--tech-bg)", color: "var(--tech-text)" }}
         >
-          {/* Decorative top gradient line */}
           <div
             className="absolute top-0 left-0 right-0 h-px"
             style={{ background: "linear-gradient(90deg, transparent, #00b894, transparent)" }}
             aria-hidden="true"
           />
-
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
               <div className="badge-dark inline-flex mb-6">
@@ -40,13 +52,12 @@ export default function Intro({ eyebrow, badge: _badge, title, body, actions }: 
                 className="text-display-lg"
                 style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
               >
-                {title ?? "Laboratoire de recherche et d'innovation en IA et science des données."}
+                {title ?? fb.title}
               </h2>
             </div>
             <div>
               <p className="text-lg leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
-                {body ??
-                  "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents."}
+                {body ?? fb.body}
               </p>
             </div>
           </div>

@@ -70,13 +70,14 @@ export default async function Home() {
 
   return (
     <>
-      <Hero banner={site.banner} />
+      <Hero banner={site.banner} locale={locale} />
       <Intro
         eyebrow={home.introEyebrow ?? site.shortName}
         badge={home.heroBadge}
         title={home.introTitle ?? site.description}
         body={home.introBody}
         actions={normalizeActions(home.introActions)}
+        locale={locale}
       />
       <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} locale={locale} />
       <Highlights

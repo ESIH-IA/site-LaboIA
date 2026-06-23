@@ -2456,3 +2456,76 @@ body {
 .form-select:focus {
   border-color: var(--color-teal, #00e5c3);
 }
+
+/* ============================================================
+   CONTACT PAGE — layout 2 colonnes responsive
+   ============================================================ */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Amélioration form-input sur fond dark */
+.glass-form .form-input,
+.glass-form textarea.form-input,
+.glass-form select.form-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f0f4ff;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.glass-form .form-input:focus,
+.glass-form textarea.form-input:focus,
+.glass-form select.form-input:focus {
+  border-color: var(--labo-accent-teal);
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.12);
+  outline: none;
+}
+
+.glass-form .form-input::placeholder {
+  color: rgba(136, 146, 176, 0.45);
+}
+
+.glass-form .form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #8892b0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.glass-form .form-label-required {
+  color: var(--labo-accent-teal);
+}
+
+.glass-form .btn-gradient {
+  width: 100%;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  letter-spacing: 0.01em;
+}
+
+.glass-form .form-submit-area {
+  padding-top: 0.75rem;
+}
+
+/* Supprime le max-width du glass-form pour la nouvelle page contact */
+.contact-form-wrapper .glass-form {
+  max-width: none;
+  margin: 0;
+}

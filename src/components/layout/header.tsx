@@ -64,11 +64,13 @@ export default function Header({
   }, [mobileOpen]);
 
   const navItems = useMemo(() => {
-    return nav.mainNav.map((item) => ({
-      ...item,
-      localizedHref: withLocale(item.href, currentLocale),
-      active: isActivePath(basePath, item.href),
-    }));
+    return nav.mainNav
+      .filter((item) => item.href !== "/collaborer")
+      .map((item) => ({
+        ...item,
+        localizedHref: withLocale(item.href, currentLocale),
+        active: isActivePath(basePath, item.href),
+      }));
   }, [basePath, currentLocale, nav.mainNav]);
 
   const logoSrc = site.logo?.url ?? "/logo/logo-site.svg";
@@ -224,11 +226,11 @@ export default function Header({
             {/* Footer CTA */}
             <div className="mt-8 pt-6 border-t border-white/8">
               <Link
-                href={withLocale("/collaborer", currentLocale)}
+                href={withLocale("/contact", currentLocale)}
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold bg-[#00d4aa]/10 border border-[#00d4aa]/30 text-[#00d4aa] hover:bg-[#00d4aa]/20 transition"
               >
-                Collaborer avec nous
+                {currentLocale === "en" ? "Contact us" : "Nous contacter"}
               </Link>
             </div>
           </div>
