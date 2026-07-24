@@ -240,7 +240,6 @@ async function seed() {
         labelIntl: localeString("Services et Solutions IA"),
         href: "/solutions",
       },
-      { _type: "navItem", label: "Actualit\u00e9s", labelIntl: localeString("Actualit\u00e9s"), href: "/actualites" },
       { _type: "navItem", label: "\u00c9quipe", labelIntl: localeString("\u00c9quipe"), href: "/equipe" },
       { _type: "navItem", label: "Collaborer", labelIntl: localeString("Collaborer"), href: "/collaborer" },
       { _type: "navItem", label: "Contact", labelIntl: localeString("Contact"), href: "/contact" },
@@ -250,7 +249,7 @@ async function seed() {
       { _type: "navItem", label: "Recherche", labelIntl: localeString("Recherche"), href: "/recherche" },
       { _type: "navItem", label: "Departement scientifique", labelIntl: localeString("Departement scientifique"), href: "/recherche/departement-scientifique" },
       { _type: "navItem", label: "LaCDIA Tech", labelIntl: localeString("LaCDIA Tech"), href: "/lacdia-tech" },
-      { _type: "navItem", label: "Equipe", labelIntl: localeString("Equipe"), href: "/equipe" },
+      // Equipe retiree du footer tant que la page est masquee (voir next.config.ts)
       { _type: "navItem", label: "Mentions legales", labelIntl: localeString("Mentions legales"), href: "/mentions-legales" },
       { _type: "navItem", label: "Confidentialite", labelIntl: localeString("Confidentialite"), href: "/confidentialite" },
       { _type: "navItem", label: "Cookies", labelIntl: localeString("Cookies"), href: "/cookies" },
@@ -312,6 +311,16 @@ async function seed() {
       loadingLabel: "Inscription en cours",
       successMessage: "Votre inscription a ete prise en compte.",
       errorMessage: "L'inscription n'a pas pu etre finalisee. Reessayez plus tard.",
+    }),
+    unsubscribe: formCopy({
+      title: "Gerer mon abonnement",
+      subtitle: "Vous pouvez vous desinscrire de la newsletter a tout moment.",
+      emailLabel: "Email",
+      emailPlaceholder: "votre@email.com",
+      submitLabel: "Se desinscrire",
+      loadingLabel: "Envoi en cours",
+      successMessage: "Votre demande a ete prise en compte.",
+      errorMessage: "La demande n'a pas pu etre traitee. Reessayez plus tard.",
     }),
   };
 
@@ -400,15 +409,6 @@ async function seed() {
       { _type: "linkAction", label: "Proposer un partenariat", href: "/collaborer", variant: "primary" },
       { _type: "linkAction", label: "Candidater a un stage", href: "/collaborer", variant: "secondary" },
     ]),
-    eventBanner: {
-      enabled: true,
-      label: localeString("Evenement a venir"),
-      title: localeString("S\u00e9minaire IA & donn\u00e9es pour les services publics"),
-      date: localeString("Jeudi 25 avril a 10h00"),
-      location: localeString("Campus ESIH, Port-au-Prince"),
-      ctaLabel: localeString("Voir le programme"),
-      ctaHref: "/actualites",
-    },
   };
   const kpis = [
     {
@@ -916,7 +916,7 @@ async function seed() {
       affiliation: "LaCDIA",
       longBio: "Co-fondatrice du laboratoire LaCDIA. Pilote les activites scientifiques en apprentissage automatique.",
       expertise: ["Direction scientifique", "Machine Learning", "Data Science"],
-      links: { email: "aishael.picard@lacdia.org" },
+      links: { email: "aishael.picard@lacdia.esih.edu" },
       governanceGroup: "direction",
       order: 2,
     },
@@ -931,7 +931,7 @@ async function seed() {
       affiliation: "LaCDIA - ESTIA",
       longBio: "Co-fondateur du laboratoire LaCDIA. Supervise les projets de recherche appliqu\u00e9e.",
       expertise: ["Intelligence artificielle", "Deep Learning", "Computer Vision"],
-      links: { email: "livenson.nicolas@lacdia.org", linkedin: "https://linkedin.com/in/livenson-nicolas" },
+      links: { email: "livenson.nicolas@lacdia.esih.edu", linkedin: "https://linkedin.com/in/livenson-nicolas" },
       governanceGroup: "direction",
       order: 3,
     },
@@ -1371,7 +1371,7 @@ async function seed() {
           layout: "cards",
           title: "Coordonnees",
           cards: [
-            card({ title: "Email", description: "contact@lacdia.org", href: "mailto:contact@lacdia.org" }),
+            card({ title: "Email", description: "contact@lacdia.esih.edu", href: "mailto:contact@lacdia.esih.edu" }),
             card({ title: "Localisation", description: "Port-au-Prince, Haiti" }),
             card({ title: "Demandes", description: "Recherche, partenariats, projets IA, formation et communication." }),
           ],

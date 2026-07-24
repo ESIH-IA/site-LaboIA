@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import ContactForm from "@/components/forms/contact-form";
 import CollaborateForm from "@/components/forms/collaborate-form";
 import NewsletterForm from "@/components/forms/newsletter-form";
+import NewsletterUnsubscribeForm from "@/components/forms/newsletter-unsubscribe-form";
 import PortableTextRenderer from "@/components/content/portable-text";
 import type { Locale } from "@/lib/i18n";
 import type { FormSettings, InstitutionalPage, PageSection } from "@/lib/sanity/types";
@@ -44,6 +45,7 @@ function EditableForm({ type, forms, locale }: { type?: PageSection["formType"];
   if (type === "contact") return <ContactForm copy={forms?.contact} locale={locale} />;
   if (type === "collaborate") return <CollaborateForm copy={forms?.collaborate} />;
   if (type === "newsletter") return <NewsletterForm copy={forms?.newsletter} />;
+  if (type === "unsubscribe") return <NewsletterUnsubscribeForm copy={forms?.unsubscribe} />;
   return null;
 }
 

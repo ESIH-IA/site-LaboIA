@@ -1,8 +1,9 @@
 import Hero from "@/components/home/hero";
+import Ticker from "@/components/home/ticker";
 import Intro from "@/components/home/intro";
 import Kpis from "@/components/home/kpis";
 import Highlights from "@/components/home/highlights";
-import PublicationsPreview from "@/components/home/publications-preview";
+import ActualitesSection from "@/components/home/actualites-section";
 import Partners from "@/components/home/partners";
 import CollaborateCta from "@/components/home/collaborate-cta";
 import type { Metadata } from "next";
@@ -48,16 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const locale = await getServerLocale();
   const [site, homeData] = await Promise.all([getSiteSettings(locale), getHomeData(locale)]);
-  const { home, kpis, kpiSettings, featuredNews, featuredPartners } = homeData;
-
-  const publications = featuredNews.map((item) => ({
-    _id: item._id,
-    title: item.title,
-    category: item.category,
-    date: item.date,
-    summary: item.summary,
-    sourceUrl: item.sourceUrl,
-  }));
+  const { home, kpis, kpiSettings, allNews, featuredPartners } = homeData;
 
   const partners = featuredPartners.map((partner) => ({
     _id: partner._id,
@@ -71,6 +63,7 @@ export default async function Home() {
   return (
     <>
       <Hero banner={site.banner} locale={locale} />
+      <Ticker />
       <Intro
         eyebrow={home.introEyebrow ?? site.shortName}
         badge={home.heroBadge}
@@ -79,17 +72,17 @@ export default async function Home() {
         actions={normalizeActions(home.introActions)}
         locale={locale}
       />
-      <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} locale={locale} />
+      <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} />
       <Highlights
         title={home.highlightsTitle}
         intro={home.highlightsIntro}
         items={home.highlights?.length ? home.highlights : undefined}
-        locale={locale}
       />
-      <PublicationsPreview
+      <ActualitesSection
         title={home.publicationsTitle}
         intro={home.publicationsIntro}
-        items={publications}
+        items={allNews}
+        locale={locale}
       />
       <Partners
         title={home.partnersTitle}

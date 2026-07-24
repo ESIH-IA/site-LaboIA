@@ -13,7 +13,6 @@ const staticPaths = [
   "/lacdia-tech",
   "/solutions",
   "/ressources",
-  "/actualites",
   "/formation",
   "/collaborer",
   "/contact",

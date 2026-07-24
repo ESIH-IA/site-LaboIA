@@ -36,6 +36,7 @@ type HomeDataBundle = {
   kpiSettings: KpiSettings;
   featuredProjects: ProjectListItem[];
   featuredNews: NewsListItem[];
+  allNews: NewsListItem[];
   featuredPartners: PartnerListItem[];
   researchAxes: ResearchAxisListItem[];
 };
@@ -52,13 +53,8 @@ const emptyNavigation: Navigation = {
   footerNav: [],
 };
 
-const emptyHome: HomePageData = {
-  _id: "homePage-empty",
-};
-
-const emptySolutionsPage: SolutionsPage = {
-  _id: "solutionsPage-empty",
-};
+const emptyHome: HomePageData = { _id: "homePage-empty" };
+const emptySolutionsPage: SolutionsPage = { _id: "solutionsPage-empty" };
 
 export async function getSiteSettings(locale: Locale): Promise<SiteSettings> {
   if (!isSanityConfigured) return emptySiteSettings;
@@ -82,6 +78,7 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
       kpiSettings: { _id: "kpiSettings-empty" },
       featuredProjects: [],
       featuredNews: [],
+      allNews: [],
       featuredPartners: [],
       researchAxes: [],
     };
@@ -101,9 +98,10 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
     home: home ?? emptyHome,
     kpis,
     kpiSettings: kpiSettings ?? { _id: "kpiSettings-empty" },
-    featuredProjects: projects.filter((project) => project.featured),
-    featuredNews: news.filter((item) => item.featured),
-    featuredPartners: partners.filter((partner) => partner.featured),
+    featuredProjects: projects.filter((p) => p.featured),
+    featuredNews: news.filter((n) => n.featured),
+    allNews: news,
+    featuredPartners: partners.filter((p) => p.featured),
     researchAxes: axes,
   };
 }
@@ -121,33 +119,20 @@ export async function getFormSettings(locale: Locale): Promise<FormSettings | nu
 
 export async function getGovernancePageData(locale: Locale) {
   if (!isSanityConfigured) {
-    return {
-      mode: "sanity" as const,
-      page: null,
-      chart: null,
-      members: [],
-    };
+    return { mode: "sanity" as const, page: null, chart: null, members: [] };
   }
-
   const page = await getGovernancePage(locale);
   if (!page) {
-    return {
-      mode: "sanity" as const,
-      page: null,
-      chart: null,
-      members: [],
-    };
+    return { mode: "sanity" as const, page: null, chart: null, members: [] };
   }
-
-  const chart = page.showOrgChart ? await getDefaultGovernanceChartStrict(locale) : null;
+  const chart = page.showOrgChart
+    ? await getDefaultGovernanceChartStrict(locale)
+    : null;
   const members = page.membersGroupsToShow?.length
-    ? await getGovernanceMembers(page.membersGroupsToShow, page.membersOrder ?? "orderAsc")
+    ? await getGovernanceMembers(
+        page.membersGroupsToShow,
+        page.membersOrder ?? "orderAsc",
+      )
     : [];
-
-  return {
-    mode: "sanity" as const,
-    page,
-    chart,
-    members,
-  };
+  return { mode: "sanity" as const, page, chart, members };
 }

@@ -29,7 +29,10 @@
     "copyright": "Tous droits réservés.",
     "laboratory": "Le Laboratoire",
     "navigation": "Navigation",
-    "contact": "Contact"
+    "contact": "Contact",
+    "axes": "Axes de recherche",
+    "projects": "Projets",
+    "tagline": "Haïti · Caraïbes · Recherche IA"
   },
   "common": {
     "learnMore": "En savoir plus",
@@ -57,6 +60,81 @@
     "reject": "Refuser"
   },
   "home": {
+    "hero": {
+      "badge": "IA · Recherche · Innovation",
+      "titleLine1": "Transformer",
+      "titleLine2": "la donnée",
+      "titleLine3": "caraïbéenne",
+      "titleLine4": "en intelligence.",
+      "subtitle": "LaCDIA est un laboratoire de recherche appliquée en IA et science des données, au service des communautés caribéennes.",
+      "primaryLabel": "Collaborer avec le laboratoire",
+      "secondaryLabel": "Explorer nos projets",
+      "canvasLabel": "Réseau neuronal caribéen"
+    },
+    "ticker": {
+      "ariaLabel": "Domaines de recherche",
+      "items": [
+        "Intelligence Artificielle",
+        "Science des Données",
+        "Recherche Appliquée",
+        "Vision par Ordinateur",
+        "IA Responsable",
+        "Apprentissage Automatique",
+        "Haïti · Caraïbe",
+        "Systèmes Multi-Agents",
+        "RAG & LLM",
+        "Agriculture Numérique",
+        "Santé & IA",
+        "Gouvernance IA",
+        "Deep Learning",
+        "NLP Créole",
+        "Data Engineering",
+        "ESIH · LaCDIA"
+      ]
+    },
+    "kpis": {
+      "sectionLabel": "Chiffres clés",
+      "updated": "Mise à jour :",
+      "fallbackItems": [
+        { "_id": "kpi-1", "key": "chercheurs", "value": "5+", "label": "Chercheurs actifs", "note": "Chercheurs, doctorants et collaborateurs actifs", "status": "confirmed" },
+        { "_id": "kpi-2", "key": "projets", "value": "0", "label": "Projets en cours", "note": "Projets de recherche en cours de lancement", "status": "confirmed" },
+        { "_id": "kpi-3", "key": "partenariats", "value": "1", "label": "Partenariats actifs", "note": "Partenariat actif en recherche et médiation", "status": "confirmed" },
+        { "_id": "kpi-4", "key": "axes", "value": "6", "label": "Axes de recherche", "note": "Thématiques structurant nos travaux", "status": "confirmed" }
+      ]
+    },
+    "highlights": {
+      "sectionLabel": "Axes de recherche",
+      "sectionTitle": "Six axes structurants",
+      "sectionIntro": "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe.",
+      "transversalLabel": "Thématique transversale",
+      "transversalText": "Intelligence artificielle et sciences des données pour le développement durable d'Haïti et de la Caraïbe",
+      "axes": [
+        { "title": "Méthodes fondamentales en IA et apprentissage automatique", "description": "Développement de méthodes adaptées aux données rares, bruitées ou hétérogènes, apprentissage auto-supervisé, transfert d'apprentissage, robustesse et IA frugale." },
+        { "title": "Vision par ordinateur et analyse de données complexes", "description": "Analyse d'images, de documents et de données multimodales, notamment pour l'agriculture, la santé, l'environnement et le traitement de documents en créole et en français." },
+        { "title": "IA robuste, explicable et responsable", "description": "Explicabilité des modèles, équité algorithmique, détection et réduction des biais, robustesse, audit des systèmes d'IA et évaluation de leurs limites." },
+        { "title": "IA pour la santé", "description": "Analyse d'images médicales, aide au dépistage et à la décision clinique, surveillance épidémiologique, assistants documentaires et interfaces sanitaires en créole haïtien." },
+        { "title": "IA pour l'agriculture numérique et la résilience environnementale", "description": "Détection des maladies des cultures, recommandations agronomiques, analyse d'images satellitaires, systèmes d'alerte précoce et adaptation au changement climatique." },
+        { "title": "IA pour les systèmes socio-économiques, éducatifs et institutionnels", "description": "Aide à la décision, transformation numérique, automatisation documentaire, traitement du créole haïtien et développement d'outils pour l'éducation, l'administration publique et l'économie." }
+      ]
+    },
+    "actualites": {
+      "badge": "Actualités",
+      "all": "Tout",
+      "external": "Source externe",
+      "noItems": "Aucune actualité disponible pour le moment.",
+      "showAll": "Voir toutes les actualités",
+      "defaultTitle": "Dernières actualités",
+      "sourceLabel": "Source",
+      "readLabel": "Lire",
+      "articlesLabel": "articles",
+      "fallbackItems": [
+        { "_id": "f1", "slug": { "current": "lancement-projets-ia-agricole" }, "date": "2025-06-01", "category": "Recherche", "title": "LaCDIA lance ses premiers projets de recherche en IA agricole", "summary": "Le laboratoire inaugure ses travaux sur l'intelligence artificielle appliquée à l'agriculture caribéenne avec deux projets pilotes.", "featured": true },
+        { "_id": "f2", "slug": { "current": "partenariat-esih-data-science" }, "date": "2025-05-15", "category": "Partenariat", "title": "Partenariat stratégique avec l'ESIH pour la formation en Data Science", "summary": "LaCDIA et l'ESIH s'associent pour développer un cursus de formation avancé en science des données.", "featured": false },
+        { "_id": "f3", "slug": { "current": "colloque-caribeeen-axes-2025" }, "date": "2025-04-28", "category": "Événement", "title": "Présentation des axes de recherche 2025–2026 lors du colloque caribéen", "summary": "Notre équipe a présenté la feuille de route scientifique du laboratoire lors du colloque régional sur l'IA.", "featured": false },
+        { "_id": "f4", "slug": { "current": "appel-candidatures-2025" }, "date": "2025-04-10", "category": "Annonce", "title": "Appel à candidatures — Programme de recherche 2025", "summary": "LaCDIA ouvre ses portes aux chercheurs et doctorants intéressés par l'IA responsable et la gouvernance algorithmique.", "featured": false },
+        { "_id": "f5", "slug": { "current": "nlp-creole-premiers-resultats" }, "date": "2025-03-20", "category": "Recherche", "title": "NLP créole : premiers résultats sur la modélisation du créole haïtien", "summary": "Une avancée significative dans le traitement automatique du langage créole haïtien avec nos modèles maison.", "featured": false }
+      ]
+    },
     "heroBadge": "Intelligence Artificielle - Innovation - Recherche Appliquée",
     "heroDescription": "Premier laboratoire d'innovation et de recherche appliquée en intelligence artificielle et science des données dans la Caraïbe, le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
     "discoverLab": "Découvrir nos solutions",
@@ -68,22 +146,6 @@
     "introBody": "Le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
     "kpisTitle": "Indicateurs clés",
     "kpisIntro": "Données quantitatives sur nos activités de recherche et d'innovation",
-    "highlightsTitle": "Ce que nous faisons",
-    "highlightsIntro": "Des axes de recherche appliquée et fondamentale qui valorisent l'IA au service des besoins locaux et des enjeux globaux.",
-    "highlightsItems": {
-      "agriculture": {
-        "title": "Agriculture intelligente",
-        "description": "Systèmes de prédiction des rendements, monitoring des cultures et alertes précoces basées sur la donnée."
-      },
-      "govern": {
-        "title": "Services publics et gouvernance",
-        "description": "Optimisation des services essentiels, observatoires de données et aide à la décision."
-      },
-      "health": {
-        "title": "Santé et environnement",
-        "description": "Analyse de données épidémiologiques, détection de risques et modélisation de scénarios."
-      }
-    },
     "publicationsTitle": "Publications récentes",
     "publicationsIntro": "Articles, rapports et communications qui documentent nos avancées scientifiques.",
     "partnersTitle": "Partenaires et collaborations",
@@ -175,6 +237,9 @@
     },
     "collaborer": {
       "formTitle": "Démarrez une collaboration"
+    },
+    "newsletter": {
+      "unsubscribeTitle": "Gérer mon abonnement"
     }
   }
 }

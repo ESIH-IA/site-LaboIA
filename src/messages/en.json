@@ -29,7 +29,10 @@
     "copyright": "All rights reserved.",
     "laboratory": "The Laboratory",
     "navigation": "Navigation",
-    "contact": "Contact"
+    "contact": "Contact",
+    "axes": "Research Axes",
+    "projects": "Projects",
+    "tagline": "Haiti · Caribbean · AI Research"
   },
   "common": {
     "learnMore": "Learn more",
@@ -57,6 +60,81 @@
     "reject": "Decline"
   },
   "home": {
+    "hero": {
+      "badge": "AI · Research · Innovation",
+      "titleLine1": "Transforming",
+      "titleLine2": "Caribbean",
+      "titleLine3": "data",
+      "titleLine4": "into intelligence.",
+      "subtitle": "LaCDIA is an applied research laboratory in AI and data science, serving Caribbean communities.",
+      "primaryLabel": "Collaborate with the lab",
+      "secondaryLabel": "Explore our projects",
+      "canvasLabel": "Caribbean neural network"
+    },
+    "ticker": {
+      "ariaLabel": "Research areas",
+      "items": [
+        "Artificial Intelligence",
+        "Data Science",
+        "Applied Research",
+        "Computer Vision",
+        "Responsible AI",
+        "Machine Learning",
+        "Haiti · Caribbean",
+        "Multi-Agent Systems",
+        "RAG & LLM",
+        "Digital Agriculture",
+        "Health & AI",
+        "AI Governance",
+        "Deep Learning",
+        "Creole NLP",
+        "Data Engineering",
+        "ESIH · LaCDIA"
+      ]
+    },
+    "kpis": {
+      "sectionLabel": "Key figures",
+      "updated": "Updated:",
+      "fallbackItems": [
+        { "_id": "kpi-1", "key": "chercheurs", "value": "5+", "label": "Active Researchers", "note": "Researchers, PhD students and active collaborators", "status": "confirmed" },
+        { "_id": "kpi-2", "key": "projets", "value": "0", "label": "Ongoing Projects", "note": "Research projects currently being launched", "status": "confirmed" },
+        { "_id": "kpi-3", "key": "partenariats", "value": "1", "label": "Active Partnerships", "note": "Active partnership in research and mediation", "status": "confirmed" },
+        { "_id": "kpi-4", "key": "axes", "value": "6", "label": "Research Axes", "note": "Themes structuring our work", "status": "confirmed" }
+      ]
+    },
+    "highlights": {
+      "sectionLabel": "Research Axes",
+      "sectionTitle": "Six structuring axes",
+      "sectionIntro": "Applied and fundamental research axes organized around a transversal theme: AI and data science for the sustainable development of Haiti and the Caribbean.",
+      "transversalLabel": "Transversal theme",
+      "transversalText": "Artificial intelligence and data science for the sustainable development of Haiti and the Caribbean",
+      "axes": [
+        { "title": "Fundamental AI Methods and Machine Learning", "description": "Developing methods suited to scarce, noisy or heterogeneous data, self-supervised learning, transfer learning, robustness and frugal AI." },
+        { "title": "Computer Vision and Complex Data Analysis", "description": "Image, document and multimodal data analysis, particularly for agriculture, health, environment and document processing in Haitian Creole and French." },
+        { "title": "Robust, Explainable and Responsible AI", "description": "Model explainability, algorithmic fairness, bias detection and mitigation, robustness, AI system auditing and evaluation of limitations." },
+        { "title": "AI for Healthcare", "description": "Medical image analysis, screening and clinical decision support, epidemiological surveillance, documentary assistants and health interfaces in Haitian Creole." },
+        { "title": "AI for Digital Agriculture and Environmental Resilience", "description": "Crop disease detection, agronomic recommendations, satellite image analysis, early warning systems and climate change adaptation." },
+        { "title": "AI for Socioeconomic, Educational and Institutional Systems", "description": "Decision support, digital transformation, document automation, Haitian Creole processing and tool development for education, public administration and the economy." }
+      ]
+    },
+    "actualites": {
+      "badge": "News",
+      "all": "All",
+      "external": "External source",
+      "noItems": "No news available yet.",
+      "showAll": "View all news",
+      "defaultTitle": "Latest News",
+      "sourceLabel": "Source",
+      "readLabel": "Read",
+      "articlesLabel": "articles",
+      "fallbackItems": [
+        { "_id": "f1", "slug": { "current": "lancement-projets-ia-agricole" }, "date": "2025-06-01", "category": "Recherche", "title": "LaCDIA launches its first research projects in agricultural AI", "summary": "The lab kicks off its work on artificial intelligence applied to Caribbean agriculture with two pilot projects.", "featured": true },
+        { "_id": "f2", "slug": { "current": "partenariat-esih-data-science" }, "date": "2025-05-15", "category": "Partenariat", "title": "Strategic partnership with ESIH for Data Science training", "summary": "LaCDIA and ESIH join forces to develop an advanced training program in data science.", "featured": false },
+        { "_id": "f3", "slug": { "current": "colloque-caribeeen-axes-2025" }, "date": "2025-04-28", "category": "Événement", "title": "2025–2026 research axes presented at the Caribbean symposium", "summary": "Our team presented the lab's scientific roadmap at the regional AI symposium.", "featured": false },
+        { "_id": "f4", "slug": { "current": "appel-candidatures-2025" }, "date": "2025-04-10", "category": "Annonce", "title": "Call for applications — 2025 research program", "summary": "LaCDIA is opening its doors to researchers and PhD students interested in responsible AI and algorithmic governance.", "featured": false },
+        { "_id": "f5", "slug": { "current": "nlp-creole-premiers-resultats" }, "date": "2025-03-20", "category": "Recherche", "title": "Creole NLP: first results in modeling Haitian Creole", "summary": "A significant breakthrough in automatic processing of Haitian Creole with our in-house models.", "featured": false }
+      ]
+    },
     "heroBadge": "Artificial Intelligence · Research · Caribbean Innovation",
     "heroDescription": "LaCDIA is the first AI and data science research laboratory in the Caribbean. We produce original scientific knowledge and build technology solutions grounded in Caribbean realities.",
     "discoverLab": "Explore our work",
@@ -68,22 +146,6 @@
     "introBody": "LaCDIA conducts applied and fundamental research, and supports institutions in designing AI-driven solutions adapted to local contexts.",
     "kpisTitle": "Key figures",
     "kpisIntro": "Quantitative indicators of our research and innovation activities",
-    "highlightsTitle": "What we do",
-    "highlightsIntro": "Six applied and fundamental research axes combining scientific rigor with real-world Caribbean impact.",
-    "highlightsItems": {
-      "agriculture": {
-        "title": "Smart Agriculture",
-        "description": "Yield forecasting, crop health monitoring and data-driven early-warning systems."
-      },
-      "govern": {
-        "title": "Public Services & Governance",
-        "description": "AI for optimizing essential services, data observatories and evidence-based decision support."
-      },
-      "health": {
-        "title": "Health & Environment",
-        "description": "Epidemiological data analysis, environmental risk detection and climate scenario modelling."
-      }
-    },
     "publicationsTitle": "Latest publications",
     "publicationsIntro": "Research articles, reports and communications from the laboratory.",
     "partnersTitle": "Partners & collaborations",
@@ -175,6 +237,9 @@
     },
     "collaborer": {
       "formTitle": "Start a collaboration"
+    },
+    "newsletter": {
+      "unsubscribeTitle": "Manage your subscription"
     }
   }
 }

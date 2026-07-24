@@ -65,7 +65,7 @@ export default function Header({
 
   const navItems = useMemo(() => {
     return nav.mainNav
-      .filter((item) => item.href !== "/collaborer")
+      .filter((item) => !(["/collaborer", "/equipe", "/actualites"]).includes(item.href))
       .map((item) => ({
         ...item,
         localizedHref: withLocale(item.href, currentLocale),

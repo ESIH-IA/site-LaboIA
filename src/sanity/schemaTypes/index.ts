@@ -239,6 +239,7 @@ const pageSection = defineType({
           { title: "Contact", value: "contact" },
           { title: "Collaboration", value: "collaborate" },
           { title: "Newsletter", value: "newsletter" },
+          { title: "Newsletter unsubscribe", value: "unsubscribe" },
         ],
       },
     }),
@@ -286,6 +287,7 @@ const formSettings = defineType({
     defineField({ name: "contact", type: "formCopy", title: "Contact form" }),
     defineField({ name: "collaborate", type: "formCopy", title: "Collaboration form" }),
     defineField({ name: "newsletter", type: "formCopy", title: "Newsletter form" }),
+    defineField({ name: "unsubscribe", type: "formCopy", title: "Newsletter unsubscribe form" }),
   ],
 });
 
@@ -385,20 +387,6 @@ const homePage = defineType({
     defineField({ name: "collaborateTitle", type: "localeString", title: "Collaborate title" }),
     defineField({ name: "collaborateBody", type: "localeText", title: "Collaborate body" }),
     defineField({ name: "collaborateActions", type: "array", of: [{ type: "linkAction" }] }),
-    defineField({
-      name: "eventBanner",
-      title: "Event banner",
-      type: "object",
-      fields: [
-        defineField({ name: "enabled", type: "boolean", title: "Enabled" }),
-        defineField({ name: "label", type: "localeString", title: "Label" }),
-        defineField({ name: "title", type: "localeString", title: "Title" }),
-        defineField({ name: "date", type: "localeString", title: "Date" }),
-        defineField({ name: "location", type: "localeString", title: "Location" }),
-        defineField({ name: "ctaLabel", type: "localeString", title: "CTA label" }),
-        defineField({ name: "ctaHref", type: "string", title: "CTA href" }),
-      ],
-    }),
     defineField({ name: "seo", type: "seo", title: "SEO" }),
   ],
 });
@@ -407,6 +395,8 @@ const kpi = defineType({
   name: "kpi",
   title: "KPI",
   type: "document",
+  description:
+    "Seuls les 4 premiers KPI (ordre de publication) sont affiches sur la mise en page bento de la page d'accueil.",
   fields: [
     defineField({ name: "key", type: "string", title: "Key" }),
     defineField({ name: "label", type: "string", title: "Label" }),

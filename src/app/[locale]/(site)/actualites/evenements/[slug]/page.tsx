@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 
 import PortableTextRenderer from "@/components/content/portable-text";
@@ -67,8 +67,10 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <article className="container" style={{maxWidth:'56rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
+      {/* The dedicated /actualites listing page was removed; news now lives
+          in the "actualites" section on the home page. */}
       <Link
-        href="/actualites"
+        href="/#actualites"
         className="btn-link"
         aria-label="actualites"
       >

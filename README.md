@@ -1,15 +1,21 @@
 # LaCDIA Website
 
-Site institutionnel multilingue (FR/EN) pour LaCDIA, construit avec Next.js App Router et un CMS headless Sanity. Le site couvre les pages de recherche, publications, projets, equipe, actualites, ressources, solutions, etc., avec formulaires et newsletter.
+Site institutionnel bilingue (FR/EN) pour LaCDIA, construit avec Next.js App Router et un CMS headless Sanity. Le site couvre les pages de recherche, publications, projets, ressources, solutions, etc., avec formulaires et newsletter. Les actualites sont integrees directement a la page d'accueil (pas de page listing dediee).
 
 ## Fonctionnalites
 
-- Routing FR/EN avec prefixe de langue et cookie de preference (`lacdia_locale`).
+- Routing FR (defaut) / EN avec prefixe de langue et cookie de preference (`lacdia_locale`). ES et HT ne sont plus supportes (retires deliberement).
+- Traductions UI statiques centralisees dans `src/messages/{fr,en}.json` (next-intl, un seul systeme de traduction) ; le contenu editorial (pages, axes, actualites...) reste pilote par Sanity (`localeString`/`localeText`).
 - SEO complet : metadata, Open Graph, sitemap et robots.
 - Contenu hybride : contenu local (`src/content`) + contenu dynamique Sanity.
 - Formulaires (collaborer/contact) stockes dans Sanity, notification email optionnelle via Brevo.
-- Newsletter (inscription/desinscription) via Brevo si configure.
+- Newsletter (inscription/desinscription) via Brevo si configure. Le formulaire de desinscription est toujours affiche sur `/newsletter`, independamment du contenu Sanity de la page.
 - Analytics Matomo ou GA4, actives apres consentement cookies.
+
+## Notes operationnelles
+
+- **Actualites** : pas de page listing dediee. `/actualites` (et ses variantes localisees) redirige vers l'accueil, ou les actualites sont affichees directement. Les pages de detail (`/actualites/[slug]`, `/actualites/evenements/[slug]`) restent actives et sont liees depuis la home et d'autres contenus.
+- **Equipe** : la page `/equipe` est temporairement masquee (redirection dans `next.config.ts`) en attendant une consolidation du contenu. Les fiches individuelles `/equipe/[slug]` restent actives (utilisees comme liens d'attribution dans publications, projets, evenements, formations).
 
 ## Stack
 
@@ -21,12 +27,13 @@ Site institutionnel multilingue (FR/EN) pour LaCDIA, construit avec Next.js App 
 
 ## Structure du projet
 
-- `src/app/(site)` pages du site
+- `src/app/[locale]/(site)` pages du site (arborescence active, prefixee par la locale)
 - `src/app/api` endpoints (forms, newsletter, preview)
 - `src/components` composants UI
 - `src/content` contenu local (fallback)
 - `src/data` donnees structurees (gouvernance, solutions)
 - `src/lib` utilitaires (i18n, SEO, Sanity)
+- `src/messages` catalogues de traduction next-intl (`fr.json`, `en.json`)
 - `public` assets
 
 ## Variables d'environnement
@@ -73,9 +80,12 @@ npm run start
 npm run lint
 npm run check:routes
 npm run sanity:seed
+npm run translate:en
 ```
 
 `check:routes` verifie un ensemble de routes clefs. Il utilise `SITE_URL` ou `NEXT_PUBLIC_SITE_URL` et suppose que l'app tourne deja.
+
+`translate:en` traduit automatiquement les cles manquantes de `src/messages/fr.json` vers `en.json` (LibreTranslate par defaut, voir `scripts/auto-translate.mjs` pour Google/DeepL). Seul l'anglais est supporte par ce script.
 
 ## Sanity Studio & migration
 
