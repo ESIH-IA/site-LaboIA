@@ -232,6 +232,9 @@ async function seed() {
   const navigation = {
     _id: "navigation",
     _type: "navigation",
+    // Perimetre reduit a 4 pages : Accueil, Solutions, Actualites (section
+    // de la home), Contact. Tout le reste a ete retire du code \u2014 voir
+    // next.config.ts pour les redirections des anciennes routes.
     mainNav: withKeys([
       { _type: "navItem", label: "Accueil", labelIntl: localeString("Accueil"), href: "/" },
       {
@@ -240,16 +243,10 @@ async function seed() {
         labelIntl: localeString("Services et Solutions IA"),
         href: "/solutions",
       },
-      { _type: "navItem", label: "\u00c9quipe", labelIntl: localeString("\u00c9quipe"), href: "/equipe" },
-      { _type: "navItem", label: "Collaborer", labelIntl: localeString("Collaborer"), href: "/collaborer" },
+      { _type: "navItem", label: "Actualit\u00e9s", labelIntl: localeString("Actualit\u00e9s"), href: "/actualites" },
       { _type: "navItem", label: "Contact", labelIntl: localeString("Contact"), href: "/contact" },
     ]),
     footerNav: withKeys([
-      { _type: "navItem", label: "A propos", labelIntl: localeString("A propos"), href: "/a-propos" },
-      { _type: "navItem", label: "Recherche", labelIntl: localeString("Recherche"), href: "/recherche" },
-      { _type: "navItem", label: "Departement scientifique", labelIntl: localeString("Departement scientifique"), href: "/recherche/departement-scientifique" },
-      { _type: "navItem", label: "LaCDIA Tech", labelIntl: localeString("LaCDIA Tech"), href: "/lacdia-tech" },
-      // Equipe retiree du footer tant que la page est masquee (voir next.config.ts)
       { _type: "navItem", label: "Mentions legales", labelIntl: localeString("Mentions legales"), href: "/mentions-legales" },
       { _type: "navItem", label: "Confidentialite", labelIntl: localeString("Confidentialite"), href: "/confidentialite" },
       { _type: "navItem", label: "Cookies", labelIntl: localeString("Cookies"), href: "/cookies" },

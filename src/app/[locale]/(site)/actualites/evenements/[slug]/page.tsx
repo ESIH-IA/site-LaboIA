@@ -99,16 +99,7 @@ export default async function Page({ params }: PageProps) {
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {event.speakers.map((speaker) => (
               <li key={speaker._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
-                {speaker.slug?.current ? (
-                  <Link
-                    href={`/equipe/${speaker.slug.current}`}
-                    className="btn-link"
-                  >
-                    {speaker.fullName}
-                  </Link>
-                ) : (
-                  <span style={{fontWeight:500}}>{speaker.fullName}</span>
-                )}
+                <span style={{fontWeight:500}}>{speaker.fullName}</span>
                 {speaker.role ? (
                   <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{speaker.role}</span>
                 ) : null}

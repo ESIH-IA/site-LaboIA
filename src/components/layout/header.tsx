@@ -35,6 +35,11 @@ function isActivePath(current: string, href: string) {
   return current === href || current.startsWith(`${href}/`);
 }
 
+// Allowlist plutot que blocklist : le site n'a plus que ces 4 pages ; on
+// ignore tout item de navigation Sanity qui pointerait encore vers une
+// page retiree (contenu CMS pas forcement resynchronise avec le code).
+const ALLOWED_HREFS = ["/", "/solutions", "/actualites", "/contact"];
+
 export default function Header({
   nav,
   site,
@@ -65,10 +70,16 @@ export default function Header({
 
   const navItems = useMemo(() => {
     return nav.mainNav
-      .filter((item) => !(["/collaborer", "/equipe", "/actualites"]).includes(item.href))
+      .filter((item) => ALLOWED_HREFS.includes(item.href))
       .map((item) => ({
         ...item,
-        localizedHref: withLocale(item.href, currentLocale),
+        // "/actualites" redirige vers l'accueil (plus de page listing dediee) —
+        // on pointe directement vers la section actualites de la home plutot
+        // que de faire perdre la position de scroll via la redirection.
+        localizedHref:
+          item.href === "/actualites"
+            ? `${withLocale("/", currentLocale)}#actualites`
+            : withLocale(item.href, currentLocale),
         active: isActivePath(basePath, item.href),
       }));
   }, [basePath, currentLocale, nav.mainNav]);

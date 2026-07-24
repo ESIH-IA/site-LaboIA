@@ -102,7 +102,7 @@ export default async function Footer({
                 {t("navigation")}
               </div>
               <nav className="flex flex-col gap-2.5">
-                {nav.footerNav.map((item) => (
+                {nav.mainNav.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -119,13 +119,13 @@ export default async function Footer({
                 className="text-[10px] font-medium text-[#8892b0] tracking-widest uppercase mb-4"
                 style={{ fontFamily: "var(--font-jetbrains, monospace)" }}
               >
-                {t("laboratory")}
+                {t("legal")}
               </div>
               <nav className="flex flex-col gap-2.5">
                 {[
-                  { label: t("axes"), href: "/recherche/axes" },
-                  { label: t("projects"), href: "/projets" },
-                  { label: t("newsletter"), href: "/newsletter" },
+                  { label: t("legalNotice"), href: "/mentions-legales" },
+                  { label: t("privacy"), href: "/confidentialite" },
+                  { label: t("cookies"), href: "/cookies" },
                 ].map((item) => (
                   <Link
                     key={item.href}

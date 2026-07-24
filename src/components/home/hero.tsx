@@ -340,7 +340,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
             </Link>
 
             <Link
-              href={secondary?.href ?? "/projets"}
+              href={secondary?.href ?? "/solutions#projets"}
               style={{
                 display: "inline-flex",
                 alignItems: "center",

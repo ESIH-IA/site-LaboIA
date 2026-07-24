@@ -2,21 +2,13 @@ import type { MetadataRoute } from "next";
 
 import { locales, localizedPath } from "@/lib/i18n";
 import { sanityFetch } from "@/lib/sanity/client";
-import { eventListQuery, memberListQuery, newsListQuery, projectListQuery } from "@/lib/sanity/queries";
-import type { EventListItem, MemberListItem, NewsListItem, ProjectListItem } from "@/lib/sanity/types";
+import { eventListQuery, newsListQuery } from "@/lib/sanity/queries";
+import type { EventListItem, NewsListItem } from "@/lib/sanity/types";
 import { siteUrl } from "@/lib/seo";
 
-const staticPaths = [
-  "/",
-  "/a-propos",
-  "/recherche/departement-scientifique",
-  "/lacdia-tech",
-  "/solutions",
-  "/ressources",
-  "/formation",
-  "/collaborer",
-  "/contact",
-];
+// Perimetre reduit a 4 pages (voir next.config.ts pour les redirections des
+// anciennes routes).
+const staticPaths = ["/", "/solutions", "/contact"];
 
 function buildUrl(path: string, locale: (typeof locales)[number]) {
   return new URL(localizedPath(path, locale), siteUrl).toString();
@@ -24,9 +16,7 @@ function buildUrl(path: string, locale: (typeof locales)[number]) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const localeParam = { locale: "fr" };
-  const [projects, members, news, events] = await Promise.all([
-    sanityFetch<ProjectListItem[]>(projectListQuery, localeParam, []),
-    sanityFetch<MemberListItem[]>(memberListQuery, localeParam, []),
+  const [news, events] = await Promise.all([
     sanityFetch<NewsListItem[]>(newsListQuery, localeParam, []),
     sanityFetch<EventListItem[]>(eventListQuery, localeParam, []),
   ]);
@@ -37,13 +27,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     locales.forEach((locale) => {
       entries.push({ url: buildUrl(path, locale) });
     });
-  });
-
-  projects.forEach((project) => {
-    const frSlug = project.slugIntl?.fr?.current ?? project.slug.current;
-    const enSlug = project.slugIntl?.en?.current ?? project.slug.current;
-    entries.push({ url: buildUrl(`/projets/${frSlug}`, "fr") });
-    entries.push({ url: buildUrl(`/projets/${enSlug}`, "en") });
   });
 
   news.forEach((article) => {
