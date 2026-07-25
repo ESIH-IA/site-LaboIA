@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/lib/i18n";
 
@@ -10,14 +10,13 @@ type Action = {
 
 type IntroProps = {
   eyebrow?: string;
-  badge?: string;
   title?: string;
   body?: string;
   actions?: Action[];
   locale?: Locale;
 };
 
-export default async function Intro({ eyebrow, badge: _badge, title, body, actions, locale = "fr" }: IntroProps) {
+export default async function Intro({ eyebrow, title, body, actions, locale = "fr" }: IntroProps) {
   const t = await getTranslations({ locale, namespace: "home" });
 
   return (
@@ -49,6 +48,19 @@ export default async function Intro({ eyebrow, badge: _badge, title, body, actio
               <p className="text-lg leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
                 {body ?? t("introBody")}
               </p>
+              {actions && actions.length > 0 && (
+                <div className="flex flex-wrap gap-3 mt-6">
+                  {actions.map((action) => (
+                    <Link
+                      key={action.href}
+                      href={action.href}
+                      className={action.variant === "primary" ? "btn btn-cta-primary" : "btn btn-cta-secondary"}
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

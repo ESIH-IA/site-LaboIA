@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 import ContactForm from "@/components/forms/contact-form";
@@ -17,11 +17,12 @@ const tabLabels: Record<Locale, { contact: string; collaborate: string }> = {
 
 function Tabs({ forms, locale }: { forms?: FormSettings | null; locale: Locale }) {
   const searchParams = useSearchParams();
-  const [active, setActive] = useState<Tab>("contact");
-
-  useEffect(() => {
-    if (searchParams.get("tab") === "collaborate") setActive("collaborate");
-  }, [searchParams]);
+  // Derived directly from the URL at init instead of defaulting to "contact"
+  // and correcting via an effect — avoids both a render flash and a
+  // setState-in-effect (the tab is right on the very first paint).
+  const [active, setActive] = useState<Tab>(() =>
+    searchParams.get("tab") === "collaborate" ? "collaborate" : "contact",
+  );
 
   const labels = tabLabels[locale] ?? tabLabels.fr;
 

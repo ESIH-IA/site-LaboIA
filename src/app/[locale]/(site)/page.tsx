@@ -66,7 +66,6 @@ export default async function Home() {
       <Ticker />
       <Intro
         eyebrow={home.introEyebrow ?? site.shortName}
-        badge={home.heroBadge}
         title={home.introTitle ?? site.description}
         body={home.introBody}
         actions={normalizeActions(home.introActions)}

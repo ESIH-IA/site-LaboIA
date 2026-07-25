@@ -211,7 +211,7 @@ function FeaturedCard({ item, locale }: { item: NewsListItem; locale: Locale }) 
 }
 
 /* ─── Compact Card ─── */
-function CompactCard({ item, index, locale }: { item: NewsListItem; index: number; locale: Locale }) {
+function CompactCard({ item, locale }: { item: NewsListItem; locale: Locale }) {
   const t = useTranslations("home.actualites");
   const ref = useRef<HTMLAnchorElement>(null);
   const catStyle = getCategoryStyle(item.category);
@@ -505,8 +505,8 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
               gridTemplateRows: "repeat(2, 1fr)",
               gap: "1.25rem",
             }}>
-              {visibleRest.slice(0, 4).map((item, i) => (
-                <CompactCard key={item._id} item={item} index={i} locale={locale} />
+              {visibleRest.slice(0, 4).map((item) => (
+                <CompactCard key={item._id} item={item} locale={locale} />
               ))}
 
               {/* Show more / empty slot */}
@@ -550,8 +550,8 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
             gap: "1.25rem",
             marginTop: "1.25rem",
           }}>
-            {visibleRest.slice(4).map((item, i) => (
-              <CompactCard key={item._id} item={item} index={i + 4} locale={locale} />
+            {visibleRest.slice(4).map((item) => (
+              <CompactCard key={item._id} item={item} locale={locale} />
             ))}
           </div>
         )}
