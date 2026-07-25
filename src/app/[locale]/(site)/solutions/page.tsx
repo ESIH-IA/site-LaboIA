@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import CollaborateCta from "@/components/home/collaborate-cta";
 import { ProjectCard } from "@/components/cards/cards";

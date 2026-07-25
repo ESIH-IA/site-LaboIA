@@ -7,7 +7,7 @@ type Props = {
   value: PortableTextBlock[] | undefined;
 };
 
-const components: PortableTextComponents = {
+export const portableTextComponents: PortableTextComponents = {
   marks: {
     link: ({ children, value }) => {
       const href: string = value?.href ?? "";
@@ -29,7 +29,7 @@ export default function PortableTextRenderer({ value }: Props) {
 
   return (
     <div className="prose">
-      <PortableText value={value} components={components} />
+      <PortableText value={value} components={portableTextComponents} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import PortableTextRenderer from "@/components/content/portable-text";
 import type { InstitutionalPage } from "@/lib/sanity/types";
 

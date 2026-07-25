@@ -247,7 +247,7 @@ export const eventBySlugQuery = groq`
 export const partnerListQuery = groq`
   *[_type == "partner" && status == "published"] | order(name asc){
     _id,
-    name,
+    "name": coalesce(nameIntl[$locale], name),
     "slug": coalesce(slugIntl[$locale], slug),
     slugIntl,
     partnerType,
@@ -753,10 +753,10 @@ export const governancePageBySlugQuery = groq`
     "slug": coalesce(slugIntl[$locale], slug),
     "intro": coalesce(introIntl[$locale], intro),
     showOrgChart,
-    orgChartSectionTitle,
+    "orgChartSectionTitle": coalesce(orgChartSectionTitleIntl[$locale], orgChartSectionTitle),
     "orgChartSectionIntro": coalesce(orgChartSectionIntroIntl[$locale], orgChartSectionIntro),
     showMembers,
-    membersSectionTitle,
+    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
     "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
     membersGroupsToShow,
     membersOrder,
