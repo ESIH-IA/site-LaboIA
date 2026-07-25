@@ -58,6 +58,7 @@ export default async function Home() {
     shortDescription: partner.shortDescription,
     website: partner.website,
     tags: partner.tags,
+    logo: partner.logo,
   }));
 
   return (

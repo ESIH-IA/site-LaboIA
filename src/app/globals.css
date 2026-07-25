@@ -1670,6 +1670,14 @@ body {
   color: var(--labo-text);
 }
 
+.partner-card-logo {
+  height: 2.5rem;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  object-position: left center;
+}
+
 .partner-card-text {
   font-size: 0.85rem;
   color: var(--labo-text-muted);

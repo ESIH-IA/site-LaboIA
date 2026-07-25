@@ -254,7 +254,8 @@ export const partnerListQuery = groq`
     "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
     website,
     tags,
-    featured
+    featured,
+    "logo": select(defined(logo.image) => { "url": logo.image.asset->url, "alt": logo.alt }, null)
   }
 `;
 
@@ -355,7 +356,7 @@ export const resourceListQuery = groq`
 `;
 
 export const kpiListQuery = groq`
-  *[_type == "kpi"] | order(label asc){
+  *[_type == "kpi" && status == "published"] | order(label asc){
     _id,
     key,
     "label": coalesce(labelIntl[$locale], label),

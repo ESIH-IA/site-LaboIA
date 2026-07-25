@@ -26,7 +26,13 @@ const blockContent = defineType({
             type: "object",
             title: "Link",
             fields: [
-              defineField({ name: "href", type: "url", title: "URL" }),
+              defineField({
+                name: "href",
+                type: "url",
+                title: "URL",
+                validation: (Rule) =>
+                  Rule.uri({ allowRelative: true, scheme: ["http", "https", "mailto", "tel"] }),
+              }),
               defineField({ name: "blank", type: "boolean", title: "Open in new tab" }),
             ],
           },
@@ -592,6 +598,15 @@ const partner = defineType({
     defineField({ name: "website", type: "url" }),
     defineField({ name: "tags", type: "array", of: [{ type: "string" }] }),
     defineField({ name: "featured", type: "boolean" }),
+    defineField({
+      name: "logo",
+      title: "Logo",
+      type: "object",
+      fields: [
+        defineField({ name: "image", type: "image", options: { hotspot: true } }),
+        defineField({ name: "alt", type: "string", title: "Alt text" }),
+      ],
+    }),
   ],
 });
 

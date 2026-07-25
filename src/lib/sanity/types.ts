@@ -164,6 +164,7 @@ export type PartnerListItem = {
   website?: string;
   tags?: string[];
   featured?: boolean;
+  logo?: SiteAsset | null;
 };
 
 export type OfferListItem = {
