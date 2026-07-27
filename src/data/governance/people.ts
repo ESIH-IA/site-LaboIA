@@ -52,7 +52,7 @@ export const aishaelPicard: Person = {
     "Éthique de l'IA",
   ],
   links: {
-    email: "aishael.picard@lacdia.org",
+    email: "aishael.picard@lacdia.esih.edu",
   },
   status: "actif",
   hierarchicalLink: "patrick-attie",
@@ -80,7 +80,7 @@ export const livensonNicolas: Person = {
     "Détection de maladies végétales",
   ],
   links: {
-    email: "livenson.nicolas@lacdia.org",
+    email: "livenson.nicolas@lacdia.esih.edu",
     linkedin: "https://linkedin.com/in/livenson-nicolas",
   },
   status: "actif",

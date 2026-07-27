@@ -17,13 +17,12 @@
  *    Variable d'environnement : DEEPL_API_KEY
  *
  * Usage :
- *   node scripts/auto-translate.mjs                          # Toutes les langues
+ *   node scripts/auto-translate.mjs                          # Toutes les langues cibles
  *   node scripts/auto-translate.mjs --target en              # Anglais seulement
- *   node scripts/auto-translate.mjs --target ht --engine libre  # Créole via LibreTranslate
  *   node scripts/auto-translate.mjs --dry-run                # Simulation sans écriture
  *
  * Options :
- *   --target <locale>    Langue cible (en, es, ht). Toutes si omis.
+ *   --target <locale>    Langue cible (en). Toutes si omis.
  *   --engine <name>      Moteur : libre (défaut), google, deepl
  *   --api-url <url>      URL LibreTranslate (défaut: https://libretranslate.com)
  *   --dry-run            Affiche les traductions sans écrire les fichiers
@@ -39,9 +38,9 @@ const MESSAGES_DIR = path.join(__dirname, "..", "src", "messages");
 const SOURCE_LOCALE = "fr";
 
 // Mapping des codes de langue
-const LIBRE_LANG_MAP = { fr: "fr", en: "en", es: "es", ht: "ht" };
-const GOOGLE_LANG_MAP = { fr: "fr", en: "en", es: "es", ht: "ht" };
-const DEEPL_LANG_MAP = { fr: "FR", en: "EN", es: "ES", ht: null }; // DeepL ne supporte pas le créole
+const LIBRE_LANG_MAP = { fr: "fr", en: "en" };
+const GOOGLE_LANG_MAP = { fr: "fr", en: "en" };
+const DEEPL_LANG_MAP = { fr: "FR", en: "EN" };
 
 // ─── Helpers ────────────────────────────────────────────
 
@@ -57,7 +56,7 @@ function parseArgs() {
     else if (args[i] === "--overwrite") opts.overwrite = true;
   }
 
-  if (opts.targets.length === 0) opts.targets = ["en", "es", "ht"];
+  if (opts.targets.length === 0) opts.targets = ["en"];
   return opts;
 }
 

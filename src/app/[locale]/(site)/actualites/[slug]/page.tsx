@@ -114,16 +114,7 @@ export default async function Page({ params }: PageProps) {
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {article.relatedProjects.map((project) => (
               <li key={project._id}>
-                {project.slug?.current ? (
-                  <Link
-                    href={`/projets/${project.slug.current}`}
-                    className="btn-link"
-                  >
-                    {project.title}
-                  </Link>
-                ) : (
-                  <span style={{fontWeight:500}}>{project.title}</span>
-                )}
+                <span style={{fontWeight:500}}>{project.title}</span>
               </li>
             ))}
           </ul>
@@ -135,16 +126,7 @@ export default async function Page({ params }: PageProps) {
           <ul style={{marginTop:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem', fontSize:'0.875rem', color:'#1e293b'}}>
             {article.relatedMembers.map((member) => (
               <li key={member._id} style={{display:'flex', alignItems:'center', justifyContent:'space-between', gap:'0.75rem'}}>
-                {member.slug?.current ? (
-                  <Link
-                    href={`/equipe/${member.slug.current}`}
-                    className="btn-link"
-                  >
-                    {member.fullName}
-                  </Link>
-                ) : (
-                  <span style={{fontWeight:500}}>{member.fullName}</span>
-                )}
+                <span style={{fontWeight:500}}>{member.fullName}</span>
                 {member.role ? <span style={{fontSize:'0.75rem', textTransform:'uppercase', color:'var(--muted)'}}>{member.role}</span> : null}
               </li>
             ))}

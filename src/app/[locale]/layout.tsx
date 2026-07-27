@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Inter, Syne, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Inter, Sora, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import { locales, type Locale, isLocale } from "@/lib/i18n";
 import { getSiteSettings } from "@/lib/cms";
 import { getSiteUrlObject } from "@/lib/site-url";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const syne = Syne({ variable: "--font-syne", subsets: ["latin"], weight: ["400","500","600","700","800"], display: "swap" });
+const syne = Sora({ variable: "--font-syne", subsets: ["latin"], weight: ["400","500","600","700","800"], display: "swap" });
 const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], weight: ["400","500"], display: "swap" });
 const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["latin"], display: "swap" });
 

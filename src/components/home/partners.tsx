@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type PartnerPreview = {
   _id: string;
   name: string;
@@ -5,6 +7,7 @@ type PartnerPreview = {
   shortDescription?: string;
   website?: string;
   tags?: string[];
+  logo?: { url: string; alt?: string } | null;
 };
 
 type PartnersProps = {
@@ -18,8 +21,8 @@ export default async function Partners({ title, intro, badge, items }: PartnersP
   if (!title && !intro && !badge && items.length === 0) return null;
 
   return (
-    <section className="section section-white">
-      <div className="section-inner" style={{ padding: "5rem 0" }}>
+    <section style={{ background: "var(--labo-bg)", color: "var(--labo-text)", padding: "clamp(5rem,9vw,8rem) 0" }}>
+      <div className="container">
         <div className="section-header-row">
           <div>
             {title ? <h2 className="section-title">{title}</h2> : null}
@@ -38,9 +41,19 @@ export default async function Partners({ title, intro, badge, items }: PartnersP
               <div className="card-accent-top" />
 
               <div className="partner-card-header">
-                <div className="partner-card-name">
-                  {partner.name}
-                </div>
+                {partner.logo?.url ? (
+                  <Image
+                    src={partner.logo.url}
+                    alt={partner.logo.alt || partner.name}
+                    width={120}
+                    height={40}
+                    className="partner-card-logo"
+                  />
+                ) : (
+                  <div className="partner-card-name">
+                    {partner.name}
+                  </div>
+                )}
                 {partner.type ? (
                   <span className="badge badge-teal">
                     {partner.type}

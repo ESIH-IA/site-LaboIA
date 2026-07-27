@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/lib/i18n";
 
 type Action = {
@@ -9,26 +10,14 @@ type Action = {
 
 type IntroProps = {
   eyebrow?: string;
-  badge?: string;
   title?: string;
   body?: string;
   actions?: Action[];
   locale?: Locale;
 };
 
-const introFallback: Record<Locale, { title: string; body: string }> = {
-  fr: {
-    title: "Laboratoire de recherche et d'innovation en IA et science des données.",
-    body: "Nous menons des travaux de recherche appliquée et fondamentale, et nous accompagnons des partenaires et des institutions dans la conception de solutions fondées sur l'intelligence artificielle, la science des données et les systèmes intelligents.",
-  },
-  en: {
-    title: "Research and innovation laboratory in AI and data science.",
-    body: "We conduct applied and fundamental research, and support partners and institutions in designing solutions based on artificial intelligence, data science and intelligent systems.",
-  },
-};
-
-export default function Intro({ eyebrow, badge: _badge, title, body, actions, locale = "fr" }: IntroProps) {
-  const fb = introFallback[locale] ?? introFallback.fr;
+export default async function Intro({ eyebrow, title, body, actions, locale = "fr" }: IntroProps) {
+  const t = await getTranslations({ locale, namespace: "home" });
 
   return (
     <section className="section-labo section-padding-sm">
@@ -52,13 +41,26 @@ export default function Intro({ eyebrow, badge: _badge, title, body, actions, lo
                 className="text-display-lg"
                 style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
               >
-                {title ?? fb.title}
+                {title ?? t("introTitle")}
               </h2>
             </div>
             <div>
               <p className="text-lg leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
-                {body ?? fb.body}
+                {body ?? t("introBody")}
               </p>
+              {actions && actions.length > 0 && (
+                <div className="flex flex-wrap gap-3 mt-6">
+                  {actions.map((action) => (
+                    <Link
+                      key={action.href}
+                      href={action.href}
+                      className={action.variant === "primary" ? "btn btn-cta-primary" : "btn btn-cta-secondary"}
+                    >
+                      {action.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

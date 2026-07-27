@@ -1,0 +1,41 @@
+Ce qui était réellement cassé — vs ce qui ne l'est pas
+
+E-mails : confirmé, 0 occurrence de lacdia.org restante dans le code.
+
+J'ai testé les "pages en erreur" en local, contre le vrai dataset Sanity (mon .env.local pointe sur le même projet Sanity que Netlify, fghn7rpw) — et je n'ai reproduit aucune des erreurs signalées :
+
+┌────────────────────────────────────────────────────────────────┬──────────────┬──────────────────────────────────────────────────────────────┐
+│                              Page                              │   Rapport    │              Chez moi (local, dataset Netlify)               │
+├────────────────────────────────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
+│ /fr/a-propos, /fr/recherche, /fr/lacdia-tech,                  │ « This page  │                                                              │
+│ /fr/recherche/departement-scientifique, /fr/recherche/axes     │ couldn't     │ 200 OK                                                       │
+│                                                                │ load »       │                                                              │
+├────────────────────────────────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
+│ /fr/actualites/soutenance-master-2-ia-decembre-2025            │ « couldn't   │ 200 OK                                                       │
+│                                                                │ load »       │                                                              │
+├────────────────────────────────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
+│                                                                │ « A server   │ 307 → /fr/contact?tab=collaborate — c'est-à-dire qu'il       │
+│ /fr/collaborer                                                 │ error        │ redirige déjà, volontairement, vers l'onglet Contact qui     │
+│                                                                │ occurred »   │ fonctionne. Exactement la recommandation du rapport, déjà en │
+│                                                                │              │  place.                                                      │
+├────────────────────────────────────────────────────────────────┼──────────────┼──────────────────────────────────────────────────────────────┤
+│ /fr/newsletter                                                 │ « couldn't   │ 200 OK                                                       │
+│                                                                │ load »       │                                                              │
+└────────────────────────────────────────────────────────────────┴──────────────┴──────────────────────────────────────────────────────────────┘
+
+Je n'ai donc pas supprimé ces pages (à-propos, recherche, LaCDIA Tech, département scientifique, axes, newsletter) — ce sont de vraies pages de contenu, et rien dans le code ne les fait planter. Piste très probable : vercel.json pointe sur un projet Sanity différent de netlify.toml (3rg8hwul vs fghn7rpw, repéré dès mon tout premier audit). Si l'outil qui a produit ce rapport a testé le déploiement Vercel, il tape sur un dataset potentiellement incomplet/différent — pas un bug de code.
+
+J'ai besoin d'une info de toi pour trancher : quelle URL exactement a été testée (le domaine réel) ? Si c'est bien Vercel avec l'autre projet Sanity, la vraie correction est d'aligner les deux déploiements sur le même projet — pas de supprimer des pages qui fonctionnent.
+
+Ce que j'ai corrigé (bugs réels, confirmés dans le code)
+
+- Lien « Actualités » mort dans le menu : ajouté au filtre ipe/Collaborer) — ne s'affiche plus, quel que soit l'état du contenu Sanity en prod.
+- Section Partenaires — bug de marge ET de contraste (Infos racine trouvée dans partners.tsx : un style={{padding:"5rem 0"}} en inline écrasait le padding horizontal de la classe .section-inner (d'où le texte collé au bord), et la section utilisait encore l'ancien
+thème clair (.section-white) alors que ses cartes utilisentblanc) — texte quasi invisible sur fond blanc. J'ai basculétoute la section vers le thème sombre cohérent avec ses voisines (corrige aussi la transition brutale sombre→blanc→sombre signalée).
+- Titre du hero : espace insécable entre « en » et « intell» de se retrouver seul sur sa ligne.
+                                                                                                                                                   Vérifié : tsc/eslint propres.
+                                                                                                                                                   Ce qui reste ouvert
+                                                                                                                                                   1. Mentions légales / confidentialité / cookies : j'ai confanity-seed.mjs) que c'est bien du texte d'instruction restéen ligne (« Renseignez les mentions légales du site ici »), pas propre à un déploiement. Je ne peux pas inventer un vrai texte légal — tu veux que je rédige un brouillon de base à faire valider par quelqu'uz déjà un texte à intégrer ?
+2. Grille "Indicateurs clés" / "Axes de recherche" : la carte isolée que le rapport décrit est en fait la mise en page bento volontaire (carte large
++ cartes compactes asymétriques), pas un bug. Si tu veux unique, c'est un vrai changement de design que je peux faire, mais je voulais confirmer que ce n'est pas juste "cassé".
+3. La question du déploiement Vercel/Sanity ci-dessus, à trn sur ce qui est vraiment cassé en prod.

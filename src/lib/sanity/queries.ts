@@ -247,14 +247,15 @@ export const eventBySlugQuery = groq`
 export const partnerListQuery = groq`
   *[_type == "partner" && status == "published"] | order(name asc){
     _id,
-    name,
+    "name": coalesce(nameIntl[$locale], name),
     "slug": coalesce(slugIntl[$locale], slug),
     slugIntl,
     partnerType,
     "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
     website,
     tags,
-    featured
+    featured,
+    "logo": select(defined(logo.image) => { "url": logo.image.asset->url, "alt": logo.alt }, null)
   }
 `;
 
@@ -355,7 +356,7 @@ export const resourceListQuery = groq`
 `;
 
 export const kpiListQuery = groq`
-  *[_type == "kpi"] | order(label asc){
+  *[_type == "kpi" && status == "published"] | order(label asc){
     _id,
     key,
     "label": coalesce(labelIntl[$locale], label),
@@ -471,15 +472,6 @@ export const homePageQuery = groq`
       "label": coalesce(labelIntl[$locale], label),
       href,
       variant
-    },
-    "eventBanner": {
-      "enabled": eventBanner.enabled,
-      "label": coalesce(eventBanner.label[$locale], eventBanner.label.fr, eventBanner.label.en),
-      "title": coalesce(eventBanner.title[$locale], eventBanner.title.fr, eventBanner.title.en),
-      "date": coalesce(eventBanner.date[$locale], eventBanner.date.fr, eventBanner.date.en),
-      "location": coalesce(eventBanner.location[$locale], eventBanner.location.fr, eventBanner.location.en),
-      "ctaLabel": coalesce(eventBanner.ctaLabel[$locale], eventBanner.ctaLabel.fr, eventBanner.ctaLabel.en),
-      "ctaHref": eventBanner.ctaHref
     }
   }
 `;
@@ -645,6 +637,16 @@ export const formSettingsQuery = groq`
       "loadingLabel": coalesce(newsletter.loadingLabel[$locale], newsletter.loadingLabel.fr, newsletter.loadingLabel.en),
       "successMessage": coalesce(newsletter.successMessage[$locale], newsletter.successMessage.fr, newsletter.successMessage.en),
       "errorMessage": coalesce(newsletter.errorMessage[$locale], newsletter.errorMessage.fr, newsletter.errorMessage.en)
+    },
+    "unsubscribe": {
+      "title": coalesce(unsubscribe.title[$locale], unsubscribe.title.fr, unsubscribe.title.en),
+      "subtitle": coalesce(unsubscribe.subtitle[$locale], unsubscribe.subtitle.fr, unsubscribe.subtitle.en),
+      "emailLabel": coalesce(unsubscribe.emailLabel[$locale], unsubscribe.emailLabel.fr, unsubscribe.emailLabel.en),
+      "emailPlaceholder": coalesce(unsubscribe.emailPlaceholder[$locale], unsubscribe.emailPlaceholder.fr, unsubscribe.emailPlaceholder.en),
+      "submitLabel": coalesce(unsubscribe.submitLabel[$locale], unsubscribe.submitLabel.fr, unsubscribe.submitLabel.en),
+      "loadingLabel": coalesce(unsubscribe.loadingLabel[$locale], unsubscribe.loadingLabel.fr, unsubscribe.loadingLabel.en),
+      "successMessage": coalesce(unsubscribe.successMessage[$locale], unsubscribe.successMessage.fr, unsubscribe.successMessage.en),
+      "errorMessage": coalesce(unsubscribe.errorMessage[$locale], unsubscribe.errorMessage.fr, unsubscribe.errorMessage.en)
     }
   }
 `;
@@ -751,10 +753,10 @@ export const governancePageBySlugQuery = groq`
     "slug": coalesce(slugIntl[$locale], slug),
     "intro": coalesce(introIntl[$locale], intro),
     showOrgChart,
-    orgChartSectionTitle,
+    "orgChartSectionTitle": coalesce(orgChartSectionTitleIntl[$locale], orgChartSectionTitle),
     "orgChartSectionIntro": coalesce(orgChartSectionIntroIntl[$locale], orgChartSectionIntro),
     showMembers,
-    membersSectionTitle,
+    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
     "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
     membersGroupsToShow,
     membersOrder,

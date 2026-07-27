@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { PortableText } from '@portabletext/react';
-import Link from 'next/link';
 import Image from 'next/image';
+
+import { Link } from '@/i18n/navigation';
+import { portableTextComponents } from '@/components/content/portable-text';
 
 // Simple helper pour extraire le texte depuis l'objet {fr, en} de Sanity
 function getLocalValue(field: any, locale: string) {
@@ -71,7 +73,7 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
                     {title && <h2 className="text-3xl md:text-4xl font-bold mb-6">{title}</h2>}
                     {content && (
                       <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground">
-                        <PortableText value={content} />
+                        <PortableText value={content} components={portableTextComponents} />
                       </div>
                     )}
                   </div>

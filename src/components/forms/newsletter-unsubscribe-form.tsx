@@ -21,7 +21,7 @@ export default function NewsletterUnsubscribeForm({ copy }: { copy?: FormCopy | 
 
     if (!email) {
       setStatus("error");
-      setMessage(copy?.errorMessage ?? "");
+      setMessage(copy?.errorMessage ?? "La demande n'a pas pu être traitée. Réessayez plus tard.");
       return;
     }
 
@@ -41,7 +41,7 @@ export default function NewsletterUnsubscribeForm({ copy }: { copy?: FormCopy | 
       setMessage(copy?.successMessage ?? "Votre demande a été prise en compte.");
     } catch {
       setStatus("error");
-      setMessage(copy?.errorMessage ?? "");
+      setMessage(copy?.errorMessage ?? "La demande n'a pas pu être traitée. Réessayez plus tard.");
     }
   }
 

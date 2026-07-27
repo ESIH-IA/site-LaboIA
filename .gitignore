@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# sanity studio
+/.sanity/
+
 # production
 /build
 
@@ -42,3 +45,4 @@ next-env.d.ts
 _backup_git/
 node_modules_broken/
 .env*.local
+.playwright-mcp/

@@ -71,7 +71,7 @@
    TYPOGRAPHY VARIABLES
    ============================================================ */
 :root {
-  --font-display: var(--font-syne), "Syne", system-ui, sans-serif;
+  --font-display: var(--font-syne), "Sora", system-ui, sans-serif;
   --font-body: var(--font-inter), "Inter", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
   --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
@@ -1668,6 +1668,14 @@ body {
   font-size: 1rem;
   font-weight: 700;
   color: var(--labo-text);
+}
+
+.partner-card-logo {
+  height: 2.5rem;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .partner-card-text {

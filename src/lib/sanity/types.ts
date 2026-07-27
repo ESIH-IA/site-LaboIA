@@ -53,7 +53,7 @@ export type PageSection = {
   cards?: PageCard[];
   tableHeaders?: string[];
   tableRows?: Array<{ cells?: string[] }>;
-  formType?: "contact" | "collaborate" | "newsletter";
+  formType?: "contact" | "collaborate" | "newsletter" | "unsubscribe";
 };
 
 export type ProjectListItem = {
@@ -164,6 +164,7 @@ export type PartnerListItem = {
   website?: string;
   tags?: string[];
   featured?: boolean;
+  logo?: SiteAsset | null;
 };
 
 export type OfferListItem = {
@@ -349,15 +350,6 @@ export type HomePageData = {
   collaborateTitle?: string;
   collaborateBody?: string;
   collaborateActions?: Array<{ label: string; href: string; variant?: string }>;
-  eventBanner?: {
-    enabled?: boolean;
-    label?: string;
-    title?: string;
-    date?: string;
-    location?: string;
-    ctaLabel?: string;
-    ctaHref?: string;
-  };
 };
 
 export type KpiSettings = {
@@ -450,4 +442,5 @@ export type FormSettings = {
   contact?: FormCopy;
   collaborate?: FormCopy;
   newsletter?: FormCopy;
+  unsubscribe?: FormCopy;
 };
