@@ -16,15 +16,15 @@
     "@portabletext/react": "^6.0.2",
     "@sanity/client": "^7.13.2",
     "@sanity/image-url": "^2.1.1",
-    "@sanity/vision": "^5.22.0",
+    "@sanity/vision": "^6.6.0",
     "@tailwindcss/postcss": "^4",
     "lucide-react": "^1.21.0",
-    "next": "^16.2.4",
+    "next": "^16.2.12",
     "next-intl": "^4.13.0",
-    "next-sanity": "^12.3.1",
+    "next-sanity": "^13.2.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sanity": "^5.22.0",
+    "sanity": "^6.6.0",
     "styled-components": "^6.4.1",
     "tailwindcss": "^4"
   },
@@ -32,16 +32,16 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@typescript-eslint/eslint-plugin": "^8.50.0",
-    "@typescript-eslint/parser": "^8.50.0",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.1.0",
+    "eslint-config-next": "^16.2.12",
     "typescript": "^5"
   },
   "overrides": {
     "js-yaml": "^3.14.2",
     "postcss": "^8.5.12",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.0",
+    "sharp": "^0.35.3",
+    "adm-zip": "^0.6.0"
   }
 }
