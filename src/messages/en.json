@@ -47,7 +47,9 @@
     "discoverServices": "Explore our AI solutions",
     "discoverResearch": "Explore our research",
     "requestQuote": "Request a consultation",
-    "becomePartner": "Become a partner"
+    "becomePartner": "Become a partner",
+    "close": "Close",
+    "keywords": "Keywords"
   },
   "cookies": {
     "title": "Cookie Notice",

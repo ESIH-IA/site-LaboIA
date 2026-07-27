@@ -47,7 +47,9 @@
     "discoverServices": "Découvrir nos services",
     "discoverResearch": "Découvrir nos recherches",
     "requestQuote": "Demander un devis",
-    "becomePartner": "Devenir partenaire"
+    "becomePartner": "Devenir partenaire",
+    "close": "Fermer",
+    "keywords": "Mots-clés"
   },
   "cookies": {
     "title": "Cookies",
