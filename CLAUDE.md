@@ -56,7 +56,8 @@ Sanity Studio est embarqué dans l'app Next.js : `npm run dev` puis ouvrir `/stu
 
 ### Déploiement
 
-- Deux cibles de déploiement coexistent avec des **project IDs Sanity différents** : `vercel.json` (`3rg8hwul`) et `netlify.toml` (`fghn7rpw`). Vérifier quelle cible/dataset est visée avant de modifier ces fichiers ou de raisonner sur le contenu Sanity « en prod ».
+- **Vercel est l'unique cible de déploiement** (Netlify a été abandonné — `netlify.toml` supprimé — décision explicite pour ne plus avoir deux datasets Sanity divergents à maintenir).
+- **Un seul projet Sanity canonique : `fghn7rpw`** (dataset `production`), configuré dans `vercel.json`, `.env.local` et le dashboard Vercel (Project Settings → Environment Variables — c'est le dashboard qui fait foi en cas de divergence avec `vercel.json`). L'ancien projet `3rg8hwul` ("LaCDIA") existe toujours dans l'organisation Sanity mais n'est plus utilisé — ne pas y écrire, son contenu a divergé (nav, etc.) et il sera supprimé/archivé séparément.
 - `next.config.ts` autorise déjà `cdn.sanity.io` pour `next/image` et transpile les packages `sanity`/`@sanity/ui`/`@sanity/icons`.
 
 ### Styling
