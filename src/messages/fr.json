@@ -107,6 +107,7 @@
       "sectionIntro": "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe.",
       "transversalLabel": "Thématique transversale",
       "transversalText": "Intelligence artificielle et sciences des données pour le développement durable d'Haïti et de la Caraïbe",
+      "discoverCta": "Découvrir",
       "axes": [
         { "title": "Méthodes fondamentales en IA et apprentissage automatique", "description": "Développement de méthodes adaptées aux données rares, bruitées ou hétérogènes, apprentissage auto-supervisé, transfert d'apprentissage, robustesse et IA frugale." },
         { "title": "Vision par ordinateur et analyse de données complexes", "description": "Analyse d'images, de documents et de données multimodales, notamment pour l'agriculture, la santé, l'environnement et le traitement de documents en créole et en français." },

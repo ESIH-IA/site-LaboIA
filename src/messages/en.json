@@ -106,6 +106,7 @@
       "sectionTitle": "Six structuring axes",
       "sectionIntro": "Applied and fundamental research axes organized around a transversal theme: AI and data science for the sustainable development of Haiti and the Caribbean.",
       "transversalLabel": "Transversal theme",
+      "discoverCta": "Discover",
       "transversalText": "Artificial intelligence and data science for the sustainable development of Haiti and the Caribbean",
       "axes": [
         { "title": "Fundamental AI Methods and Machine Learning", "description": "Developing methods suited to scarce, noisy or heterogeneous data, self-supervised learning, transfer learning, robustness and frugal AI." },
