@@ -19,6 +19,8 @@ export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
 
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email")?.toString();
+    // Honeypot anti-bot : voir le champ caché plus bas dans le JSX.
+    const company = formData.get("company")?.toString();
 
     if (!email) {
       setStatus("error");
@@ -32,7 +34,7 @@ export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
       const response = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, company }),
       });
       const payload = await response.json();
       if (!response.ok) {
@@ -59,6 +61,18 @@ export default function NewsletterForm({ copy }: { copy?: FormCopy | null }) {
           required
         />
       </label>
+
+      {/* Honeypot anti-spam — invisible et ignoré par les humains, mais
+          rempli par la plupart des robots de soumission automatique. */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+      />
+
       <label className="form-checkbox-light-row">
         <input type="checkbox" required style={{ marginTop: "0.25rem" }} />
         <span>

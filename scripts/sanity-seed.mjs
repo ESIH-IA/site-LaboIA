@@ -232,8 +232,8 @@ async function seed() {
   const navigation = {
     _id: "navigation",
     _type: "navigation",
-    // Perimetre reduit a 4 pages : Accueil, Solutions, Actualites (section
-    // de la home), Contact. Tout le reste a ete retire du code \u2014 voir
+    // Périmètre réduit à 4 pages : Accueil, Solutions, Actualités (section
+    // de la home), Contact. Tout le reste a été retiré du code — voir
     // next.config.ts pour les redirections des anciennes routes.
     mainNav: withKeys([
       { _type: "navItem", label: "Accueil", labelIntl: localeString("Accueil"), href: "/" },
@@ -247,8 +247,8 @@ async function seed() {
       { _type: "navItem", label: "Contact", labelIntl: localeString("Contact"), href: "/contact" },
     ]),
     footerNav: withKeys([
-      { _type: "navItem", label: "Mentions legales", labelIntl: localeString("Mentions legales"), href: "/mentions-legales" },
-      { _type: "navItem", label: "Confidentialite", labelIntl: localeString("Confidentialite"), href: "/confidentialite" },
+      { _type: "navItem", label: "Mentions légales", labelIntl: localeString("Mentions légales"), href: "/mentions-legales" },
+      { _type: "navItem", label: "Confidentialité", labelIntl: localeString("Confidentialité"), href: "/confidentialite" },
       { _type: "navItem", label: "Cookies", labelIntl: localeString("Cookies"), href: "/cookies" },
     ]),
   };
@@ -258,7 +258,7 @@ async function seed() {
     _type: "formSettings",
     contact: formCopy({
       title: "Contacter le laboratoire",
-      subtitle: "Precisez votre demande afin que l'equipe puisse vous repondre efficacement.",
+      subtitle: "Précisez votre demande afin que l'équipe puisse vous répondre efficacement.",
       fullNameLabel: "Nom complet",
       fullNamePlaceholder: "Votre nom",
       emailLabel: "Email",
@@ -267,57 +267,57 @@ async function seed() {
       subjectPlaceholder: "Objet de votre message",
       messageLabel: "Message",
       messagePlaceholder: "Votre message",
-      consentText: "J'accepte que mes donnees soient utilisees pour repondre a ma demande.",
-      privacyLabel: "Politique de confidentialite",
+      consentText: "J'accepte que mes données soient utilisées pour répondre à ma demande.",
+      privacyLabel: "Politique de confidentialité",
       privacyHref: "/confidentialite",
       submitLabel: "Envoyer",
       loadingLabel: "Envoi en cours",
-      successMessage: "Votre message a ete envoye.",
-      errorMessage: "Le message n'a pas pu etre envoye. Reessayez plus tard.",
+      successMessage: "Votre message a été envoyé.",
+      errorMessage: "Le message n'a pas pu être envoyé. Réessayez plus tard.",
     }),
     collaborate: formCopy({
       title: "Proposer une collaboration",
-      subtitle: "Presentez votre organisation, votre besoin et le type de partenariat envisage.",
+      subtitle: "Présentez votre organisation, votre besoin et le type de partenariat envisagé.",
       fullNameLabel: "Nom complet",
       fullNamePlaceholder: "Votre nom",
       emailLabel: "Email",
       emailPlaceholder: "votre@email.com",
       organizationLabel: "Organisation",
-      organizationPlaceholder: "Institution, entreprise ou equipe",
+      organizationPlaceholder: "Institution, entreprise ou équipe",
       subjectLabel: "Type de collaboration",
       subjectPlaceholder: "Projet, stage, recherche, financement",
       messageLabel: "Description",
       messagePlaceholder: "Contexte, objectifs, calendrier et attentes",
-      consentText: "J'accepte que mes donnees soient utilisees pour traiter cette proposition.",
-      privacyLabel: "Politique de confidentialite",
+      consentText: "J'accepte que mes données soient utilisées pour traiter cette proposition.",
+      privacyLabel: "Politique de confidentialité",
       privacyHref: "/confidentialite",
       submitLabel: "Soumettre",
       loadingLabel: "Envoi en cours",
-      successMessage: "Votre proposition a ete transmise.",
-      errorMessage: "La proposition n'a pas pu etre envoyee. Reessayez plus tard.",
+      successMessage: "Votre proposition a été transmise.",
+      errorMessage: "La proposition n'a pas pu être envoyée. Réessayez plus tard.",
     }),
     newsletter: formCopy({
       title: "Recevoir les nouvelles du laboratoire",
-      subtitle: "Inscrivez-vous pour suivre les annonces, publications, evenements et opportunites.",
+      subtitle: "Inscrivez-vous pour suivre les annonces, publications, événements et opportunités.",
       emailLabel: "Email",
       emailPlaceholder: "votre@email.com",
       consentText: "J'accepte de recevoir les communications du laboratoire.",
-      privacyLabel: "Politique de confidentialite",
+      privacyLabel: "Politique de confidentialité",
       privacyHref: "/confidentialite",
       submitLabel: "S'inscrire",
       loadingLabel: "Inscription en cours",
-      successMessage: "Votre inscription a ete prise en compte.",
-      errorMessage: "L'inscription n'a pas pu etre finalisee. Reessayez plus tard.",
+      successMessage: "Votre inscription a été prise en compte.",
+      errorMessage: "L'inscription n'a pas pu être finalisée. Réessayez plus tard.",
     }),
     unsubscribe: formCopy({
-      title: "Gerer mon abonnement",
-      subtitle: "Vous pouvez vous desinscrire de la newsletter a tout moment.",
+      title: "Gérer mon abonnement",
+      subtitle: "Vous pouvez vous désinscrire de la newsletter à tout moment.",
       emailLabel: "Email",
       emailPlaceholder: "votre@email.com",
-      submitLabel: "Se desinscrire",
+      submitLabel: "Se désinscrire",
       loadingLabel: "Envoi en cours",
-      successMessage: "Votre demande a ete prise en compte.",
-      errorMessage: "La demande n'a pas pu etre traitee. Reessayez plus tard.",
+      successMessage: "Votre demande a été prise en compte.",
+      errorMessage: "La demande n'a pas pu être traitée. Réessayez plus tard.",
     }),
   };
 
@@ -335,7 +335,7 @@ async function seed() {
     heroActions: withKeys([
       { _type: "linkAction", label: "Collaborer avec le laboratoire", href: "/collaborer", variant: "primary" },
       { _type: "linkAction", label: "Explorer nos projets", href: "/projets", variant: "secondary" },
-      { _type: "linkAction", label: "Voir les actualites", href: "/actualites", variant: "tertiary" },
+      { _type: "linkAction", label: "Voir les actualités", href: "/actualites", variant: "tertiary" },
     ]),
     introEyebrow: localeString("LaCDIA"),
     introTitle: localeString("Laboratoire de recherche et d'innovation en IA et science des donn\u00e9es."),
@@ -345,7 +345,7 @@ async function seed() {
     introActions: withKeys([
       { _type: "linkAction", label: "Collaborer avec le laboratoire", href: "/collaborer", variant: "primary" },
       { _type: "linkAction", label: "Explorer nos projets", href: "/projets", variant: "secondary" },
-      { _type: "linkAction", label: "Voir les actualites", href: "/actualites", variant: "tertiary" },
+      { _type: "linkAction", label: "Voir les actualités", href: "/actualites", variant: "tertiary" },
     ]),
     highlightsTitle: localeString("Ce que nous faisons"),
     highlightsIntro: localeText(
@@ -389,7 +389,7 @@ async function seed() {
     featuredProjectsIntro: localeText(
       "Des initiatives concr\u00e8tes qui d\u00e9montrent la puissance de l'IA et de la science des donn\u00e9es au service des communaut\u00e9s.",
     ),
-    featuredProjectsCtaLabel: localeString("Decouvrir tous les projets"),
+    featuredProjectsCtaLabel: localeString("Découvrir tous les projets"),
     featuredProjectsCtaHref: "/projets",
     publicationsTitle: localeString("Publications r\u00e9centes"),
     publicationsIntro: localeText("Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques."),
@@ -400,11 +400,11 @@ async function seed() {
     partnersBadge: localeString("Besoin de collaborer ? Contactez-nous."),
     collaborateTitle: localeString("Collaborer avec le laboratoire"),
     collaborateBody: localeText(
-      "Partenariats institutionnels, stages, financements ou projets appliques : construisons ensemble des solutions d'impact.",
+      "Partenariats institutionnels, stages, financements ou projets appliqués : construisons ensemble des solutions d'impact.",
     ),
     collaborateActions: withKeys([
       { _type: "linkAction", label: "Proposer un partenariat", href: "/collaborer", variant: "primary" },
-      { _type: "linkAction", label: "Candidater a un stage", href: "/collaborer", variant: "secondary" },
+      { _type: "linkAction", label: "Candidater à un stage", href: "/collaborer", variant: "secondary" },
     ]),
   };
   const kpis = [
@@ -426,8 +426,8 @@ async function seed() {
       label: "Publications",
       labelIntl: localeString("Publications"),
       value: "?",
-      note: "Mise a jour prochainement",
-      noteIntl: localeText("Mise a jour prochainement"),
+      note: "Mise à jour prochainement",
+      noteIntl: localeText("Mise à jour prochainement"),
       status: "draft",
     },
     {
@@ -437,19 +437,19 @@ async function seed() {
       label: "Partenaires / Clients",
       labelIntl: localeString("Partenaires / Clients"),
       value: "2+",
-      note: "Liste evolutive",
-      noteIntl: localeText("Liste evolutive"),
+      note: "Liste évolutive",
+      noteIntl: localeText("Liste évolutive"),
       status: "draft",
     },
     {
       _id: "kpi-students",
       _type: "kpi",
       key: "students",
-      label: "Etudiants impliques",
-      labelIntl: localeString("Etudiants impliques"),
+      label: "Étudiants impliqués",
+      labelIntl: localeString("Étudiants impliqués"),
       value: "30+",
-      note: "Selon activites en cours",
-      noteIntl: localeText("Selon activites en cours"),
+      note: "Selon activités en cours",
+      noteIntl: localeText("Selon activités en cours"),
       status: "draft",
     },
   ];
@@ -459,9 +459,9 @@ async function seed() {
     _type: "kpiSettings",
     lastUpdated: "2025-12-30",
     lastUpdatedIntl: localeString("2025-12-30"),
-    disclaimer: "Certains indicateurs sont provisoires et seront confirmes apres consolidation interne.",
+    disclaimer: "Certains indicateurs sont provisoires et seront confirmés après consolidation interne.",
     disclaimerIntl: localeString(
-      "Certains indicateurs sont provisoires et seront confirmes apres consolidation interne.",
+      "Certains indicateurs sont provisoires et seront confirmés après consolidation interne.",
     ),
   };
 
@@ -476,9 +476,9 @@ async function seed() {
       slugIntl: { fr: { current: "infosnation" }, en: { current: "infosnation" } },
       partnerType: "media",
       shortDescription:
-        "Plateforme mediatique independante engagee pour un journalisme rigoureux et la valorisation des savoirs.",
+        "Plateforme médiatique indépendante engagée pour un journalisme rigoureux et la valorisation des savoirs.",
       shortDescriptionIntl: localeText(
-        "Plateforme mediatique independante engagee pour un journalisme rigoureux et la valorisation des savoirs.",
+        "Plateforme médiatique indépendante engagée pour un journalisme rigoureux et la valorisation des savoirs.",
       ),
       website: "https://infosnation.com",
       tags: ["M\u00e9diation scientifique", "Partenariat \u00e9ditorial", "Sciences & Soci\u00e9t\u00e9"],
@@ -494,7 +494,7 @@ async function seed() {
       fullName: "Livenson Nicolas",
       slug: { current: "livenson-nicolas" },
       slugIntl: { fr: { current: "livenson-nicolas" }, en: { current: "livenson-nicolas" } },
-      role: "Etudiant(e) stagiaire",
+      role: "Étudiant(e) stagiaire",
       bio:
         "Travaux sur un tuteur num\u00e9rique intelligent bas\u00e9 sur une architecture RAG multi-agents, appliqu\u00e9e \u00e0 l'accompagnement des producteurs de mangues en Ha\u00efti.",
       bioIntl: localeText(
@@ -512,7 +512,7 @@ async function seed() {
       fullName: "Aishael Donata Laury Picard",
       slug: { current: "aishael-picard" },
       slugIntl: { fr: { current: "aishael-picard" }, en: { current: "aishael-picard" } },
-      role: "Etudiant(e) stagiaire",
+      role: "Étudiant(e) stagiaire",
       bio:
         "Travaux sur la vision par ordinateur pour la d\u00e9tection de maladies du manguier (feuilles et fruits), int\u00e9gr\u00e9s \u00e0 un syst\u00e8me d'aide \u00e0 la d\u00e9cision dans le cadre de Deep Farm.",
       bioIntl: localeText(
@@ -606,9 +606,9 @@ async function seed() {
       _id: "news-aishael-ia-manguiers",
       _type: "news",
       status: "published",
-      title: "Quand l'intelligence artificielle vient au secours des manguiers haitiens",
+      title: "Quand l'intelligence artificielle vient au secours des manguiers haïtiens",
       titleIntl: localeString(
-        "Quand l'intelligence artificielle vient au secours des manguiers haitiens",
+        "Quand l'intelligence artificielle vient au secours des manguiers haïtiens",
       ),
       slug: { current: "aishael-ia-manguiers" },
       slugIntl: { fr: { current: "aishael-ia-manguiers" }, en: { current: "aishael-ia-manguiers" } },
@@ -627,8 +627,8 @@ async function seed() {
       _id: "news-soutenance-master-2-ia-decembre-2025",
       _type: "news",
       status: "published",
-      title: "Soutenance de Master 2 en Intelligence Artificielle - Decembre 2025",
-      titleIntl: localeString("Soutenance de Master 2 en Intelligence Artificielle - Decembre 2025"),
+      title: "Soutenance de Master 2 en Intelligence Artificielle - Décembre 2025",
+      titleIntl: localeString("Soutenance de Master 2 en Intelligence Artificielle - Décembre 2025"),
       slug: { current: "soutenance-master-2-ia-decembre-2025" },
       slugIntl: { fr: { current: "soutenance-master-2-ia-decembre-2025" }, en: { current: "soutenance-master-2-ia-decembre-2025" } },
       date: "2025-12-23",
@@ -824,7 +824,7 @@ async function seed() {
     { _id: "sector-health", _type: "sector", name: "Sant\u00e9", nameIntl: localeString("Sant\u00e9"), icon: "health", order: 5 },
     { _id: "sector-public", _type: "sector", name: "Secteur public", nameIntl: localeString("Secteur public"), icon: "government", order: 6 },
     { _id: "sector-industry", _type: "sector", name: "Industrie", nameIntl: localeString("Industrie"), icon: "factory", order: 7 },
-    { _id: "sector-education", _type: "sector", name: "Education", nameIntl: localeString("Education"), icon: "book", order: 8 },
+    { _id: "sector-education", _type: "sector", name: "Éducation", nameIntl: localeString("Éducation"), icon: "book", order: 8 },
   ];
 
   const solutionsPage = {
@@ -833,7 +833,7 @@ async function seed() {
     heroBadge: localeString("Services & Solutions IA"),
     heroTitle: localeString("Recherche appliqu\u00e9e et transfert en intelligence artificielle"),
     heroSubtitle: localeText(
-      "Le LaCDIA developpe des methodes et prototypes IA, puis les transfere vers des cas d'usage reels en collaboration avec ses partenaires.",
+      "Le LaCDIA développe des méthodes et prototypes IA, puis les transfère vers des cas d'usage réels en collaboration avec ses partenaires.",
     ),
     heroDescription: localeText(
       "Nos solutions s'appuient sur des axes de recherche, des projets interdisciplinaires et une validation scientifique rigoureuse.",
@@ -841,7 +841,7 @@ async function seed() {
     heroPrimaryCta: { _type: "linkAction", label: "Proposer un projet", href: "/contact", variant: "primary" },
     heroSecondaryCta: { _type: "linkAction", label: "Voir les cas d'usage", href: "#cas-usage", variant: "secondary" },
     approachTitle: localeString("Notre approche"),
-    approachIntro: localeText("Une demarche scientifique, rigoureuse et orientee impact."),
+    approachIntro: localeText("Une démarche scientifique, rigoureuse et orientée impact."),
     approachSteps: withKeys([
       {
         title: "Diagnostic",
@@ -851,30 +851,30 @@ async function seed() {
           "Qualification des donn\u00e9es, besoins m\u00e9tier et contraintes terrain.",
         ),
       },
-      { title: "Modelisation", titleIntl: localeString("Modelisation"), description: "Conception IA, prototypage rapide et validation scientifique.", descriptionIntl: localeText("Conception IA, prototypage rapide et validation scientifique.") },
-      { title: "Deploiement", titleIntl: localeString("Deploiement"), description: "Integration, accompagnement et mesure d'impact.", descriptionIntl: localeText("Integration, accompagnement et mesure d'impact.") },
+      { title: "Modélisation", titleIntl: localeString("Modélisation"), description: "Conception IA, prototypage rapide et validation scientifique.", descriptionIntl: localeText("Conception IA, prototypage rapide et validation scientifique.") },
+      { title: "Déploiement", titleIntl: localeString("Déploiement"), description: "Intégration, accompagnement et mesure d'impact.", descriptionIntl: localeText("Intégration, accompagnement et mesure d'impact.") },
     ]),
     solutionsTitle: localeString("Solutions IA"),
     solutionsIntro: localeText(
-      "Des solutions concretes pour analyser, automatiser, decider et rendre l'information accessible.",
+      "Des solutions concrètes pour analyser, automatiser, décider et rendre l'information accessible.",
     ),
     solutions: aiSolutions.map((item) => ({ _key: makeKey(), _type: "reference", _ref: item._id })),
     useCasesTitle: localeString("Cas d'usage"),
     useCasesIntro: localeText("Projets concrets et parcours d'impact."),
     featuredUseCase: { _type: "reference", _ref: useCases[0]._id },
-    flowTitle: localeString("Flux IA applique"),
+    flowTitle: localeString("Flux IA appliqué"),
     flowDescription: localeText(
       "Donn\u00e9es terrain -> Connaissances -> Mod\u00e8les IA -> D\u00e9cision",
     ),
     flowSteps: ["Collecte", "Analyse", "Recommandation", "Suivi terrain"],
-    servicesTitle: localeString("Services proposes"),
-    servicesIntro: localeText("Un accompagnement complet, de l'idee au deploiement."),
+    servicesTitle: localeString("Services proposés"),
+    servicesIntro: localeText("Un accompagnement complet, de l'idée au déploiement."),
     services: [
       "Conseil scientifique",
       "D\u00e9veloppement IA",
       "Data engineering",
       "Syst\u00e8mes d'aide \u00e0 la d\u00e9cision",
-      "MLOps et deploiement",
+      "MLOps et déploiement",
     ],
     sectorsTitle: localeString("Secteurs d'application"),
     sectorsIntro: localeText(
@@ -897,7 +897,7 @@ async function seed() {
       affiliation: "ESIH - \u00c9cole Sup\u00e9rieure d'Infotronique d'Ha\u00efti",
       longBio:
         "Co-fondateur du laboratoire LaCDIA et Directeur g\u00e9n\u00e9ral de l'ESIH. Pilote la gouvernance institutionnelle du laboratoire.",
-      expertise: ["Gouvernance institutionnelle", "Direction strategique", "Innovation pedagogique"],
+      expertise: ["Gouvernance institutionnelle", "Direction stratégique", "Innovation pédagogique"],
       links: { email: "p.attie@esih.edu" },
       governanceGroup: "gouvernance",
       order: 1,
@@ -911,7 +911,7 @@ async function seed() {
       roleCategory: "direction",
       shortBio: "Co-fondatrice du laboratoire LaCDIA. Docteure en sciences des donn\u00e9es.",
       affiliation: "LaCDIA",
-      longBio: "Co-fondatrice du laboratoire LaCDIA. Pilote les activites scientifiques en apprentissage automatique.",
+      longBio: "Co-fondatrice du laboratoire LaCDIA. Pilote les activités scientifiques en apprentissage automatique.",
       expertise: ["Direction scientifique", "Machine Learning", "Data Science"],
       links: { email: "aishael.picard@lacdia.esih.edu" },
       governanceGroup: "direction",
@@ -924,7 +924,7 @@ async function seed() {
       slug: { current: "livenson-nicolas" },
       roleTitle: "Direction scientifique - Intelligence artificielle",
       roleCategory: "direction",
-      shortBio: "Co-fondateur du laboratoire LaCDIA. Specialiste des systemes multi-agents.",
+      shortBio: "Co-fondateur du laboratoire LaCDIA. Spécialiste des systèmes multi-agents.",
       affiliation: "LaCDIA - ESTIA",
       longBio: "Co-fondateur du laboratoire LaCDIA. Supervise les projets de recherche appliqu\u00e9e.",
       expertise: ["Intelligence artificielle", "Deep Learning", "Computer Vision"],
@@ -935,12 +935,12 @@ async function seed() {
     {
       _id: "person-benedique-paul",
       _type: "person",
-      name: "Dr. Benedique Paul",
+      name: "Dr. Bénédique Paul",
       slug: { current: "benedique-paul" },
-      roleTitle: "Chercheur associe",
+      roleTitle: "Chercheur associé",
       roleCategory: "conseil",
       shortBio: "Membre du conseil scientifique. Expert en agronomie tropicale.",
-      affiliation: "FSAE/UniQ - Universite Quisqueya",
+      affiliation: "FSAE/UniQ - Université Quisqueya",
       longBio: "Membre du conseil scientifique. Collabore avec LaCDIA sur des initiatives de recherche appliqu\u00e9e.",
       expertise: ["Agronomie tropicale", "Syst\u00e8mes agricoles durables", "\u00c9conomie rurale"],
       links: { email: "b.paul@uniq.edu" },
@@ -955,7 +955,7 @@ async function seed() {
       roleTitle: "Conseiller scientifique international",
       roleCategory: "conseil",
       shortBio: "Conseiller scientifique international du laboratoire.",
-      affiliation: "A determiner",
+      affiliation: "À déterminer",
       longBio: "Conseiller scientifique international. Participe aux orientations de recherche du laboratoire.",
       expertise: ["A venir"],
       links: { email: "" },
@@ -993,16 +993,16 @@ async function seed() {
       { _key: makeKey(), _type: "reference", _ref: "person-benedique-paul" },
       { _key: makeKey(), _type: "reference", _ref: "person-serge-mranda" },
     ],
-    membersSectionTitle: "Membres & Profils detailles",
-    membersSectionTitleIntl: localeString("Membres & Profils detailles"),
+    membersSectionTitle: "Membres & Profils détaillés",
+    membersSectionTitleIntl: localeString("Membres & Profils détaillés"),
     membersSectionIntro: [
       block(
-        "L'equipe de LaCDIA reunit des experts en intelligence artificielle, data science et agronomie.",
+        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
       ),
     ],
     membersSectionIntroIntl: localeBlock([
       block(
-        "L'equipe de LaCDIA reunit des experts en intelligence artificielle, data science et agronomie.",
+        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
       ),
     ]),
     membersToShow: [
@@ -1024,12 +1024,12 @@ async function seed() {
     slugIntl: { fr: { current: "gouvernance" }, en: { current: "gouvernance" } },
     intro: [
       block(
-        "Decouvrez la structure organisationnelle et l'equipe qui pilote LaCDIA dans sa mission de recherche et d'innovation.",
+        "Découvrez la structure organisationnelle et l'équipe qui pilote LaCDIA dans sa mission de recherche et d'innovation.",
       ),
     ],
     introIntl: localeBlock([
       block(
-        "Decouvrez la structure organisationnelle et l'equipe qui pilote LaCDIA dans sa mission de recherche et d'innovation.",
+        "Découvrez la structure organisationnelle et l'équipe qui pilote LaCDIA dans sa mission de recherche et d'innovation.",
       ),
     ]),
     showOrgChart: true,
@@ -1046,16 +1046,16 @@ async function seed() {
       ),
     ]),
     showMembers: true,
-    membersSectionTitle: "Membres & Profils detailles",
-    membersSectionTitleIntl: localeString("Membres & Profils detailles"),
+    membersSectionTitle: "Membres & Profils détaillés",
+    membersSectionTitleIntl: localeString("Membres & Profils détaillés"),
     membersSectionIntro: [
       block(
-        "L'equipe de LaCDIA reunit des experts en intelligence artificielle, data science et agronomie.",
+        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
       ),
     ],
     membersSectionIntroIntl: localeBlock([
       block(
-        "L'equipe de LaCDIA reunit des experts en intelligence artificielle, data science et agronomie.",
+        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
       ),
     ]),
     membersGroupsToShow: ["direction", "gouvernance", "comite_scientifique"],
@@ -1068,28 +1068,28 @@ async function seed() {
       _id: "page-a-propos",
       _type: "institutionalPage",
       status: "published",
-      title: "A propos",
-      titleIntl: localeString("A propos"),
+      title: "À propos",
+      titleIntl: localeString("À propos"),
       slug: { current: "a-propos" },
       slugIntl: { fr: { current: "a-propos" }, en: { current: "about" } },
       summary:
-        "Laboratoire caribeen dedie a la recherche, a l'innovation et au transfert en intelligence artificielle et science des donnees.",
+        "Laboratoire caribéen dédié à la recherche, à l'innovation et au transfert en intelligence artificielle et science des données.",
       summaryIntl: localeText(
-        "Laboratoire caribeen dedie a la recherche, a l'innovation et au transfert en intelligence artificielle et science des donnees.",
+        "Laboratoire caribéen dédié à la recherche, à l'innovation et au transfert en intelligence artificielle et science des données.",
       ),
       seo: seo(
-        "A propos - LaCDIA",
-        "Decouvrez le Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle.",
+        "À propos - LaCDIA",
+        "Découvrez le Laboratoire Caribéen des Sciences de Données et de l'Intelligence Artificielle.",
       ),
-      content: [block("Presentation institutionnelle du laboratoire.")],
-      contentIntl: localeBlock([block("Presentation institutionnelle du laboratoire.")]),
+      content: [block("Présentation institutionnelle du laboratoire.")],
+      contentIntl: localeBlock([block("Présentation institutionnelle du laboratoire.")]),
       sections: [
         section({
           variant: "heroDark",
           eyebrow: "Laboratoire de recherche",
-          title: "Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle",
+          title: "Laboratoire Caribéen des Sciences de Données et de l'Intelligence Artificielle",
           intro:
-            "Un pole de reference pour la recherche, l'innovation et le transfert technologique en intelligence artificielle et science des donnees dans la Caraibe.",
+            "Un pôle de référence pour la recherche, l'innovation et le transfert technologique en intelligence artificielle et science des données dans la Caraïbe.",
           actions: [
             action("Explorer la recherche", "/recherche", "primary"),
             action("Contacter le laboratoire", "/contact", "secondary"),
@@ -1097,20 +1097,20 @@ async function seed() {
         }),
         section({
           layout: "cards",
-          title: "Identite institutionnelle",
-          intro: "Les informations structurantes du laboratoire sont editables depuis Sanity.",
+          title: "Identité institutionnelle",
+          intro: "Les informations structurantes du laboratoire sont éditables depuis Sanity.",
           cards: [
-            card({ title: "Nom complet", description: "Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle" }),
+            card({ title: "Nom complet", description: "Laboratoire Caribéen des Sciences de Données et de l'Intelligence Artificielle" }),
             card({ title: "Acronyme", description: "LaCDIA" }),
-            card({ title: "Affiliation", description: "Ecosysteme academique et scientifique caribeen." }),
-            card({ title: "Localisation", description: "Port-au-Prince, Haiti, avec une vocation regionale caribeenne." }),
+            card({ title: "Affiliation", description: "Écosystème académique et scientifique caribéen." }),
+            card({ title: "Localisation", description: "Port-au-Prince, Haïti, avec une vocation régionale caribéenne." }),
           ],
         }),
         section({
           title: "Vision",
           body: [
             block(
-              "Devenir un pole de reference regional pour la recherche, l'innovation et l'application responsable de l'intelligence artificielle et de la science des donnees.",
+              "Devenir un pôle de référence régional pour la recherche, l'innovation et l'application responsable de l'intelligence artificielle et de la science des données.",
             ),
           ],
         }),
@@ -1119,12 +1119,12 @@ async function seed() {
           variant: "light",
           title: "Mission",
           intro:
-            "Produire des connaissances, former des talents, developper des solutions utiles et accompagner les institutions dans l'usage responsable des donnees.",
+            "Produire des connaissances, former des talents, développer des solutions utiles et accompagner les institutions dans l'usage responsable des données.",
           cards: [
-            card({ title: "Recherche", description: "Conduire des travaux scientifiques appliques et fondamentaux." }),
-            card({ title: "Innovation", description: "Transformer les resultats scientifiques en prototypes, outils et services." }),
-            card({ title: "Formation", description: "Renforcer les competences en IA, data science et ingenierie numerique." }),
-            card({ title: "Transfert", description: "Connecter le laboratoire aux besoins des organisations publiques, privees et communautaires." }),
+            card({ title: "Recherche", description: "Conduire des travaux scientifiques appliqués et fondamentaux." }),
+            card({ title: "Innovation", description: "Transformer les résultats scientifiques en prototypes, outils et services." }),
+            card({ title: "Formation", description: "Renforcer les compétences en IA, data science et ingénierie numérique." }),
+            card({ title: "Transfert", description: "Connecter le laboratoire aux besoins des organisations publiques, privées et communautaires." }),
           ],
         }),
         section({
@@ -1132,21 +1132,21 @@ async function seed() {
           title: "Valeurs",
           cards: [
             card({ title: "Rigueur scientifique" }),
-            card({ title: "Ethique et responsabilite" }),
+            card({ title: "Éthique et responsabilité" }),
             card({ title: "Impact local" }),
             card({ title: "Collaboration" }),
-            card({ title: "Ouverture caribeenne" }),
-            card({ title: "Excellence operationnelle" }),
+            card({ title: "Ouverture caribéenne" }),
+            card({ title: "Excellence opérationnelle" }),
           ],
         }),
         section({
           layout: "cards",
-          title: "Piliers strategiques",
+          title: "Piliers stratégiques",
           cards: [
             card({ title: "Recherche scientifique", description: "Axes de recherche, publications, protocoles et encadrement." }),
-            card({ title: "LaCDIA Tech", description: "Developpement de solutions IA, plateformes data et services numeriques." }),
+            card({ title: "LaCDIA Tech", description: "Développement de solutions IA, plateformes data et services numériques." }),
             card({ title: "Formation et talents", description: "Ateliers, programmes, mentorat et accompagnement des jeunes chercheurs." }),
-            card({ title: "Partenariats", description: "Cooperation avec universites, institutions, entreprises et bailleurs." }),
+            card({ title: "Partenariats", description: "Coopération avec universités, institutions, entreprises et bailleurs." }),
           ],
         }),
       ],
@@ -1160,30 +1160,30 @@ async function seed() {
       slug: { current: "lacdia-tech" },
       slugIntl: { fr: { current: "lacdia-tech" }, en: { current: "lacdia-tech" } },
       summary:
-        "Departement technologique charge de transformer la recherche en solutions IA, produits data et services numeriques.",
+        "Département technologique chargé de transformer la recherche en solutions IA, produits data et services numériques.",
       summaryIntl: localeText(
-        "Departement technologique charge de transformer la recherche en solutions IA, produits data et services numeriques.",
+        "Département technologique chargé de transformer la recherche en solutions IA, produits data et services numériques.",
       ),
       seo: seo(
-        "LaCDIA Tech - Departement Technologique et Innovation",
-        "Solutions IA, data science, automatisation, plateformes intelligentes et innovation appliquee par LaCDIA Tech.",
+        "LaCDIA Tech - Département Technologique et Innovation",
+        "Solutions IA, data science, automatisation, plateformes intelligentes et innovation appliquée par LaCDIA Tech.",
       ),
-      content: [block("Departement technologique et innovation du laboratoire.")],
-      contentIntl: localeBlock([block("Departement technologique et innovation du laboratoire.")]),
+      content: [block("Département technologique et innovation du laboratoire.")],
+      contentIntl: localeBlock([block("Département technologique et innovation du laboratoire.")]),
       sections: [
         section({
           variant: "heroDark",
           eyebrow: "LaCDIA Tech",
-          title: "Departement Technologique et Innovation",
+          title: "Département Technologique et Innovation",
           intro:
-            "Nous concevons des solutions IA, plateformes de donnees, outils d'automatisation et prototypes issus des travaux scientifiques du laboratoire.",
+            "Nous concevons des solutions IA, plateformes de données, outils d'automatisation et prototypes issus des travaux scientifiques du laboratoire.",
           actions: [action("Demander une solution", "/contact", "primary"), action("Voir les cas d'usage", "#cas-usage", "secondary")],
         }),
         section({
           title: "Mission",
           body: [
             block(
-              "LaCDIA Tech assure le passage de la recherche vers l'usage : cadrage du besoin, architecture technique, developpement, experimentation, deploiement et transfert.",
+              "LaCDIA Tech assure le passage de la recherche vers l'usage : cadrage du besoin, architecture technique, développement, expérimentation, déploiement et transfert.",
             ),
           ],
         }),
@@ -1192,20 +1192,20 @@ async function seed() {
           variant: "light",
           title: "Services",
           cards: [
-            card({ title: "Solutions IA sur mesure", description: "Modeles predictifs, classification, recommandation et detection d'anomalies." }),
-            card({ title: "Data platforms", description: "Collecte, structuration, visualisation et gouvernance des donnees." }),
-            card({ title: "Automatisation", description: "Processus intelligents, assistants metier et workflows connectes." }),
-            card({ title: "Conseil technique", description: "Audit, faisabilite, architecture et accompagnement de projets IA." }),
+            card({ title: "Solutions IA sur mesure", description: "Modèles prédictifs, classification, recommandation et détection d'anomalies." }),
+            card({ title: "Data platforms", description: "Collecte, structuration, visualisation et gouvernance des données." }),
+            card({ title: "Automatisation", description: "Processus intelligents, assistants métier et workflows connectés." }),
+            card({ title: "Conseil technique", description: "Audit, faisabilité, architecture et accompagnement de projets IA." }),
           ],
         }),
         section({
           layout: "cards",
           title: "Pipeline d'innovation",
           cards: [
-            card({ title: "Cadrer", description: "Clarifier le probleme, les donnees disponibles et les criteres d'impact." }),
+            card({ title: "Cadrer", description: "Clarifier le problème, les données disponibles et les critères d'impact." }),
             card({ title: "Prototyper", description: "Construire un MVP testable avec des indicateurs mesurables." }),
-            card({ title: "Valider", description: "Evaluer les performances, les risques et l'utilisabilite." }),
-            card({ title: "Deployer", description: "Industrialiser progressivement avec documentation et transfert." }),
+            card({ title: "Valider", description: "Évaluer les performances, les risques et l'utilisabilité." }),
+            card({ title: "Déployer", description: "Industrialiser progressivement avec documentation et transfert." }),
           ],
         }),
         section({
@@ -1214,10 +1214,10 @@ async function seed() {
           variant: "light",
           title: "Cas d'usage",
           cards: [
-            card({ title: "Agriculture intelligente", description: "Prediction, suivi de cultures, alertes et tableaux de bord." }),
-            card({ title: "Sante et services publics", description: "Analyse de donnees, priorisation, observatoires et aide a la decision." }),
-            card({ title: "Education et formation", description: "Plateformes, assistants pedagogiques et analyse des parcours." }),
-            card({ title: "Entreprises et institutions", description: "Optimisation operationnelle, automatisation documentaire et reporting." }),
+            card({ title: "Agriculture intelligente", description: "Prédiction, suivi de cultures, alertes et tableaux de bord." }),
+            card({ title: "Santé et services publics", description: "Analyse de données, priorisation, observatoires et aide à la décision." }),
+            card({ title: "Éducation et formation", description: "Plateformes, assistants pédagogiques et analyse des parcours." }),
+            card({ title: "Entreprises et institutions", description: "Optimisation opérationnelle, automatisation documentaire et reporting." }),
           ],
         }),
       ],
@@ -1226,35 +1226,35 @@ async function seed() {
       _id: "page-departement-scientifique",
       _type: "institutionalPage",
       status: "published",
-      title: "Departement scientifique",
-      titleIntl: localeString("Departement scientifique"),
+      title: "Département scientifique",
+      titleIntl: localeString("Département scientifique"),
       slug: { current: "departement-scientifique" },
       slugIntl: { fr: { current: "departement-scientifique" }, en: { current: "scientific-department" } },
       summary:
-        "Structure scientifique chargee des axes de recherche, methodes, publications, encadrement et collaborations academiques.",
+        "Structure scientifique chargée des axes de recherche, méthodes, publications, encadrement et collaborations académiques.",
       summaryIntl: localeText(
-        "Structure scientifique chargee des axes de recherche, methodes, publications, encadrement et collaborations academiques.",
+        "Structure scientifique chargée des axes de recherche, méthodes, publications, encadrement et collaborations académiques.",
       ),
       seo: seo(
-        "Departement Scientifique - LaCDIA",
-        "Axes de recherche, methodes scientifiques, publications, encadrement et collaborations du departement scientifique de LaCDIA.",
+        "Département Scientifique - LaCDIA",
+        "Axes de recherche, méthodes scientifiques, publications, encadrement et collaborations du département scientifique de LaCDIA.",
       ),
-      content: [block("Presentation du departement scientifique.")],
-      contentIntl: localeBlock([block("Presentation du departement scientifique.")]),
+      content: [block("Présentation du département scientifique.")],
+      contentIntl: localeBlock([block("Présentation du département scientifique.")]),
       sections: [
         section({
           variant: "heroDark",
-          eyebrow: "Departement scientifique",
-          title: "Recherche, methodes et production scientifique",
+          eyebrow: "Département scientifique",
+          title: "Recherche, méthodes et production scientifique",
           intro:
-            "Le departement scientifique structure les axes de recherche, garantit la qualite methodologique et accompagne les publications, projets et collaborations academiques.",
+            "Le département scientifique structure les axes de recherche, garantit la qualité méthodologique et accompagne les publications, projets et collaborations académiques.",
           actions: [action("Explorer les axes", "/recherche/axes", "primary"), action("Voir les publications", "/publications", "secondary")],
         }),
         section({
-          title: "Role",
+          title: "Rôle",
           body: [
             block(
-              "Le departement scientifique definit les priorites de recherche, encadre les protocoles, anime les groupes de travail et veille a la coherence scientifique des projets du laboratoire.",
+              "Le département scientifique définit les priorités de recherche, encadre les protocoles, anime les groupes de travail et veille à la cohérence scientifique des projets du laboratoire.",
             ),
           ],
         }),
@@ -1263,20 +1263,20 @@ async function seed() {
           variant: "light",
           title: "Objectifs",
           cards: [
-            card({ title: "Structurer les axes", description: "Organiser les travaux autour de problemes scientifiques et territoriaux prioritaires." }),
-            card({ title: "Garantir la methode", description: "Assurer la rigueur des donnees, protocoles, experimentations et evaluations." }),
-            card({ title: "Produire et publier", description: "Valoriser les resultats sous forme d'articles, rapports, jeux de donnees et communications." }),
-            card({ title: "Encadrer", description: "Accompagner et former les etudiants, chercheurs et collaborateurs associes." }),
+            card({ title: "Structurer les axes", description: "Organiser les travaux autour de problèmes scientifiques et territoriaux prioritaires." }),
+            card({ title: "Garantir la méthode", description: "Assurer la rigueur des données, protocoles, expérimentations et évaluations." }),
+            card({ title: "Produire et publier", description: "Valoriser les résultats sous forme d'articles, rapports, jeux de données et communications." }),
+            card({ title: "Encadrer", description: "Accompagner et former les étudiants, chercheurs et collaborateurs associés." }),
           ],
         }),
         section({
           layout: "cards",
-          title: "Methodologies",
+          title: "Méthodologies",
           cards: [
-            card({ title: "Apprentissage automatique", description: "Modelisation predictive, classification, optimisation et evaluation." }),
-            card({ title: "Science des donnees", description: "Collecte, nettoyage, analyse, visualisation et interpretation des donnees." }),
-            card({ title: "IA responsable", description: "Ethique, explicabilite, robustesse, biais et gouvernance." }),
-            card({ title: "Recherche appliquee", description: "Protocoles terrain, experimentation, mesure d'impact et transfert." }),
+            card({ title: "Apprentissage automatique", description: "Modélisation prédictive, classification, optimisation et évaluation." }),
+            card({ title: "Science des données", description: "Collecte, nettoyage, analyse, visualisation et interprétation des données." }),
+            card({ title: "IA responsable", description: "Éthique, explicabilité, robustesse, biais et gouvernance." }),
+            card({ title: "Recherche appliquée", description: "Protocoles terrain, expérimentation, mesure d'impact et transfert." }),
           ],
         }),
         section({
@@ -1284,10 +1284,10 @@ async function seed() {
           variant: "light",
           title: "Collaborations",
           cards: [
-            card({ title: "Universites", description: "Programmes de recherche, encadrement, mobilite et co-publications." }),
-            card({ title: "Institutions publiques", description: "Observatoires, donnees d'interet general et aide a la decision." }),
-            card({ title: "Entreprises", description: "Recherche appliquee, prototypes et experimentation." }),
-            card({ title: "Organisations internationales", description: "Programmes regionaux, financement et transfert de connaissances." }),
+            card({ title: "Universités", description: "Programmes de recherche, encadrement, mobilité et co-publications." }),
+            card({ title: "Institutions publiques", description: "Observatoires, données d'intérêt général et aide à la décision." }),
+            card({ title: "Entreprises", description: "Recherche appliquée, prototypes et expérimentation." }),
+            card({ title: "Organisations internationales", description: "Programmes régionaux, financement et transfert de connaissances." }),
           ],
         }),
       ],
@@ -1302,8 +1302,8 @@ async function seed() {
       slugIntl: { fr: { current: "actualites" }, en: { current: "actualites" } },
       summary: "Suivez les actualit\u00e9s, projets et \u00e9v\u00e9nements du laboratoire.",
       summaryIntl: localeText("Suivez les actualit\u00e9s, projets et \u00e9v\u00e9nements du laboratoire."),
-      content: [block("Retrouvez les actualites et annonces officielles de LaCDIA.")],
-      contentIntl: localeBlock([block("Retrouvez les actualites et annonces officielles de LaCDIA.")]),
+      content: [block("Retrouvez les actualités et annonces officielles de LaCDIA.")],
+      contentIntl: localeBlock([block("Retrouvez les actualités et annonces officielles de LaCDIA.")]),
     },
     {
       _id: "page-collaborer",
@@ -1323,23 +1323,23 @@ async function seed() {
           variant: "heroDark",
           title: "Collaborer avec le laboratoire",
           intro:
-            "Partenariats institutionnels, stages, financement, recherche appliquee ou developpement de solutions : presentez votre besoin a l'equipe.",
+            "Partenariats institutionnels, stages, financement, recherche appliquée ou développement de solutions : présentez votre besoin à l'équipe.",
         }),
         section({
           layout: "cards",
           title: "Types de collaboration",
           cards: [
-            card({ title: "Partenariat scientifique", description: "Projets de recherche, publications, experimentation et encadrement." }),
-            card({ title: "Projet applique", description: "Cadrage et developpement de solutions IA ou data adaptees a un besoin terrain." }),
-            card({ title: "Formation et stage", description: "Accueil, mentorat, ateliers et parcours de renforcement de competences." }),
-            card({ title: "Financement et soutien", description: "Programmes, appels a projets, ressources et cooperation institutionnelle." }),
+            card({ title: "Partenariat scientifique", description: "Projets de recherche, publications, expérimentation et encadrement." }),
+            card({ title: "Projet appliqué", description: "Cadrage et développement de solutions IA ou data adaptées à un besoin terrain." }),
+            card({ title: "Formation et stage", description: "Accueil, mentorat, ateliers et parcours de renforcement de compétences." }),
+            card({ title: "Financement et soutien", description: "Programmes, appels à projets, ressources et coopération institutionnelle." }),
           ],
         }),
         section({
           layout: "form",
           variant: "light",
           title: "Formulaire de collaboration",
-          intro: "Tous les libelles et messages du formulaire sont modifiables dans les reglages Sanity.",
+          intro: "Tous les libellés et messages du formulaire sont modifiables dans les réglages Sanity.",
           formType: "collaborate",
         }),
       ],
@@ -1352,24 +1352,24 @@ async function seed() {
       titleIntl: localeString("Contact"),
       slug: { current: "contact" },
       slugIntl: { fr: { current: "contact" }, en: { current: "contact" } },
-      summary: "Ecrivez au laboratoire pour toute demande.",
-      summaryIntl: localeText("Ecrivez au laboratoire pour toute demande."),
-      seo: seo("Contact - LaCDIA", "Contacter le Laboratoire Caribeen des Sciences de Donnees et de l'Intelligence Artificielle."),
-      content: [block("Utilisez le formulaire pour contacter l'equipe du laboratoire.")],
-      contentIntl: localeBlock([block("Utilisez le formulaire pour contacter l'equipe du laboratoire.")]),
+      summary: "Écrivez au laboratoire pour toute demande.",
+      summaryIntl: localeText("Écrivez au laboratoire pour toute demande."),
+      seo: seo("Contact - LaCDIA", "Contacter le Laboratoire Caribéen des Sciences de Données et de l'Intelligence Artificielle."),
+      content: [block("Utilisez le formulaire pour contacter l'équipe du laboratoire.")],
+      contentIntl: localeBlock([block("Utilisez le formulaire pour contacter l'équipe du laboratoire.")]),
       sections: [
         section({
           variant: "heroDark",
           title: "Contact",
           intro:
-            "Ecrivez au laboratoire pour une demande institutionnelle, scientifique, technique, media ou partenariale.",
+            "Écrivez au laboratoire pour une demande institutionnelle, scientifique, technique, média ou partenariale.",
         }),
         section({
           layout: "cards",
-          title: "Coordonnees",
+          title: "Coordonnées",
           cards: [
             card({ title: "Email", description: "contact@lacdia.esih.edu", href: "mailto:contact@lacdia.esih.edu" }),
-            card({ title: "Localisation", description: "Port-au-Prince, Haiti" }),
+            card({ title: "Localisation", description: "Port-au-Prince, Haïti" }),
             card({ title: "Demandes", description: "Recherche, partenariats, projets IA, formation et communication." }),
           ],
         }),
@@ -1403,17 +1403,17 @@ async function seed() {
       titleIntl: localeString("Newsletter"),
       slug: { current: "newsletter" },
       slugIntl: { fr: { current: "newsletter" }, en: { current: "newsletter" } },
-      summary: "Inscrivez-vous pour recevoir les actualites.",
-      summaryIntl: localeText("Inscrivez-vous pour recevoir les actualites."),
-      seo: seo("Newsletter - LaCDIA", "Recevoir les actualites, publications, evenements et opportunites de LaCDIA."),
-      content: [block("Inscrivez-vous pour recevoir les actualites du laboratoire.")],
-      contentIntl: localeBlock([block("Inscrivez-vous pour recevoir les actualites du laboratoire.")]),
+      summary: "Inscrivez-vous pour recevoir les actualités.",
+      summaryIntl: localeText("Inscrivez-vous pour recevoir les actualités."),
+      seo: seo("Newsletter - LaCDIA", "Recevoir les actualités, publications, événements et opportunités de LaCDIA."),
+      content: [block("Inscrivez-vous pour recevoir les actualités du laboratoire.")],
+      contentIntl: localeBlock([block("Inscrivez-vous pour recevoir les actualités du laboratoire.")]),
       sections: [
         section({
           variant: "heroDark",
           title: "Newsletter",
           intro:
-            "Recevez les annonces, publications, evenements, appels a collaboration et nouvelles du laboratoire.",
+            "Recevez les annonces, publications, événements, appels à collaboration et nouvelles du laboratoire.",
         }),
         section({
           layout: "form",
@@ -1446,8 +1446,8 @@ async function seed() {
       slugIntl: { fr: { current: "recherche" }, en: { current: "recherche" } },
       summary: "Axes de recherche, projets et publications scientifiques.",
       summaryIntl: localeText("Axes de recherche, projets et publications scientifiques."),
-      content: [block("Decouvrez les axes de recherche et les projets scientifiques du laboratoire.")],
-      contentIntl: localeBlock([block("Decouvrez les axes de recherche et les projets scientifiques du laboratoire.")]),
+      content: [block("Découvrez les axes de recherche et les projets scientifiques du laboratoire.")],
+      contentIntl: localeBlock([block("Découvrez les axes de recherche et les projets scientifiques du laboratoire.")]),
     },
     {
       _id: "page-recherche-explorer",
@@ -1471,8 +1471,8 @@ async function seed() {
           title: "Formulaire de recherche",
           actions: [action("Rechercher", "/recherche/explorer", "primary")],
           cards: [
-            card({ title: "Tous les contenus", href: "", label: "Mot-cle, auteur, projet..." }),
-            card({ title: "Publications", href: "publication", description: "Aucun resultat pour votre recherche." }),
+            card({ title: "Tous les contenus", href: "", label: "Mot-clé, auteur, projet..." }),
+            card({ title: "Publications", href: "publication", description: "Aucun résultat pour votre recherche." }),
             card({ title: "Projets", href: "project" }),
             card({ title: "Membres", href: "member" }),
           ],
@@ -1487,10 +1487,10 @@ async function seed() {
       titleIntl: localeString("Formation"),
       slug: { current: "formation" },
       slugIntl: { fr: { current: "formation" }, en: { current: "formation" } },
-      summary: "Programmes, ateliers et formations proposes par le laboratoire.",
-      summaryIntl: localeText("Programmes, ateliers et formations proposes par le laboratoire."),
-      content: [block("Renseignez ici les programmes de formation et les parcours pedagogiques.")],
-      contentIntl: localeBlock([block("Renseignez ici les programmes de formation et les parcours pedagogiques.")]),
+      summary: "Programmes, ateliers et formations proposés par le laboratoire.",
+      summaryIntl: localeText("Programmes, ateliers et formations proposés par le laboratoire."),
+      content: [block("Renseignez ici les programmes de formation et les parcours pédagogiques.")],
+      contentIntl: localeBlock([block("Renseignez ici les programmes de formation et les parcours pédagogiques.")]),
     },
     {
       _id: "page-confidentialite",
@@ -1528,8 +1528,8 @@ async function seed() {
       slugIntl: { fr: { current: "cookies" }, en: { current: "cookies" } },
       summary: "Informations sur l'usage des cookies.",
       summaryIntl: localeText("Informations sur l'usage des cookies."),
-      content: [block("Detaillez ici la politique d'utilisation des cookies.")],
-      contentIntl: localeBlock([block("Detaillez ici la politique d'utilisation des cookies.")]),
+      content: [block("Détaillez ici la politique d'utilisation des cookies.")],
+      contentIntl: localeBlock([block("Détaillez ici la politique d'utilisation des cookies.")]),
     },
     {
       _id: "page-axes-recherche",
@@ -1541,8 +1541,8 @@ async function seed() {
       slugIntl: { fr: { current: "axes-recherche" }, en: { current: "axes-recherche" } },
       summary: "Principaux axes de recherche du laboratoire.",
       summaryIntl: localeText("Principaux axes de recherche du laboratoire."),
-      content: [block("Liste des axes de recherche et des equipes associees.")],
-      contentIntl: localeBlock([block("Liste des axes de recherche et des equipes associees.")]),
+      content: [block("Liste des axes de recherche et des équipes associées.")],
+      contentIntl: localeBlock([block("Liste des axes de recherche et des équipes associées.")]),
     },
     {
       _id: "page-publications-axes",
@@ -1554,8 +1554,8 @@ async function seed() {
       slugIntl: { fr: { current: "publications-axes" }, en: { current: "publications-axes" } },
       summary: "Parcourez les publications par axe de recherche.",
       summaryIntl: localeText("Parcourez les publications par axe de recherche."),
-      content: [block("Selectionnez un axe pour consulter les publications associees.")],
-      contentIntl: localeBlock([block("Selectionnez un axe pour consulter les publications associees.")]),
+      content: [block("Sélectionnez un axe pour consulter les publications associées.")],
+      contentIntl: localeBlock([block("Sélectionnez un axe pour consulter les publications associées.")]),
     },
   ];
 

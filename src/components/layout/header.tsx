@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 import { locales, type Locale } from "@/lib/i18n";
 import LocaleSwitcher from "@/components/layout/locale-switcher";
@@ -47,6 +48,7 @@ export default function Header({
   nav: Navigation;
   site: SiteSettings;
 }) {
+  const t = useTranslations("header");
   const pathname = usePathname() || "/";
   const currentLocale = useMemo(() => getCurrentLocale(pathname), [pathname]);
   const basePath = useMemo(() => stripLocale(pathname) || "/", [pathname]);
@@ -159,7 +161,7 @@ export default function Header({
             <button
               type="button"
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-[#8892b0] transition hover:border-white/20 hover:text-[#f0f4ff] md:hidden"
-              aria-label="Ouvrir le menu"
+              aria-label={t("openMenu")}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
             >
@@ -177,10 +179,10 @@ export default function Header({
       {/* Mobile menu */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-60 md:hidden"
+          className="fixed inset-0 z-[60] md:hidden"
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation mobile"
+          aria-label={t("navigation")}
         >
           {/* Backdrop */}
           <div
@@ -201,7 +203,7 @@ export default function Header({
               <button
                 type="button"
                 className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-[#8892b0] hover:text-[#f0f4ff] transition"
-                aria-label="Fermer le menu"
+                aria-label={t("closeMenu")}
                 onClick={() => setMobileOpen(false)}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">

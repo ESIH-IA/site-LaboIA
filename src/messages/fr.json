@@ -12,7 +12,7 @@
     "publications": "Publications",
     "training": "Formation",
     "resources": "Ressources",
-    "solutions": "Solutions IA"
+    "solutions": "Axes de recherche"
   },
   "header": {
     "tagline": "Laboratoire d'innovation et de recherche appliquée en IA et science des données",
@@ -239,7 +239,8 @@
       "formTitle": "Démarrez une collaboration"
     },
     "newsletter": {
-      "unsubscribeTitle": "Gérer mon abonnement"
+      "unsubscribeTitle": "Gérer mon abonnement",
+      "unsubscribeIntro": "Indiquez votre adresse email pour vous désabonner de la newsletter LaCDIA. Un lien de confirmation vous sera envoyé avant toute désinscription effective."
     }
   }
 }

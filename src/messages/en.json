@@ -12,7 +12,7 @@
     "publications": "Publications",
     "training": "Training",
     "resources": "Resources",
-    "solutions": "AI & Data Solutions"
+    "solutions": "Research Axes"
   },
   "header": {
     "tagline": "Caribbean AI & Data Science Research Laboratory",
@@ -239,7 +239,8 @@
       "formTitle": "Start a collaboration"
     },
     "newsletter": {
-      "unsubscribeTitle": "Manage your subscription"
+      "unsubscribeTitle": "Manage your subscription",
+      "unsubscribeIntro": "Enter your email address to unsubscribe from the LaCDIA newsletter. A confirmation link will be sent to you before the unsubscription takes effect."
     }
   }
 }

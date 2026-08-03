@@ -126,11 +126,16 @@ export default function ContactForm({
             fullName: formData.get("fullName")?.toString(),
             email: formData.get("email")?.toString(),
             phone: formData.get("phone")?.toString() || undefined,
-            organisation: formData.get("organisation")?.toString() || undefined,
+            // Nom de champ aligné sur le schéma Sanity ("organization",
+            // sans "s") — l'ancien payload envoyait "organisation" et la
+            // valeur était silencieusement ignorée côté serveur.
+            organization: formData.get("organisation")?.toString() || undefined,
             subject: formData.get("subject")?.toString(),
             message: formData.get("message")?.toString(),
             consent: true,
             locale,
+            // Honeypot anti-bot : voir le champ caché plus bas dans le JSX.
+            company: formData.get("company")?.toString() || undefined,
           };
 
           try {
@@ -240,6 +245,17 @@ export default function ContactForm({
           />
           {errors.message && <span className="form-field-error">{errors.message}</span>}
         </label>
+
+        {/* Honeypot anti-spam — invisible et ignoré par les humains, mais
+            rempli par la plupart des robots de soumission automatique. */}
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+        />
 
         {/* Consentement */}
         <label className="form-checkbox-row">

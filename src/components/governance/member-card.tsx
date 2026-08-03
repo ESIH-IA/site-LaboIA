@@ -192,7 +192,7 @@ export function MemberCard({ person, locale }: { person: GovernanceProfile; loca
           className="member-modal-overlay"
           role="dialog"
           aria-modal="true"
-          aria-label={`Bio de ${person.name}`}
+          aria-label={`${modalTitle} — ${person.name}`}
           id={dialogId}
           onClick={() => setOpen(false)}
         >

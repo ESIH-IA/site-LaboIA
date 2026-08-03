@@ -98,11 +98,18 @@ export default function CollaborateForm({
             formType: "collaborer",
             fullName: formData.get("fullName")?.toString(),
             email: formData.get("email")?.toString(),
-            organisation: formData.get("organisation")?.toString() || undefined,
-            collabType: formData.get("collabType")?.toString() || undefined,
+            // Noms de champs alignés sur ce que le serveur lit réellement
+            // (schéma Sanity formSubmission : "organization", "subject") —
+            // les anciennes clés "organisation"/"collabType" n'avaient pas
+            // de correspondance côté API et étaient silencieusement
+            // ignorées.
+            organization: formData.get("organisation")?.toString() || undefined,
+            subject: formData.get("collabType")?.toString() || undefined,
             message: formData.get("message")?.toString(),
             consent: true,
             locale,
+            // Honeypot anti-bot : voir le champ caché plus bas dans le JSX.
+            company: formData.get("company")?.toString() || undefined,
           };
 
           try {
@@ -193,6 +200,17 @@ export default function CollaborateForm({
             required
           />
         </label>
+
+        {/* Honeypot anti-spam — invisible et ignoré par les humains, mais
+            rempli par la plupart des robots de soumission automatique. */}
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0, pointerEvents: "none" }}
+        />
 
         {/* Consentement */}
         <label className="form-checkbox-row">

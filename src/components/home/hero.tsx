@@ -221,7 +221,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
 
   return (
     <section
-      className="relative overflow-hidden hero-neural"
+      className="relative overflow-hidden hero-neural hero-section"
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -513,6 +513,14 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
       />
 
       <style>{`
+        /* minHeight: 100vh (inline, above) is the fallback for browsers
+           without dvh support. On mobile, 100vh includes the area behind
+           the address bar, which can clip content until the user scrolls —
+           100dvh (dynamic viewport height) tracks the *visible* viewport
+           instead. @supports keeps old browsers on the safe 100vh fallback. */
+        @supports (height: 100dvh) {
+          .hero-section { min-height: 100dvh !important; }
+        }
         @media (max-width: 760px) {
           .hero-scrim {
             background: linear-gradient(
