@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import ContactForm from "@/components/forms/contact-form";
 import CollaborateForm from "@/components/forms/collaborate-form";
@@ -9,11 +10,6 @@ import type { FormSettings } from "@/lib/sanity/types";
 import type { Locale } from "@/lib/i18n";
 
 type Tab = "contact" | "collaborate";
-
-const tabLabels: Record<Locale, { contact: string; collaborate: string }> = {
-  fr: { contact: "Nous contacter", collaborate: "Proposer une collaboration" },
-  en: { contact: "Contact us", collaborate: "Propose a collaboration" },
-};
 
 function Tabs({ forms, locale }: { forms?: FormSettings | null; locale: Locale }) {
   const searchParams = useSearchParams();
@@ -24,7 +20,7 @@ function Tabs({ forms, locale }: { forms?: FormSettings | null; locale: Locale }
     searchParams.get("tab") === "collaborate" ? "collaborate" : "contact",
   );
 
-  const labels = tabLabels[locale] ?? tabLabels.fr;
+  const labels = useTranslations("pages.contactTabs");
 
   return (
     <div>
@@ -58,7 +54,7 @@ function Tabs({ forms, locale }: { forms?: FormSettings | null; locale: Locale }
               fontFamily: "var(--font-body)",
             }}
           >
-            {tab === "contact" ? labels.contact : labels.collaborate}
+            {tab === "contact" ? labels("contact") : labels("collaborate")}
           </button>
         ))}
       </div>

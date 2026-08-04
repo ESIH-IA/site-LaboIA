@@ -13,8 +13,8 @@ type HeroAction = {
 
 type HeroProps = {
   badge?: string;
+  subtitle?: string;
   actions?: HeroAction[];
-  banner?: unknown;
   locale?: Locale;
 };
 
@@ -212,7 +212,7 @@ function NeuralCanvas() {
 }
 
 /* ─── Hero ─────────────────────────────────────────────────── */
-export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
+export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroProps) {
   const t = useTranslations("home.hero");
   const primary   = actions?.find((a) => a.variant === "primary")   ?? actions?.[0];
   const secondary = actions?.find((a) => a.variant === "secondary") ?? actions?.[1];
@@ -375,7 +375,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
             marginBottom: "2.75rem",
           }}
         >
-          {t("subtitle")}
+          {subtitle ?? t("subtitle")}
         </p>
 
         {/* CTAs */}
@@ -461,7 +461,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
               color: "rgba(136,146,176,0.45)",
             }}
           >
-            scroll
+            {t("scrollHint")}
           </span>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import type { NewsListItem } from "@/lib/sanity/types";
 import type { Locale } from "@/lib/i18n";
@@ -47,7 +47,7 @@ function formatDate(dateStr?: string, locale = "fr"): string {
 function getHref(item: NewsListItem, locale: Locale) {
   if (item.sourceUrl) return item.sourceUrl;
   const slugVal = item.slugIntl?.[locale]?.current ?? item.slug?.current;
-  return `/${locale}/actualites/${slugVal}`;
+  return `/actualites/${slugVal}`;
 }
 
 function CategoryPill({ category }: { category?: string }) {

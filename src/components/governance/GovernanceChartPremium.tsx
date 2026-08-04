@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import type { Person } from "@/data/governance/types";
 
 interface GovernanceChartPremiumProps {
@@ -27,6 +29,7 @@ function PremiumCard({
   level: "gouvernance" | "direction" | "conseil";
   onClick?: () => void;
 }) {
+  const t = useTranslations("governance");
   const isFuture = person.status === "futur";
 
   const colorSchemes = {
@@ -79,7 +82,7 @@ function PremiumCard({
         (e.currentTarget as HTMLElement).style.borderColor = "var(--labo-border)";
         (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.25)";
       }}
-      aria-label={`Voir le profil de ${person.name}`}
+      aria-label={t("viewProfileOf", { name: person.name })}
     >
       {/* Accent Bar Top */}
       <div className={`absolute left-0 right-0 top-0 h-1 bg-linear-to-r ${colors.accent}`} />
@@ -111,7 +114,7 @@ function PremiumCard({
 
         {isFuture ? (
           <div className="absolute right-4 top-4 rounded-full bg-amber-400 px-4 py-1.5 text-xs font-bold text-amber-900 shadow-lg">
-            À venir
+            {t("upcoming")}
           </div>
         ) : null}
       </div>
@@ -174,6 +177,8 @@ export function GovernanceChartPremium({
   coFounders,
   associateResearchers = [],
 }: GovernanceChartPremiumProps) {
+  const t = useTranslations("governance");
+
   if (!topPerson || coFounders.length !== 2) {
     return (
       <div
@@ -184,7 +189,7 @@ export function GovernanceChartPremium({
         }}
       >
         <p className="text-base" style={{ color: "var(--labo-text-muted)" }}>
-          Configuration invalide : 1 personne en gouvernance et exactement 2 co-fondateurs requis.
+          {t("invalidPremiumConfig")}
         </p>
       </div>
     );
@@ -239,7 +244,7 @@ export function GovernanceChartPremium({
                   color: "#a78bfa",
                 }}
               >
-                Conseil scientifique
+                {t("scientificCouncil")}
               </span>
               <div
                 className="h-px w-24 rounded-full"
@@ -301,7 +306,7 @@ export function GovernanceChartPremium({
                   color: "#a78bfa",
                 }}
               >
-                Conseil scientifique
+                {t("scientificCouncil")}
               </span>
               <div
                 className="h-px flex-1 rounded-full"

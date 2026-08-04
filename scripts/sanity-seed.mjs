@@ -207,10 +207,6 @@ async function seed() {
     footerContactCtaLabel: "\u00c9crire au laboratoire",
     footerContactCtaLabelIntl: localeString("\u00c9crire au laboratoire"),
     footerContactCtaHref: "/contact",
-    footerLanguageNote: "Langues : fran\u00e7ais (d\u00e9faut), anglais.",
-    footerLanguageNoteIntl: localeString("Langues : fran\u00e7ais (d\u00e9faut), anglais."),
-    footerNavTitle: "Laboratoire",
-    footerNavTitleIntl: localeString("Laboratoire"),
     footerCopyrightText: "Copyright {year} {shortName}. Tous droits reserves.",
     footerCopyrightTextIntl: localeString("Copyright {year} {shortName}. Tous droits reserves."),
     cookieTitle: "Gestion des cookies",
@@ -325,11 +321,7 @@ async function seed() {
     _id: "homePage",
     _type: "homePage",
     heroBadge: localeString("Intelligence Artificielle - Recherche - Innovation"),
-    heroTitle: localeString("LaCDIA"),
     heroSubtitle: localeText(
-      "Nous menons des recherches en intelligence artificielle et science des donn\u00e9es pour l'agriculture, les services publics, la sant\u00e9 et l'innovation.",
-    ),
-    heroDescription: localeText(
       "Nous menons des recherches en intelligence artificielle et science des donn\u00e9es pour l'agriculture, les services publics, la sant\u00e9 et l'innovation.",
     ),
     heroActions: withKeys([
@@ -385,12 +377,6 @@ async function seed() {
     ]),
     kpisTitle: localeString("Indicateurs cles"),
     kpisIntro: localeText("Donn\u00e9es quantitatives sur nos activit\u00e9s de recherche et d'innovation"),
-    featuredProjectsTitle: localeString("Projets \u00e0 la une"),
-    featuredProjectsIntro: localeText(
-      "Des initiatives concr\u00e8tes qui d\u00e9montrent la puissance de l'IA et de la science des donn\u00e9es au service des communaut\u00e9s.",
-    ),
-    featuredProjectsCtaLabel: localeString("Découvrir tous les projets"),
-    featuredProjectsCtaHref: "/projets",
     publicationsTitle: localeString("Publications r\u00e9centes"),
     publicationsIntro: localeText("Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques."),
     partnersTitle: localeString("Partenaires & collaborations"),

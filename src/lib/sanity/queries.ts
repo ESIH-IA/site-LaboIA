@@ -71,8 +71,10 @@ export const genericPageBySlugQuery = groq`
           labelIntl,
           value,
           note,
-          noteIntl
-        }
+          noteIntl,
+          status
+        }[status == "confirmed"],
+        "kpis": null
       }
     }
   }
@@ -114,71 +116,6 @@ export const projectBySlugQuery = groq`
   }
 `;
 
-export const publicationListQuery = groq`
-  *[_type == "publication" && status == "published"] | order(date desc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    publicationType,
-    date,
-    "summary": coalesce(summaryIntl[$locale], summary),
-    doi,
-    url,
-    "pdfUrl": pdf.asset->url,
-    "axes": axes[]->{ _id, title },
-    "projects": projects[]->{ _id, title, "partners": partners[]->{ _id, name } }
-  }
-`;
-
-export const publicationBySlugQuery = groq`
-  *[_type == "publication" && status == "published" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    publicationType,
-    date,
-    "summary": coalesce(summaryIntl[$locale], summary),
-    doi,
-    url,
-    "pdfUrl": pdf.asset->url,
-    bibtex,
-    "authors": authors[]->{ _id, fullName, role, slug },
-    externalAuthors,
-    "projects": projects[]->{ _id, title, slug },
-    "axes": axes[]->{ _id, title, slug },
-    "resources": resources[]->{ _id, title, resourceType, "fileUrl": file.asset->url, url }
-  }
-`;
-
-export const memberListQuery = groq`
-  *[_type == "member" && status == "published"] | order(fullName asc){
-    _id,
-    fullName,
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    role,
-    affiliation,
-    "bio": coalesce(bioIntl[$locale], bio)
-  }
-`;
-
-export const memberBySlugQuery = groq`
-  *[_type == "member" && status == "published" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
-    _id,
-    fullName,
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    role,
-    affiliation,
-    "bio": coalesce(bioIntl[$locale], bio),
-    expertise,
-    links,
-    "projects": projects[]->{ _id, title, slug, summary },
-    "publications": publications[]->{ _id, title, slug, date }
-  }
-`;
 
 export const newsListQuery = groq`
   *[_type == "news" && status == "published"] | order(date desc){
@@ -215,7 +152,7 @@ export const newsBySlugQuery = groq`
 `;
 
 export const eventListQuery = groq`
-  *[_type == "event" && status == "published"] | order(startDate desc){
+  *[_type == "event" && status == "published" && visibility != "internal"] | order(startDate desc){
     _id,
     "title": coalesce(titleIntl[$locale], title),
     "slug": coalesce(slugIntl[$locale], slug),
@@ -228,7 +165,7 @@ export const eventListQuery = groq`
 `;
 
 export const eventBySlugQuery = groq`
-  *[_type == "event" && status == "published" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
+  *[_type == "event" && status == "published" && visibility != "internal" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
     _id,
     "title": coalesce(titleIntl[$locale], title),
     "slug": coalesce(slugIntl[$locale], slug),
@@ -259,70 +196,6 @@ export const partnerListQuery = groq`
   }
 `;
 
-export const offerListQuery = groq`
-  *[_type == "offer" && status == "published"] | order(openDate desc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    offerType,
-    openDate,
-    closeDate,
-    "summary": coalesce(summaryIntl[$locale], summary)
-  }
-`;
-
-export const programListQuery = groq`
-  *[_type == "program" && status == "published"] | order(startDate desc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    programType,
-    startDate,
-    endDate,
-    "summary": coalesce(summaryIntl[$locale], summary)
-  }
-`;
-
-export const programBySlugQuery = groq`
-  *[_type == "program" && status == "published" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    programType,
-    startDate,
-    endDate,
-    "summary": coalesce(summaryIntl[$locale], summary),
-    "content": coalesce(contentIntl[$locale], content),
-    "members": members[]->{ _id, fullName, role, slug }
-  }
-`;
-
-export const researchAxisListQuery = groq`
-  *[_type == "researchAxis" && status == "published"] | order(title asc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    "summary": coalesce(summaryIntl[$locale], summary)
-  }
-`;
-
-export const researchAxisBySlugQuery = groq`
-  *[_type == "researchAxis" && status == "published" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    "summary": coalesce(summaryIntl[$locale], summary),
-    "content": coalesce(contentIntl[$locale], content),
-    "projects": projects[]->{ _id, title, slug, summary, projectType, startDate },
-    "publications": publications[]->{ _id, title, slug, date, publicationType }
-  }
-`;
-
 export const institutionalPageBySlugQuery = groq`
   *[_type == "institutionalPage" && status == "published" && (slug.current == $slug || slugIntl[$locale].current == $slug)][0]{
     _id,
@@ -339,43 +212,14 @@ export const institutionalPageBySlugQuery = groq`
   }
 `;
 
-export const resourceListQuery = groq`
-  *[_type == "resource" && status == "published"] | order(date desc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    resourceType,
-    date,
-    "summary": coalesce(summaryIntl[$locale], summary),
-    "fileUrl": file.asset->url,
-    url,
-    "publications": publications[]->{ _id, title, slug },
-    "projects": projects[]->{ _id, title, slug }
-  }
-`;
-
 export const kpiListQuery = groq`
-  *[_type == "kpi" && status == "published"] | order(label asc){
+  *[_type == "kpi" && status == "confirmed"] | order(coalesce(labelIntl[$locale], label) asc){
     _id,
     key,
     "label": coalesce(labelIntl[$locale], label),
     value,
     "note": coalesce(noteIntl[$locale], note),
     status
-  }
-`;
-
-export const labReportListQuery = groq`
-  *[_type == "labReport" && status == "published"] | order(year desc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    year,
-    "summary": coalesce(summaryIntl[$locale], summary),
-    "fileUrl": file.asset->url,
-    url
   }
 `;
 
@@ -390,8 +234,6 @@ export const siteSettingsQuery = groq`
     "footerContactText": coalesce(footerContactTextIntl[$locale], footerContactText),
     "footerContactCtaLabel": coalesce(footerContactCtaLabelIntl[$locale], footerContactCtaLabel),
     footerContactCtaHref,
-    "footerLanguageNote": coalesce(footerLanguageNoteIntl[$locale], footerLanguageNote),
-    "footerNavTitle": coalesce(footerNavTitleIntl[$locale], footerNavTitle),
     "footerCopyrightText": coalesce(footerCopyrightTextIntl[$locale], footerCopyrightText),
     "cookieTitle": coalesce(cookieTitleIntl[$locale], cookieTitle),
     "cookieMessage": coalesce(cookieMessageIntl[$locale], cookieMessage),
@@ -433,9 +275,7 @@ export const homePageQuery = groq`
     _id,
     ${seoProjection},
     "heroBadge": coalesce(heroBadge[$locale], heroBadge.fr, heroBadge.en),
-    "heroTitle": coalesce(heroTitle[$locale], heroTitle.fr, heroTitle.en),
     "heroSubtitle": coalesce(heroSubtitle[$locale], heroSubtitle.fr, heroSubtitle.en),
-    "heroDescription": coalesce(heroDescription[$locale], heroDescription.fr, heroDescription.en),
     "heroActions": heroActions[]{
       "label": coalesce(labelIntl[$locale], label),
       href,
@@ -457,10 +297,6 @@ export const homePageQuery = groq`
     },
     "kpisTitle": coalesce(kpisTitle[$locale], kpisTitle.fr, kpisTitle.en),
     "kpisIntro": coalesce(kpisIntro[$locale], kpisIntro.fr, kpisIntro.en),
-    "featuredProjectsTitle": coalesce(featuredProjectsTitle[$locale], featuredProjectsTitle.fr, featuredProjectsTitle.en),
-    "featuredProjectsIntro": coalesce(featuredProjectsIntro[$locale], featuredProjectsIntro.fr, featuredProjectsIntro.en),
-    "featuredProjectsCtaLabel": coalesce(featuredProjectsCtaLabel[$locale], featuredProjectsCtaLabel.fr, featuredProjectsCtaLabel.en),
-    featuredProjectsCtaHref,
     "publicationsTitle": coalesce(publicationsTitle[$locale], publicationsTitle.fr, publicationsTitle.en),
     "publicationsIntro": coalesce(publicationsIntro[$locale], publicationsIntro.fr, publicationsIntro.en),
     "partnersTitle": coalesce(partnersTitle[$locale], partnersTitle.fr, partnersTitle.en),
@@ -481,38 +317,6 @@ export const kpiSettingsQuery = groq`
     _id,
     "lastUpdated": coalesce(lastUpdatedIntl[$locale], lastUpdated),
     "disclaimer": coalesce(disclaimerIntl[$locale], disclaimer)
-  }
-`;
-
-export const aiSolutionListQuery = groq`
-  *[_type == "aiSolution"] | order(order asc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "shortDescription": coalesce(shortDescriptionIntl[$locale], shortDescription),
-    benefits,
-    examples,
-    icon,
-    order
-  }
-`;
-
-export const useCaseListQuery = groq`
-  *[_type == "useCase"] | order(order asc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "context": coalesce(contextIntl[$locale], context),
-    "solution": coalesce(solutionIntl[$locale], solution),
-    benefits,
-    order
-  }
-`;
-
-export const sectorListQuery = groq`
-  *[_type == "sector"] | order(order asc){
-    _id,
-    "name": coalesce(nameIntl[$locale], name),
-    icon,
-    order
   }
 `;
 
@@ -648,39 +452,6 @@ export const formSettingsQuery = groq`
       "successMessage": coalesce(unsubscribe.successMessage[$locale], unsubscribe.successMessage.fr, unsubscribe.successMessage.en),
       "errorMessage": coalesce(unsubscribe.errorMessage[$locale], unsubscribe.errorMessage.fr, unsubscribe.errorMessage.en)
     }
-  }
-`;
-
-export const internalEventListQuery = groq`
-  *[_type == "event" && status == "published" && visibility == "internal"] | order(startDate desc){
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    eventType,
-    startDate,
-    location,
-    "summary": coalesce(summaryIntl[$locale], summary)
-  }
-`;
-
-export const searchQuery = groq`
-  *[
-    _type in ["publication", "project", "member"]
-    && status == "published"
-    && (
-      title match $term
-      || fullName match $term
-      || summary match $term
-      || bio match $term
-    )
-    && ($type == null || _type == $type)
-  ] | order(_updatedAt desc)[0...50]{
-    _id,
-    _type,
-    "title": coalesce(titleIntl[$locale], title, fullName),
-    "slug": coalesce(slugIntl[$locale], slug),
-    "summary": coalesce(summaryIntl[$locale], summary, bioIntl[$locale], bio)
   }
 `;
 

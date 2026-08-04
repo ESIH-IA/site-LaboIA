@@ -29,7 +29,10 @@
     "navigation": "Navigation",
     "contact": "Contact",
     "legal": "Legal",
-    "tagline": "Haiti · Caribbean · AI Research"
+    "tagline": "Haiti · Caribbean · AI Research",
+    "nameFallback": "Caribbean Laboratory of Data Science and AI",
+    "descriptionFallback": "Applied research in artificial intelligence and data science serving Caribbean communities.",
+    "contactCtaLabel": "Write to the lab"
   },
   "common": {
     "learnMore": "Learn more",
@@ -49,7 +52,8 @@
     "requestQuote": "Request a consultation",
     "becomePartner": "Become a partner",
     "close": "Close",
-    "keywords": "Keywords"
+    "keywords": "Keywords",
+    "backToNews": "Back to news"
   },
   "cookies": {
     "title": "Cookie Notice",
@@ -68,7 +72,8 @@
       "subtitle": "LaCDIA is an applied research laboratory in AI and data science, serving Caribbean communities.",
       "primaryLabel": "Collaborate with the lab",
       "secondaryLabel": "Explore our projects",
-      "canvasLabel": "Caribbean neural network"
+      "canvasLabel": "Caribbean neural network",
+      "scrollHint": "scroll"
     },
     "ticker": {
       "ariaLabel": "Research areas",
@@ -115,6 +120,52 @@
         { "title": "AI for Healthcare", "description": "Medical image analysis, screening and clinical decision support, epidemiological surveillance, documentary assistants and health interfaces in Haitian Creole." },
         { "title": "AI for Digital Agriculture and Environmental Resilience", "description": "Crop disease detection, agronomic recommendations, satellite image analysis, early warning systems and climate change adaptation." },
         { "title": "AI for Socioeconomic, Educational and Institutional Systems", "description": "Decision support, digital transformation, document automation, Haitian Creole processing and tool development for education, public administration and the economy." }
+      ],
+      "axesDetails": [
+        {
+          "description": "This axis forms the laboratory's scientific foundation: it aims to design learning methods that work effectively even when available data is scarce, noisy, or heterogeneous — a common reality in the Caribbean context, where data-collection infrastructure remains limited. The work focuses in particular on self-supervised learning, which makes it possible to exploit unlabeled data, on transfer learning across domains, and on model robustness to variation and bias. Particular attention is paid to computational frugality, to develop high-performing AI without relying on costly infrastructure.",
+          "keywords": ["self-supervised learning", "transfer learning", "robustness", "frugal AI"]
+        },
+        {
+          "description": "This axis explores the automatic analysis of images, documents, and multimodal data (text, image, signal) for concrete applications in agriculture, health, and the environment. A specific and original dimension of the laboratory concerns the processing of documents written in Haitian Creole and French, a linguistic challenge still poorly covered by existing AI tools. The research combines modern computer-vision techniques with approaches adapted to the local specificities of the data.",
+          "keywords": ["computer vision", "multimodal analysis", "document processing", "Haitian Creole"]
+        },
+        {
+          "description": "Given the growing adoption of AI in sensitive decisions, this axis focuses on making models understandable, fair, and trustworthy. The work covers model explainability, so users can understand the decisions made, the detection and reduction of algorithmic bias, and the auditing of AI systems to assess their limits and risks. This axis is transversal to the others, since it aims to ensure that the solutions developed by the laboratory remain trustworthy and can be deployed responsibly.",
+          "keywords": ["explainability", "algorithmic fairness", "AI system auditing", "responsible AI"]
+        },
+        {
+          "description": "This axis applies AI to public-health and clinical challenges, with a focus on medical image analysis for screening support, clinical decision support, and epidemiological surveillance. The laboratory also develops documentary assistants and interfaces for health professionals, designed in Haitian Creole to ease field adoption and meet the real needs of local health systems.",
+          "keywords": ["medical imaging", "diagnostic support", "epidemiological surveillance", "digital health"]
+        },
+        {
+          "description": "This axis puts AI to work for food security and climate adaptation, two major challenges for the Caribbean region. The research covers automatic detection of crop diseases from images, personalized agronomic recommendations, satellite image analysis for environmental monitoring, and early-warning systems for climate and natural hazards.",
+          "keywords": ["precision agriculture", "satellite imaging", "early warning", "climate resilience"]
+        },
+        {
+          "description": "This axis explores how AI can support the digital transformation of public and economic institutions. It covers decision support, document automation, and the development of tools adapted to education, public administration, and the local economy, systematically incorporating Haitian Creole processing to ensure the accessibility of the tools developed.",
+          "keywords": ["digital transformation", "decision support", "education", "public governance"]
+        }
+      ]
+    },
+    "team": {
+      "sectionLabel": "Scientific team",
+      "sectionTitle": "High-level scientific expertise, rooted in Haiti and open to the world",
+      "sectionIntro": "LaCDIA brings together around a dozen complementary scientific and technical profiles — national and international researchers, specialized engineers and emerging-technology experts — to carry out rigorous artificial intelligence research grounded in Caribbean realities.",
+      "note": "Some profiles combine several scientific and institutional responsibilities; this presentation reflects the expertise mobilized by the laboratory rather than a fixed organizational chart.",
+      "categories": [
+        { "badge": "2 researchers · HDR", "title": "Senior accredited researchers", "description": "Two national researchers, holders of a Habilitation to Direct Research (HDR), oversee the laboratory's work and ensure its scientific rigor." },
+        { "badge": "3 experts", "title": "International scientific network", "description": "Two international researchers and an emeritus professor complete this scientific core, bringing LaCDIA an outside perspective and established academic collaborations." },
+        { "badge": "2+ researchers", "title": "Associate national researchers", "description": "Other national researchers, with complementary expertise, are progressively joining the laboratory and contributing to the expansion of its research areas." },
+        { "badge": "2 engineers", "title": "AI and data engineering", "description": "Two artificial intelligence engineers, specialized in large-scale data processing, handle the technical implementation of the laboratory's projects and models." },
+        { "badge": "1 director", "title": "Scientific and institutional leadership", "description": "The laboratory's leadership is backed by the leadership of a partner higher-education institution, guaranteeing LaCDIA's institutional anchoring and the coherence of its scientific strategy." },
+        { "badge": "1 expert", "title": "Generative AI expertise", "description": "A generative artificial intelligence expert completes the team, driving the exploration of these emerging technologies within LaCDIA's work." }
+      ],
+      "stats": [
+        { "value": "11", "label": "Team members mobilized" },
+        { "value": "2", "label": "International researchers" },
+        { "value": "2", "label": "AI engineers" },
+        { "value": "6", "label": "Areas of expertise" }
       ]
     },
     "actualites": {
@@ -162,6 +213,83 @@
       "client": "Client",
       "media": "Media",
       "academic": "Academic institution"
+    }
+  },
+  "forms": {
+    "contact": {
+      "formTitle": "Send us a message",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "First Last",
+      "email": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone (optional)",
+      "phonePlaceholder": "+509 XXXX XXXX",
+      "organisation": "Organisation / Institution (optional)",
+      "organisationPlaceholder": "University, company, NGO…",
+      "subject": "Subject",
+      "subjects": [
+        { "value": "", "label": "Select a subject…" },
+        { "value": "collaboration", "label": "Research Collaboration" },
+        { "value": "partenariat", "label": "Institutional Partnership" },
+        { "value": "stage", "label": "Internship or Training" },
+        { "value": "medias", "label": "Media and Communications" },
+        { "value": "question", "label": "General Inquiry" },
+        { "value": "autre", "label": "Other" }
+      ],
+      "message": "Message",
+      "messagePlaceholder": "Describe your request…",
+      "consent": "I agree that my information will be processed in accordance with the",
+      "privacy": "privacy policy",
+      "submit": "Send message",
+      "loading": "Sending…",
+      "success": "Thank you. Your message has been received. We will get back to you as soon as possible.",
+      "error": "An error occurred. Please try again or contact us directly.",
+      "required": "Required field"
+    },
+    "collaborate": {
+      "formTitle": "Propose a collaboration",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "First Last",
+      "email": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "organisation": "Organisation / Institution",
+      "organisationPlaceholder": "University, company, NGO…",
+      "collabType": "Type of collaboration",
+      "collabTypes": [
+        { "value": "", "label": "Select a type…" },
+        { "value": "recherche", "label": "Joint research" },
+        { "value": "financement", "label": "Funding / grant" },
+        { "value": "terrain", "label": "Field access / data" },
+        { "value": "formation", "label": "Training and skills transfer" },
+        { "value": "technique", "label": "Technical partnership" },
+        { "value": "autre", "label": "Other" }
+      ],
+      "message": "Project / proposal description",
+      "messagePlaceholder": "Describe your collaboration proposal…",
+      "consent": "I agree that my information will be processed in accordance with the",
+      "privacy": "privacy policy",
+      "submit": "Submit proposal",
+      "loading": "Sending…",
+      "success": "Thank you. Your proposal has been received. We will get back to you as soon as possible.",
+      "error": "An error occurred. Please try again or contact us directly."
+    },
+    "newsletter": {
+      "emailLabel": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "consent": "I agree to receive communications from the laboratory. See the",
+      "privacy": "privacy policy",
+      "submit": "Subscribe",
+      "loading": "Sending…",
+      "success": "Thank you! Your newsletter subscription has been registered.",
+      "error": "An error occurred. Please try again."
+    },
+    "newsletterUnsubscribe": {
+      "emailLabel": "Email address",
+      "emailPlaceholder": "your@email.com",
+      "submit": "Unsubscribe",
+      "loading": "Sending…",
+      "success": "Check your inbox: a confirmation link has just been sent to you.",
+      "error": "The request couldn't be processed. Please try again later."
     }
   },
   "about": {
@@ -225,6 +353,28 @@
     "switchLanguage": "Switch language",
     "currentLanguage": "Current language"
   },
+  "governance": {
+    "categories": {
+      "gouvernance": "Institutional governance",
+      "direction": "Scientific leadership",
+      "recherche": "Research",
+      "conseil": "Scientific council"
+    },
+    "upcoming": "Upcoming",
+    "expertise": "Expertise",
+    "contribution": "Contribution",
+    "contact": "Contact",
+    "modalTitle": "Biography",
+    "modalExpertiseTitle": "Areas of expertise",
+    "learnMore": "View full profile",
+    "viewProfileOf": "View profile of {name}",
+    "close": "Close",
+    "website": "Website",
+    "emptyMembers": "No profiles are configured for this section.",
+    "scientificCouncil": "Scientific council",
+    "invalidPremiumConfig": "Invalid configuration: exactly 1 governance lead and 2 co-founders are required.",
+    "invalidStrictConfig": "Invalid configuration: exactly 1 institutional director and 2 scientific directors are required."
+  },
   "pages": {
     "solutions": {
       "fallbackSummary": "Discover our AI and data science services — tested, proven, and ready to deploy."
@@ -241,6 +391,25 @@
     "newsletter": {
       "unsubscribeTitle": "Manage your subscription",
       "unsubscribeIntro": "Enter your email address to unsubscribe from the LaCDIA newsletter. A confirmation link will be sent to you before the unsubscription takes effect."
+    },
+    "contact": {
+      "metaTitle": "Contact & Collaboration",
+      "metaDescription": "Write to us or propose a collaboration with LaCDIA.",
+      "badge": "Let's work together",
+      "title": "Contact LaCDIA",
+      "subtitle": "A question, a collaboration idea, or just want to learn more? Use the form or reach us directly.",
+      "infoTitle": "Contact information",
+      "emailLabel": "General email",
+      "locationLabel": "Location",
+      "location": "Haiti · Caribbean",
+      "hoursLabel": "Estimated response",
+      "hours": "Within 3 to 5 business days",
+      "followLabel": "Follow us",
+      "collabNote": "Want to propose a partnership or research collaboration? Use the 'Collaboration' tab."
+    },
+    "contactTabs": {
+      "contact": "Contact us",
+      "collaborate": "Propose a collaboration"
     }
   }
 }

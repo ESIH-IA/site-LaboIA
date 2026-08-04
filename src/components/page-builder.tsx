@@ -44,12 +44,17 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
                   <div className="flex flex-wrap items-center justify-center gap-4">
                     {actions.map((act: any, i: number) => {
                       const label = getLocalValue(act.labelIntl, locale) || act.label;
-                      const isPrimary = act.variant === 'primary';
+                      const variantClass =
+                        act.variant === 'primary'
+                          ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                          : act.variant === 'secondary'
+                            ? 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                            : 'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground';
                       return (
-                        <Link 
-                          key={i} 
+                        <Link
+                          key={i}
                           href={act.href || '#'}
-                          className={`px-6 py-3 rounded-lg font-medium transition-colors ${isPrimary ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
+                          className={`px-6 py-3 rounded-lg font-medium transition-colors ${variantClass}`}
                         >
                           {label}
                         </Link>

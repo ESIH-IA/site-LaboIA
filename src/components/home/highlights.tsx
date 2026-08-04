@@ -20,41 +20,9 @@ const AXES_META: AxeMeta[] = [
   { icon: BarChart3,   num: "06", color: "#6c63ff", bg: "rgba(108,99,255,0.12)",  border: "rgba(108,99,255,0.22)" },
 ];
 
-// Long-form content for the detail modal — not sourced from the CMS, kept verbatim.
+// Long-form content for the detail modal — not sourced from the CMS, comes
+// from next-intl's home.highlights.axesDetails (parallel array to home.highlights.axes).
 type AxeDetail = { description: string; keywords: string[] };
-
-const AXES_DETAILS: AxeDetail[] = [
-  {
-    description:
-      "Cet axe constitue le socle scientifique du laboratoire : il vise à concevoir des méthodes d'apprentissage capables de fonctionner efficacement même lorsque les données disponibles sont rares, bruitées ou hétérogènes, une réalité fréquente dans le contexte caribéen où les infrastructures de collecte de données restent limitées. Les travaux portent notamment sur l'apprentissage auto-supervisé, qui permet d'exploiter des données non annotées, le transfert d'apprentissage entre domaines, ainsi que sur la robustesse des modèles face aux variations et aux biais. Une attention particulière est portée à la frugalité computationnelle, afin de développer une IA performante sans dépendre d'infrastructures coûteuses.",
-    keywords: ["apprentissage auto-supervisé", "transfert d'apprentissage", "robustesse", "IA frugale"],
-  },
-  {
-    description:
-      "Cet axe explore l'analyse automatique d'images, de documents et de données multimodales (texte, image, signal) pour des applications concrètes touchant l'agriculture, la santé et l'environnement. Une dimension spécifique et originale du laboratoire concerne le traitement de documents rédigés en créole et en français, un enjeu linguistique encore peu couvert par les outils d'IA existants. Les recherches combinent des techniques de vision par ordinateur modernes avec des approches adaptées aux spécificités locales des données.",
-    keywords: ["vision par ordinateur", "analyse multimodale", "traitement documentaire", "créole haïtien"],
-  },
-  {
-    description:
-      "Face à l'adoption croissante de l'IA dans des décisions sensibles, cet axe s'attache à rendre les modèles compréhensibles, équitables et fiables. Les travaux couvrent l'explicabilité des modèles pour permettre aux utilisateurs de comprendre leurs décisions, la détection et la réduction des biais algorithmiques, ainsi que l'audit des systèmes d'IA pour évaluer leurs limites et leurs risques. Cet axe est transversal aux autres, car il vise à garantir que les solutions développées par le laboratoire restent dignes de confiance et déployables de manière responsable.",
-    keywords: ["explicabilité", "équité algorithmique", "audit de systèmes IA", "IA responsable"],
-  },
-  {
-    description:
-      "Cet axe applique l'IA aux enjeux de santé publique et clinique, avec un accent sur l'analyse d'images médicales pour l'aide au dépistage, le soutien à la décision clinique et la surveillance épidémiologique. Le laboratoire développe également des assistants documentaires et des interfaces destinées aux professionnels de santé, conçus en créole haïtien afin de faciliter leur adoption sur le terrain et de répondre aux besoins réels des systèmes de santé locaux.",
-    keywords: ["imagerie médicale", "aide au diagnostic", "surveillance épidémiologique", "santé numérique"],
-  },
-  {
-    description:
-      "Cet axe met l'IA au service de la sécurité alimentaire et de l'adaptation climatique, deux enjeux majeurs pour la région caribéenne. Les recherches portent sur la détection automatique des maladies des cultures à partir d'images, les recommandations agronomiques personnalisées, l'analyse d'images satellitaires pour le suivi environnemental, ainsi que sur des systèmes d'alerte précoce face aux risques climatiques et naturels.",
-    keywords: ["agriculture de précision", "imagerie satellitaire", "alerte précoce", "résilience climatique"],
-  },
-  {
-    description:
-      "Cet axe explore comment l'IA peut soutenir la transformation numérique des institutions publiques et économiques. Il couvre l'aide à la décision, l'automatisation documentaire, ainsi que le développement d'outils adaptés à l'éducation, à l'administration publique et à l'économie locale, en intégrant systématiquement le traitement du créole haïtien pour garantir l'accessibilité des outils développés.",
-    keywords: ["transformation numérique", "aide à la décision", "éducation", "gouvernance publique"],
-  },
-];
 
 const cardBase: CSSProperties = {
   position: "relative",
@@ -301,6 +269,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
   // in Sanity always see their change reflected instead of it being silently
   // discarded when the count isn't exactly 6.
   const list = items?.length ? items.slice(0, 6) : (t.raw("axes") as HighlightItem[]);
+  const axesDetails = t.raw("axesDetails") as AxeDetail[];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const closeLabel = tc("close");
@@ -308,7 +277,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
   const discoverLabel = t("discoverCta");
 
   const openItem = openIndex !== null ? list[openIndex] : null;
-  const openDetail = openIndex !== null ? AXES_DETAILS[openIndex % AXES_DETAILS.length] : null;
+  const openDetail = openIndex !== null ? axesDetails[openIndex % axesDetails.length] : null;
   const openAx = openIndex !== null ? AXES_META[openIndex % AXES_META.length] : null;
 
   return (

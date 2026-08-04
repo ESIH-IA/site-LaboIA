@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { MemberCard } from "@/components/governance/member-card";
 import type { GovernanceProfile } from "@/components/governance/types";
 import type { Locale } from "@/lib/i18n";
@@ -15,10 +17,8 @@ export function MembersGrid({
   intro?: string;
   members: GovernanceProfile[];
 }) {
-  const emptyLabel =
-    locale === "en"
-      ? "No profiles are configured for this section."
-      : "Aucun profil n'est configuré pour cette section.";
+  const t = useTranslations("governance");
+  const emptyLabel = t("emptyMembers");
 
   const orderedMembers = [...members].sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 

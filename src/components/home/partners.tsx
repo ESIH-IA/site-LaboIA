@@ -10,7 +10,7 @@ type PartnerPreview = {
   shortDescription?: string;
   website?: string;
   tags?: string[];
-  logo?: { url: string; alt?: string } | null;
+  logo?: { url: string | null; alt?: string } | null;
 };
 
 type PartnersProps = {

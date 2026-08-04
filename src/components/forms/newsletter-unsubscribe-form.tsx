@@ -1,31 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { trackEvent } from "@/lib/analytics";
 import type { FormCopy } from "@/lib/sanity/types";
 import type { Locale } from "@/lib/i18n";
 
 type Status = "idle" | "loading" | "success" | "error";
-
-const labels = {
-  fr: {
-    emailLabel: "Adresse e-mail",
-    emailPlaceholder: "votre@email.com",
-    submit: "Se désinscrire",
-    loading: "Envoi en cours…",
-    success: "Vérifiez votre boîte mail : un lien de confirmation vient de vous être envoyé.",
-    error: "La demande n'a pas pu être traitée. Réessayez plus tard.",
-  },
-  en: {
-    emailLabel: "Email address",
-    emailPlaceholder: "your@email.com",
-    submit: "Unsubscribe",
-    loading: "Sending…",
-    success: "Check your inbox: a confirmation link has just been sent to you.",
-    error: "The request couldn't be processed. Please try again later.",
-  },
-};
 
 export default function NewsletterUnsubscribeForm({
   copy,
@@ -36,7 +18,7 @@ export default function NewsletterUnsubscribeForm({
 }) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>("");
-  const tx = labels[locale] ?? labels.fr;
+  const tx = useTranslations("forms.newsletterUnsubscribe");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,7 +33,7 @@ export default function NewsletterUnsubscribeForm({
 
     if (!email) {
       setStatus("error");
-      setMessage(copy?.errorMessage ?? tx.error);
+      setMessage(copy?.errorMessage ?? tx("error"));
       return;
     }
 
@@ -68,23 +50,23 @@ export default function NewsletterUnsubscribeForm({
         throw new Error(payload?.message || "Request failed");
       }
       setStatus("success");
-      setMessage(copy?.successMessage ?? tx.success);
+      setMessage(copy?.successMessage ?? tx("success"));
     } catch {
       setStatus("error");
-      setMessage(copy?.errorMessage ?? tx.error);
+      setMessage(copy?.errorMessage ?? tx("error"));
     }
   }
 
   return (
     <form className="form-section" style={{ marginTop: "1.5rem" }} onSubmit={handleSubmit}>
       <label className="form-label-light">
-        {copy?.emailLabel ?? tx.emailLabel}
+        {copy?.emailLabel ?? tx("emailLabel")}
         <input
           type="email"
           name="email"
           className="form-input-light"
           style={{ marginTop: "0.5rem" }}
-          placeholder={copy?.emailPlaceholder ?? tx.emailPlaceholder}
+          placeholder={copy?.emailPlaceholder ?? tx("emailPlaceholder")}
           required
         />
       </label>
@@ -105,7 +87,7 @@ export default function NewsletterUnsubscribeForm({
         className="btn btn-small btn-small-primary"
         disabled={status === "loading"}
       >
-        {status === "loading" ? (copy?.loadingLabel ?? tx.loading) : (copy?.submitLabel ?? tx.submit)}
+        {status === "loading" ? (copy?.loadingLabel ?? tx("loading")) : (copy?.submitLabel ?? tx("submit"))}
       </button>
       {message ? <p className="form-status-text">{message}</p> : null}
     </form>

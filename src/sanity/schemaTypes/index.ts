@@ -78,9 +78,9 @@ const navItem = defineType({
   title: "Navigation Item",
   type: "object",
   fields: [
-    defineField({ name: "label", type: "string", title: "Label" }),
+    defineField({ name: "label", type: "string", title: "Label", validation: (Rule) => Rule.required() }),
     defineField({ name: "labelIntl", type: "localeString", title: "Label (i18n)" }),
-    defineField({ name: "href", type: "string", title: "Href" }),
+    defineField({ name: "href", type: "string", title: "Href", validation: (Rule) => Rule.required() }),
   ],
 });
 
@@ -302,8 +302,8 @@ const siteSettings = defineType({
   title: "Site Settings",
   type: "document",
   fields: [
-    defineField({ name: "name", type: "string", title: "Site name" }),
-    defineField({ name: "shortName", type: "string", title: "Short name" }),
+    defineField({ name: "name", type: "string", title: "Site name", validation: (Rule) => Rule.required() }),
+    defineField({ name: "shortName", type: "string", title: "Short name", validation: (Rule) => Rule.required() }),
     defineField({ name: "description", type: "text", title: "Description" }),
     defineField({ name: "tagline", type: "string", title: "Tagline" }),
     defineField({ name: "taglineIntl", type: "localeString", title: "Tagline (i18n)" }),
@@ -332,10 +332,6 @@ const siteSettings = defineType({
     defineField({ name: "footerContactCtaLabel", type: "string", title: "Footer contact CTA label" }),
     defineField({ name: "footerContactCtaLabelIntl", type: "localeString", title: "Footer contact CTA label (i18n)" }),
     defineField({ name: "footerContactCtaHref", type: "string", title: "Footer contact CTA href" }),
-    defineField({ name: "footerLanguageNote", type: "string", title: "Footer language note" }),
-    defineField({ name: "footerLanguageNoteIntl", type: "localeString", title: "Footer language note (i18n)" }),
-    defineField({ name: "footerNavTitle", type: "string", title: "Footer navigation title" }),
-    defineField({ name: "footerNavTitleIntl", type: "localeString", title: "Footer navigation title (i18n)" }),
     defineField({ name: "footerCopyrightText", type: "string", title: "Footer copyright text" }),
     defineField({ name: "footerCopyrightTextIntl", type: "localeString", title: "Footer copyright text (i18n)" }),
     defineField({ name: "cookieTitle", type: "string", title: "Cookie banner title" }),
@@ -368,9 +364,12 @@ const homePage = defineType({
   type: "document",
   fields: [
     defineField({ name: "heroBadge", type: "localeString", title: "Hero badge" }),
-    defineField({ name: "heroTitle", type: "localeString", title: "Hero title" }),
-    defineField({ name: "heroSubtitle", type: "localeText", title: "Hero subtitle" }),
-    defineField({ name: "heroDescription", type: "localeText", title: "Hero description" }),
+    defineField({
+      name: "heroSubtitle",
+      type: "localeText",
+      title: "Hero subtitle",
+      description: "Sous-titre affiché sous le titre du hero de l'accueil (le titre lui-même est un texte de design fixe, non éditable ici).",
+    }),
     defineField({ name: "heroActions", type: "array", of: [{ type: "linkAction" }] }),
     defineField({ name: "introEyebrow", type: "localeString", title: "Intro eyebrow" }),
     defineField({ name: "introTitle", type: "localeString", title: "Intro title" }),
@@ -381,10 +380,6 @@ const homePage = defineType({
     defineField({ name: "highlights", type: "array", of: [{ type: "highlightItem" }] }),
     defineField({ name: "kpisTitle", type: "localeString", title: "KPIs title" }),
     defineField({ name: "kpisIntro", type: "localeText", title: "KPIs intro" }),
-    defineField({ name: "featuredProjectsTitle", type: "localeString", title: "Featured projects title" }),
-    defineField({ name: "featuredProjectsIntro", type: "localeText", title: "Featured projects intro" }),
-    defineField({ name: "featuredProjectsCtaLabel", type: "localeString", title: "Featured projects CTA label" }),
-    defineField({ name: "featuredProjectsCtaHref", type: "string", title: "Featured projects CTA href" }),
     defineField({ name: "publicationsTitle", type: "localeString", title: "Publications title" }),
     defineField({ name: "publicationsIntro", type: "localeText", title: "Publications intro" }),
     defineField({ name: "partnersTitle", type: "localeString", title: "Partners title" }),
@@ -442,9 +437,9 @@ const project = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -514,9 +509,9 @@ const news = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -551,9 +546,9 @@ const event = defineType({
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
     defineField({ name: "visibility", type: "string", options: { list: ["public", "internal"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -581,9 +576,9 @@ const partner = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "name", type: "string" }),
+    defineField({ name: "name", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "nameIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "name" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "name" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -723,9 +718,9 @@ const institutionalPage = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -794,7 +789,7 @@ const person = defineType({
   title: "Person (Governance)",
   type: "document",
   fields: [
-    defineField({ name: "name", type: "string" }),
+    defineField({ name: "name", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "slug", type: "slug", options: { source: "name" } }),
     defineField({ name: "photo", type: "image", options: { hotspot: true } }),
     defineField({ name: "roleTitle", type: "string" }),
@@ -835,7 +830,7 @@ const governanceChartStrict = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
     defineField({ name: "slug", type: "slug", options: { source: "title" } }),
     defineField({
@@ -850,8 +845,18 @@ const governanceChartStrict = defineType({
     defineField({ name: "orgSectionTitleIntl", type: "localeString" }),
     defineField({ name: "orgSectionIntro", type: "blockContent" }),
     defineField({ name: "orgSectionIntroIntl", type: "localeBlockContent" }),
-    defineField({ name: "topPerson", type: "reference", to: [{ type: "person" }] }),
-    defineField({ name: "coFounders", type: "array", of: [{ type: "reference", to: [{ type: "person" }] }] }),
+    defineField({
+      name: "topPerson",
+      type: "reference",
+      to: [{ type: "person" }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "coFounders",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "person" }] }],
+      validation: (Rule) => Rule.required().length(2),
+    }),
     defineField({ name: "associateResearchers", type: "array", of: [{ type: "reference", to: [{ type: "person" }] }] }),
     defineField({ name: "membersSectionTitle", type: "string" }),
     defineField({ name: "membersSectionTitleIntl", type: "localeString" }),
@@ -867,9 +872,9 @@ const governancePage = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -911,9 +916,9 @@ const teamPage = defineType({
   type: "document",
   fields: [
     defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
+    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
     defineField({
       name: "slugIntl",
       type: "object",
@@ -1020,7 +1025,7 @@ const aiSolution = defineType({
   title: "AI Solution",
   type: "document",
   fields: [
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
     defineField({ name: "shortDescription", type: "text" }),
     defineField({ name: "shortDescriptionIntl", type: "localeText" }),
@@ -1036,7 +1041,7 @@ const useCase = defineType({
   title: "Use Case",
   type: "document",
   fields: [
-    defineField({ name: "title", type: "string" }),
+    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "titleIntl", type: "localeString" }),
     defineField({ name: "context", type: "text" }),
     defineField({ name: "contextIntl", type: "localeText" }),
@@ -1052,7 +1057,7 @@ const sector = defineType({
   title: "Sector",
   type: "document",
   fields: [
-    defineField({ name: "name", type: "string" }),
+    defineField({ name: "name", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "nameIntl", type: "localeString" }),
     defineField({ name: "icon", type: "string" }),
     defineField({ name: "order", type: "number" }),
@@ -1215,7 +1220,12 @@ const genericPage = defineType({
         { type: "featuresBlock" },
         { type: "kpisBlock" },
         { type: "ctaBlock" },
-        { type: "latestNewsBlock" },
+        // "latestNewsBlock" retiré de ce picker : page-builder.tsx ne rend
+        // que son titre, jamais les actualités ni le champ "limit" — le
+        // type reste défini (voir plus bas) pour ne pas casser un
+        // pageBuilder existant qui en contiendrait déjà un, mais un
+        // éditeur ne peut plus en ajouter tant qu'il n'est pas réellement
+        // implémenté.
       ],
     }),
     defineField({ name: "seo", type: "seo", title: "SEO" }),

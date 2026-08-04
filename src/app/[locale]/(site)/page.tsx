@@ -3,6 +3,7 @@ import Ticker from "@/components/home/ticker";
 import Intro from "@/components/home/intro";
 import Kpis from "@/components/home/kpis";
 import Highlights from "@/components/home/highlights";
+import Team from "@/components/home/team";
 import ActualitesSection from "@/components/home/actualites-section";
 import Partners from "@/components/home/partners";
 import CollaborateCta from "@/components/home/collaborate-cta";
@@ -63,7 +64,7 @@ export default async function Home() {
 
   return (
     <>
-      <Hero banner={site.banner} locale={locale} />
+      <Hero badge={home.heroBadge} subtitle={home.heroSubtitle} actions={home.heroActions} locale={locale} />
       <Ticker />
       <Intro
         eyebrow={home.introEyebrow ?? site.shortName}
@@ -78,6 +79,7 @@ export default async function Home() {
         intro={home.highlightsIntro}
         items={home.highlights?.length ? home.highlights : undefined}
       />
+      <Team />
       <ActualitesSection
         title={home.publicationsTitle}
         intro={home.publicationsIntro}
