@@ -1,21 +1,21 @@
 # LaCDIA Website
 
-Site institutionnel bilingue (FR/EN) pour LaCDIA, construit avec Next.js App Router et un CMS headless Sanity. Le site couvre les pages de recherche, publications, projets, ressources, solutions, etc., avec formulaires et newsletter. Les actualites sont integrees directement a la page d'accueil (pas de page listing dediee).
+Site institutionnel bilingue (FR/EN) pour LaCDIA, construit avec Next.js App Router et un CMS headless Sanity. Le site couvre les pages de recherche, publications, projets, ressources, solutions, etc., avec formulaires et newsletter. Les actualités sont intégrées directement à la page d'accueil (pas de page listing dédiée).
 
-## Fonctionnalites
+## Fonctionnalités
 
-- Routing FR (defaut) / EN avec prefixe de langue et cookie de preference (`lacdia_locale`). ES et HT ne sont plus supportes (retires deliberement).
-- Traductions UI statiques centralisees dans `src/messages/{fr,en}.json` (next-intl, un seul systeme de traduction) ; le contenu editorial (pages, axes, actualites...) reste pilote par Sanity (`localeString`/`localeText`).
+- Routing FR (défaut) / EN avec préfixe de langue et cookie de préférence (`lacdia_locale`). ES et HT ne sont plus supportés (retirés délibérément).
+- Traductions UI statiques centralisées dans `src/messages/{fr,en}.json` (next-intl, un seul système de traduction) ; le contenu éditorial (pages, axes, actualités...) reste piloté par Sanity (`localeString`/`localeText`).
 - SEO complet : metadata, Open Graph, sitemap et robots.
 - Contenu hybride : contenu local (`src/content`) + contenu dynamique Sanity.
-- Formulaires (collaborer/contact) stockes dans Sanity, notification email optionnelle via Brevo.
-- Newsletter (inscription/desinscription) via Brevo si configure. Le formulaire de desinscription est toujours affiche sur `/newsletter`, independamment du contenu Sanity de la page.
-- Analytics Matomo ou GA4, actives apres consentement cookies.
+- Formulaires (collaborer/contact) stockés dans Sanity, notification email optionnelle via Brevo.
+- Newsletter (inscription/désinscription) via Brevo si configuré. Le formulaire de désinscription est toujours affiché sur `/newsletter`, indépendamment du contenu Sanity de la page.
+- Analytics Matomo ou GA4, activés après consentement cookies.
 
-## Notes operationnelles
+## Notes opérationnelles
 
-- **Actualites** : pas de page listing dediee. `/actualites` (et ses variantes localisees) redirige vers l'accueil, ou les actualites sont affichees directement. Les pages de detail (`/actualites/[slug]`, `/actualites/evenements/[slug]`) restent actives et sont liees depuis la home et d'autres contenus.
-- **Equipe** : la page `/equipe` est temporairement masquee (redirection dans `next.config.ts`) en attendant une consolidation du contenu. Les fiches individuelles `/equipe/[slug]` restent actives (utilisees comme liens d'attribution dans publications, projets, evenements, formations).
+- **Actualités** : pas de page listing dédiée. `/actualites` (et ses variantes localisées) redirige vers l'accueil, où les actualités sont affichées directement. Les pages de détail (`/actualites/[slug]`, `/actualites/evenements/[slug]`) restent actives et sont liées depuis la home et d'autres contenus.
+- **Équipe** : la page `/equipe` est temporairement masquée (redirection dans `next.config.ts`) en attendant une consolidation du contenu. Les fiches individuelles `/equipe/[slug]` restent actives (utilisées comme liens d'attribution dans publications, projets, événements, formations).
 
 ## Stack
 
@@ -27,18 +27,18 @@ Site institutionnel bilingue (FR/EN) pour LaCDIA, construit avec Next.js App Rou
 
 ## Structure du projet
 
-- `src/app/[locale]/(site)` pages du site (arborescence active, prefixee par la locale)
+- `src/app/[locale]/(site)` pages du site (arborescence active, préfixée par la locale)
 - `src/app/api` endpoints (forms, newsletter, preview)
 - `src/components` composants UI
 - `src/content` contenu local (fallback)
-- `src/data` donnees structurees (gouvernance, solutions)
+- `src/data` données structurées (gouvernance, solutions)
 - `src/lib` utilitaires (i18n, SEO, Sanity)
 - `src/messages` catalogues de traduction next-intl (`fr.json`, `en.json`)
 - `public` assets
 
 ## Variables d'environnement
 
-Creez un fichier `.env.local` (ou variables d'environnement sur l'hebergeur) :
+Créez un fichier `.env.local` (ou variables d'environnement sur l'hébergeur) :
 
 ```
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
@@ -47,12 +47,12 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-# Alternatives cote serveur (optionnelles)
+# Alternatives côté serveur (optionnelles)
 SANITY_PROJECT_ID=your_project_id
 SANITY_DATASET=production
 SANITY_API_VERSION=2024-01-01
 
-# Sanity (ecriture, formulaires)
+# Sanity (écriture, formulaires)
 SANITY_API_TOKEN=your_sanity_write_token
 
 # Preview
@@ -83,28 +83,28 @@ npm run sanity:seed
 npm run translate:en
 ```
 
-`check:routes` verifie un ensemble de routes clefs. Il utilise `SITE_URL` ou `NEXT_PUBLIC_SITE_URL` et suppose que l'app tourne deja.
+`check:routes` vérifie un ensemble de routes clefs. Il utilise `SITE_URL` ou `NEXT_PUBLIC_SITE_URL` et suppose que l'app tourne déjà.
 
-`translate:en` traduit automatiquement les cles manquantes de `src/messages/fr.json` vers `en.json` (LibreTranslate par defaut, voir `scripts/auto-translate.mjs` pour Google/DeepL). Seul l'anglais est supporte par ce script.
+`translate:en` traduit automatiquement les clés manquantes de `src/messages/fr.json` vers `en.json` (LibreTranslate par défaut, voir `scripts/auto-translate.mjs` pour Google/DeepL). Seul l'anglais est supporté par ce script.
 
 ## Sanity Studio & migration
 
-- Le Studio est integre dans l'app : lancer `npm run dev` puis ouvrir `/studio`.
+- Le Studio est intégré dans l'app : lancer `npm run dev` puis ouvrir `/studio`.
 - La commande `npm run sanity:seed` initialise un contenu de base (navigation, home, solutions, gouvernance, etc.). Elle requiert `SANITY_API_TOKEN`.
-- Les collections publications, axes, ressources et formations sont a completer dans le Studio si besoin.
+- Les collections publications, axes, ressources et formations sont à compléter dans le Studio si besoin.
 
 ## Endpoints API
 
-- `POST /api/forms/submit` : enregistre une demande dans Sanity, envoie un email via Brevo si configure.
-- `POST /api/newsletter/subscribe` : inscription newsletter (Brevo si configure).
-- `POST /api/newsletter/unsubscribe` : desinscription newsletter (Brevo si configure).
+- `POST /api/forms/submit` : enregistre une demande dans Sanity, envoie un email via Brevo si configuré.
+- `POST /api/newsletter/subscribe` : inscription newsletter (Brevo si configuré).
+- `POST /api/newsletter/unsubscribe` : désinscription newsletter (Brevo si configuré).
 - `GET /api/preview?secret=...` : active le mode preview (Sanity).
 
-## Deploiement
+## Déploiement
 
-1. Installer les dependances : `npm install`
+1. Installer les dépendances : `npm install`
 2. Build : `npm run build`
 3. Run : `npm run start`
-4. Verifier que les variables d'environnement sont presentes.
+4. Vérifier que les variables d'environnement sont présentes.
 
-Le domaine `cdn.sanity.io` est deja autorise pour `next/image`.
+Le domaine `cdn.sanity.io` est déjà autorisé pour `next/image`.

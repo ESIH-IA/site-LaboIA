@@ -11,8 +11,6 @@ import {
   navigationQuery,
   newsListQuery,
   partnerListQuery,
-  projectListQuery,
-  researchAxisListQuery,
   siteSettingsQuery,
   solutionsPageQuery,
 } from "@/lib/sanity/queries";
@@ -24,8 +22,6 @@ import type {
   Navigation,
   NewsListItem,
   PartnerListItem,
-  ProjectListItem,
-  ResearchAxisListItem,
   SiteSettings,
   SolutionsPage,
 } from "@/lib/sanity/types";
@@ -34,11 +30,8 @@ type HomeDataBundle = {
   home: HomePageData;
   kpis: KpiItem[];
   kpiSettings: KpiSettings;
-  featuredProjects: ProjectListItem[];
-  featuredNews: NewsListItem[];
   allNews: NewsListItem[];
   featuredPartners: PartnerListItem[];
-  researchAxes: ResearchAxisListItem[];
 };
 
 const emptySiteSettings: SiteSettings = {
@@ -76,33 +69,25 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
       home: emptyHome,
       kpis: [],
       kpiSettings: { _id: "kpiSettings-empty" },
-      featuredProjects: [],
-      featuredNews: [],
       allNews: [],
       featuredPartners: [],
-      researchAxes: [],
     };
   }
 
-  const [home, kpis, kpiSettings, projects, news, partners, axes] = await Promise.all([
+  const [home, kpis, kpiSettings, news, partners] = await Promise.all([
     sanityFetch<HomePageData | null>(homePageQuery, { locale }, null),
     sanityFetch<KpiItem[]>(kpiListQuery, { locale }, []),
     sanityFetch<KpiSettings | null>(kpiSettingsQuery, { locale }, null),
-    sanityFetch<ProjectListItem[]>(projectListQuery, { locale }, []),
     sanityFetch<NewsListItem[]>(newsListQuery, { locale }, []),
     sanityFetch<PartnerListItem[]>(partnerListQuery, { locale }, []),
-    sanityFetch<ResearchAxisListItem[]>(researchAxisListQuery, { locale }, []),
   ]);
 
   return {
     home: home ?? emptyHome,
     kpis,
     kpiSettings: kpiSettings ?? { _id: "kpiSettings-empty" },
-    featuredProjects: projects.filter((p) => p.featured),
-    featuredNews: news.filter((n) => n.featured),
     allNews: news,
     featuredPartners: partners.filter((p) => p.featured),
-    researchAxes: axes,
   };
 }
 

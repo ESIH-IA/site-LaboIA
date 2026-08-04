@@ -71,35 +71,6 @@ export type ProjectListItem = {
   featured?: boolean;
 };
 
-export type PublicationListItem = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  publicationType?: string;
-  date?: string;
-  summary?: string;
-  doi?: string;
-  url?: string;
-  pdfUrl?: string;
-  axes?: Array<{ _id: string; title: string }>;
-  projects?: Array<{ _id: string; title: string; partners?: Array<{ _id: string; name: string }> }>;
-};
-
-export type ResourceListItem = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  resourceType?: string;
-  date?: string;
-  summary?: string;
-  fileUrl?: string;
-  url?: string;
-  publications?: Array<{ _id: string; title: string; slug?: SanitySlug }>;
-  projects?: Array<{ _id: string; title: string; slug?: SanitySlug }>;
-};
-
 export type KpiItem = {
   _id: string;
   key: string;
@@ -107,26 +78,6 @@ export type KpiItem = {
   value: string;
   note?: string;
   status: "draft" | "confirmed";
-};
-
-export type LabReportItem = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  year?: number;
-  summary?: string;
-  fileUrl?: string;
-  url?: string;
-};
-export type MemberListItem = {
-  _id: string;
-  fullName: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  role?: string;
-  affiliation?: string;
-  bio?: string;
 };
 
 export type NewsListItem = {
@@ -165,36 +116,6 @@ export type PartnerListItem = {
   tags?: string[];
   featured?: boolean;
   logo?: SiteAsset | null;
-};
-
-export type OfferListItem = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  offerType?: string;
-  openDate?: string;
-  closeDate?: string;
-  summary?: string;
-};
-
-export type ProgramListItem = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  programType?: string;
-  startDate?: string;
-  endDate?: string;
-  summary?: string;
-};
-
-export type ResearchAxisListItem = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  summary?: string;
 };
 
 export type InstitutionalPage = {
@@ -281,7 +202,7 @@ export type TeamPage = {
 };
 
 export type SiteAsset = {
-  url: string;
+  url: string | null;
   alt?: string;
   width?: number;
   height?: number;
@@ -297,8 +218,6 @@ export type SiteSettings = {
   footerContactText?: string;
   footerContactCtaLabel?: string;
   footerContactCtaHref?: string;
-  footerLanguageNote?: string;
-  footerNavTitle?: string;
   footerCopyrightText?: string;
   cookieTitle?: string;
   cookieMessage?: string;
@@ -325,9 +244,7 @@ export type HomePageData = {
   _id: string;
   seo?: SeoData;
   heroBadge?: string;
-  heroTitle?: string;
   heroSubtitle?: string;
-  heroDescription?: string;
   heroActions?: Array<{ label: string; href: string; variant?: string }>;
   introEyebrow?: string;
   introTitle?: string;
@@ -338,10 +255,6 @@ export type HomePageData = {
   highlights?: Array<{ title: string; description: string }>;
   kpisTitle?: string;
   kpisIntro?: string;
-  featuredProjectsTitle?: string;
-  featuredProjectsIntro?: string;
-  featuredProjectsCtaLabel?: string;
-  featuredProjectsCtaHref?: string;
   publicationsTitle?: string;
   publicationsIntro?: string;
   partnersTitle?: string;

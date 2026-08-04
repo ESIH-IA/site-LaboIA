@@ -266,30 +266,6 @@ export default async function SolutionsPage() {
         </div>
       </section>
 
-      {/* Section Services */}
-      <section className="section section-light">
-        <div className="container">
-          <div style={{maxWidth:'48rem', marginBottom:'3rem'}}>
-            <h2 className="section-title">
-              {solutionsPage.servicesTitle}
-            </h2>
-            <p className="section-subtitle">
-              {solutionsPage.servicesIntro}
-            </p>
-          </div>
-          <div style={{display:'flex', flexWrap:'wrap', gap:'1rem'}}>
-            {solutionsPage.services?.map((service) => (
-              <span
-                key={service}
-                className="btn btn-cta-secondary" style={{borderRadius:'9999px'}}
-              >
-                {service}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Section Secteurs */}
       <section className="section section-white">
         <div className="container">

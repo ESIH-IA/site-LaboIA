@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import PortableTextRenderer from "@/components/content/portable-text";
+import EditablePageView from "@/components/content/editable-page-view";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
@@ -38,15 +38,5 @@ export default async function Page() {
     null,
   );
 
-  return (
-    <section className="container" style={{maxWidth:'64rem', paddingTop:'3rem', paddingBottom:'3rem'}}>
-      <div style={{maxWidth:'48rem'}}>
-        {page?.title ? <h1 className="section-title">{page.title}</h1> : null}
-        {page?.summary ? <p className="section-subtitle">{page.summary}</p> : null}
-      </div>
-      <div style={{marginTop:'1.5rem'}}>
-        <PortableTextRenderer value={page?.content} />
-      </div>
-    </section>
-  );
+  return <EditablePageView page={page} locale={locale} />;
 }

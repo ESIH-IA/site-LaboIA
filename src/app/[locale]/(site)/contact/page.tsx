@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import ContactCollaborateTabs from "@/components/forms/contact-collaborate-tabs";
 import { getServerLocale } from "@/lib/i18n-server";
 import { localizedPath } from "@/lib/i18n";
@@ -7,14 +8,15 @@ import { getFormSettings } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
+const CONTACT_EMAIL = "contact@lacdia.esih.edu";
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
+  const t = await getTranslations({ locale, namespace: "pages.contact" });
   return await buildMetadata({
     locale,
-    title: locale === "en" ? "Contact & Collaboration" : "Contact & Collaboration",
-    description: locale === "en"
-      ? "Write to us or propose a collaboration with LaCDIA."
-      : "Écrivez-nous ou proposez une collaboration avec le LaCDIA.",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
     path: localizedPath("/contact", locale),
     alternates: {
       fr: localizedPath("/contact", "fr"),
@@ -23,41 +25,10 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-const content = {
-  fr: {
-    badge: "Travaillons ensemble",
-    title: "Contactez le LaCDIA",
-    subtitle: "Une question, une idée de collaboration ou simplement envie d'en savoir plus ? Utilisez le formulaire ou retrouvez-nous directement.",
-    infoTitle: "Informations de contact",
-    emailLabel: "E-mail général",
-    email: "contact@lacdia.esih.edu",
-    locationLabel: "Localisation",
-    location: "Haïti · Caraïbes",
-    hoursLabel: "Réponse estimée",
-    hours: "Sous 3 à 5 jours ouvrés",
-    followLabel: "Suivez-nous",
-    collabNote: "Vous souhaitez proposer un partenariat ou une collaboration de recherche ? Utilisez l'onglet « Collaboration ».",
-  },
-  en: {
-    badge: "Let's work together",
-    title: "Contact LaCDIA",
-    subtitle: "A question, a collaboration idea, or just want to learn more? Use the form or reach us directly.",
-    infoTitle: "Contact information",
-    emailLabel: "General email",
-    email: "contact@lacdia.esih.edu",
-    locationLabel: "Location",
-    location: "Haiti · Caribbean",
-    hoursLabel: "Estimated response",
-    hours: "Within 3 to 5 business days",
-    followLabel: "Follow us",
-    collabNote: "Want to propose a partnership or research collaboration? Use the 'Collaboration' tab.",
-  },
-};
-
 export default async function Page() {
   const locale = await getServerLocale();
   const forms = await getFormSettings(locale);
-  const tx = content[locale] ?? content.fr;
+  const tx = await getTranslations({ locale, namespace: "pages.contact" });
 
   return (
     <main style={{ background: "var(--labo-bg)", minHeight: "100vh" }}>
@@ -99,7 +70,7 @@ export default async function Page() {
             className="hero-badge"
             style={{ display: "inline-flex", marginBottom: "1.25rem" }}
           >
-            <span className="hero-badge-text">{tx.badge}</span>
+            <span className="hero-badge-text">{tx("badge")}</span>
           </div>
           <h1
             style={{
@@ -112,7 +83,7 @@ export default async function Page() {
               marginBottom: "1rem",
             }}
           >
-            {tx.title}
+            {tx("title")}
           </h1>
           <p
             style={{
@@ -123,7 +94,7 @@ export default async function Page() {
               margin: 0,
             }}
           >
-            {tx.subtitle}
+            {tx("subtitle")}
           </p>
         </div>
       </section>
@@ -153,7 +124,7 @@ export default async function Page() {
                   margin: 0,
                 }}
               >
-                {tx.infoTitle}
+                {tx("infoTitle")}
               </h2>
 
               {[
@@ -161,24 +132,24 @@ export default async function Page() {
                   icon: (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                   ),
-                  label: tx.emailLabel,
-                  value: tx.email,
-                  href: `mailto:${tx.email}`,
+                  label: tx("emailLabel"),
+                  value: CONTACT_EMAIL,
+                  href: `mailto:${CONTACT_EMAIL}`,
                 },
                 {
                   icon: (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   ),
-                  label: tx.locationLabel,
-                  value: tx.location,
+                  label: tx("locationLabel"),
+                  value: tx("location"),
                   href: null,
                 },
                 {
                   icon: (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   ),
-                  label: tx.hoursLabel,
-                  value: tx.hours,
+                  label: tx("hoursLabel"),
+                  value: tx("hours"),
                   href: null,
                 },
               ].map(({ icon, label, value, href }) => (
@@ -217,7 +188,7 @@ export default async function Page() {
               {/* LinkedIn */}
               <div>
                 <p style={{ fontSize: "0.72rem", color: "#8892b0", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 0.75rem", fontFamily: "var(--font-mono)" }}>
-                  {tx.followLabel}
+                  {tx("followLabel")}
                 </p>
                 <a
                   href="https://www.linkedin.com/company/lacdia"
@@ -257,7 +228,7 @@ export default async function Page() {
                   borderRadius: 10,
                 }}
               >
-                {tx.collabNote}
+                {tx("collabNote")}
               </p>
             </div>
           </aside>

@@ -20,113 +20,78 @@ const AXES_META: AxeMeta[] = [
   { icon: BarChart3,   num: "06", color: "#6c63ff", bg: "rgba(108,99,255,0.12)",  border: "rgba(108,99,255,0.22)" },
 ];
 
-// Long-form content for the detail modal — not sourced from the CMS, kept verbatim.
+// Long-form content for the detail modal — not sourced from the CMS, comes
+// from next-intl's home.highlights.axesDetails (parallel array to home.highlights.axes).
 type AxeDetail = { description: string; keywords: string[] };
-
-const AXES_DETAILS: AxeDetail[] = [
-  {
-    description:
-      "Cet axe constitue le socle scientifique du laboratoire : il vise à concevoir des méthodes d'apprentissage capables de fonctionner efficacement même lorsque les données disponibles sont rares, bruitées ou hétérogènes, une réalité fréquente dans le contexte caribéen où les infrastructures de collecte de données restent limitées. Les travaux portent notamment sur l'apprentissage auto-supervisé, qui permet d'exploiter des données non annotées, le transfert d'apprentissage entre domaines, ainsi que sur la robustesse des modèles face aux variations et aux biais. Une attention particulière est portée à la frugalité computationnelle, afin de développer une IA performante sans dépendre d'infrastructures coûteuses.",
-    keywords: ["apprentissage auto-supervisé", "transfert d'apprentissage", "robustesse", "IA frugale"],
-  },
-  {
-    description:
-      "Cet axe explore l'analyse automatique d'images, de documents et de données multimodales (texte, image, signal) pour des applications concrètes touchant l'agriculture, la santé et l'environnement. Une dimension spécifique et originale du laboratoire concerne le traitement de documents rédigés en créole et en français, un enjeu linguistique encore peu couvert par les outils d'IA existants. Les recherches combinent des techniques de vision par ordinateur modernes avec des approches adaptées aux spécificités locales des données.",
-    keywords: ["vision par ordinateur", "analyse multimodale", "traitement documentaire", "créole haïtien"],
-  },
-  {
-    description:
-      "Face à l'adoption croissante de l'IA dans des décisions sensibles, cet axe s'attache à rendre les modèles compréhensibles, équitables et fiables. Les travaux couvrent l'explicabilité des modèles pour permettre aux utilisateurs de comprendre leurs décisions, la détection et la réduction des biais algorithmiques, ainsi que l'audit des systèmes d'IA pour évaluer leurs limites et leurs risques. Cet axe est transversal aux autres, car il vise à garantir que les solutions développées par le laboratoire restent dignes de confiance et déployables de manière responsable.",
-    keywords: ["explicabilité", "équité algorithmique", "audit de systèmes IA", "IA responsable"],
-  },
-  {
-    description:
-      "Cet axe applique l'IA aux enjeux de santé publique et clinique, avec un accent sur l'analyse d'images médicales pour l'aide au dépistage, le soutien à la décision clinique et la surveillance épidémiologique. Le laboratoire développe également des assistants documentaires et des interfaces destinées aux professionnels de santé, conçus en créole haïtien afin de faciliter leur adoption sur le terrain et de répondre aux besoins réels des systèmes de santé locaux.",
-    keywords: ["imagerie médicale", "aide au diagnostic", "surveillance épidémiologique", "santé numérique"],
-  },
-  {
-    description:
-      "Cet axe met l'IA au service de la sécurité alimentaire et de l'adaptation climatique, deux enjeux majeurs pour la région caribéenne. Les recherches portent sur la détection automatique des maladies des cultures à partir d'images, les recommandations agronomiques personnalisées, l'analyse d'images satellitaires pour le suivi environnemental, ainsi que sur des systèmes d'alerte précoce face aux risques climatiques et naturels.",
-    keywords: ["agriculture de précision", "imagerie satellitaire", "alerte précoce", "résilience climatique"],
-  },
-  {
-    description:
-      "Cet axe explore comment l'IA peut soutenir la transformation numérique des institutions publiques et économiques. Il couvre l'aide à la décision, l'automatisation documentaire, ainsi que le développement d'outils adaptés à l'éducation, à l'administration publique et à l'économie locale, en intégrant systématiquement le traitement du créole haïtien pour garantir l'accessibilité des outils développés.",
-    keywords: ["transformation numérique", "aide à la décision", "éducation", "gouvernance publique"],
-  },
-];
 
 const cardBase: CSSProperties = {
   position: "relative",
-  background: "rgba(17,24,39,0.82)",
-  border: "1px solid rgba(255,255,255,0.07)",
-  borderRadius: 20,
-  padding: "2rem",
-  overflow: "hidden",
+  padding: "2.75rem 2.25rem 2.25rem",
   display: "flex",
   flexDirection: "column",
-  gap: "1rem",
-  minHeight: 220,
+  gap: "1.1rem",
+  minHeight: 240,
   height: "100%",
   width: "100%",
   textAlign: "left",
   cursor: "pointer",
   font: "inherit",
   color: "inherit",
-  transition: "transform 0.25s ease-out, border-color 0.25s ease-out, box-shadow 0.25s ease-out",
 };
 
 // --- Clickable axis card — opens the detail modal ---
-function AxeCard({ item, ax, onOpen }: { item: HighlightItem; ax: AxeMeta; onOpen: () => void }) {
+function AxeCard({ item, ax, discoverLabel, onOpen }: { item: HighlightItem; ax: AxeMeta; discoverLabel: string; onOpen: () => void }) {
   const Icon = ax.icon;
+  const accentGradient = `linear-gradient(90deg, ${ax.color}, ${ax.color === "#00d4aa" ? "#6c63ff" : "#00d4aa"})`;
+
   return (
     <button
       type="button"
       onClick={onOpen}
       aria-haspopup="dialog"
-      style={{ ...cardBase, borderColor: "rgba(255,255,255,0.07)", boxShadow: "0 12px 32px rgba(0,0,0,0.28)" }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.transform = "translateY(-5px)";
-        el.style.borderColor = ax.color + "55";
-        el.style.boxShadow = "0 20px 44px rgba(0,0,0,0.36), 0 0 0 1px " + ax.color + "40";
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.transform = "translateY(0)";
-        el.style.borderColor = "rgba(255,255,255,0.07)";
-        el.style.boxShadow = "0 12px 32px rgba(0,0,0,0.28)";
-      }}
-      onFocus={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.borderColor = ax.color + "55";
-        el.style.boxShadow = "0 0 0 2px " + ax.color + "80";
-      }}
-      onBlur={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.borderColor = "rgba(255,255,255,0.07)";
-        el.style.boxShadow = "0 12px 32px rgba(0,0,0,0.28)";
+      className="axe-card card-premium card-spotlight"
+      style={{ ...cardBase, "--card-accent": ax.color + "55" } as CSSProperties}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+        e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
       }}
     >
-      <span aria-hidden="true" style={{ position: "absolute", bottom: "-0.25rem", right: "1rem", fontFamily: "var(--font-display)", fontSize: "5.5rem", fontWeight: 900, lineHeight: 1, color: ax.color, opacity: 0.05, userSelect: "none", pointerEvents: "none" }}>
+      <span aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: accentGradient }} />
+      <span aria-hidden="true" style={{ position: "absolute", bottom: "-0.25rem", right: "1rem", fontFamily: "var(--font-display)", fontSize: "5.5rem", fontWeight: 900, lineHeight: 1, color: ax.color, opacity: 0.035, userSelect: "none", pointerEvents: "none" }}>
         {ax.num}
       </span>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ width: 44, height: 44, borderRadius: 12, background: ax.bg, border: "1px solid " + ax.border, display: "flex", alignItems: "center", justifyContent: "center", color: ax.color }}>
-          <Icon size={20} strokeWidth={1.6} aria-hidden />
+        <div
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 13,
+            background: `radial-gradient(circle at 30% 30%, ${ax.color}33, ${ax.color}11)`,
+            border: "1px solid " + ax.border,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: ax.color,
+          }}
+        >
+          <Icon size={21} strokeWidth={1.6} aria-hidden />
         </div>
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.14em", color: ax.color, opacity: 0.7 }}>
           AXE {ax.num}
         </span>
       </div>
-      <div>
-        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontWeight: 700, color: "var(--labo-text)", marginBottom: "0.5rem", lineHeight: 1.3 }}>
+      <div style={{ flex: 1 }}>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "var(--labo-text)", marginBottom: "0.6rem", lineHeight: 1.3 }}>
           {item.title}
         </h3>
-        <p style={{ fontSize: "0.85rem", color: "var(--labo-text-muted)", lineHeight: 1.65, margin: 0 }}>
+        <p style={{ fontSize: "0.85rem", color: "var(--labo-text-muted)", lineHeight: 1.7, margin: 0 }}>
           {item.description}
         </p>
       </div>
+      <span className="axe-card-cta" aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-mono)", fontSize: "0.7rem", letterSpacing: "0.08em", color: ax.color }}>
+        {discoverLabel} <span aria-hidden="true">→</span>
+      </span>
     </button>
   );
 }
@@ -304,13 +269,15 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
   // in Sanity always see their change reflected instead of it being silently
   // discarded when the count isn't exactly 6.
   const list = items?.length ? items.slice(0, 6) : (t.raw("axes") as HighlightItem[]);
+  const axesDetails = t.raw("axesDetails") as AxeDetail[];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const closeLabel = tc("close");
   const keywordsLabel = tc("keywords");
+  const discoverLabel = t("discoverCta");
 
   const openItem = openIndex !== null ? list[openIndex] : null;
-  const openDetail = openIndex !== null ? AXES_DETAILS[openIndex % AXES_DETAILS.length] : null;
+  const openDetail = openIndex !== null ? axesDetails[openIndex % axesDetails.length] : null;
   const openAx = openIndex !== null ? AXES_META[openIndex % AXES_META.length] : null;
 
   return (
@@ -330,11 +297,11 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem" }}>
+        <div className="axes-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem" }}>
           {list.map((item, i) => {
             const ax = AXES_META[i % AXES_META.length];
             return (
-              <AxeCard key={item.title ?? i} item={item} ax={ax} onOpen={() => setOpenIndex(i)} />
+              <AxeCard key={item.title ?? i} item={item} ax={ax} discoverLabel={discoverLabel} onOpen={() => setOpenIndex(i)} />
             );
           })}
         </div>
@@ -364,10 +331,21 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
       ) : null}
 
       <style>{`
-        @media (max-width: 767px) {
-          #axes-de-recherche [style*="repeat(3"] { grid-template-columns: 1fr !important; }
+        #axes-de-recherche .axe-card:hover .axe-card-cta,
+        #axes-de-recherche .axe-card:focus-visible .axe-card-cta {
+          opacity: 1;
+          transform: translateX(4px);
         }
-        @media (max-width: 560px) {
+        #axes-de-recherche .axe-card-cta {
+          opacity: 0;
+          transform: translateX(0);
+          transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        @media (max-width: 1024px) {
+          #axes-de-recherche .axes-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 640px) {
+          #axes-de-recherche .axes-grid { grid-template-columns: 1fr !important; }
           #axes-de-recherche [style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
         }
         @media (prefers-reduced-motion: reduce) {

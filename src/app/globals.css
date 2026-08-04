@@ -1636,60 +1636,101 @@ body {
 }
 
 /* ============================================================
-   PARTNER CARDS
+   PREMIUM CARD SYSTEM (shared: glass surface + cursor spotlight)
+   Consumed by partner tiles and axis cards. --card-accent sets the
+   per-card hover tint; --mx/--my are written from onMouseMove.
    ============================================================ */
-.partner-card {
+.card-premium {
   position: relative;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
   overflow: hidden;
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.partner-card:hover {
-  border-color: rgba(0, 212, 170, 0.25);
-  transform: translateY(-2px);
+.card-premium:hover,
+.card-premium:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--card-accent, rgba(0, 212, 170, 0.4));
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32), 0 0 0 1px var(--card-accent, rgba(0, 212, 170, 0.4));
 }
 
-.partner-card-header {
+.card-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.07), transparent 42%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-visible::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-premium { transition: none !important; }
+  .card-premium:hover, .card-premium:focus-visible { transform: none !important; }
+}
+
+/* ============================================================
+   PARTNER TILES — clickable logo grid
+   ============================================================ */
+.partner-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
+  justify-content: center;
+  gap: 2rem;
+}
+
+.partner-tile {
+  aspect-ratio: 1 / 1;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.partner-card-name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--labo-text);
-}
-
-.partner-card-logo {
-  height: 2.5rem;
+.partner-tile-logo {
+  max-width: 75%;
+  max-height: 55%;
   width: auto;
-  max-width: 120px;
+  height: auto;
   object-fit: contain;
-  object-position: left center;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
 
-.partner-card-text {
-  font-size: 0.85rem;
-  color: var(--labo-text-muted);
-  line-height: 1.6;
-  margin: 0;
-  flex: 1;
+.partner-tile:hover .partner-tile-logo,
+.partner-tile:focus-visible .partner-tile-logo {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.06);
 }
 
-.partner-card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.partner-tile-wordmark {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.01em;
+  color: var(--labo-text);
+  opacity: 0.7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.partner-tile:hover .partner-tile-wordmark,
+.partner-tile:focus-visible .partner-tile-wordmark {
+  opacity: 1;
+  color: var(--labo-accent-teal);
 }
 
 .tag-small {
@@ -1702,27 +1743,6 @@ body {
   background: rgba(108, 99, 255, 0.1);
   color: var(--labo-accent-violet);
   border: 1px solid rgba(108, 99, 255, 0.2);
-}
-
-.partner-card-link {
-  align-self: flex-end;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--labo-text-muted);
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.partner-card-link:hover {
-  border-color: var(--labo-accent-teal);
-  color: var(--labo-accent-teal);
-  background: rgba(0, 212, 170, 0.08);
 }
 
 /* ============================================================

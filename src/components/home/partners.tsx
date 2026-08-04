@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import type { MouseEvent } from "react";
 
 type PartnerPreview = {
   _id: string;
@@ -7,7 +10,7 @@ type PartnerPreview = {
   shortDescription?: string;
   website?: string;
   tags?: string[];
-  logo?: { url: string; alt?: string } | null;
+  logo?: { url: string | null; alt?: string } | null;
 };
 
 type PartnersProps = {
@@ -17,7 +20,50 @@ type PartnersProps = {
   items: PartnerPreview[];
 };
 
-export default async function Partners({ title, intro, badge, items }: PartnersProps) {
+function handleSpotlightMove(e: MouseEvent<HTMLElement>) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+}
+
+function PartnerTile({ partner }: { partner: PartnerPreview }) {
+  const content = partner.logo?.url ? (
+    <Image
+      src={partner.logo.url}
+      alt={partner.logo.alt || partner.name}
+      width={140}
+      height={70}
+      className="partner-tile-logo"
+    />
+  ) : (
+    <span className="partner-tile-wordmark">{partner.name}</span>
+  );
+
+  const className = "partner-tile card-premium card-spotlight";
+
+  if (partner.website) {
+    return (
+      <a
+        href={partner.website}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={partner.name}
+        className={className}
+        onMouseMove={handleSpotlightMove}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <div className={className} aria-label={partner.name} onMouseMove={handleSpotlightMove}>
+      {content}
+    </div>
+  );
+}
+
+export default function Partners({ title, intro, badge, items }: PartnersProps) {
   if (!title && !intro && !badge && items.length === 0) return null;
 
   return (
@@ -31,59 +77,9 @@ export default async function Partners({ title, intro, badge, items }: PartnersP
           {badge ? <div className="badge-teal-box">{badge}</div> : null}
         </div>
 
-        <div className="card-grid card-grid-3 card-grid-sm-2" style={{ marginTop: "3rem" }}>
+        <div className="partner-tile-grid" style={{ marginTop: "3rem" }}>
           {items.map((partner) => (
-            <div
-              key={partner._id}
-              className="partner-card card-hover"
-            >
-              {/* Top accent gradient */}
-              <div className="card-accent-top" />
-
-              <div className="partner-card-header">
-                {partner.logo?.url ? (
-                  <Image
-                    src={partner.logo.url}
-                    alt={partner.logo.alt || partner.name}
-                    width={120}
-                    height={40}
-                    className="partner-card-logo"
-                  />
-                ) : (
-                  <div className="partner-card-name">
-                    {partner.name}
-                  </div>
-                )}
-                {partner.type ? (
-                  <span className="badge badge-teal">
-                    {partner.type}
-                  </span>
-                ) : null}
-              </div>
-              {partner.shortDescription ? (
-                <p className="partner-card-text">{partner.shortDescription}</p>
-              ) : null}
-              {partner.tags?.length ? (
-                <div className="partner-card-tags">
-                  {partner.tags.map((tag) => (
-                    <span key={tag} className="tag-small">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              ) : null}
-              {partner.website ? (
-                <a
-                  href={partner.website}
-                  className="partner-card-link"
-                  rel="noreferrer"
-                  target="_blank"
-                  aria-label={partner.name}
-                >
-                  <span aria-hidden>{">"}</span>
-                </a>
-              ) : null}
-            </div>
+            <PartnerTile key={partner._id} partner={partner} />
           ))}
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useId, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import type { GovernanceProfile, GovernanceProfileCategory } from "@/components/governance/types";
 import type { Locale } from "@/lib/i18n";
@@ -43,6 +44,7 @@ const categoryBadgeStyles: Record<GovernanceProfileCategory, { borderColor: stri
 };
 
 export function MemberCard({ person, locale }: { person: GovernanceProfile; locale: Locale }) {
+  const t = useTranslations("governance");
   const dialogId = useId();
   const [open, setOpen] = useState(false);
   const category = person.category;
@@ -60,20 +62,15 @@ export function MemberCard({ person, locale }: { person: GovernanceProfile; loca
   const contactHref = person.links?.email
     ? `mailto:${person.links.email}`
     : `/${locale}/contact?profile=${encodeURIComponent(person.name)}`;
-  const categoryLabel =
-    locale === "en"
-      ? { gouvernance: "Institutional governance", direction: "Scientific leadership", recherche: "Research", conseil: "Scientific council" }[category]
-      : { gouvernance: "Gouvernance institutionnelle", direction: "Direction scientifique", recherche: "Recherche", conseil: "Conseil scientifique" }[category];
-  const upcomingLabel = locale === "en" ? "Upcoming" : "À venir";
-  const expertiseLabel = "Expertise";
-  const contributionLabel = "Contribution";
-  const contactLabel = locale === "en" ? "Contact" : "Contacter";
-  const modalTitle = locale === "en" ? "Biography" : "Biographie";
-  const modalExpertiseTitle =
-    locale === "en" ? "Areas of expertise" : "Domaines d'expertise";
-  const learnMoreLabel =
-    locale === "en" ? "View full profile" : "Voir le profil complet";
-  const closeLabel = locale === "en" ? "Close" : "Fermer";
+  const categoryLabel = t(`categories.${category}`);
+  const upcomingLabel = t("upcoming");
+  const expertiseLabel = t("expertise");
+  const contributionLabel = t("contribution");
+  const contactLabel = t("contact");
+  const modalTitle = t("modalTitle");
+  const modalExpertiseTitle = t("modalExpertiseTitle");
+  const learnMoreLabel = t("learnMore");
+  const closeLabel = t("close");
 
   return (
     <>
@@ -89,7 +86,7 @@ export function MemberCard({ person, locale }: { person: GovernanceProfile; loca
             setOpen(true);
           }
         }}
-        aria-label={`${learnMoreLabel} ${person.name}`}
+        aria-label={t("viewProfileOf", { name: person.name })}
       >
         <div className={`member-card-accent member-card-accent--${category}`} />
 
@@ -192,7 +189,7 @@ export function MemberCard({ person, locale }: { person: GovernanceProfile; loca
           className="member-modal-overlay"
           role="dialog"
           aria-modal="true"
-          aria-label={`Bio de ${person.name}`}
+          aria-label={`${modalTitle} — ${person.name}`}
           id={dialogId}
           onClick={() => setOpen(false)}
         >
@@ -274,7 +271,7 @@ export function MemberCard({ person, locale }: { person: GovernanceProfile; loca
                   ) : null}
                   {person.links?.website ? (
                     <a href={person.links.website} target="_blank" rel="noreferrer" className="member-modal-link-secondary">
-                      {locale === "en" ? "Website" : "Site web"}
+                      {t("website")}
                     </a>
                   ) : null}
                 </div>

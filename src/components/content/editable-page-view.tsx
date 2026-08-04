@@ -45,7 +45,7 @@ function EditableForm({ type, forms, locale }: { type?: PageSection["formType"];
   if (type === "contact") return <ContactForm copy={forms?.contact} locale={locale} />;
   if (type === "collaborate") return <CollaborateForm copy={forms?.collaborate} />;
   if (type === "newsletter") return <NewsletterForm copy={forms?.newsletter} />;
-  if (type === "unsubscribe") return <NewsletterUnsubscribeForm copy={forms?.unsubscribe} />;
+  if (type === "unsubscribe") return <NewsletterUnsubscribeForm copy={forms?.unsubscribe} locale={locale} />;
   return null;
 }
 

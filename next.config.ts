@@ -8,10 +8,12 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   async redirects() {
-    // Le site est volontairement reduit a 4 pages : Accueil, Solutions,
-    // Actualites (integree a la home), Contact. Tout le reste a ete retire
-    // du code (pas seulement masque) — voir git log pour retrouver ces
-    // pages si elles doivent revenir plus tard. Ces redirections couvrent
+    // Le site est volontairement reduit a 4 pages de navigation : Accueil,
+    // Solutions, Actualites (integree a la home), Contact — plus la route
+    // utilitaire /newsletter (desinscription, non presente dans le menu).
+    // Tout le reste a ete retire du code (pas seulement masque) — voir git
+    // log pour retrouver ces pages si elles doivent revenir plus tard.
+    // Ces redirections couvrent
     // les liens externes/marque-pages/anciens resultats de recherche et
     // tout contenu CMS pas encore resynchronise avec le nouveau perimetre.
     const removedTrees = [
@@ -23,7 +25,9 @@ const nextConfig: NextConfig = {
       "projets",
       "publications",
       "ressources",
-      "newsletter",
+      // "newsletter" retiré de cette liste : /newsletter est une route
+      // dédiée active (désinscription newsletter, compliance-sensible —
+      // voir audit pré-production COMP-1). Ne pas la réintroduire ici.
     ];
 
     const homeRedirects = removedTrees.flatMap((tree) => [

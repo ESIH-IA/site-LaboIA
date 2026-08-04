@@ -1,34 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useMemo, useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
-import { locales, type Locale } from "@/lib/i18n";
 import LocaleSwitcher from "@/components/layout/locale-switcher";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
-
-function getCurrentLocale(pathname: string): Locale | null {
-  const segments = pathname.split("/").filter(Boolean);
-  const first = segments[0];
-  return first && locales.includes(first as Locale) ? (first as Locale) : null;
-}
-
-function stripLocale(pathname: string) {
-  const segments = pathname.split("/").filter(Boolean);
-  const first = segments[0];
-  if (first && locales.includes(first as Locale)) {
-    return "/" + segments.slice(1).join("/");
-  }
-  return pathname;
-}
-
-function withLocale(href: string, locale: Locale | null) {
-  if (!locale) return href;
-  if (href === "/") return `/${locale}`;
-  return `/${locale}${href}`;
-}
 
 function isActivePath(current: string, href: string) {
   if (href === "/") return current === "/";
@@ -47,9 +25,9 @@ export default function Header({
   nav: Navigation;
   site: SiteSettings;
 }) {
-  const pathname = usePathname() || "/";
-  const currentLocale = useMemo(() => getCurrentLocale(pathname), [pathname]);
-  const basePath = useMemo(() => stripLocale(pathname) || "/", [pathname]);
+  const t = useTranslations("header");
+  const tCommon = useTranslations("common");
+  const basePath = usePathname() || "/";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -76,13 +54,10 @@ export default function Header({
         // "/actualites" redirige vers l'accueil (plus de page listing dediee) —
         // on pointe directement vers la section actualites de la home plutot
         // que de faire perdre la position de scroll via la redirection.
-        localizedHref:
-          item.href === "/actualites"
-            ? `${withLocale("/", currentLocale)}#actualites`
-            : withLocale(item.href, currentLocale),
+        localizedHref: item.href === "/actualites" ? "/#actualites" : item.href,
         active: isActivePath(basePath, item.href),
       }));
-  }, [basePath, currentLocale, nav.mainNav]);
+  }, [basePath, nav.mainNav]);
 
   const logoSrc = site.logo?.url ?? "/logo/logo-site.svg";
   const logoAlt = site.logo?.alt ?? site.shortName ?? "LaCDIA";
@@ -100,7 +75,7 @@ export default function Header({
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
           {/* Logo */}
           <Link
-            href={withLocale("/", currentLocale)}
+            href="/"
             className="flex items-center gap-3 group"
             aria-label={site.name ?? "LaCDIA"}
           >
@@ -159,7 +134,7 @@ export default function Header({
             <button
               type="button"
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-[#8892b0] transition hover:border-white/20 hover:text-[#f0f4ff] md:hidden"
-              aria-label="Ouvrir le menu"
+              aria-label={t("openMenu")}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
             >
@@ -177,10 +152,10 @@ export default function Header({
       {/* Mobile menu */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-60 md:hidden"
+          className="fixed inset-0 z-[60] md:hidden"
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation mobile"
+          aria-label={t("navigation")}
         >
           {/* Backdrop */}
           <div
@@ -201,7 +176,7 @@ export default function Header({
               <button
                 type="button"
                 className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-[#8892b0] hover:text-[#f0f4ff] transition"
-                aria-label="Fermer le menu"
+                aria-label={t("closeMenu")}
                 onClick={() => setMobileOpen(false)}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -237,11 +212,11 @@ export default function Header({
             {/* Footer CTA */}
             <div className="mt-8 pt-6 border-t border-white/8">
               <Link
-                href={withLocale("/contact", currentLocale)}
+                href="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold bg-[#00d4aa]/10 border border-[#00d4aa]/30 text-[#00d4aa] hover:bg-[#00d4aa]/20 transition"
               >
-                {currentLocale === "en" ? "Contact us" : "Nous contacter"}
+                {tCommon("contactUs")}
               </Link>
             </div>
           </div>

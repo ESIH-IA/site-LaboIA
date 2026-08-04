@@ -46,3 +46,9 @@ _backup_git/
 node_modules_broken/
 .env*.local
 .playwright-mcp/
+
+# audit LaCDIA — hygiene du depot
+*.bak
+temp_*.html
+.next-dev*.log
+_to_delete/

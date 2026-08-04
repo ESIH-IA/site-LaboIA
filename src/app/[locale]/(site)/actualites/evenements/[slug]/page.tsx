@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 import PortableTextRenderer from "@/components/content/portable-text";
 import type { PortableTextBlock } from "@portabletext/types";
@@ -55,6 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   const locale = await getServerLocale();
+  const t = await getTranslations({ locale, namespace: "common" });
   const event = await sanityFetch<EventDetail | null>(
     eventBySlugQuery,
     { slug, locale },
@@ -72,7 +74,7 @@ export default async function Page({ params }: PageProps) {
       <Link
         href="/#actualites"
         className="btn-link"
-        aria-label="actualites"
+        aria-label={t("backToNews")}
       >
         {"<"}
       </Link>

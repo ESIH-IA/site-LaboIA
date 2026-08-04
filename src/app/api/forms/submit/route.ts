@@ -1,18 +1,40 @@
 import { NextResponse } from "next/server";
 
 import { sanityWriteClient, isSanityWriteConfigured } from "@/lib/sanity/write-client";
+import { getClientIp, isRateLimited } from "@/lib/rate-limit";
+import { escapeHtml } from "@/lib/utils";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
+  // Limitation de débit best-effort (voir src/lib/rate-limit.ts) — 5
+  // soumissions / 10 min / IP (audit pré-production, SEC-2).
+  const ip = getClientIp(request);
+  if (isRateLimited(`forms-submit:${ip}`, 5, 10 * 60 * 1000)) {
+    return NextResponse.json({ ok: false, message: "Trop de requêtes. Réessayez plus tard." }, { status: 429 });
+  }
+
   const body = await request.json().catch(() => null);
   const formType = body?.formType?.toString();
   const fullName = body?.fullName?.toString().trim();
   const email = body?.email?.toString().trim();
   const organization = body?.organization?.toString().trim();
   const subject = body?.subject?.toString().trim();
-  const message = body?.message?.toString().trim();
+  // Le schéma Sanity formSubmission n'a pas de champ dédié pour le
+  // téléphone : plutôt que de le perdre silencieusement (comme c'était le
+  // cas auparavant — la valeur n'était ni stockée ni transmise), on le
+  // rattache au message et on l'affiche dans l'email de notification.
+  const phone = body?.phone?.toString().trim();
+  const rawMessage = body?.message?.toString().trim();
+  const message = phone ? [`Téléphone : ${phone}`, rawMessage].filter(Boolean).join("\n\n") : rawMessage;
   const consent = Boolean(body?.consent);
+  // Honeypot anti-bot : champ caché, jamais rempli par un humain. On
+  // répond "ok" sans rien enregistrer pour ne pas signaler le piège.
+  const honeypot = body?.company?.toString().trim();
+
+  if (honeypot) {
+    return NextResponse.json({ ok: true, message: "Demande enregistree." });
+  }
 
   if (!formType || !fullName || !email || !consent) {
     return NextResponse.json({ ok: false, message: "Champs requis manquants." }, { status: 400 });
@@ -58,6 +80,20 @@ export async function POST(request: Request) {
 
   if (notifyEmail && senderEmail && apiKey) {
     const typeLabel = formType === "collaborer" ? "Collaboration" : "Contact";
+    // Contenu utilisateur échappé avant interpolation HTML (SEC-5) :
+    // sans cela, un champ contenant des balises pouvait s'injecter dans
+    // l'email de notification reçu par l'équipe.
+    const safeFullName = escapeHtml(fullName);
+    const safeEmail = escapeHtml(email);
+    const safeOrganization = organization ? escapeHtml(organization) : "";
+    const safeSubject = subject ? escapeHtml(subject) : "";
+    // Le corps de l'email affiche le téléphone dans sa propre ligne
+    // (ci-dessous) : on utilise donc le message brut ici pour éviter de
+    // le répéter, même si `message` (avec le préfixe téléphone) est bien
+    // ce qui est enregistré dans Sanity.
+    const safeMessage = rawMessage ? escapeHtml(rawMessage) : "";
+    const safePhone = phone ? escapeHtml(phone) : "";
+
     const brevoRes = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -72,13 +108,14 @@ export async function POST(request: Request) {
           <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#f9f9f9;border-radius:8px;">
             <h2 style="color:#0a0f1c;margin-bottom:16px;">Nouvelle demande de ${typeLabel.toLowerCase()}</h2>
             <table style="width:100%;border-collapse:collapse;">
-              <tr><td style="padding:8px 0;color:#555;width:140px;">Nom</td><td style="padding:8px 0;font-weight:600;">${fullName}</td></tr>
-              <tr><td style="padding:8px 0;color:#555;">Email</td><td style="padding:8px 0;"><a href="mailto:${email}">${email}</a></td></tr>
-              <tr><td style="padding:8px 0;color:#555;">Organisation</td><td style="padding:8px 0;">${organization || "—"}</td></tr>
-              <tr><td style="padding:8px 0;color:#555;">Objet</td><td style="padding:8px 0;">${subject || "—"}</td></tr>
+              <tr><td style="padding:8px 0;color:#555;width:140px;">Nom</td><td style="padding:8px 0;font-weight:600;">${safeFullName}</td></tr>
+              <tr><td style="padding:8px 0;color:#555;">Email</td><td style="padding:8px 0;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+              ${safePhone ? `<tr><td style="padding:8px 0;color:#555;">Téléphone</td><td style="padding:8px 0;"><a href="tel:${safePhone}">${safePhone}</a></td></tr>` : ""}
+              <tr><td style="padding:8px 0;color:#555;">Organisation</td><td style="padding:8px 0;">${safeOrganization || "—"}</td></tr>
+              <tr><td style="padding:8px 0;color:#555;">Objet</td><td style="padding:8px 0;">${safeSubject || "—"}</td></tr>
             </table>
             <div style="margin-top:16px;padding:16px;background:#fff;border-radius:6px;border:1px solid #e5e5e5;">
-              <p style="color:#555;margin:0;white-space:pre-wrap;">${message || ""}</p>
+              <p style="color:#555;margin:0;white-space:pre-wrap;">${safeMessage}</p>
             </div>
             <p style="margin-top:16px;font-size:12px;color:#999;">Message reçu via le formulaire du site LaCDIA.</p>
           </div>`,

@@ -28,7 +28,7 @@ Sanity Studio est embarqué dans l'app Next.js : `npm run dev` puis ouvrir `/stu
 ### i18n — attention aux pièges
 
 - Le fichier middleware s'appelle **`src/proxy.ts`** (pas `middleware.ts`) et enregistre `next-intl`'s `createMiddleware`.
-- Les locales actives sont `fr` (défaut) et `en`, définies dans `src/lib/i18n.ts` (`locales`). ES et HT ont été retirés (fichiers de messages, scripts `translate:*`, matcher du proxy) — ne pas les réintroduire sans decision produit explicite.
+- Les locales actives sont `fr` (défaut) et `en`, définies dans `src/lib/i18n.ts` (`locales`). ES et HT ont été retirés (fichiers de messages, scripts `translate:*`, matcher du proxy) — ne pas les réintroduire sans décision produit explicite.
 - Toute copie UI statique sans backing CMS (labels, aria-labels, contenu de repli des composants) doit passer par `next-intl` (`src/messages/{fr,en}.json` + `useTranslations`/`getTranslations`) — un seul système de traduction, pas de dictionnaire ad-hoc par composant. Le contenu éditorial (pages, axes, actualités...) reste piloté par Sanity (`localeString`/`localeText`).
 - `localePrefix: "always"` — toute URL est préfixée (`/fr/...`, `/en/...`), `/` redirige vers `/fr`.
 - Helpers de routing : `src/i18n/routing.ts`, `src/i18n/navigation.ts` (Link/redirect localisés), `src/i18n/request.ts` (config next-intl). `src/lib/i18n-server.ts` expose `getServerLocale()` pour les Server Components/Route Handlers.

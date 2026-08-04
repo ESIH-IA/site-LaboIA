@@ -12,7 +12,7 @@
     "publications": "Publications",
     "training": "Formation",
     "resources": "Ressources",
-    "solutions": "Solutions IA"
+    "solutions": "Axes de recherche"
   },
   "header": {
     "tagline": "Laboratoire d'innovation et de recherche appliquée en IA et science des données",
@@ -29,7 +29,10 @@
     "navigation": "Navigation",
     "contact": "Contact",
     "legal": "Légal",
-    "tagline": "Haïti · Caraïbes · Recherche IA"
+    "tagline": "Haïti · Caraïbes · Recherche IA",
+    "nameFallback": "Laboratoire Caraïbéen des Sciences des Données et de l'IA",
+    "descriptionFallback": "Recherche appliquée en intelligence artificielle et science des données au service des communautés caribéennes.",
+    "contactCtaLabel": "Écrire au laboratoire"
   },
   "common": {
     "learnMore": "En savoir plus",
@@ -49,7 +52,8 @@
     "requestQuote": "Demander un devis",
     "becomePartner": "Devenir partenaire",
     "close": "Fermer",
-    "keywords": "Mots-clés"
+    "keywords": "Mots-clés",
+    "backToNews": "Retour aux actualités"
   },
   "cookies": {
     "title": "Cookies",
@@ -68,7 +72,8 @@
       "subtitle": "LaCDIA est un laboratoire de recherche appliquée en IA et science des données, au service des communautés caribéennes.",
       "primaryLabel": "Collaborer avec le laboratoire",
       "secondaryLabel": "Explorer nos projets",
-      "canvasLabel": "Réseau neuronal caribéen"
+      "canvasLabel": "Réseau neuronal caribéen",
+      "scrollHint": "scroll"
     },
     "ticker": {
       "ariaLabel": "Domaines de recherche",
@@ -107,6 +112,7 @@
       "sectionIntro": "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe.",
       "transversalLabel": "Thématique transversale",
       "transversalText": "Intelligence artificielle et sciences des données pour le développement durable d'Haïti et de la Caraïbe",
+      "discoverCta": "Découvrir",
       "axes": [
         { "title": "Méthodes fondamentales en IA et apprentissage automatique", "description": "Développement de méthodes adaptées aux données rares, bruitées ou hétérogènes, apprentissage auto-supervisé, transfert d'apprentissage, robustesse et IA frugale." },
         { "title": "Vision par ordinateur et analyse de données complexes", "description": "Analyse d'images, de documents et de données multimodales, notamment pour l'agriculture, la santé, l'environnement et le traitement de documents en créole et en français." },
@@ -114,6 +120,52 @@
         { "title": "IA pour la santé", "description": "Analyse d'images médicales, aide au dépistage et à la décision clinique, surveillance épidémiologique, assistants documentaires et interfaces sanitaires en créole haïtien." },
         { "title": "IA pour l'agriculture numérique et la résilience environnementale", "description": "Détection des maladies des cultures, recommandations agronomiques, analyse d'images satellitaires, systèmes d'alerte précoce et adaptation au changement climatique." },
         { "title": "IA pour les systèmes socio-économiques, éducatifs et institutionnels", "description": "Aide à la décision, transformation numérique, automatisation documentaire, traitement du créole haïtien et développement d'outils pour l'éducation, l'administration publique et l'économie." }
+      ],
+      "axesDetails": [
+        {
+          "description": "Cet axe constitue le socle scientifique du laboratoire : il vise à concevoir des méthodes d'apprentissage capables de fonctionner efficacement même lorsque les données disponibles sont rares, bruitées ou hétérogènes, une réalité fréquente dans le contexte caribéen où les infrastructures de collecte de données restent limitées. Les travaux portent notamment sur l'apprentissage auto-supervisé, qui permet d'exploiter des données non annotées, le transfert d'apprentissage entre domaines, ainsi que sur la robustesse des modèles face aux variations et aux biais. Une attention particulière est portée à la frugalité computationnelle, afin de développer une IA performante sans dépendre d'infrastructures coûteuses.",
+          "keywords": ["apprentissage auto-supervisé", "transfert d'apprentissage", "robustesse", "IA frugale"]
+        },
+        {
+          "description": "Cet axe explore l'analyse automatique d'images, de documents et de données multimodales (texte, image, signal) pour des applications concrètes touchant l'agriculture, la santé et l'environnement. Une dimension spécifique et originale du laboratoire concerne le traitement de documents rédigés en créole et en français, un enjeu linguistique encore peu couvert par les outils d'IA existants. Les recherches combinent des techniques de vision par ordinateur modernes avec des approches adaptées aux spécificités locales des données.",
+          "keywords": ["vision par ordinateur", "analyse multimodale", "traitement documentaire", "créole haïtien"]
+        },
+        {
+          "description": "Face à l'adoption croissante de l'IA dans des décisions sensibles, cet axe s'attache à rendre les modèles compréhensibles, équitables et fiables. Les travaux couvrent l'explicabilité des modèles pour permettre aux utilisateurs de comprendre leurs décisions, la détection et la réduction des biais algorithmiques, ainsi que l'audit des systèmes d'IA pour évaluer leurs limites et leurs risques. Cet axe est transversal aux autres, car il vise à garantir que les solutions développées par le laboratoire restent dignes de confiance et déployables de manière responsable.",
+          "keywords": ["explicabilité", "équité algorithmique", "audit de systèmes IA", "IA responsable"]
+        },
+        {
+          "description": "Cet axe applique l'IA aux enjeux de santé publique et clinique, avec un accent sur l'analyse d'images médicales pour l'aide au dépistage, le soutien à la décision clinique et la surveillance épidémiologique. Le laboratoire développe également des assistants documentaires et des interfaces destinées aux professionnels de santé, conçus en créole haïtien afin de faciliter leur adoption sur le terrain et de répondre aux besoins réels des systèmes de santé locaux.",
+          "keywords": ["imagerie médicale", "aide au diagnostic", "surveillance épidémiologique", "santé numérique"]
+        },
+        {
+          "description": "Cet axe met l'IA au service de la sécurité alimentaire et de l'adaptation climatique, deux enjeux majeurs pour la région caribéenne. Les recherches portent sur la détection automatique des maladies des cultures à partir d'images, les recommandations agronomiques personnalisées, l'analyse d'images satellitaires pour le suivi environnemental, ainsi que sur des systèmes d'alerte précoce face aux risques climatiques et naturels.",
+          "keywords": ["agriculture de précision", "imagerie satellitaire", "alerte précoce", "résilience climatique"]
+        },
+        {
+          "description": "Cet axe explore comment l'IA peut soutenir la transformation numérique des institutions publiques et économiques. Il couvre l'aide à la décision, l'automatisation documentaire, ainsi que le développement d'outils adaptés à l'éducation, à l'administration publique et à l'économie locale, en intégrant systématiquement le traitement du créole haïtien pour garantir l'accessibilité des outils développés.",
+          "keywords": ["transformation numérique", "aide à la décision", "éducation", "gouvernance publique"]
+        }
+      ]
+    },
+    "team": {
+      "sectionLabel": "Équipe scientifique",
+      "sectionTitle": "Une expertise scientifique de haut niveau, ancrée en Haïti et ouverte sur le monde",
+      "sectionIntro": "Le LaCDIA rassemble une dizaine de profils scientifiques et techniques complémentaires — chercheurs nationaux et internationaux, ingénieurs spécialisés et experts des technologies émergentes — pour porter une recherche en intelligence artificielle rigoureuse et ancrée dans les réalités caribéennes.",
+      "note": "Certains profils cumulent plusieurs responsabilités scientifiques et institutionnelles ; cette présentation reflète les compétences mobilisées par le laboratoire plutôt qu'un organigramme figé.",
+      "categories": [
+        { "badge": "2 chercheurs · HDR", "title": "Chercheurs seniors habilités", "description": "Deux chercheurs nationaux, titulaires d'une Habilitation à Diriger des Recherches, encadrent les travaux du laboratoire et en garantissent l'exigence scientifique." },
+        { "badge": "3 experts", "title": "Réseau scientifique international", "description": "Deux chercheurs internationaux et un professeur émérite complètent ce noyau scientifique, apportant au LaCDIA un regard extérieur et des collaborations académiques établies." },
+        { "badge": "2+ chercheurs", "title": "Chercheurs nationaux associés", "description": "D'autres chercheurs nationaux, aux expertises complémentaires, rejoignent progressivement le laboratoire et contribuent à l'élargissement de ses axes de recherche." },
+        { "badge": "2 ingénieurs", "title": "Ingénierie IA et données", "description": "Deux ingénieurs en intelligence artificielle, spécialisés dans le traitement de grands volumes de données, assurent la mise en œuvre technique des projets et modèles du laboratoire." },
+        { "badge": "1 direction", "title": "Direction scientifique et institutionnelle", "description": "La direction du laboratoire s'appuie sur la direction d'un établissement d'enseignement supérieur partenaire, garante de l'ancrage institutionnel du LaCDIA et de la cohérence de sa stratégie scientifique." },
+        { "badge": "1 expert", "title": "Expertise en IA générative", "description": "Un expert en intelligence artificielle générative complète l'équipe, portant l'exploration de ces technologies émergentes au sein des travaux du LaCDIA." }
+      ],
+      "stats": [
+        { "value": "11", "label": "Membres mobilisés" },
+        { "value": "2", "label": "Chercheurs internationaux" },
+        { "value": "2", "label": "Ingénieurs IA" },
+        { "value": "6", "label": "Profils d'expertise" }
       ]
     },
     "actualites": {
@@ -161,6 +213,83 @@
       "client": "Client",
       "media": "Média",
       "academic": "Académique"
+    }
+  },
+  "forms": {
+    "contact": {
+      "formTitle": "Envoyez-nous un message",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Prénom Nom",
+      "email": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "phone": "Téléphone (optionnel)",
+      "phonePlaceholder": "+509 XXXX XXXX",
+      "organisation": "Organisation / Institution (optionnel)",
+      "organisationPlaceholder": "Université, entreprise, ONG…",
+      "subject": "Objet",
+      "subjects": [
+        { "value": "", "label": "Sélectionnez un objet…" },
+        { "value": "collaboration", "label": "Collaboration de recherche" },
+        { "value": "partenariat", "label": "Partenariat institutionnel" },
+        { "value": "stage", "label": "Stage ou formation" },
+        { "value": "medias", "label": "Médias et communication" },
+        { "value": "question", "label": "Question générale" },
+        { "value": "autre", "label": "Autre" }
+      ],
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre demande…",
+      "consent": "J'accepte que mes informations soient traitées conformément à la",
+      "privacy": "politique de confidentialité",
+      "submit": "Envoyer le message",
+      "loading": "Envoi en cours…",
+      "success": "Merci. Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais.",
+      "error": "Une erreur est survenue. Veuillez réessayer ou nous écrire directement.",
+      "required": "Champ requis"
+    },
+    "collaborate": {
+      "formTitle": "Proposer une collaboration",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Prénom Nom",
+      "email": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "organisation": "Organisation / Institution",
+      "organisationPlaceholder": "Université, entreprise, ONG…",
+      "collabType": "Type de collaboration",
+      "collabTypes": [
+        { "value": "", "label": "Sélectionnez un type…" },
+        { "value": "recherche", "label": "Recherche commune" },
+        { "value": "financement", "label": "Financement / subvention" },
+        { "value": "terrain", "label": "Accès terrain / données" },
+        { "value": "formation", "label": "Formation et transfert de compétences" },
+        { "value": "technique", "label": "Partenariat technique" },
+        { "value": "autre", "label": "Autre" }
+      ],
+      "message": "Description du projet / proposition",
+      "messagePlaceholder": "Décrivez votre proposition de collaboration…",
+      "consent": "J'accepte que mes informations soient traitées conformément à la",
+      "privacy": "politique de confidentialité",
+      "submit": "Envoyer la proposition",
+      "loading": "Envoi en cours…",
+      "success": "Merci. Votre proposition a bien été enregistrée. Nous vous répondrons dans les meilleurs délais.",
+      "error": "Une erreur est survenue. Veuillez réessayer ou nous écrire directement."
+    },
+    "newsletter": {
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "consent": "J'accepte de recevoir les communications du laboratoire. Voir la",
+      "privacy": "politique de confidentialité",
+      "submit": "S'inscrire",
+      "loading": "En cours…",
+      "success": "Merci ! Votre inscription à la newsletter a bien été enregistrée.",
+      "error": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "newsletterUnsubscribe": {
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "submit": "Se désinscrire",
+      "loading": "Envoi en cours…",
+      "success": "Vérifiez votre boîte mail : un lien de confirmation vient de vous être envoyé.",
+      "error": "La demande n'a pas pu être traitée. Réessayez plus tard."
     }
   },
   "about": {
@@ -224,6 +353,28 @@
     "switchLanguage": "Changer de langue",
     "currentLanguage": "Langue actuelle"
   },
+  "governance": {
+    "categories": {
+      "gouvernance": "Gouvernance institutionnelle",
+      "direction": "Direction scientifique",
+      "recherche": "Recherche",
+      "conseil": "Conseil scientifique"
+    },
+    "upcoming": "À venir",
+    "expertise": "Expertise",
+    "contribution": "Contribution",
+    "contact": "Contacter",
+    "modalTitle": "Biographie",
+    "modalExpertiseTitle": "Domaines d'expertise",
+    "learnMore": "Voir le profil complet",
+    "viewProfileOf": "Voir le profil de {name}",
+    "close": "Fermer",
+    "website": "Site web",
+    "emptyMembers": "Aucun profil n'est configuré pour cette section.",
+    "scientificCouncil": "Conseil scientifique",
+    "invalidPremiumConfig": "Configuration invalide : 1 personne en gouvernance et exactement 2 co-fondateurs requis.",
+    "invalidStrictConfig": "Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis."
+  },
   "pages": {
     "solutions": {
       "fallbackSummary": "Découvrez nos services et solutions d'intelligence artificielle concrètes, testées et éprouvées."
@@ -238,7 +389,27 @@
       "formTitle": "Démarrez une collaboration"
     },
     "newsletter": {
-      "unsubscribeTitle": "Gérer mon abonnement"
+      "unsubscribeTitle": "Gérer mon abonnement",
+      "unsubscribeIntro": "Indiquez votre adresse email pour vous désabonner de la newsletter LaCDIA. Un lien de confirmation vous sera envoyé avant toute désinscription effective."
+    },
+    "contact": {
+      "metaTitle": "Contact & Collaboration",
+      "metaDescription": "Écrivez-nous ou proposez une collaboration avec le LaCDIA.",
+      "badge": "Travaillons ensemble",
+      "title": "Contactez le LaCDIA",
+      "subtitle": "Une question, une idée de collaboration ou simplement envie d'en savoir plus ? Utilisez le formulaire ou retrouvez-nous directement.",
+      "infoTitle": "Informations de contact",
+      "emailLabel": "E-mail général",
+      "locationLabel": "Localisation",
+      "location": "Haïti · Caraïbes",
+      "hoursLabel": "Réponse estimée",
+      "hours": "Sous 3 à 5 jours ouvrés",
+      "followLabel": "Suivez-nous",
+      "collabNote": "Vous souhaitez proposer un partenariat ou une collaboration de recherche ? Utilisez l'onglet « Collaboration »."
+    },
+    "contactTabs": {
+      "contact": "Nous contacter",
+      "collaborate": "Proposer une collaboration"
     }
   }
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import type { Person } from "@/data/governance/types";
 
 interface GovernanceChartStrictProps {
@@ -20,6 +22,7 @@ function PersonCard({
   level: "top" | "director" | "associate";
   onClick?: () => void;
 }) {
+  const t = useTranslations("governance");
   const initials = person.initials;
   const isFuture = person.status === "futur";
 
@@ -29,7 +32,7 @@ function PersonCard({
       onClick={onClick}
       className={["strict-card", `strict-card--${color}`].join(" ")}
       style={isFuture ? {opacity: 0.6} : undefined}
-      aria-label={`Voir le profil de ${person.name}`}
+      aria-label={t("viewProfileOf", { name: person.name })}
     >
       {/* Cercle avec initiales - pas de photo dans l'organigramme */}
       <div
@@ -51,7 +54,7 @@ function PersonCard({
         ) : null}
         {isFuture ? (
           <div className="strict-card-future-badge">
-            À venir
+            {t("upcoming")}
           </div>
         ) : null}
       </div>
@@ -81,10 +84,12 @@ export function GovernanceChartStrict({
   scientificDirectors,
   associateResearchers = [],
 }: GovernanceChartStrictProps) {
+  const t = useTranslations("governance");
+
   if (!topPerson || scientificDirectors.length !== 2) {
     return (
       <div className="empty-state">
-        Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis.
+        {t("invalidStrictConfig")}
       </div>
     );
   }
@@ -189,7 +194,7 @@ export function GovernanceChartStrict({
 
             <div className="strict-chart-level3">
               <div className="strict-chart-level3-title">
-                Conseil scientifique
+                {t("scientificCouncil")}
               </div>
               <div className="strict-chart-level3-grid">
                 {associateResearchers.map((researcher) => (
@@ -233,7 +238,7 @@ export function GovernanceChartStrict({
         {associateResearchers.length > 0 ? (
           <div className="strict-mobile-indent">
             <div className="strict-mobile-level3-title">
-              Conseil scientifique
+              {t("scientificCouncil")}
             </div>
             <div className="strict-mobile-indent-inner">
               {associateResearchers.map((researcher) => (

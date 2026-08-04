@@ -13,8 +13,8 @@ type HeroAction = {
 
 type HeroProps = {
   badge?: string;
+  subtitle?: string;
   actions?: HeroAction[];
-  banner?: unknown;
   locale?: Locale;
 };
 
@@ -212,7 +212,7 @@ function NeuralCanvas() {
 }
 
 /* ─── Hero ─────────────────────────────────────────────────── */
-export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
+export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroProps) {
   const t = useTranslations("home.hero");
   const primary   = actions?.find((a) => a.variant === "primary")   ?? actions?.[0];
   const secondary = actions?.find((a) => a.variant === "secondary") ?? actions?.[1];
@@ -221,7 +221,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
 
   return (
     <section
-      className="relative overflow-hidden hero-neural"
+      className="relative overflow-hidden hero-neural hero-section"
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -375,7 +375,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
             marginBottom: "2.75rem",
           }}
         >
-          {t("subtitle")}
+          {subtitle ?? t("subtitle")}
         </p>
 
         {/* CTAs */}
@@ -461,7 +461,7 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
               color: "rgba(136,146,176,0.45)",
             }}
           >
-            scroll
+            {t("scrollHint")}
           </span>
         </div>
       </div>
@@ -513,6 +513,14 @@ export default function Hero({ badge, actions, locale = "fr" }: HeroProps) {
       />
 
       <style>{`
+        /* minHeight: 100vh (inline, above) is the fallback for browsers
+           without dvh support. On mobile, 100vh includes the area behind
+           the address bar, which can clip content until the user scrolls —
+           100dvh (dynamic viewport height) tracks the *visible* viewport
+           instead. @supports keeps old browsers on the safe 100vh fallback. */
+        @supports (height: 100dvh) {
+          .hero-section { min-height: 100dvh !important; }
+        }
         @media (max-width: 760px) {
           .hero-scrim {
             background: linear-gradient(

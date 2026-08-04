@@ -132,8 +132,8 @@ async function translateDeepL(text, from, to) {
   return data.translations[0].text;
 }
 
-async function translate(text, from, to, engine, apiUrl) {
-  if (!text || typeof text !== "string") return text;
+async function translateText(text, from, to, engine, apiUrl) {
+  if (!text) return text;
   // Don't translate very short technical strings
   if (text.length <= 2) return text;
 
@@ -146,6 +146,30 @@ async function translate(text, from, to, engine, apiUrl) {
     case "deepl": return translateDeepL(text, from, to);
     default: throw new Error(`Unknown engine: ${engine}`);
   }
+}
+
+// Recurse into arrays/objects so array-valued message keys (e.g. lists of
+// { label, value } options) get every string leaf translated instead of
+// being copied verbatim from French into the target locale.
+async function translate(value, from, to, engine, apiUrl) {
+  if (typeof value === "string") {
+    return translateText(value, from, to, engine, apiUrl);
+  }
+  if (Array.isArray(value)) {
+    const out = [];
+    for (const item of value) {
+      out.push(await translate(item, from, to, engine, apiUrl));
+    }
+    return out;
+  }
+  if (value && typeof value === "object") {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = await translate(v, from, to, engine, apiUrl);
+    }
+    return out;
+  }
+  return value;
 }
 
 // ─── Main ────────────────────────────────────────────
