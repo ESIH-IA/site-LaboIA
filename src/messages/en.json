@@ -25,6 +25,7 @@
     "legalNotice": "Legal Notice",
     "privacy": "Privacy Policy",
     "cookies": "Cookie Policy",
+    "terms": "Terms of Use",
     "copyright": "All rights reserved.",
     "navigation": "Navigation",
     "contact": "Contact",
@@ -32,7 +33,8 @@
     "tagline": "Haiti · Caribbean · AI Research",
     "nameFallback": "Caribbean Laboratory of Data Science and AI",
     "descriptionFallback": "Applied research in artificial intelligence and data science serving Caribbean communities.",
-    "contactCtaLabel": "Write to the lab"
+    "contactCtaLabel": "Write to the lab",
+    "manageCookies": "Manage cookie settings"
   },
   "common": {
     "learnMore": "Learn more",
