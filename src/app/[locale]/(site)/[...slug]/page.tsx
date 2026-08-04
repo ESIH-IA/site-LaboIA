@@ -64,11 +64,7 @@ export default async function GenericPage({
   }
 
   return (
-    <main className="flex-1 w-full mt-24 mb-32 flex flex-col items-center">
-      {/* 
-        The top-level container has no global padding so sections can break out if needed,
-        but the PageBuilder enforces containment internally. 
-      */}
+    <main className="flex-1 w-full">
       <PageBuilder blocks={page.blocks ?? []} locale={locale} />
     </main>
   );

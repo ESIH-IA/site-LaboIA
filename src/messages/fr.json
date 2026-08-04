@@ -158,7 +158,7 @@
         { "badge": "3 experts", "title": "Réseau scientifique international", "description": "Deux chercheurs internationaux et un professeur émérite complètent ce noyau scientifique, apportant au LaCDIA un regard extérieur et des collaborations académiques établies." },
         { "badge": "2+ chercheurs", "title": "Chercheurs nationaux associés", "description": "D'autres chercheurs nationaux, aux expertises complémentaires, rejoignent progressivement le laboratoire et contribuent à l'élargissement de ses axes de recherche." },
         { "badge": "2 ingénieurs", "title": "Ingénierie IA et données", "description": "Deux ingénieurs en intelligence artificielle, spécialisés dans le traitement de grands volumes de données, assurent la mise en œuvre technique des projets et modèles du laboratoire." },
-        { "badge": "1 direction", "title": "Direction scientifique et institutionnelle", "description": "La direction du laboratoire s'appuie sur la direction d'un établissement d'enseignement supérieur partenaire, garante de l'ancrage institutionnel du LaCDIA et de la cohérence de sa stratégie scientifique." },
+        { "badge": "ESIH", "title": "Rattachement institutionnel", "description": "Le LaCDIA est rattaché à l'École Supérieure d'Infotronique d'Haïti (ESIH), qui en garantit l'ancrage institutionnel et juridique. La direction scientifique du laboratoire relève de ses propres instances de gouvernance.", "linkLabel": "ESIH", "linkHref": "https://esih.edu" },
         { "badge": "1 expert", "title": "Expertise en IA générative", "description": "Un expert en intelligence artificielle générative complète l'équipe, portant l'exploration de ces technologies émergentes au sein des travaux du LaCDIA." }
       ],
       "stats": [
@@ -167,6 +167,10 @@
         { "value": "2", "label": "Ingénieurs IA" },
         { "value": "6", "label": "Profils d'expertise" }
       ]
+    },
+    "partners": {
+      "becomePartner": "Devenez partenaire",
+      "becomePartnerAria": "Devenir partenaire du LaCDIA — nous contacter"
     },
     "actualites": {
       "badge": "Actualités",

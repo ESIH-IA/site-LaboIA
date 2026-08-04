@@ -79,7 +79,14 @@ export default async function Home() {
         intro={home.highlightsIntro}
         items={home.highlights?.length ? home.highlights : undefined}
       />
-      <Team />
+      <Team
+        sectionLabel={home.teamSectionLabel}
+        title={home.teamTitle}
+        intro={home.teamIntro}
+        note={home.teamNote}
+        categories={home.teamCategories}
+        stats={home.teamStats}
+      />
       <ActualitesSection
         title={home.publicationsTitle}
         intro={home.publicationsIntro}

@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import type { MouseEvent } from "react";
 
 type PartnerPreview = {
@@ -64,10 +66,11 @@ function PartnerTile({ partner }: { partner: PartnerPreview }) {
 }
 
 export default function Partners({ title, intro, badge, items }: PartnersProps) {
+  const t = useTranslations("home.partners");
   if (!title && !intro && !badge && items.length === 0) return null;
 
   return (
-    <section style={{ background: "var(--labo-bg)", color: "var(--labo-text)", padding: "clamp(5rem,9vw,8rem) 0" }}>
+    <section className="section-labo-surface" style={{ padding: "clamp(5rem,9vw,8rem) 0" }}>
       <div className="container">
         <div className="section-header-row">
           <div>
@@ -77,10 +80,18 @@ export default function Partners({ title, intro, badge, items }: PartnersProps) 
           {badge ? <div className="badge-teal-box">{badge}</div> : null}
         </div>
 
-        <div className="partner-tile-grid" style={{ marginTop: "3rem" }}>
+        <div className="partner-tile-grid partner-tile-grid-flow" style={{ marginTop: "3rem" }}>
           {items.map((partner) => (
             <PartnerTile key={partner._id} partner={partner} />
           ))}
+          <Link
+            href="/contact"
+            aria-label={t("becomePartnerAria")}
+            className="partner-tile partner-tile-ghost"
+          >
+            <span>{t("becomePartner")}</span>
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
     </section>

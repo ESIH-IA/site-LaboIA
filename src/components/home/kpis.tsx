@@ -11,55 +11,15 @@ type KpisProps = {
   meta?: KpiSettings;
 };
 
-// Position/style of each visible slot in the 6-col bento grid, in display order.
-// Only as many slots as available items are rendered, so the grid degrades
-// gracefully instead of dereferencing a missing item when the CMS has fewer
-// (or more) than 4 KPIs.
-const SLOTS: { gridColumn: string; gridRow: string; featured?: boolean }[] = [
-  { gridColumn: "1 / span 3", gridRow: "1", featured: true },
-  { gridColumn: "4 / span 2", gridRow: "1" },
-  { gridColumn: "6 / span 1", gridRow: "1" },
-  { gridColumn: "2 / span 5", gridRow: "2", featured: true },
+type StripeMeta = { color: string; gradEnd: string };
+
+// Cycled per item so the underline gradient direction alternates teal->violet / violet->teal.
+const STRIPE_META: StripeMeta[] = [
+  { color: "#00d4aa", gradEnd: "#6c63ff" },
+  { color: "#6c63ff", gradEnd: "#00d4aa" },
+  { color: "#00b4e4", gradEnd: "#6c63ff" },
+  { color: "#6c63ff", gradEnd: "#00d4aa" },
 ];
-
-type ArcMeta = { color: string; progress: number; border: string; glow: string; gradEnd: string };
-
-const CARD_META: ArcMeta[] = [
-  { color: "#00d4aa", progress: 0.83, border: "rgba(0,212,170,0.18)",  glow: "rgba(0,212,170,0.10)",  gradEnd: "#6c63ff" },
-  { color: "#6c63ff", progress: 0.12, border: "rgba(108,99,255,0.18)", glow: "rgba(108,99,255,0.08)", gradEnd: "#00d4aa" },
-  { color: "#00b4e4", progress: 0.25, border: "rgba(0,180,228,0.18)",  glow: "rgba(0,180,228,0.08)",  gradEnd: "#6c63ff" },
-  { color: "#6c63ff", progress: 1.0,  border: "rgba(108,99,255,0.18)", glow: "rgba(108,99,255,0.10)", gradEnd: "#00d4aa" },
-];
-
-function ArcRing({ progress = 0.75, color = "#00d4aa", size = 72 }: { progress?: number; color?: string; size?: number }) {
-  const R = (size - 8) / 2;
-  const cx = size / 2;
-  const cy = size / 2;
-  const toRad = (deg: number) => deg * (Math.PI / 180);
-  const px = (a: number) => cx + R * Math.cos(a);
-  const py = (a: number) => cy + R * Math.sin(a);
-  const start = toRad(135);
-  const sweep = toRad(270) * Math.min(1, Math.max(0, progress));
-  const end = start + sweep;
-  const trackEnd = start + toRad(270);
-  const large = sweep > Math.PI ? 1 : 0;
-  const filterStr = "drop-shadow(0 0 5px " + color + "80)";
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true" style={{ flexShrink: 0 }}>
-      <path
-        d={`M ${px(start)} ${py(start)} A ${R} ${R} 0 1 1 ${px(trackEnd)} ${py(trackEnd)}`}
-        fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="4" strokeLinecap="round"
-      />
-      {sweep > 0.01 && (
-        <path
-          d={`M ${px(start)} ${py(start)} A ${R} ${R} 0 ${large} 1 ${px(end)} ${py(end)}`}
-          fill="none" stroke={color} strokeWidth="4" strokeLinecap="round"
-          style={{ filter: filterStr }}
-        />
-      )}
-    </svg>
-  );
-}
 
 function parseNum(val: string): number | null {
   const n = parseInt(val.replace(/\D/g, ""), 10);
@@ -84,50 +44,50 @@ function useCounter(target: number, active: boolean, duration = 1300) {
   return count;
 }
 
-function KpiCard({ item, index, active, featured }: { item: KpiItem; index: number; active: boolean; featured?: boolean }) {
-  const m = CARD_META[index % CARD_META.length];
+function KpiStripe({ item, index, active }: { item: KpiItem; index: number; active: boolean }) {
+  const m = STRIPE_META[index % STRIPE_META.length];
   const num = parseNum(item.value);
   const hasSuffix = item.value.includes("+");
   const count = useCounter(num ?? 0, active && num !== null, 1200 + index * 150);
   const display = num !== null ? String(count) + (hasSuffix ? "+" : "") : item.value;
-  const glowBox = "0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05)";
-  const glowBoxHover = "0 20px 52px rgba(0,0,0,0.38), 0 0 0 1px " + m.border;
 
   return (
-    <article
-      style={{
-        position: "relative", borderRadius: 20,
-        padding: featured ? "2.5rem 2.25rem" : "2rem 1.75rem",
-        background: "rgba(17,24,39,0.85)",
-        border: "1px solid " + m.border,
-        backdropFilter: "blur(16px)", overflow: "hidden",
-        transition: "transform 0.28s ease, box-shadow 0.28s ease",
-        boxShadow: glowBox,
-        display: "flex", flexDirection: "column",
-        justifyContent: "space-between", gap: "1.5rem",
-        minHeight: featured ? 220 : 185, height: "100%",
-      }}
-      onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(-5px)"; el.style.boxShadow = glowBoxHover; }}
-      onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(0)"; el.style.boxShadow = glowBox; }}
-    >
-      <div aria-hidden="true" style={{ position: "absolute", top: "-40%", right: "-15%", width: 180, height: 180, borderRadius: "50%", background: "radial-gradient(circle, " + m.glow + " 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
-        <div style={{ fontFamily: "var(--font-display)", fontSize: featured ? "clamp(3rem,5vw,4.5rem)" : "clamp(2.25rem,3.5vw,3.25rem)", fontWeight: 900, lineHeight: 0.88, letterSpacing: "-0.04em", background: "linear-gradient(135deg, " + m.color + ", " + m.gradEnd + ")", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-          {display}
-        </div>
-        <ArcRing progress={m.progress} color={m.color} size={featured ? 76 : 62} />
+    <div className="kpi-stripe" style={{ flex: "1 1 0", minWidth: 180, padding: "0 1.75rem" }}>
+      <div
+        style={{
+          fontFamily: "var(--font-display)",
+          fontSize: "clamp(2.5rem,4vw,3.75rem)",
+          fontWeight: 900,
+          lineHeight: 0.9,
+          letterSpacing: "-0.04em",
+          backgroundImage: "linear-gradient(135deg, " + m.color + ", " + m.gradEnd + ")",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+      >
+        {display}
       </div>
-      <div>
-        <div style={{ fontFamily: "var(--font-display)", fontSize: featured ? "1rem" : "0.9rem", fontWeight: 700, color: "var(--labo-text)", marginBottom: "0.35rem", lineHeight: 1.25 }}>
-          {item.label}
-        </div>
-        {item.note && (
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.06em", color: "rgba(136,146,176,0.55)", margin: 0, lineHeight: 1.5 }}>
-            {item.note}
-          </p>
-        )}
+      <span
+        aria-hidden="true"
+        style={{
+          display: "block",
+          width: 40,
+          height: 3,
+          borderRadius: 999,
+          margin: "0.85rem 0 1rem",
+          background: "linear-gradient(90deg, " + m.color + ", " + m.gradEnd + ")",
+        }}
+      />
+      <div style={{ fontFamily: "var(--font-display)", fontSize: "0.95rem", fontWeight: 700, color: "var(--labo-text)", marginBottom: "0.35rem", lineHeight: 1.25 }}>
+        {item.label}
       </div>
-    </article>
+      {item.note && (
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.06em", color: "rgba(136,146,176,0.55)", margin: 0, lineHeight: 1.5 }}>
+          {item.note}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -147,10 +107,9 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
     obs.observe(el);
     return () => obs.disconnect();
   }, [onIntersect]);
-  const four = list.slice(0, 4);
 
   return (
-    <section ref={sectionRef} style={{ background: "var(--labo-bg)", padding: "clamp(5rem,9vw,8rem) 0" }}>
+    <section ref={sectionRef} className="section-labo" style={{ padding: "clamp(5rem,9vw,8rem) 0" }}>
       <div className="container">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", alignItems: "end", marginBottom: "3.5rem" }}>
           <div>
@@ -170,16 +129,22 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
             </p>
           )}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "1.25rem" }}>
-          {four.map((item, i) => {
-            const slot = SLOTS[i];
-            if (!slot) return null;
-            return (
-              <div key={item._id ?? i} style={{ gridColumn: slot.gridColumn, gridRow: slot.gridRow }}>
-                <KpiCard item={item} index={i} active={active} featured={slot.featured} />
-              </div>
-            );
-          })}
+        <div
+          className="kpi-bar"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            borderRadius: 20,
+            border: "1px solid var(--labo-border)",
+            background: "rgba(17,24,39,0.5)",
+            padding: "2.5rem 0",
+          }}
+        >
+          {list.map((item, i) => (
+            <div key={item._id ?? i} className="kpi-bar-item" style={{ display: "flex", flex: "1 1 0", minWidth: 180 }}>
+              <KpiStripe item={item} index={i} active={active} />
+            </div>
+          ))}
         </div>
         {(meta?.lastUpdated || meta?.disclaimer) && (
           <div style={{ marginTop: "1.75rem", display: "flex", flexWrap: "wrap", justifyContent: "flex-end", gap: "1rem", fontFamily: "var(--font-mono)", fontSize: "0.63rem", letterSpacing: "0.07em", color: "rgba(136,146,176,0.38)" }}>
@@ -189,12 +154,15 @@ export default function Kpis({ title, intro, items, meta }: KpisProps) {
         )}
       </div>
       <style>{`
+        .kpi-bar-item:not(:first-child) { border-left: 1px solid var(--labo-border); }
         @media (max-width: 900px) {
-          .kpis-bento { grid-template-columns: 1fr 1fr !important; }
-          .kpis-bento > div { grid-column: span 1 !important; grid-row: auto !important; }
+          .kpi-bar-item { flex: 1 1 50% !important; min-width: 50% !important; margin-bottom: 2rem; }
+          .kpi-bar-item:nth-child(odd) { border-left: none !important; }
         }
-        @media (max-width: 540px) { .kpis-bento { grid-template-columns: 1fr !important; } }
-        @media (prefers-reduced-motion: reduce) { article { transition: none !important; } }
+        @media (max-width: 540px) {
+          .kpi-bar-item { flex: 1 1 100% !important; min-width: 100% !important; border-left: none !important; }
+        }
+        @media (prefers-reduced-motion: reduce) { .kpi-stripe { transition: none !important; } }
       `}</style>
     </section>
   );

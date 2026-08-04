@@ -255,6 +255,12 @@ export type HomePageData = {
   highlights?: Array<{ title: string; description: string }>;
   kpisTitle?: string;
   kpisIntro?: string;
+  teamSectionLabel?: string;
+  teamTitle?: string;
+  teamIntro?: string;
+  teamNote?: string;
+  teamCategories?: Array<{ badge: string; title: string; description: string; linkLabel?: string; linkHref?: string }>;
+  teamStats?: Array<{ value: string; label: string }>;
   publicationsTitle?: string;
   publicationsIntro?: string;
   partnersTitle?: string;

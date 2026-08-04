@@ -158,7 +158,7 @@
         { "badge": "3 experts", "title": "International scientific network", "description": "Two international researchers and an emeritus professor complete this scientific core, bringing LaCDIA an outside perspective and established academic collaborations." },
         { "badge": "2+ researchers", "title": "Associate national researchers", "description": "Other national researchers, with complementary expertise, are progressively joining the laboratory and contributing to the expansion of its research areas." },
         { "badge": "2 engineers", "title": "AI and data engineering", "description": "Two artificial intelligence engineers, specialized in large-scale data processing, handle the technical implementation of the laboratory's projects and models." },
-        { "badge": "1 director", "title": "Scientific and institutional leadership", "description": "The laboratory's leadership is backed by the leadership of a partner higher-education institution, guaranteeing LaCDIA's institutional anchoring and the coherence of its scientific strategy." },
+        { "badge": "ESIH", "title": "Institutional affiliation", "description": "LaCDIA is affiliated with the École Supérieure d'Infotronique d'Haïti (ESIH), which guarantees its institutional and legal standing. The laboratory's scientific direction is carried out by its own scientific governance bodies.", "linkLabel": "ESIH", "linkHref": "https://esih.edu" },
         { "badge": "1 expert", "title": "Generative AI expertise", "description": "A generative artificial intelligence expert completes the team, driving the exploration of these emerging technologies within LaCDIA's work." }
       ],
       "stats": [
@@ -167,6 +167,10 @@
         { "value": "2", "label": "AI engineers" },
         { "value": "6", "label": "Areas of expertise" }
       ]
+    },
+    "partners": {
+      "becomePartner": "Become a partner",
+      "becomePartnerAria": "Become a LaCDIA partner — contact us"
     },
     "actualites": {
       "badge": "News",

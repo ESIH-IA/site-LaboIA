@@ -377,6 +377,74 @@ async function seed() {
     ]),
     kpisTitle: localeString("Indicateurs cles"),
     kpisIntro: localeText("Donn\u00e9es quantitatives sur nos activit\u00e9s de recherche et d'innovation"),
+    teamSectionLabel: localeString("\u00c9quipe scientifique"),
+    teamTitle: localeString(
+      "Une expertise scientifique de haut niveau, ancr\u00e9e en Ha\u00efti et ouverte sur le monde",
+    ),
+    teamIntro: localeText(
+      "Le LaCDIA rassemble une dizaine de profils scientifiques et techniques compl\u00e9mentaires \u2014 chercheurs nationaux et internationaux, ing\u00e9nieurs sp\u00e9cialis\u00e9s et experts des technologies \u00e9mergentes \u2014 pour porter une recherche en intelligence artificielle rigoureuse et ancr\u00e9e dans les r\u00e9alit\u00e9s cara\u00efbeennes.",
+    ),
+    teamNote: localeText(
+      "Certains profils cumulent plusieurs responsabilit\u00e9s scientifiques et institutionnelles ; cette pr\u00e9sentation refl\u00e8te les comp\u00e9tences mobilis\u00e9es par le laboratoire plut\u00f4t qu'un organigramme fig\u00e9.",
+    ),
+    teamCategories: withKeys([
+      {
+        _type: "teamCategoryItem",
+        badge: localeString("2 chercheurs \u00b7 HDR"),
+        title: localeString("Chercheurs seniors habilit\u00e9s"),
+        description: localeText(
+          "Deux chercheurs nationaux, titulaires d'une Habilitation \u00e0 Diriger des Recherches, encadrent les travaux du laboratoire et en garantissent l'exigence scientifique.",
+        ),
+      },
+      {
+        _type: "teamCategoryItem",
+        badge: localeString("3 experts"),
+        title: localeString("R\u00e9seau scientifique international"),
+        description: localeText(
+          "Deux chercheurs internationaux et un professeur \u00e9m\u00e9rite compl\u00e8tent ce noyau scientifique, apportant au LaCDIA un regard ext\u00e9rieur et des collaborations acad\u00e9miques \u00e9tablies.",
+        ),
+      },
+      {
+        _type: "teamCategoryItem",
+        badge: localeString("2+ chercheurs"),
+        title: localeString("Chercheurs nationaux associ\u00e9s"),
+        description: localeText(
+          "D'autres chercheurs nationaux, aux expertises compl\u00e9mentaires, rejoignent progressivement le laboratoire et contribuent \u00e0 l'\u00e9largissement de ses axes de recherche.",
+        ),
+      },
+      {
+        _type: "teamCategoryItem",
+        badge: localeString("2 ing\u00e9nieurs"),
+        title: localeString("Ing\u00e9nierie IA et donn\u00e9es"),
+        description: localeText(
+          "Deux ing\u00e9nieurs en intelligence artificielle, sp\u00e9cialis\u00e9s dans le traitement de grands volumes de donn\u00e9es, assurent la mise en \u0153uvre technique des projets et mod\u00e8les du laboratoire.",
+        ),
+      },
+      {
+        _type: "teamCategoryItem",
+        badge: localeString("ESIH"),
+        title: localeString("Rattachement institutionnel"),
+        description: localeText(
+          "Le LaCDIA est rattach\u00e9 \u00e0 l'\u00c9cole Sup\u00e9rieure d'Infotronique d'Ha\u00efti (ESIH), qui en garantit l'ancrage institutionnel et juridique. La direction scientifique du laboratoire rel\u00e8ve de ses propres instances de gouvernance.",
+        ),
+        linkLabel: localeString("ESIH"),
+        linkHref: "https://esih.edu",
+      },
+      {
+        _type: "teamCategoryItem",
+        badge: localeString("1 expert"),
+        title: localeString("Expertise en IA g\u00e9n\u00e9rative"),
+        description: localeText(
+          "Un expert en intelligence artificielle g\u00e9n\u00e9rative compl\u00e8te l'\u00e9quipe, portant l'exploration de ces technologies \u00e9mergentes au sein des travaux du LaCDIA.",
+        ),
+      },
+    ]),
+    teamStats: withKeys([
+      { _type: "teamStatItem", value: "11", label: localeString("Membres mobilis\u00e9s") },
+      { _type: "teamStatItem", value: "2", label: localeString("Chercheurs internationaux") },
+      { _type: "teamStatItem", value: "2", label: localeString("Ing\u00e9nieurs IA") },
+      { _type: "teamStatItem", value: "6", label: localeString("Profils d'expertise") },
+    ]),
     publicationsTitle: localeString("Publications r\u00e9centes"),
     publicationsIntro: localeText("Articles, rapports et communications qui documentent nos avanc\u00e9es scientifiques."),
     partnersTitle: localeString("Partenaires & collaborations"),

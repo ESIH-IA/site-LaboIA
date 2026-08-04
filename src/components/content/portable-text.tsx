@@ -28,7 +28,7 @@ export default function PortableTextRenderer({ value }: Props) {
   if (!value || value.length === 0) return null;
 
   return (
-    <div className="prose">
+    <div className="rich-text">
       <PortableText value={value} components={portableTextComponents} />
     </div>
   );
