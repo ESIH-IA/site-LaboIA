@@ -73,6 +73,16 @@ const localeBlockContent = defineType({
   ],
 });
 
+const localeStringList = defineType({
+  name: "localeStringList",
+  title: "Localized String List",
+  type: "object",
+  fields: [
+    defineField({ name: "fr", type: "array", of: [{ type: "string" }], title: "FR" }),
+    defineField({ name: "en", type: "array", of: [{ type: "string" }], title: "EN" }),
+  ],
+});
+
 const navItem = defineType({
   name: "navItem",
   title: "Navigation Item",
@@ -1088,6 +1098,7 @@ const useCase = defineType({
     defineField({ name: "solution", type: "text" }),
     defineField({ name: "solutionIntl", type: "localeText" }),
     defineField({ name: "benefits", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "benefitsIntl", type: "localeStringList" }),
     defineField({ name: "order", type: "number" }),
   ],
 });
@@ -1141,6 +1152,7 @@ const solutionsPage = defineType({
     defineField({ name: "flowTitle", type: "localeString" }),
     defineField({ name: "flowDescription", type: "localeText" }),
     defineField({ name: "flowSteps", type: "array", of: [{ type: "string" }] }),
+    defineField({ name: "flowStepsIntl", type: "localeStringList" }),
     defineField({ name: "servicesTitle", type: "localeString" }),
     defineField({ name: "servicesIntro", type: "localeText" }),
     defineField({ name: "services", type: "array", of: [{ type: "string" }] }),
@@ -1277,6 +1289,7 @@ export const schemaTypes = [
   localeString,
   localeText,
   localeBlockContent,
+  localeStringList,
   navItem,
   linkAction,
   highlightItem,

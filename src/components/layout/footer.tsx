@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
+import CookieSettingsLink from "@/components/layout/cookie-settings-link";
 import type { Locale } from "@/lib/i18n";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
 
@@ -141,6 +142,7 @@ export default async function Footer({
                       { label: t("legalNotice"), href: "/mentions-legales" },
                       { label: t("privacy"), href: "/confidentialite" },
                       { label: t("cookies"), href: "/cookies" },
+                      { label: t("terms"), href: "/conditions-utilisation" },
                     ]
                 ).map((item) => (
                   <Link
@@ -151,6 +153,7 @@ export default async function Footer({
                     {item.label}
                   </Link>
                 ))}
+                <CookieSettingsLink label={t("manageCookies")} />
               </nav>
             </div>
 

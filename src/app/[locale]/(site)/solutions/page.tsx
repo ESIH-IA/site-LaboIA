@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
 
 import CollaborateCta from "@/components/home/collaborate-cta";
+import NeuralHeroBackground from "@/components/shared/neural-hero-background";
 import { ProjectCard } from "@/components/cards/cards";
 import { sanityFetch } from "@/lib/sanity/client";
 import { getServerLocale } from "@/lib/i18n-server";
@@ -49,18 +50,7 @@ export default async function SolutionsPage() {
     <main>
       {/* Hero Section */}
       <section className="page-hero page-hero-dark">
-        {/* Grille de fond */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute", inset: 0, pointerEvents: "none",
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)," +
-              "linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            opacity: 0.5,
-          }}
-        />
+        <NeuralHeroBackground />
         {/* Halo teal */}
         <div
           aria-hidden="true"
