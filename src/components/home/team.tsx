@@ -2,96 +2,141 @@
 
 import { useTranslations } from "next-intl";
 import { GraduationCap, Globe, Users, Database, Building2, Sparkles } from "lucide-react";
-import type { ComponentType } from "react";
+import type { ComponentType, CSSProperties } from "react";
 
-type TeamCategory = { badge: string; title: string; description: string };
+type TeamCategory = { badge: string; title: string; description: string; linkLabel?: string; linkHref?: string };
 type TeamStat = { value: string; label: string };
+
+// Splices a single inline link into a plain-text description by matching
+// linkLabel verbatim (e.g. turning the "ESIH" in a sentence into a link to
+// esih.edu) instead of requiring rich text for what's otherwise one word.
+function DescriptionWithLink({ text, linkLabel, linkHref, color }: { text: string; linkLabel?: string; linkHref?: string; color: string }) {
+  if (!linkLabel || !linkHref) return <>{text}</>;
+  const index = text.indexOf(linkLabel);
+  if (index === -1) return <>{text}</>;
+  const before = text.slice(0, index);
+  const after = text.slice(index + linkLabel.length);
+  return (
+    <>
+      {before}
+      <a href={linkHref} target="_blank" rel="noreferrer" style={{ color, textDecoration: "underline", textUnderlineOffset: 2 }}>
+        {linkLabel}
+      </a>
+      {after}
+    </>
+  );
+}
+
+type TeamProps = {
+  sectionLabel?: string;
+  title?: string;
+  intro?: string;
+  note?: string;
+  categories?: TeamCategory[];
+  stats?: TeamStat[];
+};
 
 type CategoryMeta = {
   icon: ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
   color: string;
-  border: string;
 };
 
-// Order matches src/messages/{fr,en}.json home.team.categories.
+// Order matches home.team.categories.
+// Colors are literal hex (mirroring --tech-accent-teal / --tech-accent-violet)
+// because they're suffixed with an alpha channel below (e.g. `color + "22"`),
+// which var() cannot do.
 const CATEGORY_META: CategoryMeta[] = [
-  { icon: GraduationCap, color: "#00d4aa", border: "rgba(0,212,170,0.22)" },
-  { icon: Globe, color: "#6c63ff", border: "rgba(108,99,255,0.22)" },
-  { icon: Users, color: "#00d4aa", border: "rgba(0,212,170,0.22)" },
-  { icon: Database, color: "#6c63ff", border: "rgba(108,99,255,0.22)" },
-  { icon: Building2, color: "#00d4aa", border: "rgba(0,212,170,0.22)" },
-  { icon: Sparkles, color: "#6c63ff", border: "rgba(108,99,255,0.22)" },
+  { icon: GraduationCap, color: "#00b894" },
+  { icon: Globe, color: "#4f46e5" },
+  { icon: Users, color: "#00b894" },
+  { icon: Database, color: "#4f46e5" },
+  { icon: Building2, color: "#00b894" },
+  { icon: Sparkles, color: "#4f46e5" },
 ];
 
-function TeamCard({ item, meta }: { item: TeamCategory; meta: CategoryMeta }) {
+// The zigzag offset is keyed by column position (index % 3), never by raw
+// item index, and only takes effect once the grid is guaranteed to be 3
+// columns wide (see the >=1024px rule below). That's what keeps a node from
+// ever drifting into the row above/below it: two cards sharing a column
+// always carry the *same* offset, so they move together instead of toward
+// each other — a previous version alternated by raw index, which let a
+// "down" card in row 1 collide with an "up" card directly below it in row 2.
+const COLUMN_SHIFT = [-22, 30, -14];
+
+function TeamNode({ item, meta, columnIndex }: { item: TeamCategory; meta: CategoryMeta; columnIndex: number }) {
   const Icon = meta.icon;
+  const shift = COLUMN_SHIFT[columnIndex % COLUMN_SHIFT.length];
   return (
     <div
-      className="glass-labo-hover team-card"
-      style={{ borderRadius: 20, padding: "1.75rem", display: "flex", gap: "1.25rem", alignItems: "flex-start" }}
+      className="team-node"
+      style={{ "--node-shift": `${shift}px` } as CSSProperties}
     >
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", flexShrink: 0 }}>
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            background: `radial-gradient(circle at 30% 30%, ${meta.color}33, ${meta.color}11)`,
-            border: "1px solid " + meta.border,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: meta.color,
-          }}
-        >
-          <Icon size={22} strokeWidth={1.7} aria-hidden />
+      <div
+        className="card-tech-hover team-node-card"
+        style={{ borderRadius: 18, padding: "1.5rem 1.5rem 1.65rem" }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.85rem" }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 12,
+              flexShrink: 0,
+              background: `radial-gradient(circle at 30% 30%, ${meta.color}22, ${meta.color}0d)`,
+              border: "1px solid " + meta.color + "33",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: meta.color,
+            }}
+          >
+            <Icon size={19} strokeWidth={1.7} aria-hidden />
+          </div>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.06em",
+              padding: "0.2rem 0.55rem",
+              borderRadius: 999,
+              background: meta.color + "14",
+              border: "1px solid " + meta.color + "33",
+              color: meta.color,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {item.badge}
+          </span>
         </div>
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.62rem",
-            letterSpacing: "0.06em",
-            padding: "0.2rem 0.55rem",
-            borderRadius: 999,
-            background: meta.color + "1a",
-            border: "1px solid " + meta.border,
-            color: meta.color,
-            whiteSpace: "nowrap",
-          }}
-        >
-          {item.badge}
-        </span>
-      </div>
-      <div>
         <h3
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1rem",
+            fontSize: "0.98rem",
             fontWeight: 700,
-            color: "var(--labo-text)",
-            marginBottom: "0.5rem",
+            color: "var(--tech-text)",
+            marginBottom: "0.4rem",
             lineHeight: 1.3,
           }}
         >
           {item.title}
         </h3>
-        <p style={{ fontSize: "0.85rem", color: "var(--labo-text-muted)", lineHeight: 1.65, margin: 0 }}>
-          {item.description}
+        <p style={{ fontSize: "0.83rem", color: "var(--tech-text-muted)", lineHeight: 1.6, margin: 0 }}>
+          <DescriptionWithLink text={item.description} linkLabel={item.linkLabel} linkHref={item.linkHref} color={meta.color} />
         </p>
       </div>
     </div>
   );
 }
 
-export default function Team() {
+export default function Team({ sectionLabel, title, intro, note, categories, stats }: TeamProps) {
   const t = useTranslations("home.team");
-  const categories = t.raw("categories") as TeamCategory[];
-  const stats = t.raw("stats") as TeamStat[];
+  const list = categories?.length ? categories : (t.raw("categories") as TeamCategory[]);
+  const statList = stats?.length ? stats : (t.raw("stats") as TeamStat[]);
 
   return (
-    <section id="notre-equipe" style={{ background: "var(--labo-bg)", padding: "clamp(5rem,9vw,8rem) 0" }}>
+    <section id="notre-equipe" className="section-tech" style={{ padding: "clamp(5rem,9vw,8rem) 0" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", alignItems: "end", marginBottom: "3rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", alignItems: "end", marginBottom: "4rem" }}>
           <div>
             <p
               style={{
@@ -99,11 +144,11 @@ export default function Team() {
                 fontSize: "0.65rem",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                color: "var(--labo-accent-violet)",
+                color: "var(--tech-accent-teal)",
                 marginBottom: "0.85rem",
               }}
             >
-              {t("sectionLabel")}
+              {sectionLabel ?? t("sectionLabel")}
             </p>
             <h2
               style={{
@@ -112,21 +157,21 @@ export default function Team() {
                 fontWeight: 900,
                 letterSpacing: "-0.03em",
                 lineHeight: 1.05,
-                color: "var(--labo-text)",
+                color: "var(--tech-text)",
                 margin: 0,
               }}
             >
-              {t("sectionTitle")}
+              {title ?? t("sectionTitle")}
             </h2>
           </div>
-          <p style={{ fontSize: "0.95rem", color: "var(--labo-text-muted)", lineHeight: 1.75, margin: 0 }}>
-            {t("sectionIntro")}
+          <p style={{ fontSize: "0.95rem", color: "var(--tech-text-muted)", lineHeight: 1.75, margin: 0 }}>
+            {intro ?? t("sectionIntro")}
           </p>
         </div>
 
-        <div className="team-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem", marginBottom: "2.5rem" }}>
-          {categories.map((item, i) => (
-            <TeamCard key={item.title} item={item} meta={CATEGORY_META[i % CATEGORY_META.length]} />
+        <div className="team-track">
+          {list.map((item, i) => (
+            <TeamNode key={item.title} item={item} meta={CATEGORY_META[i % CATEGORY_META.length]} columnIndex={i % 3} />
           ))}
         </div>
 
@@ -137,13 +182,14 @@ export default function Team() {
             gridTemplateColumns: "repeat(4, 1fr)",
             overflow: "hidden",
             borderRadius: 16,
-            border: "1px solid rgba(255,255,255,0.08)",
+            border: "1px solid var(--tech-border)",
             gap: 1,
-            background: "rgba(255,255,255,0.06)",
+            background: "var(--tech-border)",
+            marginTop: "3.5rem",
           }}
         >
-          {stats.map((s) => (
-            <div key={s.label} style={{ background: "rgba(17,24,39,0.85)", padding: "1.5rem 1.25rem", textAlign: "center" }}>
+          {statList.map((s) => (
+            <div key={s.label} style={{ background: "var(--tech-surface)", padding: "1.5rem 1.25rem", textAlign: "center" }}>
               <div
                 style={{
                   fontFamily: "var(--font-display)",
@@ -151,7 +197,7 @@ export default function Team() {
                   fontWeight: 800,
                   lineHeight: 1,
                   marginBottom: "0.4rem",
-                  background: "linear-gradient(135deg,#00d4aa,#6c63ff)",
+                  backgroundImage: "linear-gradient(135deg, var(--tech-accent-teal), var(--tech-accent-violet))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -165,7 +211,7 @@ export default function Team() {
                   fontSize: "0.68rem",
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  color: "var(--labo-text-muted)",
+                  color: "var(--tech-text-muted)",
                 }}
               >
                 {s.label}
@@ -181,22 +227,40 @@ export default function Team() {
             fontFamily: "var(--font-mono)",
             fontSize: "0.72rem",
             letterSpacing: "0.03em",
-            color: "rgba(136,146,176,0.55)",
+            color: "rgba(10,15,28,0.4)",
           }}
         >
-          {t("note")}
+          {note ?? t("note")}
         </p>
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          #notre-equipe .team-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        .team-track {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.75rem;
+          padding: 1rem 0;
+        }
+        .team-node {
+          position: relative;
+        }
+        @media (min-width: 640px) {
+          .team-track { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        }
+        /* The zigzag offset only ever runs at this fixed 3-column width —
+           COLUMN_SHIFT is written for exactly 3 columns, so it stays off at
+           the 2-column tablet breakpoint above instead of risking a
+           mismatched column count. */
+        @media (min-width: 1024px) {
+          .team-track { grid-template-columns: repeat(3, 1fr); gap: 2.5rem 1.75rem; padding: 3rem 0 1rem; }
+          .team-node { transform: translateY(var(--node-shift)); transition: transform 0.4s ease; }
         }
         @media (max-width: 640px) {
-          #notre-equipe .team-grid { grid-template-columns: 1fr !important; }
-          #notre-equipe .team-card { flex-direction: column !important; align-items: flex-start !important; }
-          #notre-equipe .team-stats { grid-template-columns: repeat(2, 1fr) !important; }
           #notre-equipe [style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+          #notre-equipe .team-stats { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .team-node { transition: none !important; }
         }
       `}</style>
     </section>

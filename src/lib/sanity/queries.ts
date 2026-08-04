@@ -297,6 +297,21 @@ export const homePageQuery = groq`
     },
     "kpisTitle": coalesce(kpisTitle[$locale], kpisTitle.fr, kpisTitle.en),
     "kpisIntro": coalesce(kpisIntro[$locale], kpisIntro.fr, kpisIntro.en),
+    "teamSectionLabel": coalesce(teamSectionLabel[$locale], teamSectionLabel.fr, teamSectionLabel.en),
+    "teamTitle": coalesce(teamTitle[$locale], teamTitle.fr, teamTitle.en),
+    "teamIntro": coalesce(teamIntro[$locale], teamIntro.fr, teamIntro.en),
+    "teamNote": coalesce(teamNote[$locale], teamNote.fr, teamNote.en),
+    "teamCategories": teamCategories[]{
+      "badge": coalesce(badge[$locale], badge.fr, badge.en),
+      "title": coalesce(title[$locale], title.fr, title.en),
+      "description": coalesce(description[$locale], description.fr, description.en),
+      "linkLabel": coalesce(linkLabel[$locale], linkLabel.fr, linkLabel.en),
+      linkHref
+    },
+    "teamStats": teamStats[]{
+      value,
+      "label": coalesce(label[$locale], label.fr, label.en)
+    },
     "publicationsTitle": coalesce(publicationsTitle[$locale], publicationsTitle.fr, publicationsTitle.en),
     "publicationsIntro": coalesce(publicationsIntro[$locale], publicationsIntro.fr, publicationsIntro.en),
     "partnersTitle": coalesce(partnersTitle[$locale], partnersTitle.fr, partnersTitle.en),

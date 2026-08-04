@@ -27,6 +27,7 @@
   --tech-text-muted: #5a6378;
   --tech-accent: #0a0f1c;
   --tech-accent-teal: #00b894;
+  --tech-accent-violet: #4f46e5;
   --tech-accent-warm: #e8632a;
 
   /* — Shared radius */
@@ -113,7 +114,7 @@ body {
 }
 
 .section-labo-surface {
-  background-color: var(--labo-bg);
+  background-color: var(--labo-surface);
   color: var(--labo-text);
 }
 
@@ -134,6 +135,39 @@ body {
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
 .font-serif   { font-family: var(--font-serif); }
+
+/* ============================================================
+   RICH TEXT (Portable Text) — replaces the never-installed
+   @tailwindcss/typography "prose" classes previously used here.
+   ============================================================ */
+.rich-text {
+  color: var(--labo-text-muted);
+  line-height: 1.75;
+  font-size: 1rem;
+  max-width: 68ch;
+}
+.rich-text > * + * { margin-top: 1.1em; }
+.rich-text h2, .rich-text h3, .rich-text h4 {
+  font-family: var(--font-display);
+  color: var(--labo-text);
+  line-height: 1.3;
+  margin-top: 1.6em;
+}
+.rich-text h2 { font-size: 1.5rem; font-weight: 800; }
+.rich-text h3 { font-size: 1.2rem; font-weight: 700; }
+.rich-text h4 { font-size: 1.05rem; font-weight: 700; }
+.rich-text ul { padding-left: 1.25em; list-style: disc; }
+.rich-text li + li { margin-top: 0.4em; }
+.rich-text blockquote {
+  border-left: 2px solid var(--labo-accent-teal);
+  padding-left: 1.1em;
+  font-style: italic;
+  color: var(--labo-text);
+}
+.rich-text strong { color: var(--labo-text); font-weight: 700; }
+.rich-text a { color: var(--labo-accent-teal); text-decoration: underline; text-underline-offset: 2px; }
+.rich-text a:hover { color: var(--labo-accent-violet); }
+.rich-text img { border-radius: var(--radius-lg); margin-top: 1.5em; width: 100%; height: auto; }
 
 .text-display-hero {
   font-family: var(--font-display);
@@ -1686,6 +1720,37 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
   justify-content: center;
   gap: 2rem;
+}
+
+/* Centered flex-wrap variant: stays intentional-looking at any partner
+   count instead of leaving dead grid cells when the list is short. */
+.partner-tile-grid-flow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.partner-tile-grid-flow .partner-tile {
+  flex: 0 0 auto;
+  width: 180px;
+}
+
+.partner-tile-ghost {
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--labo-border);
+  color: var(--labo-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.partner-tile-ghost:hover,
+.partner-tile-ghost:focus-visible {
+  border-color: var(--labo-accent-teal);
+  color: var(--labo-accent-teal);
 }
 
 .partner-tile {

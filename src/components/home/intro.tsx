@@ -20,48 +20,43 @@ export default async function Intro({ eyebrow, title, body, actions, locale = "f
   const t = await getTranslations({ locale, namespace: "home" });
 
   return (
-    <section className="section-labo section-padding-sm">
+    <section className="section-labo-surface section-padding-sm relative overflow-hidden">
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, var(--labo-accent-teal), var(--labo-accent-violet), transparent)" }}
+        aria-hidden="true"
+      />
       <div className="container-site">
-        <div
-          className="rounded-3xl p-10 md:p-14 relative overflow-hidden"
-          style={{ background: "var(--tech-bg)", color: "var(--tech-text)" }}
-        >
-          <div
-            className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, #00b894, transparent)" }}
-            aria-hidden="true"
-          />
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <div className="badge-dark inline-flex mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#00b894]" />
-                {eyebrow ?? "LaCDIA"}
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <div className="badge-teal inline-flex mb-6">
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--labo-accent-teal)" }} />
+              {eyebrow ?? "LaCDIA"}
+            </div>
+            <h2
+              className="text-display-lg"
+              style={{ color: "var(--labo-text)", fontFamily: "var(--font-syne, sans-serif)" }}
+            >
+              {title ?? t("introTitle")}
+            </h2>
+          </div>
+          <div>
+            <p className="text-lg leading-relaxed" style={{ color: "var(--labo-text-muted)" }}>
+              {body ?? t("introBody")}
+            </p>
+            {actions && actions.length > 0 && (
+              <div className="flex flex-wrap gap-3 mt-6">
+                {actions.map((action) => (
+                  <Link
+                    key={action.href}
+                    href={action.href}
+                    className={action.variant === "primary" ? "btn btn-cta-primary" : "btn btn-cta-secondary"}
+                  >
+                    {action.label}
+                  </Link>
+                ))}
               </div>
-              <h2
-                className="text-display-lg"
-                style={{ color: "var(--tech-text)", fontFamily: "var(--font-syne, sans-serif)" }}
-              >
-                {title ?? t("introTitle")}
-              </h2>
-            </div>
-            <div>
-              <p className="text-lg leading-relaxed" style={{ color: "var(--tech-text-muted)" }}>
-                {body ?? t("introBody")}
-              </p>
-              {actions && actions.length > 0 && (
-                <div className="flex flex-wrap gap-3 mt-6">
-                  {actions.map((action) => (
-                    <Link
-                      key={action.href}
-                      href={action.href}
-                      className={action.variant === "primary" ? "btn btn-cta-primary" : "btn btn-cta-secondary"}
-                    >
-                      {action.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>

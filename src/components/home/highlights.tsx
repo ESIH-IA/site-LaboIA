@@ -281,7 +281,7 @@ export default function Highlights({ title, intro, items }: HighlightsProps) {
   const openAx = openIndex !== null ? AXES_META[openIndex % AXES_META.length] : null;
 
   return (
-    <section id="axes-de-recherche" style={{ background: "var(--labo-bg)", padding: "clamp(5rem,9vw,8rem) 0" }}>
+    <section id="axes-de-recherche" className="section-labo-surface" style={{ padding: "clamp(5rem,9vw,8rem) 0" }}>
       <div className="container">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", alignItems: "end", marginBottom: "3rem" }}>
           <div>

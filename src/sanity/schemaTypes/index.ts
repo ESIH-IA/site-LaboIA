@@ -107,6 +107,40 @@ const linkAction = defineType({
   ],
 });
 
+const teamCategoryItem = defineType({
+  name: "teamCategoryItem",
+  title: "Team Category Item",
+  type: "object",
+  fields: [
+    defineField({ name: "badge", type: "localeString", title: "Badge (ex: \"2 chercheurs · HDR\")" }),
+    defineField({ name: "title", type: "localeString", title: "Title" }),
+    defineField({ name: "description", type: "localeText", title: "Description" }),
+    defineField({
+      name: "linkLabel",
+      type: "localeString",
+      title: "Link label (optional)",
+      description: "Mot ou expression exact(e), présent dans la description, à transformer en lien (ex: \"ESIH\").",
+    }),
+    defineField({ name: "linkHref", type: "url", title: "Link URL (optional)" }),
+  ],
+  preview: {
+    select: { title: "title.fr", subtitle: "badge.fr" },
+  },
+});
+
+const teamStatItem = defineType({
+  name: "teamStatItem",
+  title: "Team Stat Item",
+  type: "object",
+  fields: [
+    defineField({ name: "value", type: "string", title: "Value (ex: \"11\")" }),
+    defineField({ name: "label", type: "localeString", title: "Label" }),
+  ],
+  preview: {
+    select: { title: "value", subtitle: "label.fr" },
+  },
+});
+
 const highlightItem = defineType({
   name: "highlightItem",
   title: "Highlight Item",
@@ -380,6 +414,12 @@ const homePage = defineType({
     defineField({ name: "highlights", type: "array", of: [{ type: "highlightItem" }] }),
     defineField({ name: "kpisTitle", type: "localeString", title: "KPIs title" }),
     defineField({ name: "kpisIntro", type: "localeText", title: "KPIs intro" }),
+    defineField({ name: "teamSectionLabel", type: "localeString", title: "Team section label" }),
+    defineField({ name: "teamTitle", type: "localeString", title: "Team title" }),
+    defineField({ name: "teamIntro", type: "localeText", title: "Team intro" }),
+    defineField({ name: "teamNote", type: "localeText", title: "Team note" }),
+    defineField({ name: "teamCategories", type: "array", of: [{ type: "teamCategoryItem" }], title: "Team categories" }),
+    defineField({ name: "teamStats", type: "array", of: [{ type: "teamStatItem" }], title: "Team stats" }),
     defineField({ name: "publicationsTitle", type: "localeString", title: "Publications title" }),
     defineField({ name: "publicationsIntro", type: "localeText", title: "Publications intro" }),
     defineField({ name: "partnersTitle", type: "localeString", title: "Partners title" }),
@@ -1240,6 +1280,8 @@ export const schemaTypes = [
   navItem,
   linkAction,
   highlightItem,
+  teamCategoryItem,
+  teamStatItem,
   seo,
   pageCard,
   tableRow,

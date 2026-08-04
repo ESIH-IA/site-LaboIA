@@ -13,13 +13,27 @@ function getLocalValue(field: any, locale: string) {
   return field[locale] || field.fr || field.en || null;
 }
 
+// Alternates the LABO "void" / "elevated" tones across blocks so a generic
+// Sanity page gets the same breathing rhythm as the homepage, instead of a
+// flat background from top to bottom. TECH (cream) is intentionally left out
+// here — it stays reserved for the homepage Équipe signature moment.
+function toneClass(index: number) {
+  return index % 2 === 0 ? 'section-labo' : 'section-labo-surface';
+}
+
+function actionClass(variant: string | undefined, index: number) {
+  if (variant === 'primary') return 'btn btn-primary-labo';
+  if (variant === 'secondary') return 'btn btn-secondary-labo';
+  return index === 0 ? 'btn btn-primary-labo' : 'btn btn-secondary-labo';
+}
+
 export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string }) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
     return null;
   }
 
   return (
-    <div className="flex flex-col gap-16 md:gap-24 w-full">
+    <div className="flex flex-col w-full">
       {blocks.map((block, index) => {
         const key = block._key || `block-${index}`;
 
@@ -31,159 +45,31 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
             const actions = block.actions || [];
 
             return (
-              <section key={key} className="text-center max-w-4xl mx-auto pt-16 pb-8 px-4">
-                {badge && (
-                  <span className="inline-block py-1.5 px-4 rounded-full bg-blue-50 text-blue-800 text-sm font-bold mb-6 tracking-wide uppercase">
-                    {badge}
-                  </span>
-                )}
-                {title && <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">{title}</h1>}
-                {description && <p className="text-lg md:text-xl text-muted-foreground mb-8">{description}</p>}
-                
-                {actions.length > 0 && (
-                  <div className="flex flex-wrap items-center justify-center gap-4">
-                    {actions.map((act: any, i: number) => {
-                      const label = getLocalValue(act.labelIntl, locale) || act.label;
-                      const variantClass =
-                        act.variant === 'primary'
-                          ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                          : act.variant === 'secondary'
-                            ? 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                            : 'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground';
-                      return (
-                        <Link
-                          key={i}
-                          href={act.href || '#'}
-                          className={`px-6 py-3 rounded-lg font-medium transition-colors ${variantClass}`}
-                        >
-                          {label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-              </section>
-            );
-          }
+              <section key={key} className="section-labo" style={{ padding: 'clamp(4.5rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)' }}>
+                <div className="container" style={{ maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
+                  {badge && (
+                    <div className="badge-teal" style={{ display: 'inline-flex', marginBottom: '1.5rem' }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--labo-accent-teal)', flexShrink: 0 }} />
+                      {badge}
+                    </div>
+                  )}
+                  {title && (
+                    <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.25rem,5vw,3.75rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--labo-text)', margin: '0 0 1.25rem' }}>
+                      {title}
+                    </h1>
+                  )}
+                  {description && (
+                    <p style={{ fontSize: '1.05rem', color: 'var(--labo-text-muted)', lineHeight: 1.75, margin: '0 auto' }}>
+                      {description}
+                    </p>
+                  )}
 
-          case 'textImageBlock': {
-            const title = getLocalValue(block.title, locale);
-            const content = getLocalValue(block.content, locale);
-            const isImageLeft = block.imagePosition === 'left';
-            
-            return (
-              <section key={key} className="container mx-auto px-4">
-                <div className={`flex flex-col gap-12 items-center md:items-start ${isImageLeft ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
-                  <div className="flex-1 max-w-2xl">
-                    {title && <h2 className="text-3xl md:text-4xl font-bold mb-6">{title}</h2>}
-                    {content && (
-                      <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground">
-                        <PortableText value={content} components={portableTextComponents} />
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex-1 w-full relative">
-                    {block.imageUrl ? (
-                      <div className="relative rounded-2xl shadow-xl w-full aspect-video bg-muted overflow-hidden">
-                        <Image
-                          src={block.imageUrl}
-                          alt={block.imageAlt || ""}
-                          fill
-                          sizes="(min-width: 768px) 50vw, 100vw"
-                          className="object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="rounded-2xl bg-muted aspect-video w-full" />
-                    )}
-                  </div>
-                </div>
-              </section>
-            );
-          }
-
-          case 'featuresBlock': {
-            const title = getLocalValue(block.title, locale);
-            const intro = getLocalValue(block.intro, locale);
-            const features = block.features || [];
-
-            return (
-              <section key={key} className="container mx-auto px-4 py-8 bg-muted/30 rounded-3xl">
-                <div className="text-center max-w-3xl mx-auto mb-12">
-                  {title && <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>}
-                  {intro && <p className="text-lg text-muted-foreground">{intro}</p>}
-                </div>
-                
-                {features.length > 0 && (
-                  <div className="grid md:grid-cols-3 gap-8">
-                    {features.map((feat: any, i: number) => {
-                      const fTitle = getLocalValue(feat.titleIntl, locale) || feat.title;
-                      const fDesc = getLocalValue(feat.descriptionIntl, locale) || feat.description;
-                      return (
-                        <div key={i} className="bg-background rounded-2xl p-8 shadow-sm border border-border/50">
-                          <h3 className="text-xl font-bold mb-3">{fTitle}</h3>
-                          <p className="text-muted-foreground">{fDesc}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </section>
-            );
-          }
-
-          case 'kpisBlock': {
-            const title = getLocalValue(block.title, locale);
-            const intro = getLocalValue(block.intro, locale);
-            const kpis = block.kpisList || [];
-
-            return (
-              <section key={key} className="container mx-auto px-4">
-                <div className="mb-10 text-center">
-                  {title && <h2 className="text-3xl font-bold mb-4">{title}</h2>}
-                  {intro && <p className="text-lg text-muted-foreground">{intro}</p>}
-                </div>
-                
-                {kpis.length > 0 && (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {kpis.map((kpi: any, i: number) => {
-                      const kLabel = getLocalValue(kpi.labelIntl, locale) || kpi.label;
-                      const kNote = getLocalValue(kpi.noteIntl, locale) || kpi.note;
-                      return (
-                        <div key={i} className="text-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-                          <div className="text-4xl md:text-5xl font-black text-primary mb-2">{kpi.value}</div>
-                          <div className="font-semibold text-lg mb-1">{kLabel}</div>
-                          {kNote && <div className="text-sm text-muted-foreground">{kNote}</div>}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </section>
-            );
-          }
-
-          case 'ctaBlock': {
-            const title = getLocalValue(block.title, locale);
-            const body = getLocalValue(block.body, locale);
-            const actions = block.actions || [];
-
-            return (
-              <section key={key} className="container mx-auto px-4 my-8">
-                <div className="bg-primary text-primary-foreground rounded-3xl p-12 text-center shadow-xl">
-                  {title && <h2 className="text-3xl md:text-5xl font-bold mb-6">{title}</h2>}
-                  {body && <p className="text-lg md:text-xl opacity-90 mb-10 max-w-2xl mx-auto">{body}</p>}
-                  
                   {actions.length > 0 && (
-                    <div className="flex flex-wrap items-center justify-center gap-4">
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '0.85rem', marginTop: '2.25rem' }}>
                       {actions.map((act: any, i: number) => {
                         const label = getLocalValue(act.labelIntl, locale) || act.label;
                         return (
-                          <Link 
-                            key={i} 
-                            href={act.href || '#'}
-                            className="px-8 py-4 rounded-xl font-bold transition-all bg-background text-foreground hover:scale-105 shadow-md"
-                          >
+                          <Link key={i} href={act.href || '#'} className={actionClass(act.variant, i)}>
                             {label}
                           </Link>
                         );
@@ -195,12 +81,175 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
             );
           }
 
+          case 'textImageBlock': {
+            const title = getLocalValue(block.title, locale);
+            const content = getLocalValue(block.content, locale);
+            const isImageLeft = block.imagePosition === 'left';
+
+            return (
+              <section key={key} className={toneClass(index)} style={{ padding: 'clamp(4rem,7vw,6rem) 0' }}>
+                <div className="container">
+                  <div
+                    className="text-image-grid"
+                    style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', alignItems: 'center', flexDirection: isImageLeft ? 'row-reverse' : 'row' }}
+                  >
+                    <div style={{ flex: '1 1 380px', minWidth: 280 }}>
+                      {title && (
+                        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem,3vw,2.25rem)', fontWeight: 800, color: 'var(--labo-text)', letterSpacing: '-0.02em', margin: '0 0 1.25rem' }}>
+                          {title}
+                        </h2>
+                      )}
+                      {content && (
+                        <div className="rich-text">
+                          <PortableText value={content} components={portableTextComponents} />
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ flex: '1 1 380px', minWidth: 280 }}>
+                      {block.imageUrl ? (
+                        <div style={{ position: 'relative', borderRadius: 20, overflow: 'hidden', width: '100%', aspectRatio: '4 / 3', background: 'var(--labo-surface-2)' }}>
+                          <Image
+                            src={block.imageUrl}
+                            alt={block.imageAlt || ''}
+                            fill
+                            sizes="(min-width: 768px) 50vw, 100vw"
+                            style={{ objectFit: 'cover' }}
+                          />
+                        </div>
+                      ) : (
+                        <div style={{ borderRadius: 20, background: 'var(--labo-surface-2)', width: '100%', aspectRatio: '4 / 3' }} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <style>{`
+                  @media (max-width: 768px) {
+                    .text-image-grid { flex-direction: column !important; }
+                  }
+                `}</style>
+              </section>
+            );
+          }
+
+          case 'featuresBlock': {
+            const title = getLocalValue(block.title, locale);
+            const intro = getLocalValue(block.intro, locale);
+            const features = block.features || [];
+
+            return (
+              <section key={key} className={toneClass(index)} style={{ padding: 'clamp(4rem,7vw,6rem) 0' }}>
+                <div className="container">
+                  <div style={{ maxWidth: 640, margin: '0 auto 3rem', textAlign: 'center' }}>
+                    {title && <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem,3vw,2.25rem)', fontWeight: 800, color: 'var(--labo-text)', letterSpacing: '-0.02em', margin: '0 0 1rem' }}>{title}</h2>}
+                    {intro && <p style={{ fontSize: '1rem', color: 'var(--labo-text-muted)', lineHeight: 1.7, margin: 0 }}>{intro}</p>}
+                  </div>
+
+                  {features.length > 0 && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+                      {features.map((feat: any, i: number) => {
+                        const fTitle = getLocalValue(feat.titleIntl, locale) || feat.title;
+                        const fDesc = getLocalValue(feat.descriptionIntl, locale) || feat.description;
+                        return (
+                          <div key={i} className="card-premium" style={{ padding: '2rem 1.75rem' }}>
+                            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.05rem', fontWeight: 700, color: 'var(--labo-text)', margin: '0 0 0.6rem' }}>{fTitle}</h3>
+                            <p style={{ color: 'var(--labo-text-muted)', fontSize: '0.9rem', lineHeight: 1.7, margin: 0 }}>{fDesc}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          }
+
+          case 'kpisBlock': {
+            const title = getLocalValue(block.title, locale);
+            const intro = getLocalValue(block.intro, locale);
+            const kpis = block.kpisList || [];
+            const stripeColors = ['#00d4aa', '#6c63ff', '#00b4e4', '#6c63ff'];
+
+            return (
+              <section key={key} className={toneClass(index)} style={{ padding: 'clamp(4rem,7vw,6rem) 0' }}>
+                <div className="container">
+                  <div style={{ maxWidth: 640, margin: '0 auto 2.5rem', textAlign: 'center' }}>
+                    {title && <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem,3vw,2.25rem)', fontWeight: 800, color: 'var(--labo-text)', letterSpacing: '-0.02em', margin: '0 0 1rem' }}>{title}</h2>}
+                    {intro && <p style={{ fontSize: '1rem', color: 'var(--labo-text-muted)', lineHeight: 1.7, margin: 0 }}>{intro}</p>}
+                  </div>
+
+                  {kpis.length > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', borderRadius: 20, border: '1px solid var(--labo-border)', background: 'rgba(17,24,39,0.5)', padding: '2.5rem 0' }}>
+                      {kpis.map((kpi: any, i: number) => {
+                        const kLabel = getLocalValue(kpi.labelIntl, locale) || kpi.label;
+                        const kNote = getLocalValue(kpi.noteIntl, locale) || kpi.note;
+                        const color = stripeColors[i % stripeColors.length];
+                        const gradEnd = stripeColors[(i + 1) % stripeColors.length];
+                        return (
+                          <div key={i} style={{ flex: '1 1 0', minWidth: 180, padding: '0 1.75rem', borderLeft: i > 0 ? '1px solid var(--labo-border)' : 'none' }}>
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.25rem,3.5vw,3.25rem)', fontWeight: 900, letterSpacing: '-0.04em', backgroundImage: `linear-gradient(135deg, ${color}, ${gradEnd})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                              {kpi.value}
+                            </div>
+                            <span aria-hidden="true" style={{ display: 'block', width: 36, height: 3, borderRadius: 999, margin: '0.75rem 0 0.9rem', background: `linear-gradient(90deg, ${color}, ${gradEnd})` }} />
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.92rem', fontWeight: 700, color: 'var(--labo-text)', marginBottom: '0.3rem' }}>{kLabel}</div>
+                            {kNote && <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.06em', color: 'rgba(136,146,176,0.55)', margin: 0 }}>{kNote}</p>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          }
+
+          case 'ctaBlock': {
+            const title = getLocalValue(block.title, locale);
+            const body = getLocalValue(block.body, locale);
+            const actions = block.actions || [];
+            const primary = actions.find((a: any) => a.variant === 'primary') ?? actions[0];
+            const secondary = actions.find((a: any) => a.variant === 'secondary') ?? actions[1];
+
+            return (
+              <section key={key} className="collab-cta section">
+                <div className="section-inner" style={{ padding: 'clamp(3.5rem,6vw,5rem) 0' }}>
+                  <div className="collab-cta-box">
+                    <div className="collab-cta-accent" />
+                    <div className="collab-cta-pattern" />
+                    <div className="collab-cta-content">
+                      <div className="collab-cta-text">
+                        {title && <h2 className="collab-cta-title">{title}</h2>}
+                        {body && <p className="collab-cta-body">{body}</p>}
+                      </div>
+                      <div className="collab-cta-buttons">
+                        {primary && (
+                          <Link href={primary.href || '#'} className="btn btn-cta-primary">
+                            {getLocalValue(primary.labelIntl, locale) || primary.label}
+                          </Link>
+                        )}
+                        {secondary && (
+                          <Link href={secondary.href || '#'} className="btn btn-cta-secondary">
+                            {getLocalValue(secondary.labelIntl, locale) || secondary.label}
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
           case 'latestNewsBlock': {
             const title = getLocalValue(block.title, locale);
+            const intro = getLocalValue(block.intro, locale);
+            if (!title && !intro) return null;
             return (
-              <section key={key} className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-border pb-4">
-                  {title ? <h2 className="text-3xl font-bold">{title}</h2> : <div />}
+              <section key={key} className={toneClass(index)} style={{ padding: 'clamp(3rem,5vw,4rem) 0' }}>
+                <div className="container">
+                  <div style={{ borderBottom: '1px solid var(--labo-border)', paddingBottom: '1.5rem' }}>
+                    {title && <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 800, color: 'var(--labo-text)', margin: intro ? '0 0 0.6rem' : 0 }}>{title}</h2>}
+                    {intro && <p style={{ color: 'var(--labo-text-muted)', margin: 0 }}>{intro}</p>}
+                  </div>
                 </div>
               </section>
             );
