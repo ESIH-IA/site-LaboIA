@@ -3,8 +3,8 @@ import { isSanityWriteConfigured, unsubscribeByEmail } from "@/lib/newsletter-su
 
 // Etape 2 de la désinscription : le lien signé envoyé par
 // /api/newsletter/unsubscribe (voir ce fichier) pointe ici. Le jeton est
-// vérifié (signature HMAC + expiration) avant toute suppression réelle du
-// contact Brevo — voir audit pré-production, constat SEC-1 / COMP-1.
+// vérifié (signature HMAC + expiration) avant toute désinscription réelle
+// du document Sanity — voir audit pré-production, constat SEC-1 / COMP-1.
 
 function htmlPage(locale: "fr" | "en", title: string, body: string) {
   return new Response(
