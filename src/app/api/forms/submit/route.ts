@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { sanityWriteClient, isSanityWriteConfigured } from "@/lib/sanity/write-client";
 import { getClientIp, isRateLimited } from "@/lib/rate-limit";
 import { escapeHtml } from "@/lib/utils";
+import { sendEmail } from "@/lib/resend";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -74,11 +75,9 @@ export async function POST(request: Request) {
     updatedAt: createdAt,
   });
 
-  const notifyEmail = process.env.BREVO_NOTIFY_EMAIL;
-  const senderEmail = process.env.BREVO_SENDER_EMAIL;
-  const apiKey = process.env.BREVO_API_KEY;
+  const notifyEmail = process.env.CONTACT_NOTIFY_EMAIL;
 
-  if (notifyEmail && senderEmail && apiKey) {
+  if (notifyEmail) {
     const typeLabel = formType === "collaborer" ? "Collaboration" : "Contact";
     // Contenu utilisateur échappé avant interpolation HTML (SEC-5) :
     // sans cela, un champ contenant des balises pouvait s'injecter dans
@@ -87,44 +86,31 @@ export async function POST(request: Request) {
     const safeEmail = escapeHtml(email);
     const safeOrganization = organization ? escapeHtml(organization) : "";
     const safeSubject = subject ? escapeHtml(subject) : "";
-    // Le corps de l'email affiche le téléphone dans sa propre ligne
-    // (ci-dessous) : on utilise donc le message brut ici pour éviter de
-    // le répéter, même si `message` (avec le préfixe téléphone) est bien
-    // ce qui est enregistré dans Sanity.
     const safeMessage = rawMessage ? escapeHtml(rawMessage) : "";
     const safePhone = phone ? escapeHtml(phone) : "";
 
-    const brevoRes = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": apiKey,
-      },
-      body: JSON.stringify({
-        sender: { email: senderEmail, name: "LaCDIA" },
-        to: [{ email: notifyEmail }],
-        subject: `[LaCDIA] Nouvelle demande — ${typeLabel}`,
-        htmlContent: `
-          <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#f9f9f9;border-radius:8px;">
-            <h2 style="color:#0a0f1c;margin-bottom:16px;">Nouvelle demande de ${typeLabel.toLowerCase()}</h2>
-            <table style="width:100%;border-collapse:collapse;">
-              <tr><td style="padding:8px 0;color:#555;width:140px;">Nom</td><td style="padding:8px 0;font-weight:600;">${safeFullName}</td></tr>
-              <tr><td style="padding:8px 0;color:#555;">Email</td><td style="padding:8px 0;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
-              ${safePhone ? `<tr><td style="padding:8px 0;color:#555;">Téléphone</td><td style="padding:8px 0;"><a href="tel:${safePhone}">${safePhone}</a></td></tr>` : ""}
-              <tr><td style="padding:8px 0;color:#555;">Organisation</td><td style="padding:8px 0;">${safeOrganization || "—"}</td></tr>
-              <tr><td style="padding:8px 0;color:#555;">Objet</td><td style="padding:8px 0;">${safeSubject || "—"}</td></tr>
-            </table>
-            <div style="margin-top:16px;padding:16px;background:#fff;border-radius:6px;border:1px solid #e5e5e5;">
-              <p style="color:#555;margin:0;white-space:pre-wrap;">${safeMessage}</p>
-            </div>
-            <p style="margin-top:16px;font-size:12px;color:#999;">Message reçu via le formulaire du site LaCDIA.</p>
-          </div>`,
-      }),
+    const result = await sendEmail({
+      to: notifyEmail,
+      subject: `[LaCDIA] Nouvelle demande — ${typeLabel}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;background:#f9f9f9;border-radius:8px;">
+          <h2 style="color:#0a0f1c;margin-bottom:16px;">Nouvelle demande de ${typeLabel.toLowerCase()}</h2>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="padding:8px 0;color:#555;width:140px;">Nom</td><td style="padding:8px 0;font-weight:600;">${safeFullName}</td></tr>
+            <tr><td style="padding:8px 0;color:#555;">Email</td><td style="padding:8px 0;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+            ${safePhone ? `<tr><td style="padding:8px 0;color:#555;">Téléphone</td><td style="padding:8px 0;"><a href="tel:${safePhone}">${safePhone}</a></td></tr>` : ""}
+            <tr><td style="padding:8px 0;color:#555;">Organisation</td><td style="padding:8px 0;">${safeOrganization || "—"}</td></tr>
+            <tr><td style="padding:8px 0;color:#555;">Objet</td><td style="padding:8px 0;">${safeSubject || "—"}</td></tr>
+          </table>
+          <div style="margin-top:16px;padding:16px;background:#fff;border-radius:6px;border:1px solid #e5e5e5;">
+            <p style="color:#555;margin:0;white-space:pre-wrap;">${safeMessage}</p>
+          </div>
+          <p style="margin-top:16px;font-size:12px;color:#999;">Message reçu via le formulaire du site LaCDIA.</p>
+        </div>`,
     });
 
-    if (!brevoRes.ok) {
-      const errText = await brevoRes.text();
-      console.error("[brevo] échec envoi email:", brevoRes.status, errText);
+    if (!result.ok) {
+      console.error("[resend] notification contact non envoyee:", result.error);
     }
   }
 
