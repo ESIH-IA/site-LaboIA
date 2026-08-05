@@ -1070,6 +1070,18 @@ const formSubmission = defineType({
   ],
 });
 
+const newsletterSubscriber = defineType({
+  name: "newsletterSubscriber",
+  title: "Newsletter Subscriber",
+  type: "document",
+  fields: [
+    defineField({ name: "email", type: "string" }),
+    defineField({ name: "status", type: "string" }),
+    defineField({ name: "subscribedAt", type: "datetime" }),
+    defineField({ name: "unsubscribedAt", type: "datetime" }),
+  ],
+});
+
 const aiSolution = defineType({
   name: "aiSolution",
   title: "AI Solution",
@@ -1330,6 +1342,7 @@ export const schemaTypes = [
   resourcePage,
   labReport,
   formSubmission,
+  newsletterSubscriber,
   formSettings,
   aiSolution,
   useCase,
