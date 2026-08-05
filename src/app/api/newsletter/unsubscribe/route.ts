@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { createUnsubscribeToken, isUnsubscribeTokenConfigured } from "@/lib/unsubscribe-token";
 import { getSiteUrl } from "@/lib/site-url";
 import { getClientIp, isRateLimited } from "@/lib/rate-limit";
+import { sendEmail } from "@/lib/resend";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -46,10 +47,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: "Email invalide" }, { status: 400 });
   }
 
-  const apiKey = process.env.BREVO_API_KEY;
-  const senderEmail = process.env.BREVO_SENDER_EMAIL;
-
-  if (!apiKey || !senderEmail || !isUnsubscribeTokenConfigured()) {
+  if (!process.env.MESSAGING_URL_RESEND_API_KEY || !isUnsubscribeTokenConfigured()) {
     console.info("[newsletter] desinscription sans provider/secret configure", { email });
     return NextResponse.json(
       { ok: false, message: "Service newsletter non configuré. Veuillez réessayer plus tard." },
@@ -69,30 +67,21 @@ export async function POST(request: Request) {
 
   const copy = copyByLocale[locale as "fr" | "en"];
 
-  const brevoRes = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "api-key": apiKey,
-    },
-    body: JSON.stringify({
-      sender: { email: senderEmail, name: "LaCDIA" },
-      to: [{ email }],
-      subject: copy.subject,
-      htmlContent: `
-        <div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:24px;background:#f9f9f9;border-radius:8px;">
-          <p style="color:#333;line-height:1.6;">${copy.intro}</p>
-          <p style="margin:24px 0;">
-            <a href="${confirmUrl.toString()}" style="background:#0a0f1c;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;">${copy.cta}</a>
-          </p>
-          <p style="color:#999;font-size:12px;">${copy.ignore}</p>
-        </div>`,
-    }),
+  const result = await sendEmail({
+    to: email,
+    subject: copy.subject,
+    html: `
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:24px;background:#f9f9f9;border-radius:8px;">
+        <p style="color:#333;line-height:1.6;">${copy.intro}</p>
+        <p style="margin:24px 0;">
+          <a href="${confirmUrl.toString()}" style="background:#0a0f1c;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;">${copy.cta}</a>
+        </p>
+        <p style="color:#999;font-size:12px;">${copy.ignore}</p>
+      </div>`,
   });
 
-  if (!brevoRes.ok) {
-    const errText = await brevoRes.text();
-    console.error("[brevo] echec envoi email de confirmation de desinscription:", brevoRes.status, errText);
+  if (!result.ok) {
+    console.error("[resend] echec envoi email de confirmation de desinscription:", result.error);
     return NextResponse.json(
       { ok: false, message: "Erreur lors de l'envoi de l'email de confirmation." },
       { status: 502 },
