@@ -126,8 +126,8 @@ function FeaturedCard({ item, locale }: { item: NewsListItem; locale: Locale }) 
         position: "relative",
         borderRadius: 20,
         overflow: "hidden",
-        minHeight: 400,
-        padding: "2.5rem",
+        minHeight: "var(--actu-card-minh, 400px)",
+        padding: "var(--actu-card-pad, 2.5rem)",
         background: "linear-gradient(135deg, rgba(0,212,170,0.08) 0%, rgba(108,99,255,0.12) 100%), #111827",
         border: "1px solid rgba(255,255,255,0.06)",
         boxShadow: "0 12px 40px rgba(0,0,0,0.32), 0 0 0 1px rgba(255,255,255,0.06)",
@@ -150,7 +150,7 @@ function FeaturedCard({ item, locale }: { item: NewsListItem; locale: Locale }) 
       }} />
 
       {/* Top: category + date */}
-      <div style={{ position: "absolute", top: "2rem", left: "2.5rem", right: "2.5rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ position: "absolute", top: "2rem", left: "var(--actu-card-pad, 2.5rem)", right: "var(--actu-card-pad, 2.5rem)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <CategoryPill category={item.category} />
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.1em", color: "rgba(136,146,176,0.6)" }}>
           {formatDate(item.date, locale)}
@@ -162,7 +162,7 @@ function FeaturedCard({ item, locale }: { item: NewsListItem; locale: Locale }) 
         position: "absolute", top: "50%", left: "50%",
         transform: "translate(-50%, -50%)",
         fontFamily: "var(--font-display)",
-        fontSize: "clamp(8rem, 15vw, 14rem)",
+        fontSize: "clamp(var(--actu-wm-min, 8rem), 15vw, 14rem)",
         fontWeight: 900,
         lineHeight: 1,
         letterSpacing: "-0.06em",
@@ -486,7 +486,7 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
 
         {/* Main layout: featured left + grid right */}
         {featured && (
-          <div style={{
+          <div className="actualites-grid" style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: "1.25rem",
@@ -499,7 +499,7 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
             <FeaturedCard item={featured} locale={locale} />
 
             {/* Right column: compact cards grid */}
-            <div style={{
+            <div className="actualites-compact-grid" style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gridTemplateRows: "repeat(2, 1fr)",
@@ -544,7 +544,7 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
 
         {/* Extended cards below (when expanded or more than 4 in rest) */}
         {visible && visibleRest.length > 4 && (
-          <div style={{
+          <div className="actualites-ext-grid" style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "1.25rem",
@@ -606,12 +606,17 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
       </div>
 
       <style>{`
+        #actualites { --actu-card-pad: 2.5rem; --actu-card-minh: 400px; --actu-wm-min: 8rem; }
         @media (max-width: 900px) {
-          .actualites-grid { grid-template-columns: 1fr !important; }
+          #actualites .actualites-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
-          .actualites-compact-grid { grid-template-columns: 1fr !important; }
-          .actualites-ext-grid { grid-template-columns: 1fr 1fr !important; }
+          #actualites .actualites-compact-grid { grid-template-columns: 1fr !important; }
+          #actualites .actualites-ext-grid { grid-template-columns: 1fr 1fr !important; }
+          #actualites { --actu-card-pad: 1.5rem; --actu-card-minh: 300px; --actu-wm-min: 5rem; }
+        }
+        @media (max-width: 480px) {
+          #actualites .actualites-ext-grid { grid-template-columns: 1fr !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           * { transition: none !important; animation: none !important; }
