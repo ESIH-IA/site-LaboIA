@@ -8,8 +8,8 @@ Site institutionnel bilingue (FR/EN) pour LaCDIA, construit avec Next.js App Rou
 - Traductions UI statiques centralisées dans `src/messages/{fr,en}.json` (next-intl, un seul système de traduction) ; le contenu éditorial (pages, axes, actualités...) reste piloté par Sanity (`localeString`/`localeText`).
 - SEO complet : metadata, Open Graph, sitemap et robots.
 - Contenu hybride : contenu local (`src/content`) + contenu dynamique Sanity.
-- Formulaires (collaborer/contact) stockés dans Sanity, notification email optionnelle via Brevo.
-- Newsletter (inscription/désinscription) via Brevo si configuré. Le formulaire de désinscription est toujours affiché sur `/newsletter`, indépendamment du contenu Sanity de la page.
+- Formulaires (collaborer/contact) stockés dans Sanity, notification email via Resend si configuré.
+- Newsletter (inscription/désinscription) : abonnés stockés dans Sanity (`newsletterSubscriber`), email de confirmation de désinscription via Resend. Le formulaire de désinscription est toujours affiché sur `/newsletter`, indépendamment du contenu Sanity de la page.
 - Analytics Matomo ou GA4, activés après consentement cookies.
 
 ## Notes opérationnelles
@@ -58,11 +58,10 @@ SANITY_API_TOKEN=your_sanity_write_token
 # Preview
 SANITY_PREVIEW_SECRET=your_preview_secret
 
-# Brevo (newsletter + notifications)
-BREVO_API_KEY=your_brevo_key
-BREVO_LIST_ID=123
-BREVO_NOTIFY_EMAIL=contact@lacdia.example
-BREVO_SENDER_EMAIL=notifications@lacdia.example
+# Resend (email transactionnel — notifications contact + confirmation desinscription)
+MESSAGING_URL_RESEND_API_KEY=re_your_resend_key
+MESSAGING_URL_RESEND_EMAIL_DOMAIN=lacdia.esih.edu
+CONTACT_NOTIFY_EMAIL=contact@lacdia.esih.edu
 
 # Analytics (choisir Matomo ou GA4)
 NEXT_PUBLIC_MATOMO_URL=https://analytics.example.org/
@@ -95,9 +94,9 @@ npm run translate:en
 
 ## Endpoints API
 
-- `POST /api/forms/submit` : enregistre une demande dans Sanity, envoie un email via Brevo si configuré.
-- `POST /api/newsletter/subscribe` : inscription newsletter (Brevo si configuré).
-- `POST /api/newsletter/unsubscribe` : désinscription newsletter (Brevo si configuré).
+- `POST /api/forms/submit` : enregistre une demande dans Sanity, envoie un email via Resend si `CONTACT_NOTIFY_EMAIL`/`MESSAGING_URL_RESEND_API_KEY` sont configurés.
+- `POST /api/newsletter/subscribe` : inscription newsletter (abonnés stockés dans Sanity).
+- `POST /api/newsletter/unsubscribe` : désinscription newsletter avec email de confirmation via Resend.
 - `GET /api/preview?secret=...` : active le mode preview (Sanity).
 
 ## Déploiement

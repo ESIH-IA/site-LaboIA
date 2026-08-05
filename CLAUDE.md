@@ -50,8 +50,8 @@ Sanity Studio est embarqué dans l'app Next.js : `npm run dev` puis ouvrir `/stu
 
 ### API routes
 
-- `POST /api/forms/submit` — enregistre dans Sanity, notifie par email via Brevo si configuré.
-- `POST /api/newsletter/subscribe` / `POST /api/newsletter/unsubscribe` — via Brevo si configuré. Le formulaire de désinscription (`NewsletterUnsubscribeForm`) est rendu **inconditionnellement** sur `/newsletter` (pas seulement si un éditeur configure une section CMS `formType: "unsubscribe"`) — fonctionnalité compliance-sensible, ne doit pas dépendre d'une config Sanity oubliée.
+- `POST /api/forms/submit` — enregistre dans Sanity, notifie par email via Resend si `CONTACT_NOTIFY_EMAIL`/`MESSAGING_URL_RESEND_API_KEY` sont configurés (`src/lib/resend.ts`).
+- `POST /api/newsletter/subscribe` / `POST /api/newsletter/unsubscribe` — abonnés stockés comme documents Sanity `newsletterSubscriber` (`src/lib/newsletter-subscribers.ts`), email de confirmation de désinscription via Resend. Le formulaire de désinscription (`NewsletterUnsubscribeForm`) est rendu **inconditionnellement** sur `/newsletter` (pas seulement si un éditeur configure une section CMS `formType: "unsubscribe"`) — fonctionnalité compliance-sensible, ne doit pas dépendre d'une config Sanity oubliée.
 - `GET /api/preview` — active le mode preview Sanity (`secret`).
 
 ### Déploiement
