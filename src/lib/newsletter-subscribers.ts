@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 
+import { ClientError } from "@sanity/client";
 import { sanityWriteClient, isSanityWriteConfigured } from "@/lib/sanity/write-client";
 
 export { isSanityWriteConfigured };
@@ -43,7 +44,7 @@ export async function unsubscribeByEmail(email: string): Promise<void> {
     // Email jamais abonne (statusCode 404) : ignore silencieusement, pas de fuite
     // d'info sur qui est abonne (meme comportement idempotent que l'ancien 404 Brevo).
     // Toute autre erreur (token invalide, reseau, rate-limit) est re-levee.
-    if ((error as any).statusCode === 404) {
+    if (error instanceof ClientError && error.statusCode === 404) {
       return;
     }
     throw error;
