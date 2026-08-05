@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { createUnsubscribeToken, isUnsubscribeTokenConfigured } from "@/lib/unsubscribe-token";
+import { isSanityWriteConfigured } from "@/lib/newsletter-subscribers";
 import { getSiteUrl } from "@/lib/site-url";
 import { getClientIp, isRateLimited } from "@/lib/rate-limit";
 import { sendEmail } from "@/lib/resend";
@@ -47,7 +48,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, message: "Email invalide" }, { status: 400 });
   }
 
-  if (!process.env.MESSAGING_URL_RESEND_API_KEY || !isUnsubscribeTokenConfigured()) {
+  if (
+    !process.env.MESSAGING_URL_RESEND_API_KEY ||
+    !process.env.MESSAGING_URL_RESEND_EMAIL_DOMAIN ||
+    !isSanityWriteConfigured ||
+    !isUnsubscribeTokenConfigured()
+  ) {
     console.info("[newsletter] desinscription sans provider/secret configure", { email });
     return NextResponse.json(
       { ok: false, message: "Service newsletter non configuré. Veuillez réessayer plus tard." },

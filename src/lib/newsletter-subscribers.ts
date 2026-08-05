@@ -42,7 +42,7 @@ export async function unsubscribeByEmail(email: string): Promise<void> {
       .commit();
   } catch (error) {
     // Email jamais abonne (statusCode 404) : ignore silencieusement, pas de fuite
-    // d'info sur qui est abonne (meme comportement idempotent que l'ancien 404 Brevo).
+    // d'info sur qui est abonne (comportement idempotent).
     // Toute autre erreur (token invalide, reseau, rate-limit) est re-levee.
     if (error instanceof ClientError && error.statusCode === 404) {
       return;

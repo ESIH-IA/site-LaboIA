@@ -63,6 +63,10 @@ MESSAGING_URL_RESEND_API_KEY=re_your_resend_key
 MESSAGING_URL_RESEND_EMAIL_DOMAIN=lacdia.esih.edu
 CONTACT_NOTIFY_EMAIL=contact@lacdia.esih.edu
 
+# Sécurité — secret de signature des liens de désinscription (HMAC),
+# requis pour que POST /api/newsletter/unsubscribe fonctionne
+UNSUBSCRIBE_TOKEN_SECRET=change_me_to_a_long_random_string
+
 # Analytics (choisir Matomo ou GA4)
 NEXT_PUBLIC_MATOMO_URL=https://analytics.example.org/
 NEXT_PUBLIC_MATOMO_SITE_ID=1

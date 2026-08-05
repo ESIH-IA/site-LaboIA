@@ -70,7 +70,12 @@ export async function GET(request: Request) {
 
   // Email jamais abonne = deja desabonne : traite comme un succes
   // idempotent (voir unsubscribeByEmail), pas d'erreur affichee.
-  await unsubscribeByEmail(email);
+  try {
+    await unsubscribeByEmail(email);
+  } catch (error) {
+    console.error("[newsletter] echec desinscription:", error);
+    return htmlPage(locale, copy.errorTitle, copy.errorBody);
+  }
 
   return htmlPage(locale, copy.okTitle, copy.okBody);
 }
