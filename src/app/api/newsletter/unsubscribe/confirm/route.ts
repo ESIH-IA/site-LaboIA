@@ -1,4 +1,5 @@
 import { verifyUnsubscribeToken } from "@/lib/unsubscribe-token";
+import { isSanityWriteConfigured, unsubscribeByEmail } from "@/lib/newsletter-subscribers";
 
 // Etape 2 de la désinscription : le lien signé envoyé par
 // /api/newsletter/unsubscribe (voir ce fichier) pointe ici. Le jeton est
@@ -63,23 +64,13 @@ export async function GET(request: Request) {
     return htmlPage(locale, copy.invalidTitle, copy.invalidBody);
   }
 
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) {
+  if (!isSanityWriteConfigured) {
     return htmlPage(locale, copy.errorTitle, copy.errorBody);
   }
 
-  const response = await fetch(`https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`, {
-    method: "DELETE",
-    headers: { "api-key": apiKey },
-  });
-
-  // 404 = déjà désabonné / jamais inscrit : on le traite comme un succès
-  // (idempotent) plutôt que d'afficher une erreur à l'utilisateur.
-  if (!response.ok && response.status !== 404) {
-    const errText = await response.text();
-    console.error("[brevo] echec suppression contact:", response.status, errText);
-    return htmlPage(locale, copy.errorTitle, copy.errorBody);
-  }
+  // Email jamais abonne = deja desabonne : traite comme un succes
+  // idempotent (voir unsubscribeByEmail), pas d'erreur affichee.
+  await unsubscribeByEmail(email);
 
   return htmlPage(locale, copy.okTitle, copy.okBody);
 }
