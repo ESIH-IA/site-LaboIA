@@ -143,7 +143,7 @@ body {
 .rich-text {
   color: var(--labo-text-muted);
   line-height: 1.75;
-  font-size: 1rem;
+  font-size: 0.9rem;
   max-width: 68ch;
 }
 .rich-text > * + * { margin-top: 1.1em; }
@@ -153,9 +153,9 @@ body {
   line-height: 1.3;
   margin-top: 1.6em;
 }
-.rich-text h2 { font-size: 1.5rem; font-weight: 800; }
-.rich-text h3 { font-size: 1.2rem; font-weight: 700; }
-.rich-text h4 { font-size: 1.05rem; font-weight: 700; }
+.rich-text h2 { font-size: 1.35rem; font-weight: 800; }
+.rich-text h3 { font-size: 1.1rem; font-weight: 700; }
+.rich-text h4 { font-size: 0.95rem; font-weight: 700; }
 .rich-text ul { padding-left: 1.25em; list-style: disc; }
 .rich-text li + li { margin-top: 0.4em; }
 .rich-text blockquote {
@@ -168,6 +168,30 @@ body {
 .rich-text a { color: var(--labo-accent-teal); text-decoration: underline; text-underline-offset: 2px; }
 .rich-text a:hover { color: var(--labo-accent-violet); }
 .rich-text img { border-radius: var(--radius-lg); margin-top: 1.5em; width: 100%; height: auto; }
+
+/* Sur fonds clairs (pages institutionnelles type "Conditions d'utilisation"),
+   les couleurs par défaut du rich-text (pensées pour fond sombre) sont illisibles :
+   on les repasse en tons foncés pour garder un contraste correct. */
+.section-white .rich-text,
+.section-light .rich-text {
+  color: var(--color-text-body);
+}
+.section-white .rich-text h2,
+.section-white .rich-text h3,
+.section-white .rich-text h4,
+.section-white .rich-text strong,
+.section-white .rich-text blockquote,
+.section-light .rich-text h2,
+.section-light .rich-text h3,
+.section-light .rich-text h4,
+.section-light .rich-text strong,
+.section-light .rich-text blockquote {
+  color: var(--color-text-dark);
+}
+.section-white .rich-text blockquote,
+.section-light .rich-text blockquote {
+  border-left-color: var(--labo-accent-teal);
+}
 
 .text-display-hero {
   font-family: var(--font-display);
@@ -1021,6 +1045,67 @@ body {
 
 .btn-small-primary:hover {
   background: #00b893;
+}
+
+.btn-small-outline {
+  background: transparent;
+  color: var(--labo-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.btn-small-outline:hover {
+  color: var(--labo-text);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+/* ============================================================
+   COOKIE BANNER (carte compacte ancrée en bas à droite)
+   ============================================================ */
+.cookie-banner {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 60;
+  width: min(300px, calc(100vw - 2.5rem));
+  background: rgba(10, 15, 28, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 0.9rem 1rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.cookie-title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--labo-text);
+  margin: 0 0 0.35rem;
+}
+
+.cookie-text {
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--labo-text-muted);
+  margin: 0;
+}
+
+.cookie-text a {
+  color: var(--labo-accent-teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cookie-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.cookie-actions .btn-small {
+  padding: 4px 11px;
+  font-size: 0.68rem;
 }
 
 /* ============================================================
