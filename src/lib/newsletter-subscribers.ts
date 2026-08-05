@@ -39,8 +39,13 @@ export async function unsubscribeByEmail(email: string): Promise<void> {
       .patch(id)
       .set({ status: "unsubscribed", unsubscribedAt: now })
       .commit();
-  } catch {
-    // Email jamais abonne : ignore silencieusement, pas de fuite d'info sur
-    // qui est abonne (meme comportement idempotent que l'ancien 404 Brevo).
+  } catch (error) {
+    // Email jamais abonne (statusCode 404) : ignore silencieusement, pas de fuite
+    // d'info sur qui est abonne (meme comportement idempotent que l'ancien 404 Brevo).
+    // Toute autre erreur (token invalide, reseau, rate-limit) est re-levee.
+    if ((error as any).statusCode === 404) {
+      return;
+    }
+    throw error;
   }
 }
