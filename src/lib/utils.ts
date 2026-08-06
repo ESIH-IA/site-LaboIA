@@ -4,7 +4,7 @@ export function cn(...inputs: (string | undefined | null | false)[]) {
 
 // Echappe le contenu utilisateur avant interpolation dans un email HTML
 // (voir audit pré-production, SEC-5 : les champs de formulaire étaient
-// injectés tels quels dans le htmlContent envoyé via Brevo).
+// injectés tels quels dans le HTML de l'email de notification).
 export function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")

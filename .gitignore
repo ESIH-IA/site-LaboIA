@@ -52,3 +52,6 @@ node_modules_broken/
 temp_*.html
 .next-dev*.log
 _to_delete/
+
+# worktrees isoles (subagent-driven development)
+/.worktrees/
