@@ -2,9 +2,6 @@ import type { Locale } from "@/lib/i18n";
 import { isSanityConfigured, sanityFetch } from "@/lib/sanity/client";
 import {
   formSettingsQuery,
-  getDefaultGovernanceChartStrict,
-  getGovernanceMembers,
-  getGovernancePage,
   homePageQuery,
   kpiListQuery,
   kpiSettingsQuery,
@@ -100,24 +97,4 @@ export async function getSolutionsPageData(locale: Locale): Promise<SolutionsPag
 export async function getFormSettings(locale: Locale): Promise<FormSettings | null> {
   if (!isSanityConfigured) return null;
   return sanityFetch<FormSettings | null>(formSettingsQuery, { locale }, null);
-}
-
-export async function getGovernancePageData(locale: Locale) {
-  if (!isSanityConfigured) {
-    return { mode: "sanity" as const, page: null, chart: null, members: [] };
-  }
-  const page = await getGovernancePage(locale);
-  if (!page) {
-    return { mode: "sanity" as const, page: null, chart: null, members: [] };
-  }
-  const chart = page.showOrgChart
-    ? await getDefaultGovernanceChartStrict(locale)
-    : null;
-  const members = page.membersGroupsToShow?.length
-    ? await getGovernanceMembers(
-        page.membersGroupsToShow,
-        page.membersOrder ?? "orderAsc",
-      )
-    : [];
-  return { mode: "sanity" as const, page, chart, members };
 }

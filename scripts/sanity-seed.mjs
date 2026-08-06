@@ -938,185 +938,6 @@ async function seed() {
     projectsTitle: localeString("Projets en cours"),
     projectsIntro: localeText("Nos projets de recherche appliqu\u00e9e et d'innovation."),
   };
-  const people = [
-    {
-      _id: "person-patrick-attie",
-      _type: "person",
-      name: "Patrick Attie",
-      slug: { current: "patrick-attie" },
-      roleTitle: "Gouvernance institutionnelle",
-      roleCategory: "gouvernance",
-      shortBio:
-        "Co-fondateur du laboratoire LaCDIA. Directeur g\u00e9n\u00e9ral de l'ESIH depuis 2004.",
-      affiliation: "ESIH - \u00c9cole Sup\u00e9rieure d'Infotronique d'Ha\u00efti",
-      longBio:
-        "Co-fondateur du laboratoire LaCDIA et Directeur g\u00e9n\u00e9ral de l'ESIH. Pilote la gouvernance institutionnelle du laboratoire.",
-      expertise: ["Gouvernance institutionnelle", "Direction stratégique", "Innovation pédagogique"],
-      links: { email: "p.attie@esih.edu" },
-      governanceGroup: "gouvernance",
-      order: 1,
-    },
-    {
-      _id: "person-aishael-picard",
-      _type: "person",
-      name: "Aishael Donata Laury Picard",
-      slug: { current: "aishael-picard" },
-      roleTitle: "Direction scientifique - Apprentissage automatique",
-      roleCategory: "direction",
-      shortBio: "Co-fondatrice du laboratoire LaCDIA. Docteure en sciences des donn\u00e9es.",
-      affiliation: "LaCDIA",
-      longBio: "Co-fondatrice du laboratoire LaCDIA. Pilote les activités scientifiques en apprentissage automatique.",
-      expertise: ["Direction scientifique", "Machine Learning", "Data Science"],
-      links: { email: "aishael.picard@lacdia.esih.edu" },
-      governanceGroup: "direction",
-      order: 2,
-    },
-    {
-      _id: "person-livenson-nicolas",
-      _type: "person",
-      name: "Livenson Nicolas",
-      slug: { current: "livenson-nicolas" },
-      roleTitle: "Direction scientifique - Intelligence artificielle",
-      roleCategory: "direction",
-      shortBio: "Co-fondateur du laboratoire LaCDIA. Spécialiste des systèmes multi-agents.",
-      affiliation: "LaCDIA - ESTIA",
-      longBio: "Co-fondateur du laboratoire LaCDIA. Supervise les projets de recherche appliqu\u00e9e.",
-      expertise: ["Intelligence artificielle", "Deep Learning", "Computer Vision"],
-      links: { email: "livenson.nicolas@lacdia.esih.edu", linkedin: "https://linkedin.com/in/livenson-nicolas" },
-      governanceGroup: "direction",
-      order: 3,
-    },
-    {
-      _id: "person-benedique-paul",
-      _type: "person",
-      name: "Dr. Bénédique Paul",
-      slug: { current: "benedique-paul" },
-      roleTitle: "Chercheur associé",
-      roleCategory: "conseil",
-      shortBio: "Membre du conseil scientifique. Expert en agronomie tropicale.",
-      affiliation: "FSAE/UniQ - Université Quisqueya",
-      longBio: "Membre du conseil scientifique. Collabore avec LaCDIA sur des initiatives de recherche appliqu\u00e9e.",
-      expertise: ["Agronomie tropicale", "Syst\u00e8mes agricoles durables", "\u00c9conomie rurale"],
-      links: { email: "b.paul@uniq.edu" },
-      governanceGroup: "comite_scientifique",
-      order: 4,
-    },
-    {
-      _id: "person-serge-mranda",
-      _type: "person",
-      name: "Serge MRANDA",
-      slug: { current: "serge-mranda" },
-      roleTitle: "Conseiller scientifique international",
-      roleCategory: "conseil",
-      shortBio: "Conseiller scientifique international du laboratoire.",
-      affiliation: "À déterminer",
-      longBio: "Conseiller scientifique international. Participe aux orientations de recherche du laboratoire.",
-      expertise: ["A venir"],
-      links: { email: "" },
-      governanceGroup: "comite_scientifique",
-      order: 5,
-    },
-  ];
-
-  const governanceChart = {
-    _id: "governanceChartStrict",
-    _type: "governanceChartStrict",
-    status: "published",
-    title: "Gouvernance LaCDIA",
-    titleIntl: localeString("Gouvernance LaCDIA"),
-    slug: { current: "gouvernance-lacdia" },
-    slugIntl: { fr: { current: "gouvernance-lacdia" }, en: { current: "gouvernance-lacdia" } },
-    orgSectionTitle: "Co-fondateurs du laboratoire",
-    orgSectionTitleIntl: localeString("Co-fondateurs du laboratoire"),
-    orgSectionIntro: [
-      block(
-        "Le laboratoire a \u00e9t\u00e9 co-fond\u00e9 par des acteurs acad\u00e9miques et scientifiques. Sa gouvernance institutionnelle est assur\u00e9e par l'ESIH.",
-      ),
-    ],
-    orgSectionIntroIntl: localeBlock([
-      block(
-        "Le laboratoire a \u00e9t\u00e9 co-fond\u00e9 par des acteurs acad\u00e9miques et scientifiques. Sa gouvernance institutionnelle est assur\u00e9e par l'ESIH.",
-      ),
-    ]),
-    topPerson: { _type: "reference", _ref: "person-patrick-attie" },
-    coFounders: [
-      { _key: makeKey(), _type: "reference", _ref: "person-livenson-nicolas" },
-      { _key: makeKey(), _type: "reference", _ref: "person-aishael-picard" },
-    ],
-    associateResearchers: [
-      { _key: makeKey(), _type: "reference", _ref: "person-benedique-paul" },
-      { _key: makeKey(), _type: "reference", _ref: "person-serge-mranda" },
-    ],
-    membersSectionTitle: "Membres & Profils détaillés",
-    membersSectionTitleIntl: localeString("Membres & Profils détaillés"),
-    membersSectionIntro: [
-      block(
-        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
-      ),
-    ],
-    membersSectionIntroIntl: localeBlock([
-      block(
-        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
-      ),
-    ]),
-    membersToShow: [
-      { _key: makeKey(), _type: "reference", _ref: "person-patrick-attie" },
-      { _key: makeKey(), _type: "reference", _ref: "person-livenson-nicolas" },
-      { _key: makeKey(), _type: "reference", _ref: "person-aishael-picard" },
-      { _key: makeKey(), _type: "reference", _ref: "person-benedique-paul" },
-      { _key: makeKey(), _type: "reference", _ref: "person-serge-mranda" },
-    ],
-  };
-
-  const governancePage = {
-    _id: "governancePage",
-    _type: "governancePage",
-    status: "published",
-    title: "\u00c9quipe & Gouvernance",
-    titleIntl: localeString("\u00c9quipe & Gouvernance"),
-    slug: { current: "gouvernance" },
-    slugIntl: { fr: { current: "gouvernance" }, en: { current: "gouvernance" } },
-    intro: [
-      block(
-        "Découvrez la structure organisationnelle et l'équipe qui pilote LaCDIA dans sa mission de recherche et d'innovation.",
-      ),
-    ],
-    introIntl: localeBlock([
-      block(
-        "Découvrez la structure organisationnelle et l'équipe qui pilote LaCDIA dans sa mission de recherche et d'innovation.",
-      ),
-    ]),
-    showOrgChart: true,
-    orgChartSectionTitle: "Co-fondateurs du laboratoire",
-    orgChartSectionTitleIntl: localeString("Co-fondateurs du laboratoire"),
-    orgChartSectionIntro: [
-      block(
-        "Le laboratoire a \u00e9t\u00e9 co-fond\u00e9 par des acteurs acad\u00e9miques et scientifiques. Sa gouvernance institutionnelle est assur\u00e9e par l'ESIH.",
-      ),
-    ],
-    orgChartSectionIntroIntl: localeBlock([
-      block(
-        "Le laboratoire a \u00e9t\u00e9 co-fond\u00e9 par des acteurs acad\u00e9miques et scientifiques. Sa gouvernance institutionnelle est assur\u00e9e par l'ESIH.",
-      ),
-    ]),
-    showMembers: true,
-    membersSectionTitle: "Membres & Profils détaillés",
-    membersSectionTitleIntl: localeString("Membres & Profils détaillés"),
-    membersSectionIntro: [
-      block(
-        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
-      ),
-    ],
-    membersSectionIntroIntl: localeBlock([
-      block(
-        "L'équipe de LaCDIA réunit des experts en intelligence artificielle, data science et agronomie.",
-      ),
-    ]),
-    membersGroupsToShow: ["direction", "gouvernance", "comite_scientifique"],
-    membersOrder: "orderAsc",
-    governanceChartStrict: { _type: "reference", _ref: "governanceChartStrict" },
-  };
-
   const institutionalPages = [
     {
       _id: "page-a-propos",
@@ -1422,7 +1243,7 @@ async function seed() {
           layout: "cards",
           title: "Coordonnées",
           cards: [
-            card({ title: "Email", description: "contact@lacdia.esih.edu", href: "mailto:contact@lacdia.esih.edu" }),
+            card({ title: "Email", description: "contact.lacdia@esih.edu", href: "mailto:contact.lacdia@esih.edu" }),
             card({ title: "Localisation", description: "Port-au-Prince, Haïti" }),
             card({ title: "Demandes", description: "Recherche, partenariats, projets IA, formation et communication." }),
           ],
@@ -1666,9 +1487,6 @@ async function seed() {
     ...useCases,
     ...sectors,
     solutionsPage,
-    ...people,
-    governanceChart,
-    governancePage,
     ...institutionalPages,
     researchAxis,
     publication,

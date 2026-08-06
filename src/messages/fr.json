@@ -359,28 +359,6 @@
     "switchLanguage": "Changer de langue",
     "currentLanguage": "Langue actuelle"
   },
-  "governance": {
-    "categories": {
-      "gouvernance": "Gouvernance institutionnelle",
-      "direction": "Direction scientifique",
-      "recherche": "Recherche",
-      "conseil": "Conseil scientifique"
-    },
-    "upcoming": "À venir",
-    "expertise": "Expertise",
-    "contribution": "Contribution",
-    "contact": "Contacter",
-    "modalTitle": "Biographie",
-    "modalExpertiseTitle": "Domaines d'expertise",
-    "learnMore": "Voir le profil complet",
-    "viewProfileOf": "Voir le profil de {name}",
-    "close": "Fermer",
-    "website": "Site web",
-    "emptyMembers": "Aucun profil n'est configuré pour cette section.",
-    "scientificCouncil": "Conseil scientifique",
-    "invalidPremiumConfig": "Configuration invalide : 1 personne en gouvernance et exactement 2 co-fondateurs requis.",
-    "invalidStrictConfig": "Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis."
-  },
   "pages": {
     "solutions": {
       "fallbackSummary": "Découvrez nos services et solutions d'intelligence artificielle concrètes, testées et éprouvées."

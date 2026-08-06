@@ -142,7 +142,6 @@ export type Person = {
   shortBio?: string;
   longBio?: string;
   affiliation?: string;
-  governanceGroup?: "direction" | "gouvernance" | "comite_scientifique";
   teamGroup?: "research" | "associate";
   expertise?: string[];
   links?: {
@@ -154,38 +153,6 @@ export type Person = {
   };
   contribution?: string;
   order?: number;
-};
-
-export type GovernanceChartStrict = {
-  _id: string;
-  title: string;
-  slug?: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  status: "draft" | "published";
-  orgSectionTitle?: string;
-  orgSectionIntro?: PortableTextBlock[];
-  topPerson: Person;
-  scientificDirectors: [Person, Person];
-  associateResearchers?: Person[];
-  membersSectionTitle?: string;
-  membersSectionIntro?: PortableTextBlock[];
-  membersToShow?: Person[];
-};
-
-export type GovernancePage = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  intro?: PortableTextBlock[];
-  showOrgChart?: boolean;
-  orgChartSectionTitle?: string;
-  orgChartSectionIntro?: PortableTextBlock[];
-  showMembers?: boolean;
-  membersSectionTitle?: string;
-  membersSectionIntro?: PortableTextBlock[];
-  membersGroupsToShow?: Array<"direction" | "gouvernance" | "comite_scientifique">;
-  membersOrder?: "nameAsc" | "orderAsc";
-  governanceChartStrict?: GovernanceChartStrict | null;
 };
 
 export type TeamPage = {

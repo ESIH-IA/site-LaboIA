@@ -836,7 +836,7 @@ const member = defineType({
 
 const person = defineType({
   name: "person",
-  title: "Person (Governance)",
+  title: "Person (Team)",
   type: "document",
   fields: [
     defineField({ name: "name", type: "string", validation: (Rule) => Rule.required() }),
@@ -847,11 +847,6 @@ const person = defineType({
     defineField({ name: "shortBio", type: "text" }),
     defineField({ name: "longBio", type: "text" }),
     defineField({ name: "affiliation", type: "string" }),
-    defineField({
-      name: "governanceGroup",
-      type: "string",
-      options: { list: ["direction", "gouvernance", "comite_scientifique"] },
-    }),
     defineField({
       name: "teamGroup",
       type: "string",
@@ -871,92 +866,6 @@ const person = defineType({
     }),
     defineField({ name: "contribution", type: "text" }),
     defineField({ name: "order", type: "number" }),
-  ],
-});
-
-const governanceChartStrict = defineType({
-  name: "governanceChartStrict",
-  title: "Governance Chart (Strict)",
-  type: "document",
-  fields: [
-    defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" } }),
-    defineField({
-      name: "slugIntl",
-      type: "object",
-      fields: [
-        defineField({ name: "fr", type: "slug", options: { source: "title" } }),
-        defineField({ name: "en", type: "slug", options: { source: "title" } }),
-      ],
-    }),
-    defineField({ name: "orgSectionTitle", type: "string" }),
-    defineField({ name: "orgSectionTitleIntl", type: "localeString" }),
-    defineField({ name: "orgSectionIntro", type: "blockContent" }),
-    defineField({ name: "orgSectionIntroIntl", type: "localeBlockContent" }),
-    defineField({
-      name: "topPerson",
-      type: "reference",
-      to: [{ type: "person" }],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "coFounders",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "person" }] }],
-      validation: (Rule) => Rule.required().length(2),
-    }),
-    defineField({ name: "associateResearchers", type: "array", of: [{ type: "reference", to: [{ type: "person" }] }] }),
-    defineField({ name: "membersSectionTitle", type: "string" }),
-    defineField({ name: "membersSectionTitleIntl", type: "localeString" }),
-    defineField({ name: "membersSectionIntro", type: "blockContent" }),
-    defineField({ name: "membersSectionIntroIntl", type: "localeBlockContent" }),
-    defineField({ name: "membersToShow", type: "array", of: [{ type: "reference", to: [{ type: "person" }] }] }),
-  ],
-});
-
-const governancePage = defineType({
-  name: "governancePage",
-  title: "Governance Page",
-  type: "document",
-  fields: [
-    defineField({ name: "status", type: "string", options: { list: ["draft", "published"] } }),
-    defineField({ name: "title", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "titleIntl", type: "localeString" }),
-    defineField({ name: "slug", type: "slug", options: { source: "title" }, validation: (Rule) => Rule.required() }),
-    defineField({
-      name: "slugIntl",
-      type: "object",
-      fields: [
-        defineField({ name: "fr", type: "slug", options: { source: "title" } }),
-        defineField({ name: "en", type: "slug", options: { source: "title" } }),
-      ],
-    }),
-    defineField({ name: "intro", type: "blockContent" }),
-    defineField({ name: "introIntl", type: "localeBlockContent" }),
-    defineField({ name: "showOrgChart", type: "boolean" }),
-    defineField({ name: "orgChartSectionTitle", type: "string" }),
-    defineField({ name: "orgChartSectionTitleIntl", type: "localeString" }),
-    defineField({ name: "orgChartSectionIntro", type: "blockContent" }),
-    defineField({ name: "orgChartSectionIntroIntl", type: "localeBlockContent" }),
-    defineField({ name: "showMembers", type: "boolean" }),
-    defineField({ name: "membersSectionTitle", type: "string" }),
-    defineField({ name: "membersSectionTitleIntl", type: "localeString" }),
-    defineField({ name: "membersSectionIntro", type: "blockContent" }),
-    defineField({ name: "membersSectionIntroIntl", type: "localeBlockContent" }),
-    defineField({
-      name: "membersGroupsToShow",
-      type: "array",
-      of: [{ type: "string" }],
-      options: { list: ["direction", "gouvernance", "comite_scientifique"] },
-    }),
-    defineField({
-      name: "membersOrder",
-      type: "string",
-      options: { list: ["nameAsc", "orderAsc"] },
-    }),
-    defineField({ name: "governanceChartStrict", type: "reference", to: [{ type: "governanceChartStrict" }] }),
   ],
 });
 
@@ -1336,8 +1245,6 @@ export const schemaTypes = [
   institutionalPage,
   member,
   person,
-  governanceChartStrict,
-  governancePage,
   teamPage,
   resourcePage,
   labReport,

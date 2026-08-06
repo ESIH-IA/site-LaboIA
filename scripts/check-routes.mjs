@@ -15,7 +15,6 @@ const paths = [
   "/fr/collaborer",
   "/fr/contact",
   "/fr/ressources",
-  "/fr/gouvernance",
   "/fr/mentions-legales",
   "/fr/confidentialite",
   "/fr/cookies",

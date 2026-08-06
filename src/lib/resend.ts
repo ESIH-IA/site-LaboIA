@@ -21,7 +21,7 @@ export async function sendEmail({ to, subject, html }: SendEmailInput): Promise<
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      from: `LaCDIA <notifications@${domain}>`,
+      from: `LaCDIA <notifications.lacdia@${domain}>`,
       to: [to],
       subject,
       html,

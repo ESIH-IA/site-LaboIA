@@ -359,28 +359,6 @@
     "switchLanguage": "Switch language",
     "currentLanguage": "Current language"
   },
-  "governance": {
-    "categories": {
-      "gouvernance": "Institutional governance",
-      "direction": "Scientific leadership",
-      "recherche": "Research",
-      "conseil": "Scientific council"
-    },
-    "upcoming": "Upcoming",
-    "expertise": "Expertise",
-    "contribution": "Contribution",
-    "contact": "Contact",
-    "modalTitle": "Biography",
-    "modalExpertiseTitle": "Areas of expertise",
-    "learnMore": "View full profile",
-    "viewProfileOf": "View profile of {name}",
-    "close": "Close",
-    "website": "Website",
-    "emptyMembers": "No profiles are configured for this section.",
-    "scientificCouncil": "Scientific council",
-    "invalidPremiumConfig": "Invalid configuration: exactly 1 governance lead and 2 co-founders are required.",
-    "invalidStrictConfig": "Invalid configuration: exactly 1 institutional director and 2 scientific directors are required."
-  },
   "pages": {
     "solutions": {
       "fallbackSummary": "Discover our AI and data science services — tested, proven, and ready to deploy."
