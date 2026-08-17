@@ -289,12 +289,29 @@ export const homePageQuery = groq`
       href,
       variant
     },
+    "missionItems": missionItems[]{
+      "text": coalesce(text[$locale], text.fr, text.en)
+    },
     "highlightsTitle": coalesce(highlightsTitle[$locale], highlightsTitle.fr, highlightsTitle.en),
     "highlightsIntro": coalesce(highlightsIntro[$locale], highlightsIntro.fr, highlightsIntro.en),
     "highlights": highlights[]{
       "title": coalesce(titleIntl[$locale], title),
       "description": coalesce(descriptionIntl[$locale], description)
     },
+    "axe1Title": coalesce(axe1Title[$locale], axe1Title.fr, axe1Title.en),
+    "axe1Description": coalesce(axe1Description[$locale], axe1Description.fr, axe1Description.en),
+    "axe1Keywords": coalesce(axe1Keywords[$locale], axe1Keywords.fr, axe1Keywords.en),
+    "axe1Objectives": coalesce(axe1Objectives[$locale], axe1Objectives.fr, axe1Objectives.en),
+    "axe2Title": coalesce(axe2Title[$locale], axe2Title.fr, axe2Title.en),
+    "axe2Description": coalesce(axe2Description[$locale], axe2Description.fr, axe2Description.en),
+    "axe2Keywords": coalesce(axe2Keywords[$locale], axe2Keywords.fr, axe2Keywords.en),
+    "axe2Objectives": coalesce(axe2Objectives[$locale], axe2Objectives.fr, axe2Objectives.en),
+    "poleTitle": coalesce(poleTitle[$locale], poleTitle.fr, poleTitle.en),
+    "poleDescription": coalesce(poleDescription[$locale], poleDescription.fr, poleDescription.en),
+    "poleSectors": coalesce(poleSectors[$locale], poleSectors.fr, poleSectors.en),
+    "poleNote": coalesce(poleNote[$locale], poleNote.fr, poleNote.en),
+    "ethicsTitle": coalesce(ethicsTitle[$locale], ethicsTitle.fr, ethicsTitle.en),
+    "ethicsText": coalesce(ethicsText[$locale], ethicsText.fr, ethicsText.en),
     "kpisTitle": coalesce(kpisTitle[$locale], kpisTitle.fr, kpisTitle.en),
     "kpisIntro": coalesce(kpisIntro[$locale], kpisIntro.fr, kpisIntro.en),
     "teamSectionLabel": coalesce(teamSectionLabel[$locale], teamSectionLabel.fr, teamSectionLabel.en),

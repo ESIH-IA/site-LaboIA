@@ -217,9 +217,25 @@ export type HomePageData = {
   introTitle?: string;
   introBody?: string;
   introActions?: Array<{ label: string; href: string; variant?: string }>;
+  missionItems?: Array<{ text: string }>;
   highlightsTitle?: string;
   highlightsIntro?: string;
   highlights?: Array<{ title: string; description: string }>;
+  // Architecture scientifique (Option A)
+  axe1Title?: string;
+  axe1Description?: string;
+  axe1Keywords?: string;   // "A · B · C" — split on " · " in component
+  axe1Objectives?: string; // "A · B · C" — split on "·" in component
+  axe2Title?: string;
+  axe2Description?: string;
+  axe2Keywords?: string;
+  axe2Objectives?: string;
+  poleTitle?: string;
+  poleDescription?: string;
+  poleSectors?: string;    // "A · B · C"
+  poleNote?: string;
+  ethicsTitle?: string;
+  ethicsText?: string;
   kpisTitle?: string;
   kpisIntro?: string;
   teamSectionLabel?: string;

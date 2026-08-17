@@ -163,6 +163,24 @@ const highlightItem = defineType({
   ],
 });
 
+const missionItem = defineType({
+  name: "missionItem",
+  title: "Mission Item",
+  type: "object",
+  description: "Un item de la liste des missions. Le champ icône est optionnel (laissez vide pour conserver l'icône par défaut).",
+  fields: [
+    defineField({
+      name: "text",
+      type: "localeText",
+      title: "Texte de la mission",
+      validation: (Rule) => Rule.required(),
+    }),
+  ],
+  preview: {
+    select: { title: "text.fr" },
+  },
+});
+
 const seo = defineType({
   name: "seo",
   title: "SEO",
@@ -416,12 +434,66 @@ const homePage = defineType({
     }),
     defineField({ name: "heroActions", type: "array", of: [{ type: "linkAction" }] }),
     defineField({ name: "introEyebrow", type: "localeString", title: "Intro eyebrow" }),
-    defineField({ name: "introTitle", type: "localeString", title: "Intro title" }),
-    defineField({ name: "introBody", type: "localeText", title: "Intro body" }),
+    defineField({ name: "introTitle", type: "localeString", title: "Vision — titre (grand h2)" }),
+    defineField({ name: "introBody", type: "localeText", title: "Vision — corps (paragraphe)" }),
     defineField({ name: "introActions", type: "array", of: [{ type: "linkAction" }] }),
+    defineField({
+      name: "missionItems",
+      type: "array",
+      of: [{ type: "missionItem" }],
+      title: "Mission — items (6 axes de mission)",
+      description: "Si vide, le contenu par défaut est utilisé. Remplis-en 6 pour remplacer intégralement la liste.",
+    }),
     defineField({ name: "highlightsTitle", type: "localeString", title: "Highlights title" }),
     defineField({ name: "highlightsIntro", type: "localeText", title: "Highlights intro" }),
     defineField({ name: "highlights", type: "array", of: [{ type: "highlightItem" }] }),
+
+    // ── Architecture scientifique — Axe 1 ──────────────────────────────
+    defineField({ name: "axe1Title", type: "localeString", title: "Axe 1 — Titre" }),
+    defineField({ name: "axe1Description", type: "localeText", title: "Axe 1 — Description" }),
+    defineField({
+      name: "axe1Keywords",
+      type: "localeText",
+      title: "Axe 1 — Mots-clés (séparés par ·)",
+      description: "Ex: Apprentissage automatique · Robustesse · Incertitude",
+    }),
+    defineField({
+      name: "axe1Objectives",
+      type: "localeText",
+      title: "Axe 1 — Objectifs (séparés par ·)",
+      description: "Ex: Concevoir des modèles robustes · Formaliser l'incertitude",
+    }),
+
+    // ── Architecture scientifique — Axe 2 ──────────────────────────────
+    defineField({ name: "axe2Title", type: "localeString", title: "Axe 2 — Titre" }),
+    defineField({ name: "axe2Description", type: "localeText", title: "Axe 2 — Description" }),
+    defineField({
+      name: "axe2Keywords",
+      type: "localeText",
+      title: "Axe 2 — Mots-clés (séparés par ·)",
+      description: "Ex: Données complexes · Systèmes réels · Haïti",
+    }),
+    defineField({
+      name: "axe2Objectives",
+      type: "localeText",
+      title: "Axe 2 — Objectifs (séparés par ·)",
+      description: "Ex: Développer des outils pour l'agriculture · Soutenir la santé publique",
+    }),
+
+    // ── Pôle de valorisation ────────────────────────────────────────────
+    defineField({ name: "poleTitle", type: "localeString", title: "Pôle — Titre" }),
+    defineField({ name: "poleDescription", type: "localeText", title: "Pôle — Description" }),
+    defineField({
+      name: "poleSectors",
+      type: "localeText",
+      title: "Pôle — Secteurs d'application (séparés par ·)",
+      description: "Ex: Agriculture · Santé · Services publics · Formation",
+    }),
+    defineField({ name: "poleNote", type: "localeText", title: "Pôle — Note de bas de carte" }),
+
+    // ── Éthique transversale ────────────────────────────────────────────
+    defineField({ name: "ethicsTitle", type: "localeString", title: "Éthique — Titre" }),
+    defineField({ name: "ethicsText", type: "localeText", title: "Éthique — Texte" }),
     defineField({ name: "kpisTitle", type: "localeString", title: "KPIs title" }),
     defineField({ name: "kpisIntro", type: "localeText", title: "KPIs intro" }),
     defineField({ name: "teamSectionLabel", type: "localeString", title: "Team section label" }),
@@ -1214,6 +1286,7 @@ export const schemaTypes = [
   navItem,
   linkAction,
   highlightItem,
+  missionItem,
   teamCategoryItem,
   teamStatItem,
   seo,

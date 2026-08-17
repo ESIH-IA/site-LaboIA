@@ -23,7 +23,6 @@ export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroPr
   const t = useTranslations("home.hero");
   const primary   = actions?.find((a) => a.variant === "primary")   ?? actions?.[0];
   const secondary = actions?.find((a) => a.variant === "secondary") ?? actions?.[1];
-
   const isFr = locale === "fr";
 
   return (
@@ -211,7 +210,7 @@ export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroPr
           </Link>
 
           <Link
-            href={secondary?.href ?? "/solutions#projets"}
+            href={secondary?.href ?? "#architecture-scientifique"}
             style={{
               display: "inline-flex",
               alignItems: "center",
