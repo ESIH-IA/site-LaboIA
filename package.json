@@ -10,7 +10,8 @@
     "check:routes": "node scripts/check-routes.mjs",
     "sanity:seed": "node scripts/sanity-seed.mjs",
     "translate": "node scripts/auto-translate.mjs",
-    "translate:en": "node scripts/auto-translate.mjs --target en"
+    "translate:en": "node scripts/auto-translate.mjs --target en",
+    "sanity:seed-architecture": "node scripts/seed-scientific-architecture.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",
@@ -18,6 +19,7 @@
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.31.1",
     "@tailwindcss/postcss": "^4",
+    "@vercel/speed-insights": "^2.0.0",
     "lucide-react": "^1.21.0",
     "next": "^16.2.12",
     "next-intl": "^4.13.0",

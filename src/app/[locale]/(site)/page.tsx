@@ -3,6 +3,7 @@ import Ticker from "@/components/home/ticker";
 import Intro from "@/components/home/intro";
 import Kpis from "@/components/home/kpis";
 import Highlights from "@/components/home/highlights";
+import GovernanceEthics from "@/components/home/governance-ethics";
 import Team from "@/components/home/team";
 import ActualitesSection from "@/components/home/actualites-section";
 import Partners from "@/components/home/partners";
@@ -49,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const locale = await getServerLocale();
-  const [site, homeData] = await Promise.all([getSiteSettings(locale), getHomeData(locale)]);
+  const [, homeData] = await Promise.all([getSiteSettings(locale), getHomeData(locale)]);
   const { home, kpis, kpiSettings, allNews, featuredPartners } = homeData;
 
   const partners = featuredPartners.map((partner) => ({
@@ -67,18 +68,32 @@ export default async function Home() {
       <Hero badge={home.heroBadge} subtitle={home.heroSubtitle} actions={home.heroActions} locale={locale} />
       <Ticker />
       <Intro
-        eyebrow={home.introEyebrow ?? site.shortName}
-        title={home.introTitle ?? site.description}
-        body={home.introBody}
-        actions={normalizeActions(home.introActions)}
         locale={locale}
+        visionTitle={home.introTitle}
+        visionBody={home.introBody}
+        missionItems={home.missionItems}
       />
-      <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} />
       <Highlights
         title={home.highlightsTitle}
         intro={home.highlightsIntro}
         items={home.highlights?.length ? home.highlights : undefined}
+        axe1Title={home.axe1Title}
+        axe1Description={home.axe1Description}
+        axe1Keywords={home.axe1Keywords}
+        axe1Objectives={home.axe1Objectives}
+        axe2Title={home.axe2Title}
+        axe2Description={home.axe2Description}
+        axe2Keywords={home.axe2Keywords}
+        axe2Objectives={home.axe2Objectives}
+        poleTitle={home.poleTitle}
+        poleDescription={home.poleDescription}
+        poleSectors={home.poleSectors}
+        poleNote={home.poleNote}
+        ethicsTitle={home.ethicsTitle}
+        ethicsText={home.ethicsText}
       />
+      <GovernanceEthics locale={locale} />
+      <Kpis title={home.kpisTitle} intro={home.kpisIntro} items={kpis} meta={kpiSettings} />
       <Team
         sectionLabel={home.teamSectionLabel}
         title={home.teamTitle}

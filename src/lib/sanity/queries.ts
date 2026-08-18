@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 import type { Locale } from "@/lib/i18n";
 import { sanityFetch } from "@/lib/sanity/client";
-import type { GovernancePage, GovernanceChartStrict, Person, TeamPage } from "@/lib/sanity/types";
+import type { Person, TeamPage } from "@/lib/sanity/types";
 
 const seoProjection = `
   "seo": {
@@ -289,12 +289,29 @@ export const homePageQuery = groq`
       href,
       variant
     },
+    "missionItems": missionItems[]{
+      "text": coalesce(text[$locale], text.fr, text.en)
+    },
     "highlightsTitle": coalesce(highlightsTitle[$locale], highlightsTitle.fr, highlightsTitle.en),
     "highlightsIntro": coalesce(highlightsIntro[$locale], highlightsIntro.fr, highlightsIntro.en),
     "highlights": highlights[]{
       "title": coalesce(titleIntl[$locale], title),
       "description": coalesce(descriptionIntl[$locale], description)
     },
+    "axe1Title": coalesce(axe1Title[$locale], axe1Title.fr, axe1Title.en),
+    "axe1Description": coalesce(axe1Description[$locale], axe1Description.fr, axe1Description.en),
+    "axe1Keywords": coalesce(axe1Keywords[$locale], axe1Keywords.fr, axe1Keywords.en),
+    "axe1Objectives": coalesce(axe1Objectives[$locale], axe1Objectives.fr, axe1Objectives.en),
+    "axe2Title": coalesce(axe2Title[$locale], axe2Title.fr, axe2Title.en),
+    "axe2Description": coalesce(axe2Description[$locale], axe2Description.fr, axe2Description.en),
+    "axe2Keywords": coalesce(axe2Keywords[$locale], axe2Keywords.fr, axe2Keywords.en),
+    "axe2Objectives": coalesce(axe2Objectives[$locale], axe2Objectives.fr, axe2Objectives.en),
+    "poleTitle": coalesce(poleTitle[$locale], poleTitle.fr, poleTitle.en),
+    "poleDescription": coalesce(poleDescription[$locale], poleDescription.fr, poleDescription.en),
+    "poleSectors": coalesce(poleSectors[$locale], poleSectors.fr, poleSectors.en),
+    "poleNote": coalesce(poleNote[$locale], poleNote.fr, poleNote.en),
+    "ethicsTitle": coalesce(ethicsTitle[$locale], ethicsTitle.fr, ethicsTitle.en),
+    "ethicsText": coalesce(ethicsText[$locale], ethicsText.fr, ethicsText.en),
     "kpisTitle": coalesce(kpisTitle[$locale], kpisTitle.fr, kpisTitle.en),
     "kpisIntro": coalesce(kpisIntro[$locale], kpisIntro.fr, kpisIntro.en),
     "teamSectionLabel": coalesce(teamSectionLabel[$locale], teamSectionLabel.fr, teamSectionLabel.en),
@@ -481,120 +498,11 @@ const personProjection = `
   longBio,
   affiliation,
   teamGroup,
-  governanceGroup,
   expertise,
   links,
   contribution,
   order
 `;
-
-export const governanceChartStrictBySlugQuery = groq`
-  *[
-    _type == "governanceChartStrict"
-    && status == "published"
-    && (slug.current == $slug || slugIntl[$locale].current == $slug)
-  ][0]{
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    status,
-    "orgSectionTitle": coalesce(orgSectionTitleIntl[$locale], orgSectionTitle),
-    "orgSectionIntro": coalesce(orgSectionIntroIntl[$locale], orgSectionIntro),
-    "topPerson": topPerson->{${personProjection}},
-    "scientificDirectors": coFounders[]->{${personProjection}},
-    "associateResearchers": associateResearchers[]->{${personProjection}},
-    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
-    "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
-    "membersToShow": membersToShow[]->{${personProjection}}
-  }
-`;
-
-export const defaultGovernanceChartStrictQuery = groq`
-  *[_type == "governanceChartStrict" && status == "published"] | order(_updatedAt desc)[0]{
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    slugIntl,
-    status,
-    "orgSectionTitle": coalesce(orgSectionTitleIntl[$locale], orgSectionTitle),
-    "orgSectionIntro": coalesce(orgSectionIntroIntl[$locale], orgSectionIntro),
-    "topPerson": topPerson->{${personProjection}},
-    "scientificDirectors": coFounders[]->{${personProjection}},
-    "associateResearchers": associateResearchers[]->{${personProjection}},
-    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
-    "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
-    "membersToShow": membersToShow[]->{${personProjection}}
-  }
-`;
-
-export const governancePageBySlugQuery = groq`
-  *[
-    _type == "governancePage"
-    && status == "published"
-    && (slug.current == $slug || slugIntl[$locale].current == $slug)
-  ][0]{
-    _id,
-    "title": coalesce(titleIntl[$locale], title),
-    "slug": coalesce(slugIntl[$locale], slug),
-    "intro": coalesce(introIntl[$locale], intro),
-    showOrgChart,
-    "orgChartSectionTitle": coalesce(orgChartSectionTitleIntl[$locale], orgChartSectionTitle),
-    "orgChartSectionIntro": coalesce(orgChartSectionIntroIntl[$locale], orgChartSectionIntro),
-    showMembers,
-    "membersSectionTitle": coalesce(membersSectionTitleIntl[$locale], membersSectionTitle),
-    "membersSectionIntro": coalesce(membersSectionIntroIntl[$locale], membersSectionIntro),
-    membersGroupsToShow,
-    membersOrder,
-    "governanceChartStrictId": governanceChartStrict->_id
-  }
-`;
-
-export async function getGovernancePage(locale: Locale) {
-  return sanityFetch<GovernancePage | null>(
-    governancePageBySlugQuery,
-    { slug: "gouvernance", locale },
-    null,
-  );
-}
-
-export async function getGovernanceChartStrict(slug: string, locale: Locale) {
-  return sanityFetch<GovernanceChartStrict | null>(
-    governanceChartStrictBySlugQuery,
-    { slug, locale },
-    null,
-  );
-}
-
-export async function getDefaultGovernanceChartStrict(locale: Locale) {
-  return sanityFetch<GovernanceChartStrict | null>(
-    defaultGovernanceChartStrictQuery,
-    { locale },
-    null,
-  );
-}
-
-export const governanceMembersByNameQuery = groq`
-  *[_type == "person" && governanceGroup in $groups]
-    | order(name asc){
-      ${personProjection}
-    }
-`;
-
-export const governanceMembersByOrderQuery = groq`
-  *[_type == "person" && governanceGroup in $groups]
-    | order(order asc, name asc){
-      ${personProjection}
-    }
-`;
-
-export async function getGovernanceMembers(
-  groups: Array<"direction" | "gouvernance" | "comite_scientifique">,
-  order: "nameAsc" | "orderAsc",
-) {
-  const query = order === "orderAsc" ? governanceMembersByOrderQuery : governanceMembersByNameQuery;
-  return sanityFetch<Person[]>(query, { groups }, []);
-}
 
 export const teamPageBySlugQuery = groq`
   *[

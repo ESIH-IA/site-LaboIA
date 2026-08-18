@@ -67,13 +67,13 @@
   "home": {
     "hero": {
       "badge": "IA · Recherche · Innovation",
-      "titleLine1": "Transformer",
-      "titleLine2": "la donnée",
-      "titleLine3": "caraïbéenne",
-      "titleLine4": "en intelligence.",
-      "subtitle": "LaCDIA est un laboratoire de recherche appliquée en IA et science des données, au service des communautés caribéennes.",
+      "titleLine1": "De la donnée",
+      "titleLine2": "à la connaissance —",
+      "titleLine3": "caribéenne,",
+      "titleLine4": "responsable.",
+      "subtitle": "Nous menons des recherches en intelligence artificielle et science des données pour l'agriculture, les services publics, la santé et l'innovation.",
       "primaryLabel": "Collaborer avec le laboratoire",
-      "secondaryLabel": "Explorer nos projets",
+      "secondaryLabel": "Notre architecture scientifique",
       "canvasLabel": "Réseau neuronal caribéen",
       "scrollHint": "scroll"
     },
@@ -102,53 +102,113 @@
       "sectionLabel": "Chiffres clés",
       "updated": "Mise à jour :",
       "fallbackItems": [
-        { "_id": "kpi-1", "key": "chercheurs", "value": "5+", "label": "Chercheurs actifs", "note": "Chercheurs, doctorants et collaborateurs actifs", "status": "confirmed" },
-        { "_id": "kpi-2", "key": "projets", "value": "0", "label": "Projets en cours", "note": "Projets de recherche en cours de lancement", "status": "confirmed" },
-        { "_id": "kpi-3", "key": "partenariats", "value": "1", "label": "Partenariats actifs", "note": "Partenariat actif en recherche et médiation", "status": "confirmed" },
-        { "_id": "kpi-4", "key": "axes", "value": "6", "label": "Axes de recherche", "note": "Thématiques structurant nos travaux", "status": "confirmed" }
+        {
+          "_id": "kpi-1",
+          "key": "chercheurs",
+          "value": "5+",
+          "label": "Chercheurs actifs",
+          "note": "Chercheurs, doctorants et collaborateurs actifs",
+          "status": "confirmed"
+        },
+        {
+          "_id": "kpi-2",
+          "key": "projets",
+          "value": "0",
+          "label": "Projets en cours",
+          "note": "Projets de recherche en cours de lancement",
+          "status": "confirmed"
+        },
+        {
+          "_id": "kpi-3",
+          "key": "partenariats",
+          "value": "1",
+          "label": "Partenariats actifs",
+          "note": "Partenariat actif en recherche et médiation",
+          "status": "confirmed"
+        },
+        {
+          "_id": "kpi-4",
+          "key": "axes",
+          "value": "2",
+          "label": "Axes de recherche",
+          "note": "Deux axes structurants + un Pôle de valorisation",
+          "status": "confirmed"
+        }
       ]
     },
     "highlights": {
-      "sectionLabel": "Axes de recherche",
-      "sectionTitle": "Six axes structurants",
-      "sectionIntro": "Des axes de recherche appliquée et fondamentale organisés autour d'une thématique transversale : l'IA et la science des données pour le développement durable d'Haïti et de la Caraïbe.",
-      "transversalLabel": "Thématique transversale",
-      "transversalText": "Intelligence artificielle et sciences des données pour le développement durable d'Haïti et de la Caraïbe",
-      "discoverCta": "Découvrir",
-      "axes": [
-        { "title": "Méthodes fondamentales en IA et apprentissage automatique", "description": "Développement de méthodes adaptées aux données rares, bruitées ou hétérogènes, apprentissage auto-supervisé, transfert d'apprentissage, robustesse et IA frugale." },
-        { "title": "Vision par ordinateur et analyse de données complexes", "description": "Analyse d'images, de documents et de données multimodales, notamment pour l'agriculture, la santé, l'environnement et le traitement de documents en créole et en français." },
-        { "title": "IA robuste, explicable et responsable", "description": "Explicabilité des modèles, équité algorithmique, détection et réduction des biais, robustesse, audit des systèmes d'IA et évaluation de leurs limites." },
-        { "title": "IA pour la santé", "description": "Analyse d'images médicales, aide au dépistage et à la décision clinique, surveillance épidémiologique, assistants documentaires et interfaces sanitaires en créole haïtien." },
-        { "title": "IA pour l'agriculture numérique et la résilience environnementale", "description": "Détection des maladies des cultures, recommandations agronomiques, analyse d'images satellitaires, systèmes d'alerte précoce et adaptation au changement climatique." },
-        { "title": "IA pour les systèmes socio-économiques, éducatifs et institutionnels", "description": "Aide à la décision, transformation numérique, automatisation documentaire, traitement du créole haïtien et développement d'outils pour l'éducation, l'administration publique et l'économie." }
+      "sectionLabel": "Architecture scientifique 2026–2030",
+      "sectionTitle": "Deux axes de recherche, un pôle de valorisation",
+      "sectionIntro": "Le développement collaboratif de compétences scientifiques et techniques en intelligence artificielle et sciences de données pour le développement durable de la Caraïbe.",
+      "axe1Label": "AXE 01",
+      "axe1Title": "Fondements, méthodes et robustesse de l'IA",
+      "axe1Description": "Le socle méthodologique du Laboratoire — concevoir des méthodes permettant aux systèmes d'apprendre, raisonner et généraliser de manière robuste, y compris à partir de données rares, bruitées ou hétérogènes.",
+      "axe1Keywords": [
+        "Apprentissage auto-supervisé",
+        "Robustesse & généralisation",
+        "Modèles frugaux",
+        "Explicabilité & audit",
+        "Réduction des biais",
+        "Raisonnement sous incertitude"
       ],
-      "axesDetails": [
+      "axe1Objectives": "Développer de nouveaux algorithmes efficaces avec peu de données · Étudier la robustesse et la généralisation hors distribution · Concevoir des modèles adaptés aux ressources limitées · Développer des méthodes d'explication et mesurer les biais",
+      "axe2Label": "AXE 02",
+      "axe2Title": "IA pour les données complexes et les systèmes du monde réel",
+      "axe2Description": "Comment adapter, combiner et évaluer les méthodes d'IA confrontées à la complexité du monde réel — données multimodales, systèmes dynamiques, environnements de qualité variable.",
+      "axe2Keywords": [
+        "Données multimodales & fusion",
+        "Détection & segmentation",
+        "Aide à la décision",
+        "Modélisation & prédiction",
+        "Validation terrain",
+        "Transfert inter-domaines"
+      ],
+      "axe2Objectives": "Apprendre à partir de données rares, bruitées, incomplètes · Développer des systèmes d'aide à la décision contextualisée · Évaluer les systèmes en conditions réelles · Intégrer les connaissances de domaine",
+      "poleLabel": "PÔLE",
+      "poleTitle": "Valorisation scientifique et de formation",
+      "poleDescription": "L'interface entre le Laboratoire et le monde socio-économique. Le Pôle valorise et transfère les connaissances issues des Axes 1 et 2 vers les organisations, tout en remontant les besoins réels comme de nouveaux problèmes scientifiques.",
+      "poleSectors": [
+        "Santé",
+        "Agriculture",
+        "Éducation",
+        "Environnement",
+        "Secteur public",
+        "Expertise & prototypage"
+      ],
+      "poleNote": "Les secteurs d'application (santé, agriculture, éducation, environnement…) relèvent du Pôle — pas des intitulés d'axes — ce qui préserve une architecture scientifique générale et pérenne.",
+      "flowLabel": "Boucle de rétroaction",
+      "flowText": "Les cas réels identifiés par le Pôle alimentent en retour de nouveaux problèmes scientifiques pour les Axes 1 et 2.",
+      "ethicsLabel": "Exigence transversale",
+      "ethicsTitle": "Éthique · Explicabilité · Sécurité · Gouvernance de l'IA",
+      "ethicsText": "L'éthique de l'IA ne constitue pas un axe séparé : elle irrigue chacun des deux axes et le Pôle, selon la nature des sujets traités. Chaque projet intègre une évaluation des biais, une documentation des limites d'usage et, le cas échéant, un protocole d'explicabilité adapté à ses utilisateurs finaux.",
+      "ethicsPillars": [
         {
-          "description": "Cet axe constitue le socle scientifique du laboratoire : il vise à concevoir des méthodes d'apprentissage capables de fonctionner efficacement même lorsque les données disponibles sont rares, bruitées ou hétérogènes, une réalité fréquente dans le contexte caribéen où les infrastructures de collecte de données restent limitées. Les travaux portent notamment sur l'apprentissage auto-supervisé, qui permet d'exploiter des données non annotées, le transfert d'apprentissage entre domaines, ainsi que sur la robustesse des modèles face aux variations et aux biais. Une attention particulière est portée à la frugalité computationnelle, afin de développer une IA performante sans dépendre d'infrastructures coûteuses.",
-          "keywords": ["apprentissage auto-supervisé", "transfert d'apprentissage", "robustesse", "IA frugale"]
+          "icon": "shield",
+          "label": "Évaluation & atténuation des biais"
         },
         {
-          "description": "Cet axe explore l'analyse automatique d'images, de documents et de données multimodales (texte, image, signal) pour des applications concrètes touchant l'agriculture, la santé et l'environnement. Une dimension spécifique et originale du laboratoire concerne le traitement de documents rédigés en créole et en français, un enjeu linguistique encore peu couvert par les outils d'IA existants. Les recherches combinent des techniques de vision par ordinateur modernes avec des approches adaptées aux spécificités locales des données.",
-          "keywords": ["vision par ordinateur", "analyse multimodale", "traitement documentaire", "créole haïtien"]
+          "icon": "eye",
+          "label": "Explicabilité adaptée aux utilisateurs"
         },
         {
-          "description": "Face à l'adoption croissante de l'IA dans des décisions sensibles, cet axe s'attache à rendre les modèles compréhensibles, équitables et fiables. Les travaux couvrent l'explicabilité des modèles pour permettre aux utilisateurs de comprendre leurs décisions, la détection et la réduction des biais algorithmiques, ainsi que l'audit des systèmes d'IA pour évaluer leurs limites et leurs risques. Cet axe est transversal aux autres, car il vise à garantir que les solutions développées par le laboratoire restent dignes de confiance et déployables de manière responsable.",
-          "keywords": ["explicabilité", "équité algorithmique", "audit de systèmes IA", "IA responsable"]
+          "icon": "lock",
+          "label": "Sécurité des données & cybersécurité"
         },
         {
-          "description": "Cet axe applique l'IA aux enjeux de santé publique et clinique, avec un accent sur l'analyse d'images médicales pour l'aide au dépistage, le soutien à la décision clinique et la surveillance épidémiologique. Le laboratoire développe également des assistants documentaires et des interfaces destinées aux professionnels de santé, conçus en créole haïtien afin de faciliter leur adoption sur le terrain et de répondre aux besoins réels des systèmes de santé locaux.",
-          "keywords": ["imagerie médicale", "aide au diagnostic", "surveillance épidémiologique", "santé numérique"]
+          "icon": "scale",
+          "label": "Gouvernance & traçabilité des méthodes"
         },
         {
-          "description": "Cet axe met l'IA au service de la sécurité alimentaire et de l'adaptation climatique, deux enjeux majeurs pour la région caribéenne. Les recherches portent sur la détection automatique des maladies des cultures à partir d'images, les recommandations agronomiques personnalisées, l'analyse d'images satellitaires pour le suivi environnemental, ainsi que sur des systèmes d'alerte précoce face aux risques climatiques et naturels.",
-          "keywords": ["agriculture de précision", "imagerie satellitaire", "alerte précoce", "résilience climatique"]
+          "icon": "check",
+          "label": "Validation éthique & réglementaire"
         },
         {
-          "description": "Cet axe explore comment l'IA peut soutenir la transformation numérique des institutions publiques et économiques. Il couvre l'aide à la décision, l'automatisation documentaire, ainsi que le développement d'outils adaptés à l'éducation, à l'administration publique et à l'économie locale, en intégrant systématiquement le traitement du créole haïtien pour garantir l'accessibilité des outils développés.",
-          "keywords": ["transformation numérique", "aide à la décision", "éducation", "gouvernance publique"]
+          "icon": "doc",
+          "label": "Documentation des limites d'usage"
         }
-      ]
+      ],
+      "objectivesLabel": "Objectifs prioritaires",
+      "sectorsLabel": "Terrains d'application"
     },
     "team": {
       "sectionLabel": "Équipe scientifique",
@@ -156,18 +216,56 @@
       "sectionIntro": "Le LaCDIA rassemble une dizaine de profils scientifiques et techniques complémentaires — chercheurs nationaux et internationaux, ingénieurs spécialisés et experts des technologies émergentes — pour porter une recherche en intelligence artificielle rigoureuse et ancrée dans les réalités caribéennes.",
       "note": "Certains profils cumulent plusieurs responsabilités scientifiques et institutionnelles ; cette présentation reflète les compétences mobilisées par le laboratoire plutôt qu'un organigramme figé.",
       "categories": [
-        { "badge": "2 chercheurs · HDR", "title": "Chercheurs seniors habilités", "description": "Deux chercheurs nationaux, titulaires d'une Habilitation à Diriger des Recherches, encadrent les travaux du laboratoire et en garantissent l'exigence scientifique." },
-        { "badge": "3 experts", "title": "Réseau scientifique international", "description": "Deux chercheurs internationaux et un professeur émérite complètent ce noyau scientifique, apportant au LaCDIA un regard extérieur et des collaborations académiques établies." },
-        { "badge": "2+ chercheurs", "title": "Chercheurs nationaux associés", "description": "D'autres chercheurs nationaux, aux expertises complémentaires, rejoignent progressivement le laboratoire et contribuent à l'élargissement de ses axes de recherche." },
-        { "badge": "2 ingénieurs", "title": "Ingénierie IA et données", "description": "Deux ingénieurs en intelligence artificielle, spécialisés dans le traitement de grands volumes de données, assurent la mise en œuvre technique des projets et modèles du laboratoire." },
-        { "badge": "ESIH", "title": "Rattachement institutionnel", "description": "Le LaCDIA est rattaché à l'École Supérieure d'Infotronique d'Haïti (ESIH), qui en garantit l'ancrage institutionnel et juridique. La direction scientifique du laboratoire relève de ses propres instances de gouvernance.", "linkLabel": "ESIH", "linkHref": "https://esih.edu" },
-        { "badge": "1 expert", "title": "Expertise en IA générative", "description": "Un expert en intelligence artificielle générative complète l'équipe, portant l'exploration de ces technologies émergentes au sein des travaux du LaCDIA." }
+        {
+          "badge": "2 chercheurs · HDR",
+          "title": "Chercheurs seniors habilités",
+          "description": "Deux chercheurs nationaux, titulaires d'une Habilitation à Diriger des Recherches, encadrent les travaux du laboratoire et en garantissent l'exigence scientifique."
+        },
+        {
+          "badge": "3 experts",
+          "title": "Réseau scientifique international",
+          "description": "Deux chercheurs internationaux et un professeur émérite complètent ce noyau scientifique, apportant au LaCDIA un regard extérieur et des collaborations académiques établies."
+        },
+        {
+          "badge": "2+ chercheurs",
+          "title": "Chercheurs nationaux associés",
+          "description": "D'autres chercheurs nationaux, aux expertises complémentaires, rejoignent progressivement le laboratoire et contribuent à l'élargissement de ses axes de recherche."
+        },
+        {
+          "badge": "2 ingénieurs",
+          "title": "Ingénierie IA et données",
+          "description": "Deux ingénieurs en intelligence artificielle, spécialisés dans le traitement de grands volumes de données, assurent la mise en œuvre technique des projets et modèles du laboratoire."
+        },
+        {
+          "badge": "ESIH",
+          "title": "Rattachement institutionnel",
+          "description": "Le LaCDIA est rattaché à l'École Supérieure d'Infotronique d'Haïti (ESIH), qui en garantit l'ancrage institutionnel et juridique. La direction scientifique du laboratoire relève de ses propres instances de gouvernance.",
+          "linkLabel": "ESIH",
+          "linkHref": "https://esih.edu"
+        },
+        {
+          "badge": "1 expert",
+          "title": "Expertise en IA générative",
+          "description": "Un expert en intelligence artificielle générative complète l'équipe, portant l'exploration de ces technologies émergentes au sein des travaux du LaCDIA."
+        }
       ],
       "stats": [
-        { "value": "11", "label": "Membres mobilisés" },
-        { "value": "2", "label": "Chercheurs internationaux" },
-        { "value": "2", "label": "Ingénieurs IA" },
-        { "value": "6", "label": "Profils d'expertise" }
+        {
+          "value": "11",
+          "label": "Membres mobilisés"
+        },
+        {
+          "value": "2",
+          "label": "Chercheurs internationaux"
+        },
+        {
+          "value": "2",
+          "label": "Ingénieurs IA"
+        },
+        {
+          "value": "6",
+          "label": "Profils d'expertise"
+        }
       ]
     },
     "partners": {
@@ -185,11 +283,61 @@
       "readLabel": "Lire",
       "articlesLabel": "articles",
       "fallbackItems": [
-        { "_id": "f1", "slug": { "current": "lancement-projets-ia-agricole" }, "date": "2025-06-01", "category": "Recherche", "title": "LaCDIA lance ses premiers projets de recherche en IA agricole", "summary": "Le laboratoire inaugure ses travaux sur l'intelligence artificielle appliquée à l'agriculture caribéenne avec deux projets pilotes.", "featured": true },
-        { "_id": "f2", "slug": { "current": "partenariat-esih-data-science" }, "date": "2025-05-15", "category": "Partenariat", "title": "Partenariat stratégique avec l'ESIH pour la formation en Data Science", "summary": "LaCDIA et l'ESIH s'associent pour développer un cursus de formation avancé en science des données.", "featured": false },
-        { "_id": "f3", "slug": { "current": "colloque-caribeeen-axes-2025" }, "date": "2025-04-28", "category": "Événement", "title": "Présentation des axes de recherche 2025–2026 lors du colloque caribéen", "summary": "Notre équipe a présenté la feuille de route scientifique du laboratoire lors du colloque régional sur l'IA.", "featured": false },
-        { "_id": "f4", "slug": { "current": "appel-candidatures-2025" }, "date": "2025-04-10", "category": "Annonce", "title": "Appel à candidatures — Programme de recherche 2025", "summary": "LaCDIA ouvre ses portes aux chercheurs et doctorants intéressés par l'IA responsable et la gouvernance algorithmique.", "featured": false },
-        { "_id": "f5", "slug": { "current": "nlp-creole-premiers-resultats" }, "date": "2025-03-20", "category": "Recherche", "title": "NLP créole : premiers résultats sur la modélisation du créole haïtien", "summary": "Une avancée significative dans le traitement automatique du langage créole haïtien avec nos modèles maison.", "featured": false }
+        {
+          "_id": "f1",
+          "slug": {
+            "current": "lancement-projets-ia-agricole"
+          },
+          "date": "2025-06-01",
+          "category": "Recherche",
+          "title": "LaCDIA lance ses premiers projets de recherche en IA agricole",
+          "summary": "Le laboratoire inaugure ses travaux sur l'intelligence artificielle appliquée à l'agriculture caribéenne avec deux projets pilotes.",
+          "featured": true
+        },
+        {
+          "_id": "f2",
+          "slug": {
+            "current": "partenariat-esih-data-science"
+          },
+          "date": "2025-05-15",
+          "category": "Partenariat",
+          "title": "Partenariat stratégique avec l'ESIH pour la formation en Data Science",
+          "summary": "LaCDIA et l'ESIH s'associent pour développer un cursus de formation avancé en science des données.",
+          "featured": false
+        },
+        {
+          "_id": "f3",
+          "slug": {
+            "current": "colloque-caribeeen-axes-2025"
+          },
+          "date": "2025-04-28",
+          "category": "Événement",
+          "title": "Présentation des axes de recherche 2025–2026 lors du colloque caribéen",
+          "summary": "Notre équipe a présenté la feuille de route scientifique du laboratoire lors du colloque régional sur l'IA.",
+          "featured": false
+        },
+        {
+          "_id": "f4",
+          "slug": {
+            "current": "appel-candidatures-2025"
+          },
+          "date": "2025-04-10",
+          "category": "Annonce",
+          "title": "Appel à candidatures — Programme de recherche 2025",
+          "summary": "LaCDIA ouvre ses portes aux chercheurs et doctorants intéressés par l'IA responsable et la gouvernance algorithmique.",
+          "featured": false
+        },
+        {
+          "_id": "f5",
+          "slug": {
+            "current": "nlp-creole-premiers-resultats"
+          },
+          "date": "2025-03-20",
+          "category": "Recherche",
+          "title": "NLP créole : premiers résultats sur la modélisation du créole haïtien",
+          "summary": "Une avancée significative dans le traitement automatique du langage créole haïtien avec nos modèles maison.",
+          "featured": false
+        }
       ]
     },
     "heroBadge": "Intelligence Artificielle - Innovation - Recherche Appliquée",
@@ -198,9 +346,9 @@
     "heroSecondaryCta": "Rencontrer l'équipe",
     "researchAxes": "Nos axes de recherche",
     "techServices": "LaCDIA Tech — Services",
-    "introEyebrow": "Notre mission",
-    "introTitle": "Un laboratoire pour la donnée caribéenne",
-    "introBody": "Le LaCDIA produit des connaissances scientifiques originales et développe des solutions technologiques adaptées aux réalités caribéennes.",
+    "introEyebrow": "Vision 2026–2030",
+    "introTitle": "Devenir le pôle caribéen de référence en IA et sciences de données",
+    "introBody": "Reconnu pour la qualité de ses recherches, la pertinence de ses applications, sa contribution à la formation scientifique et son engagement en faveur d'une innovation responsable.",
     "kpisTitle": "Indicateurs clés",
     "kpisIntro": "Données quantitatives sur nos activités de recherche et d'innovation",
     "publicationsTitle": "Publications récentes",
@@ -219,6 +367,9 @@
       "client": "Client",
       "media": "Média",
       "academic": "Académique"
+    },
+    "intro": {
+      "foundedLabel": "Fondé en 2026"
     }
   },
   "forms": {
@@ -234,13 +385,34 @@
       "organisationPlaceholder": "Université, entreprise, ONG…",
       "subject": "Objet",
       "subjects": [
-        { "value": "", "label": "Sélectionnez un objet…" },
-        { "value": "collaboration", "label": "Collaboration de recherche" },
-        { "value": "partenariat", "label": "Partenariat institutionnel" },
-        { "value": "stage", "label": "Stage ou formation" },
-        { "value": "medias", "label": "Médias et communication" },
-        { "value": "question", "label": "Question générale" },
-        { "value": "autre", "label": "Autre" }
+        {
+          "value": "",
+          "label": "Sélectionnez un objet…"
+        },
+        {
+          "value": "collaboration",
+          "label": "Collaboration de recherche"
+        },
+        {
+          "value": "partenariat",
+          "label": "Partenariat institutionnel"
+        },
+        {
+          "value": "stage",
+          "label": "Stage ou formation"
+        },
+        {
+          "value": "medias",
+          "label": "Médias et communication"
+        },
+        {
+          "value": "question",
+          "label": "Question générale"
+        },
+        {
+          "value": "autre",
+          "label": "Autre"
+        }
       ],
       "message": "Message",
       "messagePlaceholder": "Décrivez votre demande…",
@@ -262,13 +434,34 @@
       "organisationPlaceholder": "Université, entreprise, ONG…",
       "collabType": "Type de collaboration",
       "collabTypes": [
-        { "value": "", "label": "Sélectionnez un type…" },
-        { "value": "recherche", "label": "Recherche commune" },
-        { "value": "financement", "label": "Financement / subvention" },
-        { "value": "terrain", "label": "Accès terrain / données" },
-        { "value": "formation", "label": "Formation et transfert de compétences" },
-        { "value": "technique", "label": "Partenariat technique" },
-        { "value": "autre", "label": "Autre" }
+        {
+          "value": "",
+          "label": "Sélectionnez un type…"
+        },
+        {
+          "value": "recherche",
+          "label": "Recherche commune"
+        },
+        {
+          "value": "financement",
+          "label": "Financement / subvention"
+        },
+        {
+          "value": "terrain",
+          "label": "Accès terrain / données"
+        },
+        {
+          "value": "formation",
+          "label": "Formation et transfert de compétences"
+        },
+        {
+          "value": "technique",
+          "label": "Partenariat technique"
+        },
+        {
+          "value": "autre",
+          "label": "Autre"
+        }
       ],
       "message": "Description du projet / proposition",
       "messagePlaceholder": "Décrivez votre proposition de collaboration…",
@@ -358,28 +551,6 @@
   "locale": {
     "switchLanguage": "Changer de langue",
     "currentLanguage": "Langue actuelle"
-  },
-  "governance": {
-    "categories": {
-      "gouvernance": "Gouvernance institutionnelle",
-      "direction": "Direction scientifique",
-      "recherche": "Recherche",
-      "conseil": "Conseil scientifique"
-    },
-    "upcoming": "À venir",
-    "expertise": "Expertise",
-    "contribution": "Contribution",
-    "contact": "Contacter",
-    "modalTitle": "Biographie",
-    "modalExpertiseTitle": "Domaines d'expertise",
-    "learnMore": "Voir le profil complet",
-    "viewProfileOf": "Voir le profil de {name}",
-    "close": "Fermer",
-    "website": "Site web",
-    "emptyMembers": "Aucun profil n'est configuré pour cette section.",
-    "scientificCouncil": "Conseil scientifique",
-    "invalidPremiumConfig": "Configuration invalide : 1 personne en gouvernance et exactement 2 co-fondateurs requis.",
-    "invalidStrictConfig": "Configuration invalide : 1 directeur institutionnel et exactement 2 directeurs scientifiques requis."
   },
   "pages": {
     "solutions": {

@@ -67,13 +67,13 @@
   "home": {
     "hero": {
       "badge": "AI · Research · Innovation",
-      "titleLine1": "Transforming",
-      "titleLine2": "Caribbean",
-      "titleLine3": "data",
-      "titleLine4": "into intelligence.",
-      "subtitle": "LaCDIA is an applied research laboratory in AI and data science, serving Caribbean communities.",
+      "titleLine1": "From data",
+      "titleLine2": "to knowledge —",
+      "titleLine3": "Caribbean,",
+      "titleLine4": "responsible.",
+      "subtitle": "We conduct research in artificial intelligence and data science for agriculture, public services, health and innovation.",
       "primaryLabel": "Collaborate with the lab",
-      "secondaryLabel": "Explore our projects",
+      "secondaryLabel": "Our scientific architecture",
       "canvasLabel": "Caribbean neural network",
       "scrollHint": "scroll"
     },
@@ -102,53 +102,113 @@
       "sectionLabel": "Key figures",
       "updated": "Updated:",
       "fallbackItems": [
-        { "_id": "kpi-1", "key": "chercheurs", "value": "5+", "label": "Active Researchers", "note": "Researchers, PhD students and active collaborators", "status": "confirmed" },
-        { "_id": "kpi-2", "key": "projets", "value": "0", "label": "Ongoing Projects", "note": "Research projects currently being launched", "status": "confirmed" },
-        { "_id": "kpi-3", "key": "partenariats", "value": "1", "label": "Active Partnerships", "note": "Active partnership in research and mediation", "status": "confirmed" },
-        { "_id": "kpi-4", "key": "axes", "value": "6", "label": "Research Axes", "note": "Themes structuring our work", "status": "confirmed" }
+        {
+          "_id": "kpi-1",
+          "key": "chercheurs",
+          "value": "5+",
+          "label": "Active Researchers",
+          "note": "Researchers, PhD students and active collaborators",
+          "status": "confirmed"
+        },
+        {
+          "_id": "kpi-2",
+          "key": "projets",
+          "value": "0",
+          "label": "Ongoing Projects",
+          "note": "Research projects currently being launched",
+          "status": "confirmed"
+        },
+        {
+          "_id": "kpi-3",
+          "key": "partenariats",
+          "value": "1",
+          "label": "Active Partnerships",
+          "note": "Active partnership in research and mediation",
+          "status": "confirmed"
+        },
+        {
+          "_id": "kpi-4",
+          "key": "axes",
+          "value": "2",
+          "label": "Research axes",
+          "note": "Two structural axes + one valorization hub",
+          "status": "confirmed"
+        }
       ]
     },
     "highlights": {
-      "sectionLabel": "Research Axes",
-      "sectionTitle": "Six structuring axes",
-      "sectionIntro": "Applied and fundamental research axes organized around a transversal theme: AI and data science for the sustainable development of Haiti and the Caribbean.",
-      "transversalLabel": "Transversal theme",
-      "discoverCta": "Discover",
-      "transversalText": "Artificial intelligence and data science for the sustainable development of Haiti and the Caribbean",
-      "axes": [
-        { "title": "Fundamental AI Methods and Machine Learning", "description": "Developing methods suited to scarce, noisy or heterogeneous data, self-supervised learning, transfer learning, robustness and frugal AI." },
-        { "title": "Computer Vision and Complex Data Analysis", "description": "Image, document and multimodal data analysis, particularly for agriculture, health, environment and document processing in Haitian Creole and French." },
-        { "title": "Robust, Explainable and Responsible AI", "description": "Model explainability, algorithmic fairness, bias detection and mitigation, robustness, AI system auditing and evaluation of limitations." },
-        { "title": "AI for Healthcare", "description": "Medical image analysis, screening and clinical decision support, epidemiological surveillance, documentary assistants and health interfaces in Haitian Creole." },
-        { "title": "AI for Digital Agriculture and Environmental Resilience", "description": "Crop disease detection, agronomic recommendations, satellite image analysis, early warning systems and climate change adaptation." },
-        { "title": "AI for Socioeconomic, Educational and Institutional Systems", "description": "Decision support, digital transformation, document automation, Haitian Creole processing and tool development for education, public administration and the economy." }
+      "sectionLabel": "Scientific Architecture 2026–2030",
+      "sectionTitle": "Two research axes, one valorization hub",
+      "sectionIntro": "The collaborative development of scientific and technical skills in artificial intelligence and data science for the sustainable development of the Caribbean.",
+      "axe1Label": "AXIS 01",
+      "axe1Title": "Foundations, Methods and AI Robustness",
+      "axe1Description": "The methodological backbone of the Laboratory — designing methods that allow systems to learn, reason and generalize robustly, including from scarce, noisy or heterogeneous data.",
+      "axe1Keywords": [
+        "Self-supervised learning",
+        "Robustness & generalization",
+        "Frugal models",
+        "Explainability & audit",
+        "Bias reduction",
+        "Reasoning under uncertainty"
       ],
-      "axesDetails": [
+      "axe1Objectives": "Develop efficient algorithms with limited data · Study out-of-distribution robustness and generalization · Design models suited to limited computational resources · Develop explainability methods and measure biases",
+      "axe2Label": "AXIS 02",
+      "axe2Title": "AI for Complex Data and Real-World Systems",
+      "axe2Description": "How to adapt, combine and evaluate AI methods when confronted with real-world complexity — multimodal data, dynamic systems, variable-quality environments.",
+      "axe2Keywords": [
+        "Multimodal data & fusion",
+        "Detection & segmentation",
+        "Decision support",
+        "Modeling & prediction",
+        "Field validation",
+        "Cross-domain transfer"
+      ],
+      "axe2Objectives": "Learn from scarce, noisy, incomplete data · Develop contextualized decision support systems · Evaluate systems in real conditions · Integrate domain knowledge",
+      "poleLabel": "HUB",
+      "poleTitle": "Scientific Valorization and Training",
+      "poleDescription": "The interface between the Laboratory and the socio-economic world. The Hub valorizes and transfers knowledge from Axes 1 and 2 to organizations, while feeding back real needs as new scientific problems.",
+      "poleSectors": [
+        "Health",
+        "Agriculture",
+        "Education",
+        "Environment",
+        "Public sector",
+        "Expertise & prototyping"
+      ],
+      "poleNote": "Application sectors (health, agriculture, education, environment…) belong to the Hub — not to axis titles — preserving a general, lasting scientific architecture.",
+      "flowLabel": "Feedback loop",
+      "flowText": "Real-world cases identified by the Hub feed back as new scientific problems for Axes 1 and 2.",
+      "ethicsLabel": "Transversal requirement",
+      "ethicsTitle": "Ethics · Explainability · Security · AI Governance",
+      "ethicsText": "AI ethics is not a separate axis: it permeates both axes and the Hub, according to the nature of the subjects treated. Each project integrates bias assessment, usage limit documentation and, where applicable, an explainability protocol adapted to its end users.",
+      "ethicsPillars": [
         {
-          "description": "This axis forms the laboratory's scientific foundation: it aims to design learning methods that work effectively even when available data is scarce, noisy, or heterogeneous — a common reality in the Caribbean context, where data-collection infrastructure remains limited. The work focuses in particular on self-supervised learning, which makes it possible to exploit unlabeled data, on transfer learning across domains, and on model robustness to variation and bias. Particular attention is paid to computational frugality, to develop high-performing AI without relying on costly infrastructure.",
-          "keywords": ["self-supervised learning", "transfer learning", "robustness", "frugal AI"]
+          "icon": "shield",
+          "label": "Bias assessment & mitigation"
         },
         {
-          "description": "This axis explores the automatic analysis of images, documents, and multimodal data (text, image, signal) for concrete applications in agriculture, health, and the environment. A specific and original dimension of the laboratory concerns the processing of documents written in Haitian Creole and French, a linguistic challenge still poorly covered by existing AI tools. The research combines modern computer-vision techniques with approaches adapted to the local specificities of the data.",
-          "keywords": ["computer vision", "multimodal analysis", "document processing", "Haitian Creole"]
+          "icon": "eye",
+          "label": "User-adapted explainability"
         },
         {
-          "description": "Given the growing adoption of AI in sensitive decisions, this axis focuses on making models understandable, fair, and trustworthy. The work covers model explainability, so users can understand the decisions made, the detection and reduction of algorithmic bias, and the auditing of AI systems to assess their limits and risks. This axis is transversal to the others, since it aims to ensure that the solutions developed by the laboratory remain trustworthy and can be deployed responsibly.",
-          "keywords": ["explainability", "algorithmic fairness", "AI system auditing", "responsible AI"]
+          "icon": "lock",
+          "label": "Data security & cybersecurity"
         },
         {
-          "description": "This axis applies AI to public-health and clinical challenges, with a focus on medical image analysis for screening support, clinical decision support, and epidemiological surveillance. The laboratory also develops documentary assistants and interfaces for health professionals, designed in Haitian Creole to ease field adoption and meet the real needs of local health systems.",
-          "keywords": ["medical imaging", "diagnostic support", "epidemiological surveillance", "digital health"]
+          "icon": "scale",
+          "label": "Governance & method traceability"
         },
         {
-          "description": "This axis puts AI to work for food security and climate adaptation, two major challenges for the Caribbean region. The research covers automatic detection of crop diseases from images, personalized agronomic recommendations, satellite image analysis for environmental monitoring, and early-warning systems for climate and natural hazards.",
-          "keywords": ["precision agriculture", "satellite imaging", "early warning", "climate resilience"]
+          "icon": "check",
+          "label": "Ethical & regulatory validation"
         },
         {
-          "description": "This axis explores how AI can support the digital transformation of public and economic institutions. It covers decision support, document automation, and the development of tools adapted to education, public administration, and the local economy, systematically incorporating Haitian Creole processing to ensure the accessibility of the tools developed.",
-          "keywords": ["digital transformation", "decision support", "education", "public governance"]
+          "icon": "doc",
+          "label": "Usage limit documentation"
         }
-      ]
+      ],
+      "objectivesLabel": "Priority objectives",
+      "sectorsLabel": "Application areas"
     },
     "team": {
       "sectionLabel": "Scientific team",
@@ -156,18 +216,56 @@
       "sectionIntro": "LaCDIA brings together around a dozen complementary scientific and technical profiles — national and international researchers, specialized engineers and emerging-technology experts — to carry out rigorous artificial intelligence research grounded in Caribbean realities.",
       "note": "Some profiles combine several scientific and institutional responsibilities; this presentation reflects the expertise mobilized by the laboratory rather than a fixed organizational chart.",
       "categories": [
-        { "badge": "2 researchers · HDR", "title": "Senior accredited researchers", "description": "Two national researchers, holders of a Habilitation to Direct Research (HDR), oversee the laboratory's work and ensure its scientific rigor." },
-        { "badge": "3 experts", "title": "International scientific network", "description": "Two international researchers and an emeritus professor complete this scientific core, bringing LaCDIA an outside perspective and established academic collaborations." },
-        { "badge": "2+ researchers", "title": "Associate national researchers", "description": "Other national researchers, with complementary expertise, are progressively joining the laboratory and contributing to the expansion of its research areas." },
-        { "badge": "2 engineers", "title": "AI and data engineering", "description": "Two artificial intelligence engineers, specialized in large-scale data processing, handle the technical implementation of the laboratory's projects and models." },
-        { "badge": "ESIH", "title": "Institutional affiliation", "description": "LaCDIA is affiliated with the École Supérieure d'Infotronique d'Haïti (ESIH), which guarantees its institutional and legal standing. The laboratory's scientific direction is carried out by its own scientific governance bodies.", "linkLabel": "ESIH", "linkHref": "https://esih.edu" },
-        { "badge": "1 expert", "title": "Generative AI expertise", "description": "A generative artificial intelligence expert completes the team, driving the exploration of these emerging technologies within LaCDIA's work." }
+        {
+          "badge": "2 researchers · HDR",
+          "title": "Senior accredited researchers",
+          "description": "Two national researchers, holders of a Habilitation to Direct Research (HDR), oversee the laboratory's work and ensure its scientific rigor."
+        },
+        {
+          "badge": "3 experts",
+          "title": "International scientific network",
+          "description": "Two international researchers and an emeritus professor complete this scientific core, bringing LaCDIA an outside perspective and established academic collaborations."
+        },
+        {
+          "badge": "2+ researchers",
+          "title": "Associate national researchers",
+          "description": "Other national researchers, with complementary expertise, are progressively joining the laboratory and contributing to the expansion of its research areas."
+        },
+        {
+          "badge": "2 engineers",
+          "title": "AI and data engineering",
+          "description": "Two artificial intelligence engineers, specialized in large-scale data processing, handle the technical implementation of the laboratory's projects and models."
+        },
+        {
+          "badge": "ESIH",
+          "title": "Institutional affiliation",
+          "description": "LaCDIA is affiliated with the École Supérieure d'Infotronique d'Haïti (ESIH), which guarantees its institutional and legal standing. The laboratory's scientific direction is carried out by its own scientific governance bodies.",
+          "linkLabel": "ESIH",
+          "linkHref": "https://esih.edu"
+        },
+        {
+          "badge": "1 expert",
+          "title": "Generative AI expertise",
+          "description": "A generative artificial intelligence expert completes the team, driving the exploration of these emerging technologies within LaCDIA's work."
+        }
       ],
       "stats": [
-        { "value": "11", "label": "Team members mobilized" },
-        { "value": "2", "label": "International researchers" },
-        { "value": "2", "label": "AI engineers" },
-        { "value": "6", "label": "Areas of expertise" }
+        {
+          "value": "11",
+          "label": "Team members mobilized"
+        },
+        {
+          "value": "2",
+          "label": "International researchers"
+        },
+        {
+          "value": "2",
+          "label": "AI engineers"
+        },
+        {
+          "value": "6",
+          "label": "Areas of expertise"
+        }
       ]
     },
     "partners": {
@@ -185,11 +283,61 @@
       "readLabel": "Read",
       "articlesLabel": "articles",
       "fallbackItems": [
-        { "_id": "f1", "slug": { "current": "lancement-projets-ia-agricole" }, "date": "2025-06-01", "category": "Recherche", "title": "LaCDIA launches its first research projects in agricultural AI", "summary": "The lab kicks off its work on artificial intelligence applied to Caribbean agriculture with two pilot projects.", "featured": true },
-        { "_id": "f2", "slug": { "current": "partenariat-esih-data-science" }, "date": "2025-05-15", "category": "Partenariat", "title": "Strategic partnership with ESIH for Data Science training", "summary": "LaCDIA and ESIH join forces to develop an advanced training program in data science.", "featured": false },
-        { "_id": "f3", "slug": { "current": "colloque-caribeeen-axes-2025" }, "date": "2025-04-28", "category": "Événement", "title": "2025–2026 research axes presented at the Caribbean symposium", "summary": "Our team presented the lab's scientific roadmap at the regional AI symposium.", "featured": false },
-        { "_id": "f4", "slug": { "current": "appel-candidatures-2025" }, "date": "2025-04-10", "category": "Annonce", "title": "Call for applications — 2025 research program", "summary": "LaCDIA is opening its doors to researchers and PhD students interested in responsible AI and algorithmic governance.", "featured": false },
-        { "_id": "f5", "slug": { "current": "nlp-creole-premiers-resultats" }, "date": "2025-03-20", "category": "Recherche", "title": "Creole NLP: first results in modeling Haitian Creole", "summary": "A significant breakthrough in automatic processing of Haitian Creole with our in-house models.", "featured": false }
+        {
+          "_id": "f1",
+          "slug": {
+            "current": "lancement-projets-ia-agricole"
+          },
+          "date": "2025-06-01",
+          "category": "Recherche",
+          "title": "LaCDIA launches its first research projects in agricultural AI",
+          "summary": "The lab kicks off its work on artificial intelligence applied to Caribbean agriculture with two pilot projects.",
+          "featured": true
+        },
+        {
+          "_id": "f2",
+          "slug": {
+            "current": "partenariat-esih-data-science"
+          },
+          "date": "2025-05-15",
+          "category": "Partenariat",
+          "title": "Strategic partnership with ESIH for Data Science training",
+          "summary": "LaCDIA and ESIH join forces to develop an advanced training program in data science.",
+          "featured": false
+        },
+        {
+          "_id": "f3",
+          "slug": {
+            "current": "colloque-caribeeen-axes-2025"
+          },
+          "date": "2025-04-28",
+          "category": "Événement",
+          "title": "2025–2026 research axes presented at the Caribbean symposium",
+          "summary": "Our team presented the lab's scientific roadmap at the regional AI symposium.",
+          "featured": false
+        },
+        {
+          "_id": "f4",
+          "slug": {
+            "current": "appel-candidatures-2025"
+          },
+          "date": "2025-04-10",
+          "category": "Annonce",
+          "title": "Call for applications — 2025 research program",
+          "summary": "LaCDIA is opening its doors to researchers and PhD students interested in responsible AI and algorithmic governance.",
+          "featured": false
+        },
+        {
+          "_id": "f5",
+          "slug": {
+            "current": "nlp-creole-premiers-resultats"
+          },
+          "date": "2025-03-20",
+          "category": "Recherche",
+          "title": "Creole NLP: first results in modeling Haitian Creole",
+          "summary": "A significant breakthrough in automatic processing of Haitian Creole with our in-house models.",
+          "featured": false
+        }
       ]
     },
     "heroBadge": "Artificial Intelligence · Research · Caribbean Innovation",
@@ -198,9 +346,9 @@
     "heroSecondaryCta": "Meet the team",
     "researchAxes": "Research axes",
     "techServices": "AI & Data Solutions",
-    "introEyebrow": "Our mission",
-    "introTitle": "Science and technology at the service of the Caribbean",
-    "introBody": "LaCDIA conducts applied and fundamental research, and supports institutions in designing AI-driven solutions adapted to local contexts.",
+    "introEyebrow": "Vision 2026–2030",
+    "introTitle": "Becoming the Caribbean reference hub for AI and data science",
+    "introBody": "Recognized for the quality of its research, the relevance of its applications, its contribution to scientific training and its commitment to responsible innovation.",
     "kpisTitle": "Key figures",
     "kpisIntro": "Quantitative indicators of our research and innovation activities",
     "publicationsTitle": "Latest publications",
@@ -219,6 +367,9 @@
       "client": "Client",
       "media": "Media",
       "academic": "Academic institution"
+    },
+    "intro": {
+      "foundedLabel": "Founded in 2026"
     }
   },
   "forms": {
@@ -234,13 +385,34 @@
       "organisationPlaceholder": "University, company, NGO…",
       "subject": "Subject",
       "subjects": [
-        { "value": "", "label": "Select a subject…" },
-        { "value": "collaboration", "label": "Research Collaboration" },
-        { "value": "partenariat", "label": "Institutional Partnership" },
-        { "value": "stage", "label": "Internship or Training" },
-        { "value": "medias", "label": "Media and Communications" },
-        { "value": "question", "label": "General Inquiry" },
-        { "value": "autre", "label": "Other" }
+        {
+          "value": "",
+          "label": "Select a subject…"
+        },
+        {
+          "value": "collaboration",
+          "label": "Research Collaboration"
+        },
+        {
+          "value": "partenariat",
+          "label": "Institutional Partnership"
+        },
+        {
+          "value": "stage",
+          "label": "Internship or Training"
+        },
+        {
+          "value": "medias",
+          "label": "Media and Communications"
+        },
+        {
+          "value": "question",
+          "label": "General Inquiry"
+        },
+        {
+          "value": "autre",
+          "label": "Other"
+        }
       ],
       "message": "Message",
       "messagePlaceholder": "Describe your request…",
@@ -262,13 +434,34 @@
       "organisationPlaceholder": "University, company, NGO…",
       "collabType": "Type of collaboration",
       "collabTypes": [
-        { "value": "", "label": "Select a type…" },
-        { "value": "recherche", "label": "Joint research" },
-        { "value": "financement", "label": "Funding / grant" },
-        { "value": "terrain", "label": "Field access / data" },
-        { "value": "formation", "label": "Training and skills transfer" },
-        { "value": "technique", "label": "Technical partnership" },
-        { "value": "autre", "label": "Other" }
+        {
+          "value": "",
+          "label": "Select a type…"
+        },
+        {
+          "value": "recherche",
+          "label": "Joint research"
+        },
+        {
+          "value": "financement",
+          "label": "Funding / grant"
+        },
+        {
+          "value": "terrain",
+          "label": "Field access / data"
+        },
+        {
+          "value": "formation",
+          "label": "Training and skills transfer"
+        },
+        {
+          "value": "technique",
+          "label": "Technical partnership"
+        },
+        {
+          "value": "autre",
+          "label": "Other"
+        }
       ],
       "message": "Project / proposal description",
       "messagePlaceholder": "Describe your collaboration proposal…",
@@ -358,28 +551,6 @@
   "locale": {
     "switchLanguage": "Switch language",
     "currentLanguage": "Current language"
-  },
-  "governance": {
-    "categories": {
-      "gouvernance": "Institutional governance",
-      "direction": "Scientific leadership",
-      "recherche": "Research",
-      "conseil": "Scientific council"
-    },
-    "upcoming": "Upcoming",
-    "expertise": "Expertise",
-    "contribution": "Contribution",
-    "contact": "Contact",
-    "modalTitle": "Biography",
-    "modalExpertiseTitle": "Areas of expertise",
-    "learnMore": "View full profile",
-    "viewProfileOf": "View profile of {name}",
-    "close": "Close",
-    "website": "Website",
-    "emptyMembers": "No profiles are configured for this section.",
-    "scientificCouncil": "Scientific council",
-    "invalidPremiumConfig": "Invalid configuration: exactly 1 governance lead and 2 co-founders are required.",
-    "invalidStrictConfig": "Invalid configuration: exactly 1 institutional director and 2 scientific directors are required."
   },
   "pages": {
     "solutions": {

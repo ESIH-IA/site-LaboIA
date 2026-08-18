@@ -16,7 +16,7 @@ function isActivePath(current: string, href: string) {
 // Allowlist plutot que blocklist : le site n'a plus que ces 4 pages ; on
 // ignore tout item de navigation Sanity qui pointerait encore vers une
 // page retiree (contenu CMS pas forcement resynchronise avec le code).
-const ALLOWED_HREFS = ["/", "/solutions", "/actualites", "/contact"];
+const ALLOWED_HREFS = ["/", "/solutions", "/axes-de-recherche", "/actualites", "/contact"];
 
 export default function Header({
   nav,
@@ -54,7 +54,10 @@ export default function Header({
         // "/actualites" redirige vers l'accueil (plus de page listing dediee) —
         // on pointe directement vers la section actualites de la home plutot
         // que de faire perdre la position de scroll via la redirection.
-        localizedHref: item.href === "/actualites" ? "/#actualites" : item.href,
+        localizedHref:
+          item.href === "/actualites" ? "/#actualites" :
+          item.href === "/solutions" ? "/axes-de-recherche" :
+          item.href,
         active: isActivePath(basePath, item.href),
       }));
   }, [basePath, nav.mainNav]);

@@ -31,7 +31,7 @@ Site institutionnel bilingue (FR/EN) pour LaCDIA, construit avec Next.js App Rou
 - `src/app/api` endpoints (forms, newsletter, preview)
 - `src/components` composants UI
 - `src/content` contenu local (fallback)
-- `src/data` données structurées (gouvernance, solutions)
+- `src/data` données structurées (solutions)
 - `src/lib` utilitaires (i18n, SEO, Sanity)
 - `src/messages` catalogues de traduction next-intl (`fr.json`, `en.json`)
 - `public` assets
@@ -60,8 +60,8 @@ SANITY_PREVIEW_SECRET=your_preview_secret
 
 # Resend (email transactionnel — notifications contact + confirmation desinscription)
 MESSAGING_URL_RESEND_API_KEY=re_your_resend_key
-MESSAGING_URL_RESEND_EMAIL_DOMAIN=lacdia.esih.edu
-CONTACT_NOTIFY_EMAIL=contact@lacdia.esih.edu
+MESSAGING_URL_RESEND_EMAIL_DOMAIN=esih.edu
+CONTACT_NOTIFY_EMAIL=contact.lacdia@esih.edu
 
 # Sécurité — secret de signature des liens de désinscription (HMAC),
 # requis pour que POST /api/newsletter/unsubscribe fonctionne
@@ -93,7 +93,7 @@ npm run translate:en
 ## Sanity Studio & migration
 
 - Le Studio est intégré dans l'app : lancer `npm run dev` puis ouvrir `/studio`.
-- La commande `npm run sanity:seed` initialise un contenu de base (navigation, home, solutions, gouvernance, etc.). Elle requiert `SANITY_API_TOKEN`.
+- La commande `npm run sanity:seed` initialise un contenu de base (navigation, home, solutions, etc.). Elle requiert `SANITY_API_TOKEN`.
 - Les collections publications, axes, ressources et formations sont à compléter dans le Studio si besoin.
 
 ## Endpoints API

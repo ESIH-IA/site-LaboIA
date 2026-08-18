@@ -41,6 +41,10 @@ const nextConfig: NextConfig = {
 
     return [
       { source: "/", destination: "/fr", permanent: false },
+      // /solutions renommé en /axes-de-recherche
+      { source: "/solutions", destination: "/fr/axes-de-recherche", permanent: true },
+      { source: "/fr/solutions", destination: "/fr/axes-de-recherche", permanent: true },
+      { source: "/en/solutions", destination: "/en/axes-de-recherche", permanent: true },
       // Actualites : listing uniquement — /actualites/[slug] et
       // /actualites/evenements/[slug] restent des pages actives, donc
       // pas de wildcard ici (contrairement aux autres arborescences).

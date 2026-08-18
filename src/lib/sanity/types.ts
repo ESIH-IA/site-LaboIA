@@ -142,7 +142,6 @@ export type Person = {
   shortBio?: string;
   longBio?: string;
   affiliation?: string;
-  governanceGroup?: "direction" | "gouvernance" | "comite_scientifique";
   teamGroup?: "research" | "associate";
   expertise?: string[];
   links?: {
@@ -154,38 +153,6 @@ export type Person = {
   };
   contribution?: string;
   order?: number;
-};
-
-export type GovernanceChartStrict = {
-  _id: string;
-  title: string;
-  slug?: SanitySlug;
-  slugIntl?: LocalizedSlug;
-  status: "draft" | "published";
-  orgSectionTitle?: string;
-  orgSectionIntro?: PortableTextBlock[];
-  topPerson: Person;
-  scientificDirectors: [Person, Person];
-  associateResearchers?: Person[];
-  membersSectionTitle?: string;
-  membersSectionIntro?: PortableTextBlock[];
-  membersToShow?: Person[];
-};
-
-export type GovernancePage = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  intro?: PortableTextBlock[];
-  showOrgChart?: boolean;
-  orgChartSectionTitle?: string;
-  orgChartSectionIntro?: PortableTextBlock[];
-  showMembers?: boolean;
-  membersSectionTitle?: string;
-  membersSectionIntro?: PortableTextBlock[];
-  membersGroupsToShow?: Array<"direction" | "gouvernance" | "comite_scientifique">;
-  membersOrder?: "nameAsc" | "orderAsc";
-  governanceChartStrict?: GovernanceChartStrict | null;
 };
 
 export type TeamPage = {
@@ -250,9 +217,25 @@ export type HomePageData = {
   introTitle?: string;
   introBody?: string;
   introActions?: Array<{ label: string; href: string; variant?: string }>;
+  missionItems?: Array<{ text: string }>;
   highlightsTitle?: string;
   highlightsIntro?: string;
   highlights?: Array<{ title: string; description: string }>;
+  // Architecture scientifique (Option A)
+  axe1Title?: string;
+  axe1Description?: string;
+  axe1Keywords?: string;   // "A · B · C" — split on " · " in component
+  axe1Objectives?: string; // "A · B · C" — split on "·" in component
+  axe2Title?: string;
+  axe2Description?: string;
+  axe2Keywords?: string;
+  axe2Objectives?: string;
+  poleTitle?: string;
+  poleDescription?: string;
+  poleSectors?: string;    // "A · B · C"
+  poleNote?: string;
+  ethicsTitle?: string;
+  ethicsText?: string;
   kpisTitle?: string;
   kpisIntro?: string;
   teamSectionLabel?: string;

@@ -14,7 +14,7 @@ npm run build            # Build de prod — utilise --webpack (pas Turbopack, m
 npm run start             # Lance le build de prod
 npm run lint              # ESLint (flat config, eslint-config-next core-web-vitals + typescript)
 npm run check:routes      # Ping un ensemble de routes clefs (nécessite que le serveur tourne ; utilise SITE_URL/NEXT_PUBLIC_SITE_URL)
-npm run sanity:seed       # Seed initial du contenu Sanity (nav, home, solutions, gouvernance...) — nécessite SANITY_API_TOKEN
+npm run sanity:seed       # Seed initial du contenu Sanity (nav, home, solutions...) — nécessite SANITY_API_TOKEN
 npm run translate         # Traduction auto FR→EN (scripts/auto-translate.mjs) — seul EN est supporté (ES/HT retirés)
 npm run translate:en      # Idem, cible explicite
 ```
@@ -43,7 +43,7 @@ Sanity Studio est embarqué dans l'app Next.js : `npm run dev` puis ouvrir `/stu
 ### Contenu hybride (Sanity + fallback local)
 
 - `src/lib/sanity/client.ts` expose `isSanityConfigured` (vrai seulement si `NEXT_PUBLIC_SANITY_PROJECT_ID`/`SANITY_PROJECT_ID`, dataset et version d'API sont tous présents) et `sanityFetch(query, params, fallback)` qui **retourne `fallback` silencieusement si Sanity n'est pas configuré** — l'app doit donc rester fonctionnelle sans Sanity connecté.
-- `src/lib/cms.ts` est le point d'entrée principal pour les pages : agrège les requêtes GROQ (`src/lib/sanity/queries.ts`) par page (`getSiteSettings`, `getNavigation`, `getHomeData`, `getSolutionsPageData`, `getGovernancePageData`, ...) et retourne des objets « empty » typés quand Sanity est absent, jamais `null`/`undefined`.
+- `src/lib/cms.ts` est le point d'entrée principal pour les pages : agrège les requêtes GROQ (`src/lib/sanity/queries.ts`) par page (`getSiteSettings`, `getNavigation`, `getHomeData`, `getSolutionsPageData`, ...) et retourne des objets « empty » typés quand Sanity est absent, jamais `null`/`undefined`.
 - `src/lib/content-loader.ts` + `src/lib/content-types.ts` fournissent un contenu **local statique** (`src/content/*`) utilisé en repli/complément. `getArticles()` et consorts sont partiellement orphelins depuis la suppression de la page listing actualités — à vérifier avant de s'appuyer dessus.
 - Il existe **deux clients Sanity distincts** : `src/lib/sanity/client.ts` (lecture, utilisé par `cms.ts`/les pages) et `src/sanity/lib/client.ts` (utilisé par le Studio / live preview sous `src/sanity/`). `src/lib/sanity/write-client.ts` gère les écritures (soumissions de formulaires).
 - Le schéma Sanity complet est dans un seul fichier : `src/sanity/schemaTypes/index.ts` (~47 `defineType`). Les champs multilingues utilisent des objets `localeString`/`localeText`/`localeBlockContent` avec des clés `fr`/`en`.

@@ -8,7 +8,7 @@ import { getFormSettings } from "@/lib/cms";
 
 export const dynamic = "force-dynamic";
 
-const CONTACT_EMAIL = "contact@lacdia.esih.edu";
+const CONTACT_EMAIL = "contact.lacdia@esih.edu";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getServerLocale();
