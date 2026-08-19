@@ -67,7 +67,7 @@ export default async function Home() {
     <>
       <Hero
         badge={home.heroBadge}
-        subtitle={home.heroSubtitle}
+
         locale={locale}
         titleLine1={home.heroTitleLine1}
         titleLine2={home.heroTitleLine2}
