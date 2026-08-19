@@ -75,7 +75,7 @@ export default function Hero({
       <div
         className="relative hero-content"
         style={{
-          padding: "clamp(7rem,10vw,9rem) clamp(2rem,6vw,6rem)",
+          padding: "clamp(7rem,10vw,9rem) clamp(2rem,6vw,6rem) clamp(6.5rem,11vw,8rem)",
           maxWidth: "760px",
           zIndex: 10,
         }}
@@ -186,111 +186,92 @@ export default function Hero({
         >
           {subtitle ?? t("subtitle")}
         </p>
-
-        {/* Domain tags — occupent l'espace là où étaient les boutons */}
-        <div
-          aria-hidden="true"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-            marginBottom: "3.5rem",
-          }}
-        >
-          {["Agriculture", "Santé", "Services publics", "Éducation", "Gouvernance IA"].map((d) => (
-            <span
-              key={d}
-              style={{
-                padding: "6px 14px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(0,212,170,0.18)",
-                background: "rgba(0,212,170,0.05)",
-                fontSize: "0.75rem",
-                letterSpacing: "0.06em",
-                color: "rgba(0,212,170,0.7)",
-                fontWeight: 500,
-              }}
-            >
-              {d}
-            </span>
-          ))}
-        </div>
-
-        {/* Scroll indicator */}
-        <div
-          aria-hidden="true"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem",
-          }}
-        >
-          <div
-            style={{
-              width: "32px",
-              height: "1px",
-              background: "linear-gradient(to right, transparent, var(--labo-accent-teal))",
-            }}
-          />
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.6rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "rgba(136,146,176,0.45)",
-            }}
-          >
-            {t("scrollHint")}
-          </span>
-        </div>
       </div>
 
-      {/* Floating caption — bottom-right, over the open network */}
+      {/* ── Bottom band — static (no animation), gray/gradient, full-bleed.
+          Consolidates what used to be two separately-positioned pieces (a
+          floating bottom-right caption, a plain fade) into one controlled
+          region that closes the section: canvas label + scroll hint,
+          right-aligned. Gray rather than the teal/violet accent used
+          above — this band is the quiet close, not another accent
+          moment. ─────────────────────────────────────────────────────── */}
       <div
-        aria-hidden="true"
+        className="hero-bottom-band"
         style={{
           position: "absolute",
-          bottom: "2.5rem",
-          right: "2rem",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.6rem",
-          letterSpacing: "0.16em",
-          textTransform: "uppercase",
-          color: "rgba(0,212,170,0.45)",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          zIndex: 10,
-        }}
-      >
-        <span
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            backgroundColor: "rgba(0,212,170,0.5)",
-            boxShadow: "0 0 8px rgba(0,212,170,0.5)",
-            animation: "pulse-dot 2.4s ease-in-out infinite",
-          }}
-        />
-        {t("canvasLabel")}
-      </div>
-
-      {/* Bottom fade — full width */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          bottom: 0,
           left: 0,
           right: 0,
-          height: "120px",
-          pointerEvents: "none",
-          background: "linear-gradient(to top, var(--labo-bg), transparent)",
-          zIndex: 5,
+          bottom: 0,
+          zIndex: 8,
+          borderTop: "1px solid rgba(148,163,184,0.12)",
+          background:
+            "linear-gradient(180deg, transparent 0%, rgba(17,24,39,0.55) 40%, rgba(17,24,39,0.95) 75%, var(--labo-bg) 100%)",
         }}
-      />
+      >
+        <div
+          className="hero-bottom-band-inner"
+          style={{
+            maxWidth: "1240px",
+            margin: "0 auto",
+            padding: "clamp(1.1rem,2.4vw,1.6rem) clamp(2rem,6vw,6rem)",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: "1.25rem 2rem",
+          }}
+        >
+          {/* Canvas label + scroll hint — same cluster, right-aligned */}
+          <div className="hero-bottom-band-right" style={{ display: "flex", alignItems: "center", gap: "1.75rem" }}>
+            <div
+              aria-hidden="true"
+              className="hero-canvas-label"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.6rem",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "rgba(0,212,170,0.5)",
+              }}
+            >
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  backgroundColor: "rgba(0,212,170,0.5)",
+                  boxShadow: "0 0 8px rgba(0,212,170,0.5)",
+                  animation: "pulse-dot 2.4s ease-in-out infinite",
+                }}
+              />
+              {t("canvasLabel")}
+            </div>
+            <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+              <span
+                style={{
+                  width: "24px",
+                  height: "1px",
+                  background: "linear-gradient(to right, transparent, rgba(148,163,184,0.5))",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "rgba(148,163,184,0.5)",
+                }}
+              >
+                {t("scrollHint")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <style>{`
         /* minHeight: 100vh (inline, above) is the fallback for browsers
@@ -314,6 +295,7 @@ export default function Hero({
           .hero-content { max-width: 100% !important; }
           .hero-h1 .hero-line { font-size: 2.5rem !important; }
           .hero-h1 .hero-line-accent { font-size: 2.15rem !important; }
+          .hero-canvas-label { display: none !important; }
         }
         @media (max-width: 400px) {
           .hero-h1 .hero-line { font-size: 2.05rem !important; }
