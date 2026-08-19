@@ -72,23 +72,22 @@ function NeuralCanvas() {
       pulseSpeed: number;
     };
 
-    // Density scales with area: a full-width hero needs meaningfully more
-    // nodes than a compact one to avoid feeling sparse, and vice versa.
-    const N = Math.max(40, Math.min(170, Math.round((W * H) / 11000)));
+    // Density scales with area — more nodes for a richer network effect.
+    const N = Math.max(80, Math.min(280, Math.round((W * H) / 6000)));
     const nodes: Node[] = Array.from({ length: N }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.32,
-      vy: (Math.random() - 0.5) * 0.32,
-      r: Math.random() * 2.1 + 0.7,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      r: Math.random() * 2.4 + 0.6,
       color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
-      alpha: Math.random() * 0.5 + 0.16,
+      alpha: Math.random() * 0.55 + 0.2,
       pulse: Math.random() * Math.PI * 2,
-      pulseSpeed: 0.01 + Math.random() * 0.016,
+      pulseSpeed: 0.012 + Math.random() * 0.018,
     }));
 
-    const CONNECT_DIST = 140;
-    const MOUSE_RADIUS = 190;
+    const CONNECT_DIST = 175;
+    const MOUSE_RADIUS = 230;
 
     function draw() {
       if (!ctx) return;
@@ -123,8 +122,8 @@ function NeuralCanvas() {
             grad.addColorStop(0, "#00d4aa");
             grad.addColorStop(1, "#6c63ff");
             ctx.strokeStyle = grad;
-            ctx.globalAlpha = strength * (0.16 + boost * 0.3);
-            ctx.lineWidth = 0.7 + boost * 0.5;
+            ctx.globalAlpha = strength * (0.26 + boost * 0.4);
+            ctx.lineWidth = 0.8 + boost * 0.6;
             ctx.stroke();
           }
         }

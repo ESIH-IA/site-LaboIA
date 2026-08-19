@@ -1,28 +1,18 @@
 "use client";
 
-import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import NeuralHeroBackground from "@/components/shared/neural-hero-background";
 import type { Locale } from "@/lib/i18n";
 
-type HeroAction = {
-  label: string;
-  href: string;
-  variant?: string;
-};
-
 type HeroProps = {
   badge?: string;
   subtitle?: string;
-  actions?: HeroAction[];
   locale?: Locale;
 };
 
 /* ─── Hero ─────────────────────────────────────────────────── */
-export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroProps) {
+export default function Hero({ badge, subtitle, locale = "fr" }: HeroProps) {
   const t = useTranslations("home.hero");
-  const primary   = actions?.find((a) => a.variant === "primary")   ?? actions?.[0];
-  const secondary = actions?.find((a) => a.variant === "secondary") ?? actions?.[1];
   const isFr = locale === "fr";
 
   return (
@@ -172,71 +162,43 @@ export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroPr
         {/* Subtitle */}
         <p
           style={{
-            fontSize: "clamp(0.95rem, 1.3vw, 1.15rem)",
+            fontSize: "clamp(0.98rem, 1.4vw, 1.2rem)",
             color: "var(--labo-text-muted)",
             lineHeight: 1.75,
-            maxWidth: "480px",
-            marginBottom: "2.75rem",
+            maxWidth: "600px",
+            marginBottom: "3rem",
           }}
         >
           {subtitle ?? t("subtitle")}
         </p>
 
-        {/* CTAs */}
-        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
-          <Link
-            href={primary?.href ?? "/contact"}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "14px 28px",
-              borderRadius: "9999px",
-              background: "linear-gradient(135deg, #00d4aa, #00b893)",
-              color: "#0a0f1c",
-              fontSize: "0.88rem",
-              fontWeight: 700,
-              letterSpacing: "0.02em",
-              textDecoration: "none",
-              boxShadow: "0 0 32px rgba(0,212,170,0.35)",
-              transition: "all 0.22s ease",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {primary?.label ?? t("primaryLabel")}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-
-          <Link
-            href={secondary?.href ?? "#architecture-scientifique"}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "13px 24px",
-              borderRadius: "9999px",
-              background: "rgba(255,255,255,0.05)",
-              backdropFilter: "blur(8px)",
-              color: "#f0f4ff",
-              fontSize: "0.88rem",
-              fontWeight: 500,
-              letterSpacing: "0.01em",
-              textDecoration: "none",
-              border: "1px solid rgba(255,255,255,0.13)",
-              transition: "all 0.22s ease",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-              <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-              <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-              <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
-            </svg>
-            {secondary?.label ?? t("secondaryLabel")}
-          </Link>
+        {/* Domain tags — occupent l'espace là où étaient les boutons */}
+        <div
+          aria-hidden="true"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginBottom: "3.5rem",
+          }}
+        >
+          {["Agriculture", "Santé", "Services publics", "Éducation", "Gouvernance IA"].map((d) => (
+            <span
+              key={d}
+              style={{
+                padding: "6px 14px",
+                borderRadius: "9999px",
+                border: "1px solid rgba(0,212,170,0.18)",
+                background: "rgba(0,212,170,0.05)",
+                fontSize: "0.75rem",
+                letterSpacing: "0.06em",
+                color: "rgba(0,212,170,0.7)",
+                fontWeight: 500,
+              }}
+            >
+              {d}
+            </span>
+          ))}
         </div>
 
         {/* Scroll indicator */}
@@ -246,7 +208,6 @@ export default function Hero({ badge, subtitle, actions, locale = "fr" }: HeroPr
             display: "flex",
             alignItems: "center",
             gap: "0.75rem",
-            marginTop: "3.5rem",
           }}
         >
           <div
