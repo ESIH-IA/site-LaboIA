@@ -430,8 +430,17 @@ const homePage = defineType({
       name: "heroSubtitle",
       type: "localeText",
       title: "Hero subtitle",
-      description: "Sous-titre affiché sous le titre du hero de l'accueil (le titre lui-même est un texte de design fixe, non éditable ici).",
+      description: "Sous-titre affiché sous le titre du hero de l'accueil.",
     }),
+    defineField({
+      name: "heroTitleLine1",
+      type: "localeString",
+      title: "Titre hero — ligne 1 (override optionnel)",
+      description: "Laisser vide pour garder le titre de design par défaut (4 lignes codées dans le composant Hero). Si rempli, remplace uniquement cette ligne — la ligne 3 garde son style italique/dégradé quel que soit le texte saisi.",
+    }),
+    defineField({ name: "heroTitleLine2", type: "localeString", title: "Titre hero — ligne 2 (override optionnel)" }),
+    defineField({ name: "heroTitleLine3", type: "localeString", title: "Titre hero — ligne 3, style accent (override optionnel)" }),
+    defineField({ name: "heroTitleLine4", type: "localeString", title: "Titre hero — ligne 4 (override optionnel)" }),
     defineField({ name: "heroActions", type: "array", of: [{ type: "linkAction" }] }),
     defineField({ name: "introEyebrow", type: "localeString", title: "Intro eyebrow" }),
     defineField({ name: "introTitle", type: "localeString", title: "Vision — titre (grand h2)" }),
@@ -643,7 +652,13 @@ const news = defineType({
       ],
     }),
     defineField({ name: "date", type: "date" }),
-    defineField({ name: "category", type: "string" }),
+    defineField({
+      name: "category",
+      type: "string",
+      title: "Category (clé interne)",
+      description: "Clé stable utilisée pour le code couleur des badges — ne change pas selon la langue. Le libellé affiché aux visiteurs vient de categoryIntl si rempli, sinon de ce champ tel quel.",
+    }),
+    defineField({ name: "categoryIntl", type: "localeString", title: "Category — libellé affiché (i18n, optionnel)" }),
     defineField({ name: "summary", type: "text" }),
     defineField({ name: "summaryIntl", type: "localeText" }),
     defineField({ name: "content", type: "blockContent" }),
@@ -1234,7 +1249,13 @@ const latestNewsBlock = defineType({
   fields: [
     defineField({ name: "title", type: "localeString", title: "Title" }),
     defineField({ name: "intro", type: "localeText", title: "Introduction" }),
-    defineField({ name: "limit", type: "number", title: "Number of articles to show", initialValue: 3 }),
+    defineField({
+      name: "limit",
+      type: "number",
+      title: "Number of articles to show",
+      initialValue: 3,
+      validation: (Rule) => Rule.min(1).max(12),
+    }),
   ],
 });
 
@@ -1265,12 +1286,7 @@ const genericPage = defineType({
         { type: "featuresBlock" },
         { type: "kpisBlock" },
         { type: "ctaBlock" },
-        // "latestNewsBlock" retiré de ce picker : page-builder.tsx ne rend
-        // que son titre, jamais les actualités ni le champ "limit" — le
-        // type reste défini (voir plus bas) pour ne pas casser un
-        // pageBuilder existant qui en contiendrait déjà un, mais un
-        // éditeur ne peut plus en ajouter tant qu'il n'est pas réellement
-        // implémenté.
+        { type: "latestNewsBlock" },
       ],
     }),
     defineField({ name: "seo", type: "seo", title: "SEO" }),

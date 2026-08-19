@@ -17,6 +17,7 @@ npm run check:routes      # Ping un ensemble de routes clefs (nécessite que le 
 npm run sanity:seed       # Seed initial du contenu Sanity (nav, home, solutions...) — nécessite SANITY_API_TOKEN
 npm run translate         # Traduction auto FR→EN (scripts/auto-translate.mjs) — seul EN est supporté (ES/HT retirés)
 npm run translate:en      # Idem, cible explicite
+npm run sanity:seed-architecture  # Pré-remplit les champs d'architecture scientifique du homePage Sanity depuis fr.json/en.json — nécessite SANITY_API_TOKEN
 ```
 
 Il n'y a pas de suite de tests configurée dans ce repo.
@@ -37,8 +38,10 @@ Sanity Studio est embarqué dans l'app Next.js : `npm run dev` puis ouvrir `/stu
 
 - L'ancienne arborescence dupliquée sans `[locale]` (`src/app/(site)/...`) a été supprimée (newsletter, solutions, actualites). Il ne reste que `src/app/(site)/equipe/page.tsx`, un stub qui ne fait que `redirect("/")` — gardé volontairement comme trace du pattern de masquage temporaire (voir ci-dessous), pas du code mort à nettoyer par erreur.
 - `src/app/[locale]/(site)/[...slug]/page.tsx` est le catch-all générique : il résout un `genericPage` Sanity par slug et le rend via `PageBuilder` (`src/components/page-builder.tsx`), un renderer de blocs (`heroBlock`, `textImageBlock`, `featuresBlock`, `kpisBlock`, `ctaBlock`, `latestNewsBlock`...). Ce catch-all exclut explicitement `studio` et `api` en premier segment.
+- **Le site a été volontairement réduit à 4 pages de navigation** (commit `380cf9d`, « réduire le site à 4 pages ») : Accueil, Solutions (`/axes-de-recherche` — l'ancienne URL `/solutions` fait un redirect 301 permanent, `getSolutionsPageData` dans `cms.ts` garde son nom d'origine), Actualités (intégrée à la home), Contact — plus la route utilitaire `/newsletter` (désinscription, hors menu). Toutes les autres arborescences (`equipe`, `a-propos`, `recherche`, `lacdia-tech`, `formation`, `projets`, `publications`, `ressources`) ont été **supprimées du code** (pas seulement masquées) et redirigent vers l'accueil via la liste `removedTrees` dans `next.config.ts` — cette liste, pas de simples lignes isolées, est la source de vérité sur ce qui est actif. Les pages légales (`conditions-utilisation`, `confidentialite`, `cookies`, `mentions-legales`) et `/contact` restent des routes dédiées sous `src/app/[locale]/(site)/`.
+- **`/equipe` n'a plus de fiches individuelles** : contrairement à un état antérieur du projet, il n'existe plus de route `/equipe/[slug]` — toute la présentation de l'équipe est repliée dans une section ancre (`#notre-equipe`) sur la home (`src/components/home/team.tsx`). Ne pas supposer que des liens d'attribution vers `/equipe/[slug]` fonctionnent encore.
 - **`/actualites` (listing) est retiré définitivement** : `next.config.ts` redirige `/actualites`, `/fr/actualites`, `/en/actualites` vers l'accueil, où les actualités sont affichées directement (`ActualitesSection`). Les pages de détail (`/actualites/[slug]`, `/actualites/evenements/[slug]`) restent actives.
-- **`/equipe` est temporairement masqué** (redirection dans `next.config.ts`, 3 lignes réversibles), en attendant une consolidation du contenu équipe — décision produit, pas un bug. Ne pas la lever sans confirmation. Les fiches individuelles `/equipe/[slug]` restent actives (liens d'attribution depuis publications/projets/événements/formations) et ne sont pas concernées par cette redirection.
+- `/collaborer` n'a plus de page dédiée : redirigé vers `/contact?tab=collaborate` (onglet « Proposer une collaboration »).
 
 ### Contenu hybride (Sanity + fallback local)
 
@@ -51,7 +54,7 @@ Sanity Studio est embarqué dans l'app Next.js : `npm run dev` puis ouvrir `/stu
 ### API routes
 
 - `POST /api/forms/submit` — enregistre dans Sanity, notifie par email via Resend si `CONTACT_NOTIFY_EMAIL`/`MESSAGING_URL_RESEND_API_KEY` sont configurés (`src/lib/resend.ts`).
-- `POST /api/newsletter/subscribe` / `POST /api/newsletter/unsubscribe` — abonnés stockés comme documents Sanity `newsletterSubscriber` (`src/lib/newsletter-subscribers.ts`), email de confirmation de désinscription via Resend. Le formulaire de désinscription (`NewsletterUnsubscribeForm`) est rendu **inconditionnellement** sur `/newsletter` (pas seulement si un éditeur configure une section CMS `formType: "unsubscribe"`) — fonctionnalité compliance-sensible, ne doit pas dépendre d'une config Sanity oubliée.
+- `POST /api/newsletter/subscribe` / `POST /api/newsletter/unsubscribe` — abonnés stockés comme documents Sanity `newsletterSubscriber` (`src/lib/newsletter-subscribers.ts`), email de confirmation de désinscription via Resend. Le formulaire de désinscription (`NewsletterUnsubscribeForm`) est rendu **inconditionnellement** sur `/newsletter` (pas seulement si un éditeur configure une section CMS `formType: "unsubscribe"`) — fonctionnalité compliance-sensible, ne doit pas dépendre d'une config Sanity oubliée. La désinscription est en 2 étapes : `/api/newsletter/unsubscribe` envoie un lien signé (HMAC + expiration, `src/lib/unsubscribe-token.ts`), et `GET /api/newsletter/unsubscribe/confirm` vérifie ce jeton avant de désabonner réellement le document Sanity (voir audit pré-production, constats SEC-1/COMP-1).
 - `GET /api/preview` — active le mode preview Sanity (`secret`).
 
 ### Déploiement

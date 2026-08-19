@@ -125,6 +125,26 @@ export const newsListQuery = groq`
     slugIntl,
     date,
     category,
+    "categoryLabel": coalesce(categoryIntl[$locale], category),
+    "summary": coalesce(summaryIntl[$locale], summary),
+    sourceUrl,
+    "mainImageUrl": mainImage.asset->url,
+    "mainImageAlt": mainImage.alt,
+    featured
+  }
+`;
+
+// Variante paginée de newsListQuery pour un bloc à limite variable
+// (genericPage.blocks[latestNewsBlock].limit) — voir [...slug]/page.tsx.
+export const latestNewsForBlockQuery = groq`
+  *[_type == "news" && status == "published"] | order(date desc) [0...$limit]{
+    _id,
+    "title": coalesce(titleIntl[$locale], title),
+    "slug": coalesce(slugIntl[$locale], slug),
+    slugIntl,
+    date,
+    category,
+    "categoryLabel": coalesce(categoryIntl[$locale], category),
     "summary": coalesce(summaryIntl[$locale], summary),
     sourceUrl,
     "mainImageUrl": mainImage.asset->url,
@@ -141,6 +161,7 @@ export const newsBySlugQuery = groq`
     slugIntl,
     date,
     category,
+    "categoryLabel": coalesce(categoryIntl[$locale], category),
     "summary": coalesce(summaryIntl[$locale], summary),
     "content": coalesce(contentIntl[$locale], content),
     "mainImageUrl": mainImage.asset->url,
@@ -276,6 +297,10 @@ export const homePageQuery = groq`
     ${seoProjection},
     "heroBadge": coalesce(heroBadge[$locale], heroBadge.fr, heroBadge.en),
     "heroSubtitle": coalesce(heroSubtitle[$locale], heroSubtitle.fr, heroSubtitle.en),
+    "heroTitleLine1": coalesce(heroTitleLine1[$locale], heroTitleLine1.fr, heroTitleLine1.en),
+    "heroTitleLine2": coalesce(heroTitleLine2[$locale], heroTitleLine2.fr, heroTitleLine2.en),
+    "heroTitleLine3": coalesce(heroTitleLine3[$locale], heroTitleLine3.fr, heroTitleLine3.en),
+    "heroTitleLine4": coalesce(heroTitleLine4[$locale], heroTitleLine4.fr, heroTitleLine4.en),
     "heroActions": heroActions[]{
       "label": coalesce(labelIntl[$locale], label),
       href,

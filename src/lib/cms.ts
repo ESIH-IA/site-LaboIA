@@ -5,6 +5,7 @@ import {
   homePageQuery,
   kpiListQuery,
   kpiSettingsQuery,
+  latestNewsForBlockQuery,
   navigationQuery,
   newsListQuery,
   partnerListQuery,
@@ -86,6 +87,11 @@ export async function getHomeData(locale: Locale): Promise<HomeDataBundle> {
     allNews: news,
     featuredPartners: partners.filter((p) => p.featured),
   };
+}
+
+export async function getLatestNews(locale: Locale, limit: number): Promise<NewsListItem[]> {
+  if (!isSanityConfigured) return [];
+  return sanityFetch<NewsListItem[]>(latestNewsForBlockQuery, { locale, limit }, []);
 }
 
 export async function getSolutionsPageData(locale: Locale): Promise<SolutionsPage> {

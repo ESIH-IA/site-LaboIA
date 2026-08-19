@@ -50,7 +50,10 @@ function getHref(item: NewsListItem, locale: Locale) {
   return `/actualites/${slugVal}`;
 }
 
-function CategoryPill({ category }: { category?: string }) {
+// `category` sert de clé interne pour le mapping de couleur (stable quelle
+// que soit la locale) ; `label` est le texte affiché, localisable via
+// `news.categoryIntl` côté CMS, retombe sur `category` si non traduit.
+function CategoryPill({ category, label }: { category?: string; label?: string }) {
   if (!category) return null;
   const s = getCategoryStyle(category);
   return (
@@ -68,7 +71,7 @@ function CategoryPill({ category }: { category?: string }) {
       border: "1px solid " + s.border,
       flexShrink: 0,
     }}>
-      {category}
+      {label ?? category}
     </span>
   );
 }
@@ -151,7 +154,7 @@ function FeaturedCard({ item, locale }: { item: NewsListItem; locale: Locale }) 
 
       {/* Top: category + date */}
       <div style={{ position: "absolute", top: "2rem", left: "var(--actu-card-pad, 2.5rem)", right: "var(--actu-card-pad, 2.5rem)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <CategoryPill category={item.category} />
+        <CategoryPill category={item.category} label={item.categoryLabel} />
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.1em", color: "rgba(136,146,176,0.6)" }}>
           {formatDate(item.date, locale)}
         </span>
@@ -265,7 +268,7 @@ function CompactCard({ item, locale }: { item: NewsListItem; locale: Locale }) {
       }} />
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
-        <CategoryPill category={item.category} />
+        <CategoryPill category={item.category} label={item.categoryLabel} />
         <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.59rem", letterSpacing: "0.08em", color: "rgba(136,146,176,0.5)", flexShrink: 0 }}>
           {formatDate(item.date, locale)}
         </span>
@@ -320,9 +323,13 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  // Collect all unique categories
+  // Collect all unique categories (clé interne) + leur libellé localisé
   const allLabel = t("all");
   const categories = [allLabel, ...Array.from(new Set(news.map((n) => n.category).filter(Boolean) as string[]))];
+  const categoryLabels = news.reduce<Record<string, string>>((acc, n) => {
+    if (n.category && !acc[n.category]) acc[n.category] = n.categoryLabel ?? n.category;
+    return acc;
+  }, {});
   const [activeCategory, setActiveCategory] = useState<string>(allLabel);
 
   useEffect(() => {
@@ -477,7 +484,7 @@ export default function ActualitesSection({ title, intro, items, locale = "fr" }
                     transition: "all 0.2s ease",
                   }}
                 >
-                  {cat}
+                  {cat === allLabel ? cat : categoryLabels[cat] ?? cat}
                 </button>
               );
             })}

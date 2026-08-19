@@ -8,10 +8,25 @@ type HeroProps = {
   badge?: string;
   subtitle?: string;
   locale?: Locale;
+  // Override optionnel des 4 lignes du titre (CMS homePage.heroTitleLine1..4).
+  // Vide par défaut : le titre de design ci-dessous (next-intl) s'affiche
+  // tel quel tant qu'aucun éditeur ne les renseigne.
+  titleLine1?: string;
+  titleLine2?: string;
+  titleLine3?: string;
+  titleLine4?: string;
 };
 
 /* ─── Hero ─────────────────────────────────────────────────── */
-export default function Hero({ badge, subtitle, locale = "fr" }: HeroProps) {
+export default function Hero({
+  badge,
+  subtitle,
+  locale = "fr",
+  titleLine1,
+  titleLine2,
+  titleLine3,
+  titleLine4,
+}: HeroProps) {
   const t = useTranslations("home.hero");
   const isFr = locale === "fr";
 
@@ -106,7 +121,7 @@ export default function Hero({ badge, subtitle, locale = "fr" }: HeroProps) {
               color: "var(--labo-text)",
             }}
           >
-            {t("titleLine1")}
+            {titleLine1 ?? t("titleLine1")}
           </span>
 
           {/* Line 2 */}
@@ -118,7 +133,7 @@ export default function Hero({ badge, subtitle, locale = "fr" }: HeroProps) {
               color: "var(--labo-text)",
             }}
           >
-            {t("titleLine2")}
+            {titleLine2 ?? t("titleLine2")}
           </span>
 
           {/* Line 3 — "caraïbéenne" / "data" — italic + gradient */}
@@ -142,7 +157,7 @@ export default function Hero({ badge, subtitle, locale = "fr" }: HeroProps) {
               paddingRight: "0.2em",
             }}
           >
-            {t("titleLine3")}
+            {titleLine3 ?? t("titleLine3")}
           </span>
 
           {/* Line 4 */}
@@ -155,7 +170,7 @@ export default function Hero({ badge, subtitle, locale = "fr" }: HeroProps) {
               opacity: 0.85,
             }}
           >
-            {t("titleLine4")}
+            {titleLine4 ?? t("titleLine4")}
           </span>
         </h1>
 

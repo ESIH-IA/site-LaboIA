@@ -7,16 +7,12 @@ import { useTranslations } from "next-intl";
 
 import LocaleSwitcher from "@/components/layout/locale-switcher";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
+import { resolveNavItems } from "@/lib/nav";
 
 function isActivePath(current: string, href: string) {
   if (href === "/") return current === "/";
   return current === href || current.startsWith(`${href}/`);
 }
-
-// Allowlist plutot que blocklist : le site n'a plus que ces 4 pages ; on
-// ignore tout item de navigation Sanity qui pointerait encore vers une
-// page retiree (contenu CMS pas forcement resynchronise avec le code).
-const ALLOWED_HREFS = ["/", "/solutions", "/axes-de-recherche", "/actualites", "/contact"];
 
 export default function Header({
   nav,
@@ -47,19 +43,15 @@ export default function Header({
   }, [mobileOpen]);
 
   const navItems = useMemo(() => {
-    return nav.mainNav
-      .filter((item) => ALLOWED_HREFS.includes(item.href))
-      .map((item) => ({
-        ...item,
-        // "/actualites" redirige vers l'accueil (plus de page listing dediee) —
-        // on pointe directement vers la section actualites de la home plutot
-        // que de faire perdre la position de scroll via la redirection.
-        localizedHref:
-          item.href === "/actualites" ? "/#actualites" :
-          item.href === "/solutions" ? "/axes-de-recherche" :
-          item.href,
-        active: isActivePath(basePath, item.href),
-      }));
+    // resolveNavItems filtre les arborescences retirées et remappe les
+    // anciennes URLs renommées ("/solutions" -> "/axes-de-recherche",
+    // "/actualites" -> ancre "/#actualites") — voir src/lib/nav.ts. Tout
+    // item Sanity restant (y compris une nouvelle genericPage ajoutée
+    // depuis le Studio) s'affiche automatiquement, sans allowlist figée.
+    return resolveNavItems(nav.mainNav).map((item) => {
+      const pathOnly = item.href.split("#")[0] || "/";
+      return { ...item, active: isActivePath(basePath, pathOnly) };
+    });
   }, [basePath, nav.mainNav]);
 
   const logoSrc = site.logo?.url ?? "/logo/logo-site.svg";
@@ -112,7 +104,7 @@ export default function Header({
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                href={item.localizedHref}
+                href={item.href}
                 aria-current={item.active ? "page" : undefined}
                 className={[
                   "relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200",
@@ -193,7 +185,7 @@ export default function Header({
               {navItems.map((item, idx) => (
                 <Link
                   key={item.href}
-                  href={item.localizedHref}
+                  href={item.href}
                   onClick={() => setMobileOpen(false)}
                   aria-current={item.active ? "page" : undefined}
                   className={[

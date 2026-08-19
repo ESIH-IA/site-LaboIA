@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import CookieSettingsLink from "@/components/layout/cookie-settings-link";
 import type { Locale } from "@/lib/i18n";
 import type { Navigation, SiteSettings } from "@/lib/sanity/types";
+import { resolveNavItems } from "@/lib/nav";
 
 export default async function Footer({
   nav,
@@ -116,7 +117,7 @@ export default async function Footer({
                 {t("navigation")}
               </div>
               <nav className="flex flex-col gap-2.5">
-                {nav.mainNav.map((item) => (
+                {resolveNavItems(nav.mainNav).map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

@@ -27,7 +27,34 @@ function actionClass(variant: string | undefined, index: number) {
   return index === 0 ? 'btn btn-primary-labo' : 'btn btn-secondary-labo';
 }
 
-export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string }) {
+function newsHref(item: any, locale: string) {
+  if (item.sourceUrl) return item.sourceUrl;
+  const slugVal = item.slugIntl?.[locale]?.current ?? item.slug?.current;
+  return `/actualites/${slugVal}`;
+}
+
+function formatNewsDate(dateStr: string | undefined, locale: string) {
+  if (!dateStr) return '';
+  try {
+    return new Date(dateStr).toLocaleDateString(locale === 'en' ? 'en-GB' : 'fr-FR', {
+      day: 'numeric', month: 'long', year: 'numeric',
+    });
+  } catch {
+    return dateStr;
+  }
+}
+
+export function PageBuilder({
+  blocks,
+  locale,
+  newsItems = [],
+}: {
+  blocks: any[];
+  locale: string;
+  // Actualités pré-chargées côté serveur pour tout bloc latestNewsBlock
+  // présent dans `blocks` — voir [...slug]/page.tsx (getLatestNews).
+  newsItems?: any[];
+}) {
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
     return null;
   }
@@ -242,14 +269,50 @@ export function PageBuilder({ blocks, locale }: { blocks: any[]; locale: string 
           case 'latestNewsBlock': {
             const title = getLocalValue(block.title, locale);
             const intro = getLocalValue(block.intro, locale);
-            if (!title && !intro) return null;
+            const limit = block.limit || 3;
+            const items = (newsItems || []).slice(0, limit);
+
             return (
               <section key={key} className={toneClass(index)} style={{ padding: 'clamp(3rem,5vw,4rem) 0' }}>
                 <div className="container">
-                  <div style={{ borderBottom: '1px solid var(--labo-border)', paddingBottom: '1.5rem' }}>
-                    {title && <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 800, color: 'var(--labo-text)', margin: intro ? '0 0 0.6rem' : 0 }}>{title}</h2>}
-                    {intro && <p style={{ color: 'var(--labo-text-muted)', margin: 0 }}>{intro}</p>}
-                  </div>
+                  {(title || intro) && (
+                    <div style={{ borderBottom: '1px solid var(--labo-border)', paddingBottom: '1.5rem', marginBottom: '2rem' }}>
+                      {title && <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,2.5vw,2rem)', fontWeight: 800, color: 'var(--labo-text)', margin: intro ? '0 0 0.6rem' : 0 }}>{title}</h2>}
+                      {intro && <p style={{ color: 'var(--labo-text-muted)', margin: 0 }}>{intro}</p>}
+                    </div>
+                  )}
+
+                  {items.length > 0 && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+                      {items.map((item: any) => (
+                        <Link
+                          key={item._id}
+                          href={newsHref(item, locale)}
+                          target={item.sourceUrl ? '_blank' : undefined}
+                          rel={item.sourceUrl ? 'noreferrer' : undefined}
+                          className="card-premium"
+                          style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', padding: '1.75rem', textDecoration: 'none', color: 'inherit' }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+                            {(item.categoryLabel || item.category) && (
+                              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--labo-accent-teal)' }}>
+                                {item.categoryLabel || item.category}
+                              </span>
+                            )}
+                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--labo-text-muted)' }}>
+                              {formatNewsDate(item.date, locale)}
+                            </span>
+                          </div>
+                          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.05rem', fontWeight: 700, color: 'var(--labo-text)', margin: 0 }}>{item.title}</h3>
+                          {item.summary && (
+                            <p style={{ color: 'var(--labo-text-muted)', fontSize: '0.88rem', lineHeight: 1.6, margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                              {item.summary}
+                            </p>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </section>
             );

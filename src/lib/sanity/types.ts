@@ -86,7 +86,11 @@ export type NewsListItem = {
   slug: SanitySlug;
   slugIntl?: LocalizedSlug;
   date?: string;
+  // Clé interne non localisée (utilisée pour le mapping de couleur des
+  // badges) — categoryLabel est le libellé localisé à afficher, retombe
+  // sur `category` si aucune traduction n'a été saisie côté éditeur.
   category?: string;
+  categoryLabel?: string;
   summary?: string;
   mainImageUrl?: string;
   mainImageAlt?: string;
@@ -212,6 +216,13 @@ export type HomePageData = {
   seo?: SeoData;
   heroBadge?: string;
   heroSubtitle?: string;
+  // Override optionnel des 4 lignes du titre du hero — si absent, le
+  // composant Hero retombe sur son texte de design par défaut (next-intl
+  // home.hero.titleLine1..4). Voir src/components/home/hero.tsx.
+  heroTitleLine1?: string;
+  heroTitleLine2?: string;
+  heroTitleLine3?: string;
+  heroTitleLine4?: string;
   heroActions?: Array<{ label: string; href: string; variant?: string }>;
   introEyebrow?: string;
   introTitle?: string;

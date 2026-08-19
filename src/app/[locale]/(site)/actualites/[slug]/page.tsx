@@ -24,6 +24,7 @@ type NewsDetail = {
   title: string;
   date?: string;
   category?: string;
+  categoryLabel?: string;
   summary?: string;
   content?: PortableTextBlock[];
   mainImageUrl?: string;
@@ -76,7 +77,7 @@ export default async function Page({ params }: PageProps) {
       <div className="simple-card-meta">
         {article.category ? (
           <span className="badge badge-primary">
-            {article.category}
+            {article.categoryLabel ?? article.category}
           </span>
         ) : null}
         {article.date ? (

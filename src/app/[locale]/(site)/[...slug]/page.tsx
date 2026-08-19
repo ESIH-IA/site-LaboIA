@@ -5,6 +5,9 @@ import { PageBuilder } from '@/components/page-builder';
 import { setRequestLocale } from 'next-intl/server';
 import type { SeoData } from '@/lib/sanity/types';
 import { buildMetadata } from '@/lib/seo';
+import { getLatestNews } from '@/lib/cms';
+
+export const dynamic = "force-dynamic";
 
 type GenericPageData = {
   title?: string;
@@ -63,9 +66,18 @@ export default async function GenericPage({
     notFound();
   }
 
+  const blocks = page.blocks ?? [];
+  const newsBlocks = blocks.filter(
+    (block): block is { _type: string; limit?: number } =>
+      typeof block === "object" && block !== null && (block as { _type?: unknown })._type === "latestNewsBlock",
+  );
+  const newsItems = newsBlocks.length > 0
+    ? await getLatestNews(locale === "en" ? "en" : "fr", Math.max(...newsBlocks.map((b) => b.limit || 3)))
+    : [];
+
   return (
     <main className="flex-1 w-full">
-      <PageBuilder blocks={page.blocks ?? []} locale={locale} />
+      <PageBuilder blocks={blocks} locale={locale} newsItems={newsItems} />
     </main>
   );
 }

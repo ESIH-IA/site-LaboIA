@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { REMOVED_NAV_TREES } from "./src/lib/nav";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -16,19 +17,13 @@ const nextConfig: NextConfig = {
     // Ces redirections couvrent
     // les liens externes/marque-pages/anciens resultats de recherche et
     // tout contenu CMS pas encore resynchronise avec le nouveau perimetre.
-    const removedTrees = [
-      "equipe",
-      "a-propos",
-      "recherche",
-      "lacdia-tech",
-      "formation",
-      "projets",
-      "publications",
-      "ressources",
-      // "newsletter" retiré de cette liste : /newsletter est une route
-      // dédiée active (désinscription newsletter, compliance-sensible —
-      // voir audit pré-production COMP-1). Ne pas la réintroduire ici.
-    ];
+    // Liste partagée avec Header/Footer (src/lib/nav.ts) — un item de nav
+    // Sanity vers l'une de ces arborescences est filtré côté affichage ET
+    // redirigé côté serveur depuis la même source de vérité.
+    // "newsletter" n'y figure pas : /newsletter est une route dédiée active
+    // (désinscription newsletter, compliance-sensible — voir audit
+    // pré-production COMP-1). Ne pas la réintroduire ici.
+    const removedTrees = REMOVED_NAV_TREES;
 
     const homeRedirects = removedTrees.flatMap((tree) => [
       { source: `/${tree}`, destination: "/fr", permanent: false },
